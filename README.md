@@ -4,7 +4,7 @@
 
 ### Actual Data
 
-A list of the daily actual data can be found here: https://opentransportdata.swiss/de/dataset/istdaten
+A list of the daily actual data can be found here: https://opentransportdata.swiss/en/dataset/istdaten
 
 The data structure description can be found here: 
 - Information about actual data fields: https://opentransportdata.swiss/en/cookbook/actual-data/
