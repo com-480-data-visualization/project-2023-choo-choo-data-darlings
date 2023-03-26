@@ -155,37 +155,25 @@ class SwissMap {
     }
 
     getZoneCenter(zone, project, return_borders) {
-        const zone_coordinates_arrays = d3.select(zone).data()[0].geometry.coordinates
-        const most_bottoms = []
-        const most_lefts = []
-        const most_rights = []
-        const most_tops = []
-
-        zone_coordinates_arrays.forEach(function(coordinates_array) {
-            most_bottoms.push(d3.min(coordinates_array, function(d) { return d[1] }))
-            most_lefts.push(d3.min(coordinates_array, function(d) { return d[0] }))
-            most_rights.push(d3.max(coordinates_array, function(d) { return d[0] }))
-            most_tops.push(d3.max(coordinates_array, function(d) { return d[1] }))
-        })
-
-        const most_bottom = d3.min(most_bottoms)
-        const most_left = d3.min(most_lefts)
-        const most_right = d3.max(most_rights)
-        const most_top = d3.max(most_tops)
-
-        // Place points at locations
-        let bottom_left = [most_left, most_bottom]
-        let bottom_right = [most_right, most_bottom]
-        let top_left = [most_left, most_top]
-        if (project) {
-            bottom_left = this.projection(bottom_left)
-            bottom_right = this.projection(bottom_right)
-            top_left = this.projection(top_left)
+        const node = d3.select(zone).node()
+        const bbox = node.getBBox()
+        let center2 = [bbox.x + bbox.width / 2, bbox.y + bbox.height / 2]
+        if(!project) {
+            center2 = this.projection.invert(center2) // invert projection
         }
 
-        const center = [(bottom_left[0] + bottom_right[0]) / 2, (bottom_left[1] + top_left[1]) / 2]
+        return [center2, return_borders ? this.getZoneBorders(zone) : null]
+    }
 
-        return [center, return_borders ? [bottom_left, bottom_right, top_left] : null]
+    getZoneBorders(zone) {
+        const node = d3.select(zone).node()
+        const bbox = node.getBBox()
+        const bottom_left = this.projection.invert([bbox.x, bbox.y + bbox.height])
+        const bottom_right = this.projection.invert([bbox.x + bbox.width, bbox.y + bbox.height])
+        const top_left = this.projection.invert([bbox.x, bbox.y])
+        const top_right = this.projection.invert([bbox.x + bbox.width, bbox.y])
+
+        return [bottom_left, bottom_right, top_left, top_right]
     }
 
     addZoneTitle(zone, lat, long) {
