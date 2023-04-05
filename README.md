@@ -10,6 +10,10 @@ The data structure description can be found here:
 - Information about actual data fields: https://opentransportdata.swiss/en/cookbook/actual-data/
 - Information about location codes: https://didok.ch/en/glossary-stop-points-location-codes/
 
+### Additional data for stop coordinates
+
+The additional data for stop coordinates can be found here: https://opentransportdata.swiss/fr/dataset/bav_liste
+
 ### API
 
 The API documentation can be found here:
