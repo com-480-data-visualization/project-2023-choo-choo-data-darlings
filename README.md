@@ -47,9 +47,21 @@ For preprocessing/cleaning required for visualization we first translate the nam
 
 > Pre-processing of the data set you chose
 > - Show some basic statistics and get insights about the data
+> This section displays some histograms to present some insights about the data.
+> ![histogram 1](./generated/arrival_delays_unfiltered.png.png)
+> ![histogram 2](./generated/arrival_delays_filtered.png)
+> ![histogram 3](./generated/arrival_hour_distribution.png)
+> ![histogram 4](./generated/arrival_hour_distribution_by_product.png)
+> ![histogram 5](./generated/arrival_operators_top_10.png)
+> ![histogram 6](./generated/busy_stops_top_20.png)
+> ![histogram 7](./generated/departure_delays_filtered.png)
+> ![histogram 8](./generated/departure_operators_top_10.png)
+> ![histogram 9](./generated/mean_arrival_delay_worst_20.png)
+> ![histogram 10](./generated/mean_departure_delay_worst_20.png)
+> ![histogram 11](./generated/products_bar.png)
+> ![histogram 12](./generated/transport_types_bar.png)
 
 ### Related work
-
 
 > #### What others have already done with the data
 > This database has been used before for academic, professional and personal reasons. There are many mobile apps and websites who use this dataset to provide real-time train information and schedules, including the SBB Mobile App and Swiss Timetable App. As it can be found on [this webpage](https://opentransportdata.swiss/de/showcase-5/), many people have used this dataset for their own visualization projects apps as well. Many research papers also feature this dataset, for studies on predicting train delays, analyzing passenger behavior, and optimizing train schedules. For example, one study uses the dataset to develop a machine learning model for predicting train delays based on historical data. 
@@ -62,7 +74,7 @@ For preprocessing/cleaning required for visualization we first translate the nam
 > Furthermore, we take inspiration from [Trains in Time](https://www.youtube.com/watch?v=I17_nuPiJI4&t=3s) which is a project developed by the same Lab. This combines data on the time trains run behind schedule with the actual number of passengers on any train at any moment. This information is represented at the actual location of a train on SNCF's high speed rail network. 
 > 
 > #### In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
-> Defne uses the same dataset in the COM-490: Large Scale Data Science course. We it to learn how to use LSDS tools such as HDFS, Hive and HBase,  LSDS tools such as Hive, Spark, SQL. It’s a course with a different objective but she will be sure to report differences between this project and that course.
+> Defne uses the same dataset in the COM-490: Large Scale Data Science course. We use it to learn how to use LSDS tools such as HDFS, Hive, HBase, SQL and more. It’s a course with a different objective but she will be sure to report differences between this project and that course.
 
 
 ## Milestone 2 (7th May, 5pm)
