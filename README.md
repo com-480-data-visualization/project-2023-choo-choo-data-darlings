@@ -26,8 +26,32 @@ Please, fill the following sections about your project.
 > We will use multiple datasets for our website.
 > 
 > #### Main SBB dataset: 
-> The [Open data platform mobility Switzerland](https://opentransportdata.swiss/en/dataset) provides access to a variety of datasets related to Swiss Federal Railways, including the SBB Swiss train dataset. To examine the quality of the SBB Swiss train dataset we followed some steps.To check the completeness of the dataset, we look if it includes all the trains, stations, and routes that we wanted to visualize and see if there are any missing values. To check the consistency of the dataset, we examine the station names, train numbers, and times. They seem to be at a consistent format and data type for a given week. Lastly, to check the accuracy of the dataset, we check if the times recorded correctly on the dataset match with the current SBB app time schedules. It is indeed correct for most values.
-For preprocessing/cleaning required for visualization we first translate the names from German into English so they are easier to understand for us. We convert the time data to a consistent format so that it can be easily plotted in a visualization tool. Next, we handle any missing or inconsistent data points by either imputing values or removing them altogether. Moreover, since the database is quite large, we reduce the data to a level that is appropriate for our visualization and we organize it. We also analyse outliers and any samples that seem odd.
+> The [Open data platform mobility Switzerland](https://opentransportdata.swiss/en/dataset) provides access to a variety of datasets related to Swiss Federal Railways, including the SBB Swiss train dataset. We analyzed the dataset for a single day, March 10, 2023, as the data is available on a per-day basis.
+
+> Here is a list of each important field in this dataset, presented as a table:
+> 
+>| Field                   | Description                                                         |
+>| -----------------------| --------------------------------------------------------------------|
+>| date                    | Date of the journey.                                                |
+>| trip_id                 | Identifier of the journey.                                          |
+>| operator_id             | Identifier of the operator. (Chemins de fer du Jura, Bus Sierrois)   |
+>| operator_abbreviation  | Abbreviation of the operator.                                       |
+>| operator_name           | Name of the operator.                                               |
+>| product_id              | Identifier of the product.                                          |
+>| line_text               | Name of the line. (S9, IR15)                                         |
+>| transport_type          | Type of transport. (Train, Tram, Bus, …)                             |
+>| is_additional_trip      | Whether the journey is an additional one.                            |
+>| is_cancelled            | Whether the journey is cancelled.                                    |
+>| stop_id                 | Identifier of the stop.                                             |
+>| stop_name               | Name of the stop.                                                   |
+>| arrival_time            | Arrival time at the stop.                                           |
+>| arrival_forecast        | Arrival time at the stop (predicted).                                |
+>| arrival_forecast_status | Status of the predicted arrival time.                               |
+>| departure_time          | Departure time from the stop.                                        |
+>| departure_forecast      | Departure time from the stop (predicted).                             |
+>| departure_forecast_status| Status of the predicted departure time.                             |
+>| is_through_trip         | Whether the stop is a through stop.     
+
 
 > #### BAV list dataset
 > [This dataset](https://opentransportdata.swiss/en/dataset/bav_liste) contains the list of station and stop names. By using the BAV list to fill in missing data for the stop_name attribute in a dataset, we can improve the accuracy and completeness of the dataset. It also contains the geographic coordinates, which might be useful for later.
@@ -54,30 +78,6 @@ For preprocessing/cleaning required for visualization we first translate the nam
 > - __Preprocessing pipeline:__ Developed a pipeline that to process other days' data.
 > - __Removing unnecessary columns:__ We removed any columns that were not relevant to our analysis, streamlining the dataset and making it more focused on the variables of interest.
 > - __Data compression:__ Compressed dataset by using more compact data types and converting it to the Parquet file format.
-
-> Here is a list of each important field in the chosen dataset, presented as a table:
-> 
->| Field                   | Description                                                         |
->| -----------------------| --------------------------------------------------------------------|
->| date                    | Date of the journey.                                                |
->| trip_id                 | Identifier of the journey.                                          |
->| operator_id             | Identifier of the operator. (Chemins de fer du Jura, Bus Sierrois)   |
->| operator_abbreviation  | Abbreviation of the operator.                                       |
->| operator_name           | Name of the operator.                                               |
->| product_id              | Identifier of the product.                                          |
->| line_text               | Name of the line. (S9, IR15)                                         |
->| transport_type          | Type of transport. (Train, Tram, Bus, …)                             |
->| is_additional_trip      | Whether the journey is an additional one.                            |
->| is_cancelled            | Whether the journey is cancelled.                                    |
->| stop_id                 | Identifier of the stop.                                             |
->| stop_name               | Name of the stop.                                                   |
->| arrival_time            | Arrival time at the stop.                                           |
->| arrival_forecast        | Arrival time at the stop (predicted).                                |
->| arrival_forecast_status | Status of the predicted arrival time.                               |
->| departure_time          | Departure time from the stop.                                        |
->| departure_forecast      | Departure time from the stop (predicted).                             |
->| departure_forecast_status| Status of the predicted departure time.                             |
->| is_through_trip         | Whether the stop is a through stop.     
 
 #### Basic statistics and insights about the data
 
