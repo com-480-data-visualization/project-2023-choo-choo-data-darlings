@@ -57,27 +57,27 @@ For preprocessing/cleaning required for visualization we first translate the nam
 
 > Here is a list of each important field in the chosen dataset, presented as a table:
 > 
-| Field                   | Description                                                         |
-| -----------------------| --------------------------------------------------------------------|
-| date                    | Date of the journey.                                                |
-| trip_id                 | Identifier of the journey.                                          |
-| operator_id             | Identifier of the operator. (Chemins de fer du Jura, Bus Sierrois)   |
-| operator_abbreviation  | Abbreviation of the operator.                                       |
-| operator_name           | Name of the operator.                                               |
-| product_id              | Identifier of the product.                                          |
-| line_text               | Name of the line. (S9, IR15)                                         |
-| transport_type          | Type of transport. (Train, Tram, Bus, …)                             |
-| is_additional_trip      | Whether the journey is an additional one.                            |
-| is_cancelled            | Whether the journey is cancelled.                                    |
-| stop_id                 | Identifier of the stop.                                             |
-| stop_name               | Name of the stop.                                                   |
-| arrival_time            | Arrival time at the stop.                                           |
-| arrival_forecast        | Arrival time at the stop (predicted).                                |
-| arrival_forecast_status | Status of the predicted arrival time.                               |
-| departure_time          | Departure time from the stop.                                        |
-| departure_forecast      | Departure time from the stop (predicted).                             |
-| departure_forecast_status| Status of the predicted departure time.                             |
-| is_through_trip         | Whether the stop is a through stop.     
+>| Field                   | Description                                                         |
+>| -----------------------| --------------------------------------------------------------------|
+>| date                    | Date of the journey.                                                |
+>| trip_id                 | Identifier of the journey.                                          |
+>| operator_id             | Identifier of the operator. (Chemins de fer du Jura, Bus Sierrois)   |
+>| operator_abbreviation  | Abbreviation of the operator.                                       |
+>| operator_name           | Name of the operator.                                               |
+>| product_id              | Identifier of the product.                                          |
+>| line_text               | Name of the line. (S9, IR15)                                         |
+>| transport_type          | Type of transport. (Train, Tram, Bus, …)                             |
+>| is_additional_trip      | Whether the journey is an additional one.                            |
+>| is_cancelled            | Whether the journey is cancelled.                                    |
+>| stop_id                 | Identifier of the stop.                                             |
+>| stop_name               | Name of the stop.                                                   |
+>| arrival_time            | Arrival time at the stop.                                           |
+>| arrival_forecast        | Arrival time at the stop (predicted).                                |
+>| arrival_forecast_status | Status of the predicted arrival time.                               |
+>| departure_time          | Departure time from the stop.                                        |
+>| departure_forecast      | Departure time from the stop (predicted).                             |
+>| departure_forecast_status| Status of the predicted departure time.                             |
+>| is_through_trip         | Whether the stop is a through stop.     
 
 #### Basic statistics and insights about the data
 
