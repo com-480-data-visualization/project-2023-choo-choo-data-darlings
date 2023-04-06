@@ -45,9 +45,41 @@ For preprocessing/cleaning required for visualization we first translate the nam
 
 ### Exploratory Data Analysis
 
-> Pre-processing of the data set you chose
-> - Show some basic statistics and get insights about the data
-> This section displays some histograms to present some insights about the data.
+#### Pre-processing of the data set you chose
+> We performed the following preprocessing tasks (see more [in this notebook](preprocessing.ipynb)):
+> - __Data completeness:__ Analyzed each column and identified and explained possible values for categories.
+> - __Data cleaning:__ Analyzed each column and identified possible values.
+> - __Time data conversion:__ Analyzed each column and identified possible values.
+> - __Data translation:__ Translated from German to English for better understanding and consistency.
+> - __Preprocessing pipeline:__ Developed a pipeline that to process other days' data.
+> - __Removing unnecessary columns:__ We removed any columns that were not relevant to our analysis, streamlining the dataset and making it more focused on the variables of interest.
+> - __Data compression:__ Compressed dataset by using more compact data types and converting it to the Parquet file format.
+
+> Here is a list of each important field in the chosen dataset:
+> - __date:__ Date of the journey.
+> - __trip_id:__ Identifier of the journey.
+> - __operator_id:__ Identifier of the operator. (Chemins de fer du Jura, Bus Sierrois)
+> - __operator_abbreviation:__ Abbreviation of the operator.
+> - __operator_name:__ Name of the operator.
+> - __product_id:__ Identifier of the product.
+> - __line_text:__ Name of the line. (S9, IR15)
+> - __transport_type:__ Type of transport. (Train, Tram, Bus, …)
+> - __is_additional_trip:__ Whether the journey is an additional one.
+> - __is_cancelled:__ Whether the journey is cancelled.
+> - __stop_id:__ Identifier of the stop.
+> - __stop_name:__ Name of the stop.
+> - __arrival_time:__ Arrival time at the stop.
+> - __arrival_forecast:__ Arrival time at the stop (predicted).
+> - __arrival_forecast_status:__ Status of the predicted arrival time.
+> - __departure_time:__ Departure time from the stop.
+> - __departure_forecast:__ Departure time from the stop (predicted).
+> - __departure_forecast_status:__ Status of the predicted departure time.
+> - __is_through_trip:__ Whether the stop is a through stop.
+
+
+#### Basic statistics and insights about the data
+
+> We plot some histograms corresponding to the delays in minutes for each arrival of each line to present some statistics and insights about the data.
 >
 > ![histogram 1](./generated/arrival_delays_unfiltered.png)
 > ![histogram 2](./generated/arrival_delays_filtered.png)
