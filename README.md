@@ -87,8 +87,8 @@ The above graph highlights the popularity of buses, which can be attributed to t
 The above graph shows that trains are divided in $16$ different transport types each having significantly different number of entries.
 
 <p align="center">
-  <img src="./generated/arrival_delays_filtered.png" width="500" style="margin-right: 20px">
-  <img src="./generated/departure_delays_filtered.png" width="500">
+  <img src="./generated/arrival_delays_filtered.png" width="300" style="margin-right: 20px">
+  <img src="./generated/departure_delays_filtered.png" width="300">
 </p>
 
 The asymmetric distribution in the late train histogram can be attributed to efforts by train operators to minimize delays and the natural limit on early arrivals. On the right side, unpredictable factors such as equipment malfunctions, weather disruptions, and human errors can result in a wider spread of delays.
@@ -96,8 +96,8 @@ The asymmetric distribution in the late train histogram can be attributed to eff
 These graphs below show the top 10 operators regarding the delay the arrival and departure of their transport.
 
 <p align="center">
-  <img src="./generated/arrival_operators_top_10.png" width="500" style="margin-right: 20px">
-  <img src="./generated/departure_operators_top_10.png" width="500">
+  <img src="./generated/arrival_operators_top_10.png" width="300" style="margin-right: 20px">
+  <img src="./generated/departure_operators_top_10.png" width="300">
 </p>
 
 <br/>
@@ -119,8 +119,8 @@ The graph above shows that the busiest stop is _Bern, Bahnhof_, followed by _Gen
 From the graphs above, we can clearly see the peak hours in the graph above. The peak hours are $6:00$ to $8:00$ and $16:00$ to $18:00$. The rack railway is more consistent throughout the day.
 
 <p align="center">
-  <img src="./generated/mean_arrival_delay_worst_20.png" width="500" style="margin-right: 20px">
-  <img src="./generated/mean_departure_delay_worst_20.png" width="500">
+  <img src="./generated/mean_arrival_delay_worst_20.png" width="300" style="margin-right: 20px">
+  <img src="./generated/mean_departure_delay_worst_20.png" width="300">
 </p>
 
 These graphs above show the mean delay for each stop, with the number of entries taken into account for each stop. _Champoussin_ was not lucky that day, with a mean arrival delay of about $80$ minutes.
