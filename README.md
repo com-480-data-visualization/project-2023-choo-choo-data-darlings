@@ -60,7 +60,7 @@ By implementing these objectives, we aim to create a platform that empowers user
 ### **Exploratory Data Analysis**
 
 #### **Pre-processing of the dataset you chose**
-We performed the following preprocessing tasks (see more [in this notebook](preprocessing.ipynb)):
+We performed the following preprocessing tasks (see more 📓 [in this notebook](preprocessing.ipynb)):
 
 - **Data completeness**: We analyzed each column in the dataset and identified possible values for each category. This helped us assess the completeness of the data and identify any missing values.
 - **Data cleaning**: We fixed missing values and removed dirty entries to ensure that the dataset is clean and suitable for analysis. We corrected inconsistencies, such as arrival times recorded after departure times at the same stop.
@@ -72,7 +72,7 @@ We performed the following preprocessing tasks (see more [in this notebook](prep
 
 #### **Basic statistics and insights about the data**
 
-We performed some basic analysis on the processed dataset (see more [in this notebook](basic_analysis.ipynb)):
+We performed some basic analysis on the processed dataset (see more 📓 [in this notebook](basic_analysis.ipynb)):
 
 <p align="center">
   <img src="./generated/products_bar.png" width="500">
