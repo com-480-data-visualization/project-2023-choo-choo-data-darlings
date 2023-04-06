@@ -48,7 +48,8 @@ For preprocessing/cleaning required for visualization we first translate the nam
 > Pre-processing of the data set you chose
 > - Show some basic statistics and get insights about the data
 > This section displays some histograms to present some insights about the data.
-> ![histogram 1](./generated/arrival_delays_unfiltered.png.png)
+>
+> ![histogram 1](./generated/arrival_delays_unfiltered.png)
 > ![histogram 2](./generated/arrival_delays_filtered.png)
 > ![histogram 3](./generated/arrival_hour_distribution.png)
 > ![histogram 4](./generated/arrival_hour_distribution_by_product.png)
