@@ -74,7 +74,9 @@ We performed the following preprocessing tasks (see more [in this notebook](prep
 
 We performed some basic analysis on the processed dataset (see more [in this notebook](basic_analysis.ipynb)):
 
-<img src="./generated/products_bar.png" width="500" align="center">
+<p align="center">
+  <img src="./generated/products_bar.png" width="500">
+</p>
 
 The above graph highlights the popularity of buses, which can be attributed to their extensive coverage, flexibility, and cost-effectiveness. Trains follow as the next most popular mode. Trams and metro systems cater to urban commuters, while rack railways serve passengers in mountainous areas. This diverse range of transport options ensures a comprehensive public transportation network in Switzerland.
 
