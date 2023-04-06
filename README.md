@@ -55,27 +55,29 @@ For preprocessing/cleaning required for visualization we first translate the nam
 > - __Removing unnecessary columns:__ We removed any columns that were not relevant to our analysis, streamlining the dataset and making it more focused on the variables of interest.
 > - __Data compression:__ Compressed dataset by using more compact data types and converting it to the Parquet file format.
 
-> Here is a list of each important field in the chosen dataset:
-> - __date:__ Date of the journey.
-> - __trip_id:__ Identifier of the journey.
-> - __operator_id:__ Identifier of the operator. (Chemins de fer du Jura, Bus Sierrois)
-> - __operator_abbreviation:__ Abbreviation of the operator.
-> - __operator_name:__ Name of the operator.
-> - __product_id:__ Identifier of the product.
-> - __line_text:__ Name of the line. (S9, IR15)
-> - __transport_type:__ Type of transport. (Train, Tram, Bus, …)
-> - __is_additional_trip:__ Whether the journey is an additional one.
-> - __is_cancelled:__ Whether the journey is cancelled.
-> - __stop_id:__ Identifier of the stop.
-> - __stop_name:__ Name of the stop.
-> - __arrival_time:__ Arrival time at the stop.
-> - __arrival_forecast:__ Arrival time at the stop (predicted).
-> - __arrival_forecast_status:__ Status of the predicted arrival time.
-> - __departure_time:__ Departure time from the stop.
-> - __departure_forecast:__ Departure time from the stop (predicted).
-> - __departure_forecast_status:__ Status of the predicted departure time.
-> - __is_through_trip:__ Whether the stop is a through stop.
-
+> Here is a list of each important field in the chosen dataset, presented as a table:
+> 
+| Field                   | Description                                                         |
+| -----------------------| --------------------------------------------------------------------|
+| date                    | Date of the journey.                                                |
+| trip_id                 | Identifier of the journey.                                          |
+| operator_id             | Identifier of the operator. (Chemins de fer du Jura, Bus Sierrois)   |
+| operator_abbreviation  | Abbreviation of the operator.                                       |
+| operator_name           | Name of the operator.                                               |
+| product_id              | Identifier of the product.                                          |
+| line_text               | Name of the line. (S9, IR15)                                         |
+| transport_type          | Type of transport. (Train, Tram, Bus, …)                             |
+| is_additional_trip      | Whether the journey is an additional one.                            |
+| is_cancelled            | Whether the journey is cancelled.                                    |
+| stop_id                 | Identifier of the stop.                                             |
+| stop_name               | Name of the stop.                                                   |
+| arrival_time            | Arrival time at the stop.                                           |
+| arrival_forecast        | Arrival time at the stop (predicted).                                |
+| arrival_forecast_status | Status of the predicted arrival time.                               |
+| departure_time          | Departure time from the stop.                                        |
+| departure_forecast      | Departure time from the stop (predicted).                             |
+| departure_forecast_status| Status of the predicted departure time.                             |
+| is_through_trip         | Whether the stop is a through stop.     
 
 #### Basic statistics and insights about the data
 
