@@ -2,7 +2,7 @@
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| Ozan Arda Guven| 297076|
+| Ozan Arda Güven| 297076|
 | Arnaud Poletto| 302411|
 | Defne Culha| 353020|
 
