@@ -80,48 +80,48 @@ We performed some basic analysis on the processed dataset (see more [in this not
 
 The above graph highlights the popularity of buses, which can be attributed to their extensive coverage, flexibility, and cost-effectiveness. Trains follow as the next most popular mode. Trams and metro systems cater to urban commuters, while rack railways serve passengers in mountainous areas. This diverse range of transport options ensures a comprehensive public transportation network in Switzerland.
 
-<div style="text-align:center">
+<p align="center">
   <img src="./generated/transport_types_bar.png" width="500">
-</div>
+</p>
 
 The above graph shows that trains are divided in $16$ different transport types each having significantly different number of entries.
 
-<div style="display:flex;justify-content:center;align-items:center">
+<p align="center">
   <img src="./generated/arrival_delays_filtered.png" width="500" style="margin-right: 20px">
   <img src="./generated/departure_delays_filtered.png" width="500">
-</div>
+</p>
 
 The asymmetric distribution in the late train histogram can be attributed to efforts by train operators to minimize delays and the natural limit on early arrivals. On the right side, unpredictable factors such as equipment malfunctions, weather disruptions, and human errors can result in a wider spread of delays.
 
 These graphs below show the top 10 operators regarding the delay the arrival and departure of their transport.
 
-<div style="display:flex;justify-content:center;align-items:center">
+<p align="center">
   <img src="./generated/arrival_operators_top_10.png" width="500" style="margin-right: 20px">
   <img src="./generated/departure_operators_top_10.png" width="500">
-</div>
+</p>
 
 <br/>
 
-<div style="text-align:center">
+<p align="center">
   <img src="./generated/busy_stops_top_20.png" width="500">
-</div>
+</p>
 
 The graph above shows that the busiest stop is _Bern, Bahnhof_, followed by _Genève, gare Cornavin_.
 
-<div style="text-align:center">
+<p align="center">
   <img src="./generated/arrival_hour_distribution.png" width="500">
-</div>
+</p>
 
-<div style="text-align:center">
+<p align="center">
   <img src="./generated/arrival_hour_distribution_by_product.png" width="1000">
-</div>
+</p>
 
 From the graphs above, we can clearly see the peak hours in the graph above. The peak hours are $6:00$ to $8:00$ and $16:00$ to $18:00$. The rack railway is more consistent throughout the day.
 
-<div style="display:flex;justify-content:center;align-items:center">
+<p align="center">
   <img src="./generated/mean_arrival_delay_worst_20.png" width="500" style="margin-right: 20px">
   <img src="./generated/mean_departure_delay_worst_20.png" width="500">
-</div>
+</p>
 
 These graphs above show the mean delay for each stop, with the number of entries taken into account for each stop. _Champoussin_ was not lucky that day, with a mean arrival delay of about $80$ minutes.
 
