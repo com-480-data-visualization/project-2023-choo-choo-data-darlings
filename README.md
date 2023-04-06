@@ -87,8 +87,8 @@ The above graph highlights the popularity of buses, which can be attributed to t
 The above graph shows that trains are divided in $16$ different transport types each having significantly different number of entries.
 
 <p align="center">
-  <img src="./generated/arrival_delays_filtered.png" width="300" style="margin-right: 20px">
-  <img src="./generated/departure_delays_filtered.png" width="300">
+  <img src="./generated/arrival_delays_filtered.png" width="400" style="margin-right: 20px">
+  <img src="./generated/departure_delays_filtered.png" width="400">
 </p>
 
 The asymmetric distribution in the late train histogram can be attributed to efforts by train operators to minimize delays and the natural limit on early arrivals. On the right side, unpredictable factors such as equipment malfunctions, weather disruptions, and human errors can result in a wider spread of delays.
@@ -96,8 +96,8 @@ The asymmetric distribution in the late train histogram can be attributed to eff
 These graphs below show the top 10 operators regarding the delay the arrival and departure of their transport.
 
 <p align="center">
-  <img src="./generated/arrival_operators_top_10.png" width="300" style="margin-right: 20px">
-  <img src="./generated/departure_operators_top_10.png" width="300">
+  <img src="./generated/arrival_operators_top_10.png" width="400" style="margin-right: 20px">
+  <img src="./generated/departure_operators_top_10.png" width="400">
 </p>
 
 <br/>
