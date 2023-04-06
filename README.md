@@ -119,8 +119,8 @@ The graph above shows that the busiest stop is _Bern, Bahnhof_, followed by _Gen
 From the graphs above, we can clearly see the peak hours in the graph above. The peak hours are $6:00$ to $8:00$ and $16:00$ to $18:00$. The rack railway is more consistent throughout the day.
 
 <p align="center">
-  <img src="./generated/mean_arrival_delay_worst_20.png" width="300" style="margin-right: 20px">
-  <img src="./generated/mean_departure_delay_worst_20.png" width="300">
+  <img src="./generated/mean_arrival_delay_worst_20.png" width="400" style="margin-right: 20px">
+  <img src="./generated/mean_departure_delay_worst_20.png" width="400">
 </p>
 
 These graphs above show the mean delay for each stop, with the number of entries taken into account for each stop. _Champoussin_ was not lucky that day, with a mean arrival delay of about $80$ minutes.
