@@ -1,0 +1,121 @@
+operator_id,operator_abbreviation,operator_name
+80:800631,DB,DB Regio AG Baden-Württemberg
+80:800693,DB Regio,DB ZugBus Regionalverkehr Alb-Bodensee
+80:80____,DB,DB Fernverkehr AG
+80:L7____,SBB,SBB GmbH
+80:sbg034,sbg034,sbg034
+81:817000,NeTS-ÖBB,NeTS Planung ÖBB
+83:327000,TN,TreNord
+85:11,SBB,Schweizerische Bundesbahnen SBB
+85:124,JB,Jungfraubahn
+85:138,BOS/rtb,Bus Ostschweiz (Rheintal)
+85:142,SMC,Sierre-Montana-Crans
+85:146,STI,STI Bus AG
+85:151,TL,Transports Publics de la Région Lausannoise sa
+85:153,TRN-tn,Transports Publics Neuchâtelois SA (tn)
+85:156,TRN/Autovr,Service d'automobiles TRN (vr)
+85:157,WAB,Wengernalpbahn
+85:22,AB-ab,Appenzeller Bahnen (ab)
+85:29,MBC,Transports de la région Morges-Bière-Cossonay
+85:31,AVA-bd,Aargau Verkehr AG
+85:33,BLS-bls,BLS AG (bls)
+85:35,BOB,Berner Oberland-Bahnen
+85:351,SBB GmbH,SBB GmbH (Grenzverkehr)
+85:37,BLT-blt,Baselland Transport
+85:38,ASM-bti,Aare Seeland mobil (bti)
+85:3849,VBZ    Fpl,Verkehrsbetriebe Zürich INFO+
+85:41,AVA-ltb,Aargau Verkehr AG
+85:43,CJ,Chemins de fer du Jura
+85:44,TRN-cmn,Transports Publics Neuchâtelois SA (cmn)
+85:47,FLP,Lugano-Ponte Tresa
+85:48,MGB-fo,Matterhorn Gotthard Bahn (fo)
+85:51,AB-fw,Appenzeller Bahnen (fw)
+85:53,TPF,Transports publics fribourgeois
+85:55,LEB,Lausanne-Echallens-Bercher
+85:56,ASM-rvo,Aare Seeland mobil (rvo)
+85:61,TMR-mc,Transports de Martigny et Régions (mc)
+85:65,THURBO,THURBO
+85:66,NStCM,Nyon-St-Cergue-Morez
+85:712,ASL,Autoservizi Silvestri Livigno
+85:714,BS,Bus Sierrois
+85:72,RhB,Rhätische Bahn
+85:723,AVA/rbz,Aargau Verkehr AG
+85:73,TRN-rvt,Transports Publics Neuchâtelois SA (rvt)
+85:731,AVJ,Autotransports de la Vallée de Joux
+85:736,AMSA,Autolinea Mendrisiense SA
+85:737,SNL Auto,Servizio d'automobili
+85:738,TPN,Transports Publics de la Région Nyonnaise
+85:74,RA,Regionalps
+85:740,VBD,Verkehrsbetrieb der Landschaft Davos
+85:741,BNP,Bus Nyon-Prangins
+85:755,ABF,Autobusbetrieb Freienbach
+85:764,MBC Auto,Automobiles MBC
+85:765,BCS,Bus commune Sion
+85:766,BuS/cb,Bus und Service AG (Chur)
+85:772,BRER,Busbetrieb Rapperswil-Eschenbach-Rüti ZH
+85:773,VBG,Verkehrsbetriebe Glattal
+85:777,BWS,Busbetrieb Wollerau-Samstagern
+85:792,TRN/tc,Transports Publics Neuchâtelois SA (tc)
+85:793,BOGG,Busbetrieb Olten-Gösgen-Gäu
+85:796,TRN/Autrvt,Service d'automobiles TRN (rvt Auto)
+85:799,VBH,Verkehrsbetriebe Herisau
+85:801,PAG,PostAuto AG
+85:805,VLM,Verkehrsbetrieb LIECHTENSTEINmobil
+85:807,SZU Auto,Automobildienst SZU
+85:81,ASM-snb,Aare Seeland mobil (snb)
+85:810,BLWE,Busbetrieb Lichtensteig-Wattwil-Ebnat-Kappel
+85:811,AAGL,Autobus AG Liestal
+85:812,AAGR,Auto AG Rothenburg
+85:813,AFA,Autoverkehr Frutigen-Adelboden
+85:814,RA/bus,RegionAlps Bus
+85:815,BuS/eb,Bus und Service AG (Engadin)
+85:816,AAGU,Auto AG Uri
+85:817,FART Auto,Autolinee FART
+85:818,TPC Auto,Transports Publics du Chablais (Bus)
+85:819,ARAG,Automobil Rottal AG
+85:82,SOB-sob,Schweizerische Südostbahn (sob)
+85:820,VBL,Verkehrsbetriebe Luzern AG
+85:822,BOB Auto,Busbetrieb BOB
+85:823,BVB,Basler Verkehrsbetriebe
+85:826,BOS/wimo,Bus Ostschweiz (Wil)
+85:827,SVB Auto,Städtische Verkehrsbetriebe Bern
+85:832,AWA,Autobetrieb Weesen-Amden
+85:833,CJ Auto,Automobiles CJ
+85:834,TPF Auto,Service d'automobiles TPF
+85:835,TMR Auto,Service d'automobiles TMR
+85:836,VBSH,Verkehrsbetriebe Schaffhausen
+85:838,VZO,Verkehrsbetriebe Zürichsee und Oberland
+85:839,ZVB,Zugerland Verkehrsbetriebe
+85:840,BBA,Busbetrieb Aarau
+85:841,AAGS,Auto AG Schwyz
+85:843,AOT,Autokurse Oberthurgau
+85:846,VBSH-rv,Verkehrsbetriebe Schaffhausen
+85:849,VBZ,Verkehrsbetriebe Zürich
+85:850,RBS Auto,Autobusbetrieb RBS
+85:850065,THURBO,THURBO Deutschland
+85:853,TSD-asdt,Theytaz Excursions Sion
+85:855,LLB,Auto Leuk-Leukerbad
+85:858,ARL,Autolinee Regionali Luganesi
+85:859,GWB,Grindelwald Bus AG
+85:86,ZB,Zentralbahn
+85:862,ABl,Autolinee Bleniesi
+85:870,ASM Auto,Automobildienste Aare Seeland mobil
+85:871,BLAG,Busland AG
+85:873,RBL,Regionalbus Lenzburg
+85:876,VMCV,Transports publics Vevey-Montreux-Chillon-Villeneuve
+85:88,RBS,Regionalverkehr Bern-Solothurn
+85:881,TPG,Transports Publics Genevois
+85:882,SBW,Stadtbus Winterthur
+85:883,BSU,Busbetrieb Solothurn und Umgebung
+85:885,VBSG,Verkehrsbetriebe der Stadt St.Gallen
+85:886,RVBW,Regionale Verkehrsbetriebe Baden-Wettingen
+85:889,VB,Verkehrsbetriebe Biel
+85:894,BGU,Busbetrieb Grenchen und Umgebung
+85:895,TRAVYSAuto,Transports Vallée de Joux-Yverdon-Ste-Croix
+85:896,REGO,Regiobus Gossau SG
+85:899,AVA/Autwm,Aargau Verkehr AG
+85:9020,TRAVYS/oc,Transports Vallée de Joux-Yverdon-Ste-Croix (oc/bus)
+85:93,MGB-bvz,Matterhorn Gotthard Bahn (bvz)
+85:955,TPL,Trasporti Pubblici Luganesi SA
+85:96,AVA-wsb,Aargau Verkehr AG
+85:97,TRAVYS,Transports Vallée de Joux-Yverdon-Ste-Croix
