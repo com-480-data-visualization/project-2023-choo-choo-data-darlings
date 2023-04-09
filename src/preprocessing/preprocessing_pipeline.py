@@ -1,7 +1,14 @@
 import os
+import holidays
 import regex as re
+import numpy as np
 import pandas as pd
+from datetime import datetime
 from preprocessing.download_data import download_bav_data
+
+
+def __get_stop_data_dst_path(day_str):
+    return f'../../data/processed/{day_str}_stops.csv'
 
 def __get_operator_data_dst_path(day_str):
     return f'../../data/processed/{day_str}_operators.csv'
@@ -56,7 +63,8 @@ def __get_data_from_file_name(
         file_name,
         sep=sep,
         parse_dates=parse_dates,
-        dtype=dtype
+        dtype=dtype,
+        dayfirst=True
     )
 
     return transport_data
@@ -216,6 +224,32 @@ def __process_stop(transport_data, bav_data):
 
     return new_transport_data
 
+def __extract_stop_data(
+        transport_data, 
+        day_str, 
+        overwrite_existing_file=False
+):
+    """
+    Extract the stop data from the transport data and save it to a csv file.
+    
+    Args:
+        transport_data (pd.DataFrame): Dataframe with the data from a day
+        day_str (str): Date of the data
+        overwrite_existing_file (bool, optional): Overwrite existing file. Defaults to False.
+    """
+    stop_data_dst_path = __get_stop_data_dst_path(day_str)
+    if os.path.exists(stop_data_dst_path):
+        if overwrite_existing_file:
+            os.remove(stop_data_dst_path)
+        else:
+            return
+        
+    transport_data[['stop_id', 'stop_name', 'stop_lon', 'stop_lat']] \
+        .set_index('stop_id') \
+        .drop_duplicates() \
+        .to_csv(stop_data_dst_path)
+        
+
 def __process_arrival(transport_data):
     """
     Process the arrival columns.
@@ -235,12 +269,20 @@ def __process_arrival(transport_data):
         'GESCHAETZT': 'ESTIMATED',
     })
 
-    # Delete rows where arrival_forecase_status is unknown
-    new_transport_data = new_transport_data[new_transport_data['arrival_forecast_status'] != 'UNKNOWN']
+    # Set arrival_forecast and arrival_forecast_status to Na if arrival_time is NaT
+    new_transport_data.loc[new_transport_data['arrival_time'].isna(), 'arrival_forecast'] = pd.NaT
+    new_transport_data.loc[new_transport_data['arrival_time'].isna(), 'arrival_forecast_status'] = np.nan
+
+    # Set arrival_forecast and arrival_forecast_status to Na if arrival_forecast_status is UNKNOWN
+    new_transport_data.loc[new_transport_data['arrival_forecast_status'] == 'UNKNOWN', 'arrival_forecast'] = pd.NaT
+    new_transport_data.loc[new_transport_data['arrival_forecast_status'] == 'UNKNOWN', 'arrival_forecast_status'] = np.nan
     new_transport_data['arrival_forecast_status'] = new_transport_data['arrival_forecast_status'].cat.remove_unused_categories()
 
-    # Delete rows where the arrival_forecast is missing, but the arrival_forecast_status and arrival_time are not
-    new_transport_data = new_transport_data[(new_transport_data['arrival_time'].isna()) | (new_transport_data['arrival_forecast'].notna()) | (new_transport_data['arrival_forecast_status'].isna())]
+    # Set arrival_forecast_status to Na if arrival_forecast is NaT
+    new_transport_data.loc[new_transport_data['arrival_forecast'].isna(), 'arrival_forecast_status'] = np.nan
+
+    # Set arrival_forecast_status to 'FORECAST' if it is Na and arrival_forecast is not NaT
+    new_transport_data.loc[new_transport_data['arrival_forecast_status'].isna() & new_transport_data['arrival_forecast'].notna(), 'arrival_forecast_status'] = 'FORECAST'
 
     return new_transport_data
 
@@ -262,17 +304,29 @@ def __process_departure(transport_data):
         'REAL': 'REAL',
         'GESCHAETZT': 'ESTIMATED',
     })
+    
+    # Set departure_forecast and departure_forecast_status to Na if departure_time is NaT
+    new_transport_data.loc[new_transport_data['departure_time'].isna(), 'departure_forecast'] = pd.NaT
+    new_transport_data.loc[new_transport_data['departure_time'].isna(), 'departure_forecast_status'] = np.nan
 
-    # Delete rows where departure_forecase_status is unknown
-    new_transport_data = new_transport_data[new_transport_data['departure_forecast_status'] != 'UNKNOWN']
+    # Set departure_forecast and departure_forecast_status to Na if departure_forecast_status is UNKNOWN
+    new_transport_data.loc[new_transport_data['departure_forecast_status'] == 'UNKNOWN', 'departure_forecast'] = pd.NaT
+    new_transport_data.loc[new_transport_data['departure_forecast_status'] == 'UNKNOWN', 'departure_forecast_status'] = np.nan
     new_transport_data['departure_forecast_status'] = new_transport_data['departure_forecast_status'].cat.remove_unused_categories()
 
-    # Delete rows where the departure_forecast is missing, but the departure_forecast_status and departure_time are not
-    new_transport_data = new_transport_data[(new_transport_data['departure_time'].isna()) | (new_transport_data['departure_forecast'].notna()) | (new_transport_data['departure_forecast_status'].isna())]
+    # Set departure_forecast_status to Na if departure_forecast is NaT
+    new_transport_data.loc[new_transport_data['departure_forecast'].isna(), 'departure_forecast_status'] = np.nan
+
+    # Set departure_forecast_status to 'FORECAST' if it is Na and departure_forecast is not NaT
+    new_transport_data.loc[new_transport_data['departure_forecast_status'].isna() & new_transport_data['departure_forecast'].notna(), 'departure_forecast_status'] = 'FORECAST'
 
     return new_transport_data
 
-def __handle_inconsistent_rows(transport_data):
+def __handle_inconsistent_rows(
+        transport_data,
+        early_thd = 60,
+        late_thd = 480,
+    ):
     """
     Handle inconsistent rows.
 
@@ -291,13 +345,29 @@ def __handle_inconsistent_rows(transport_data):
     duplicates = new_transport_data.duplicated(subset=columns_to_compare, keep='first')
     new_transport_data = new_transport_data[~duplicates]
 
-    # For entries where the `arrival_forecast` happens after the `departure_forecast`, we replace the `arrival_forecast` with the `departure_forecast` value.
-    new_transport_data = new_transport_data \
-        .assign(
-            arrival_forecast=
-                new_transport_data['arrival_forecast'].where(new_transport_data['arrival_forecast'] <= new_transport_data['departure_forecast'], 
-                new_transport_data['departure_forecast'])
-        )
+    # For entries where the arrival_forecast happens after the departure_forecast, we replace the arrival_forecast with the departure_forecast value.
+    is_time_inconsistent = (
+        new_transport_data['arrival_forecast'].notna()
+        & new_transport_data['departure_forecast'].notna()
+        & (new_transport_data['arrival_forecast'] > new_transport_data['departure_forecast'])
+    )
+    new_transport_data.loc[is_time_inconsistent, 'arrival_forecast'] = new_transport_data['departure_forecast']
+    
+    # Set arrival_forecast to NaT and arrival_forecast_status to Na if the forecast is too early
+    new_transport_data.loc[new_transport_data['arrival_forecast'] < new_transport_data['arrival_time'] - pd.Timedelta(minutes=early_thd), 'arrival_forecast_status'] = np.nan
+    new_transport_data.loc[new_transport_data['arrival_forecast'] < new_transport_data['arrival_time'] - pd.Timedelta(minutes=early_thd), 'arrival_forecast'] = pd.NaT
+
+    # Set departure_forecast to NaT and departure_forecast_status to Na if the forecast is too early
+    new_transport_data.loc[new_transport_data['departure_forecast'] < new_transport_data['departure_time'] - pd.Timedelta(minutes=early_thd), 'departure_forecast_status'] = np.nan
+    new_transport_data.loc[new_transport_data['departure_forecast'] < new_transport_data['departure_time'] - pd.Timedelta(minutes=early_thd), 'departure_forecast'] = pd.NaT
+
+    # Set arrival_forecast to NaT and arrival_forecast_status to Na if the forecast is too late
+    new_transport_data.loc[new_transport_data['arrival_forecast'] > new_transport_data['arrival_time'] + pd.Timedelta(minutes=late_thd), 'arrival_forecast_status'] = np.nan
+    new_transport_data.loc[new_transport_data['arrival_forecast'] > new_transport_data['arrival_time'] + pd.Timedelta(minutes=late_thd), 'arrival_forecast'] = pd.NaT
+
+    # Set departure_forecast to NaT and departure_forecast_status to Na if the forecast is too late
+    new_transport_data.loc[new_transport_data['departure_forecast'] > new_transport_data['departure_time'] + pd.Timedelta(minutes=late_thd), 'departure_forecast_status'] = np.nan
+    new_transport_data.loc[new_transport_data['departure_forecast'] > new_transport_data['departure_time'] + pd.Timedelta(minutes=late_thd), 'departure_forecast'] = pd.NaT
 
     return new_transport_data
 
@@ -337,8 +407,36 @@ def __delete_unnecessary_columns(transport_data):
         pd.DataFrame: Dataframe with the deleted columns
     """
     new_transport_data = transport_data.copy()
-    useless_columns = ['circuit_id', 'line_id', 'operator_id', 'operator_abbreviation', 'operator_name']
+    useless_columns = [
+        'circuit_id', 
+        'line_id', 
+        'operator_id', 
+        'operator_abbreviation', 
+        'operator_name',
+        'stop_name',
+        'stop_lon',
+        'stop_lat',
+    ]
     new_transport_data = new_transport_data.drop(columns=useless_columns)
+
+    return new_transport_data
+
+def __add_delay_columns(transport_data):
+    """
+    Add the columns with the delay information.
+
+    Args:
+        transport_data (pd.DataFrame): Dataframe with the data from a day
+
+    Returns:
+        pd.DataFrame: Dataframe with the added columns
+    """
+    new_transport_data = transport_data.copy()
+    new_transport_data['arrival_delay'] = (new_transport_data['arrival_forecast'] - new_transport_data['arrival_time']).dt.total_seconds()
+    new_transport_data['departure_delay'] = (new_transport_data['departure_forecast'] - new_transport_data['departure_time']).dt.total_seconds()
+
+    new_transport_data['is_arrival_delayed'] = new_transport_data['arrival_delay'] > 0
+    new_transport_data['is_departure_delayed'] = new_transport_data['departure_delay'] > 0
 
     return new_transport_data
 
@@ -354,8 +452,6 @@ def __save_data(transport_data, day_str):
     new_transport_data['product_id'] = new_transport_data['product_id'].astype('category')
     new_transport_data['line_text'] = new_transport_data['line_text'].astype('category')
     new_transport_data['transport_type'] = new_transport_data['transport_type'].astype('category')
-    new_transport_data['stop_lon'] = new_transport_data['stop_lon'].astype('int32')
-    new_transport_data['stop_lat'] = new_transport_data['stop_lat'].astype('int32')
 
     cleaned_data_dst_path = __get_cleaned_data_dst_path(day_str)
     new_transport_data.to_parquet(cleaned_data_dst_path)
@@ -394,6 +490,9 @@ def __preprocessing_pipeline(
         print("\tProcessing stops...")
     transport_data = __process_stop(transport_data, bav_data)
     if print_progress:
+        print("\tExtracting stop data...")
+    __extract_stop_data(transport_data, day_str, overwrite_existing_file=overwrite_existing_file)
+    if print_progress:
         print("\tProcessing arrivals...")
     transport_data = __process_arrival(transport_data)
     if print_progress:
@@ -409,12 +508,27 @@ def __preprocessing_pipeline(
         print("\tDeleting unnecessary columns...")
     transport_data = __delete_unnecessary_columns(transport_data)
     if print_progress:
+        print("\tAdding delay columns...")
+    transport_data = __add_delay_columns(transport_data)
+    if print_progress:
         print("\tSaving data...")
     __save_data(transport_data, day_str)
     if print_progress:
         print("😀 Done!")
 
     return transport_data
+
+def __is_basic_day(file_date):
+    # Check if it's a weekend
+    if file_date.weekday() >= 5:
+        return False
+
+    # Check if it's a holiday
+    country_holidays = holidays.CountryHoliday('CH')
+    if file_date in country_holidays:
+        return False
+
+    return True
 
 def preprocess_files(
         overwrite_existing_file=False,
@@ -431,7 +545,8 @@ def preprocess_files(
     data_folder = "../../data"
     files = os.listdir(data_folder)
     files = [file for file in files if re.match(r"^\d{4}-\d{2}-\d{2}\_istdaten.csv$", file)]
-    print(f"📁 Found {len(files)} files in the data folder.")
+    files = [file for file in files if __is_basic_day(datetime.strptime(file.split('_')[0], "%Y-%m-%d"))]
+    print(f"📁 Found {len(files)} valid file(s) in the data folder.")
 
     # Preprocess the data for each day
     for file in files:

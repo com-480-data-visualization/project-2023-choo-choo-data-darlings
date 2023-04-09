@@ -1,2 +1,3 @@
-data/*_istdaten.csv
-data/*.xlsx
+data/*
+spark/dv_project/src/main/resources/*
+spark/dv_project/target/scala-2.11/classes/*
