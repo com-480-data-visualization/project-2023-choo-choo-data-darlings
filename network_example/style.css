@@ -16,9 +16,43 @@ body {
   background-color:#000000;
 }
 
-#select {
+#select_layout {
   position: fixed;
   top: 10px;
   left: 10px;
   z-index: 9999;
+}
+
+#select_node_size {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+
+#edges_opacity {
+  position: fixed;
+  top: 35px;
+  right: 10px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#w_slider {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#b_slider {
+  position: fixed;
+  top: 80px;
+  right: 10px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
