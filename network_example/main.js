@@ -1,6 +1,7 @@
 import {csvParseRows, csvFormatRows} from 'd3-dsv';
 import Graph from 'graphology';
 import Sigma from 'sigma';
+import { animateNodes } from 'sigma/utils/animate';
 
 // Fixed variables
 const GRAPH_CONTAINER_ID = 'container';
@@ -277,88 +278,6 @@ class LayoutManager {
   }
 
   /**
-   * Linear interpolation between two values
-   * @param {number} a, the start value
-   * @param {number} b, the end value
-   * @param {number} t, the interpolation value between 0 and 1
-   * @returns {number} the interpolated value
-   */
-  lerp(a, b, t) {
-    return a + (b - a) * t;
-  }
-  
-  /**
-   * Update node positions
-   * @param {string} old_x_arg, the old x coordinate attribute name
-   * @param {string} old_y_arg, the old y coordinate attribute name
-   * @param {string} new_x_arg, the new x coordinate attribute name
-   * @param {string} new_y_arg, the new y coordinate attribute name
-   * @param {number} progress, the interpolation value between 0 and 1
-   * @returns {void}
-   */
-  update_node_positions(
-    old_x_arg, 
-    old_y_arg, 
-    new_x_arg, 
-    new_y_arg, 
-    progress
-  ) {
-    // Iterate through the nodes and update their positions
-    this.graph_manager.graph.nodes().forEach(node => {
-      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
-      node_obj.x = this.lerp(node_obj[old_x_arg], node_obj[new_x_arg], progress);
-      node_obj.y = this.lerp(node_obj[old_y_arg], node_obj[new_y_arg], progress);
-    });
-  }
-  
-  /**
-   * 
-   * @param {string} old_x_arg, the old x coordinate attribute name
-   * @param {string} old_y_arg, the old y coordinate attribute name
-   * @param {string} new_x_arg, the new x coordinate attribute name
-   * @param {string} new_y_arg, the new y coordinate attribute name
-   * @param {function} easing_function, the easing function to use
-   */
-  animate_node_transition(
-    old_x_arg, 
-    old_y_arg, 
-    new_x_arg, 
-    new_y_arg, 
-    easing_function,
-  ) {
-    const startTime = performance.now();
-  
-    const step = (timestamp) => {
-      const progress = Math.min((timestamp - startTime) / this.layout_transition_duration, 1);
-      const easedProgress = easing_function(progress);
-
-      this.update_node_positions(old_x_arg, old_y_arg, new_x_arg, new_y_arg, easedProgress);
-  
-      // Refresh the renderer to display the updated positions
-      this.graph_manager.renderer.refresh();
-  
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    }
-  
-    requestAnimationFrame(step);
-  }
-
-  /**
-   * Get the x and y coordinate attribute names for the current layout
-   * @returns {string[]} the x and y coordinate attribute names
-   */
-  get_layout_coordinates_arg() {
-    if (this.layout_mode === 'random') return ['x_rdm', 'y_rdm'];
-    if (this.layout_mode === 'forceatlas2') return ['x_fa2', 'y_fa2'];
-    if (this.layout_mode === 'geographical') return ['x_geo', 'y_geo'];
-  
-    console.error('Unknown layout: ' + this.layout_mode);
-    return ['x_rdm', 'y_rdm'];
-  }
-
-  /**
    * Ease in out quad, to be used as easing function for layout transitions
    * @param {number} t, the interpolation value between 0 and 1
    * @returns {number} the eased interpolation value
@@ -376,17 +295,26 @@ class LayoutManager {
    */
   set_layout_mode(layout_mode, new_x_arg, new_y_arg) {
     if (this.layout_mode === layout_mode) return;
-
-    const coordinates_arg = this.get_layout_coordinates_arg();
-    const old_x_arg = coordinates_arg[0];
-    const old_y_arg = coordinates_arg[1];
-    this.animate_node_transition(
-      old_x_arg, 
-      old_y_arg, 
-      new_x_arg, 
-      new_y_arg, 
-      this.ease_in_out_quad,
-    );
+  
+    // Get the graph nodes
+    const nodes = this.graph_manager.graph.nodes();
+  
+    // Prepare an object with the target positions
+    const targetPositions = nodes.reduce((acc, node) => {
+      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
+      acc[node] = {
+        x: node_obj[new_x_arg],
+        y: node_obj[new_y_arg],
+      };
+      return acc;
+    }, {});
+  
+    // Animate the nodes using Sigma.js's built-in animateNodes function
+    animateNodes(this.graph_manager.graph, targetPositions, {
+      duration: this.layout_transition_duration,
+      easing: this.ease_in_out_quad,
+    });
+  
     this.layout_mode = layout_mode;
   }
 
@@ -418,59 +346,6 @@ class NodeSizeManager {
   }
 
   /**
-   * Linear interpolation between two values
-   * @param {number} a, the start value
-   * @param {number} b, the end value
-   * @param {number} t, the interpolation value between 0 and 1
-   * @returns {number} the interpolated value
-   */
-    lerp(a, b, t) {
-      return a + (b - a) * t;
-    }
-
-  /**
-   * Update the node sizes
-   * @param {string} new_size_arg, the new size attribute name
-   * @param {number} progress, the interpolation value between 0 and 1
-   * @returns {void}
-   */
-  update_node_sizes(new_size_arg, progress) {
-    this.graph_manager.graph.nodes().forEach((node) => {
-      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
-      node_obj.size = this.lerp(node_obj.old_size, node_obj[new_size_arg], progress);
-    });
-  }
-
-  animate_node_transition(
-    new_size_arg, 
-    easing_function
-  ) {
-    const startTime = performance.now();
-
-    // Define old size attribute
-    this.graph_manager.graph.nodes().forEach((node) => {
-      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
-      node_obj.old_size = node_obj.size;
-    });
-
-    const step = (timestamp) => {
-      const progress = Math.min((timestamp - startTime) / this.node_size_transition_duration, 1);
-      const easedProgress = easing_function(progress);
-
-      this.update_node_sizes(new_size_arg, easedProgress);
-
-      // Refresh the renderer to display the updated positions
-      this.graph_manager.renderer.refresh();
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  /**
    * Ease in out quad, to be used as easing function for layout transitions
    * @param {number} t, the interpolation value between 0 and 1
    * @returns {number} the eased interpolation value
@@ -481,10 +356,24 @@ class NodeSizeManager {
 
   set_node_size_mode(node_size_mode, new_size_arg) {
     if (this.node_size_mode === node_size_mode) return;
-    this.animate_node_transition(
-      new_size_arg,
-      this.ease_in_out_quad,
-    );
+
+    // Get the graph nodes
+    const nodes = this.graph_manager.graph.nodes();
+
+    // Prepare an object with the target sizes
+    const targetSizes = nodes.reduce((acc, node) => {
+      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
+      acc[node] = {
+        size: node_obj[new_size_arg],
+      };
+      return acc;
+    }, {});
+
+    // Animate the node sizes using Sigma.js's built-in animateNodes function
+    animateNodes(this.graph_manager.graph, targetSizes, {
+      duration: this.node_size_transition_duration,
+      easing: this.ease_in_out_quad,
+    });
 
     this.node_size_mode = node_size_mode;
   }
@@ -630,90 +519,6 @@ class ColorManager {
   }
 
   /**
-   * Update the node colors
-   * @param {string} node_color_mode, the new color mode
-   * @param {number} progress, the interpolation value between 0 and 1
-   * @returns {void}
-   */
-  update_node_colors(progress = 1) {
-    this.graph_manager.graph.nodes().forEach((node) => {
-      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
-      node_obj.color = this.color_lerp(node_obj.old_color, node_obj.new_color, progress);
-    });
-  }
-
-  update_edge_colors(progress = 1) {
-    const graph = this.graph_manager.graph;
-    graph.edges().forEach((edge) => {
-      // Get edge and source node
-      const edge_obj = this.graph_manager.graph.getEdgeAttributes(edge);
-      const source_node = edge_obj.source;
-      const source_node_obj = this.graph_manager.graph.getNodeAttributes(source_node);
-      // Get final color
-      let final_color = this.color_lerp(source_node_obj.old_color, source_node_obj.new_color, progress);
-      if (this.isRgbaColor(edge_obj.color)){
-        final_color = this.hexToRgba(final_color, DEFAULT_EDGE_OPACITY);
-      }
-      // Update edge color
-      edge_obj.color = final_color;
-    });
-  }
-
-  set_nodes_color(
-    new_color, 
-    color_scale_arg,
-    immediate = false
-  ) {
-    // Define old and new color attribute
-    this.graph_manager.graph.nodes().forEach((node) => {
-      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
-      // Define old color
-      node_obj.old_color = node_obj.color;
-      // Define new color
-      let color_scale = 1;
-      if (color_scale_arg) {
-        color_scale = node_obj[color_scale_arg];
-        color_scale = (color_scale - this.graph_manager.get_normalized_value(color_scale, MIN_NODE_SIZE, MAX_NODE_SIZE)) / (MAX_NODE_SIZE - MIN_NODE_SIZE);
-        color_scale = 1 / (1 + Math.exp(-this.w_scale * (color_scale - this.b_scale)));
-      }
-
-      node_obj.new_color = this.color_lerp(DEFAULT_NODE_COLOR, new_color, color_scale);
-    });
-
-    if (immediate) {
-      this.update_node_colors();
-      this.update_edge_colors();
-    }
-  }
-
-  animate_node_transition(
-    new_color, 
-    color_scale_arg,
-    easing_function,
-  ) {
-    const startTime = performance.now();
-
-    this.set_nodes_color(new_color, color_scale_arg);
-
-    const step = (timestamp) => {
-      const progress = Math.min((timestamp - startTime) / this.node_color_transition_duration, 1);
-      const easedProgress = easing_function(progress);
-
-      this.update_node_colors(easedProgress);
-      this.update_edge_colors(easedProgress);
-
-      // Refresh the renderer to display the updated positions
-      this.graph_manager.renderer.refresh();
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  /**
    * Ease in out quad, to be used as easing function for layout transitions
    * @param {number} t, the interpolation value between 0 and 1
    * @returns {number} the eased interpolation value
@@ -722,32 +527,163 @@ class ColorManager {
     return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }
 
-  set_node_color_mode(node_color_mode, new_color, color_scale_arg) {
-    if (this.node_color_mode === node_color_mode) return;
+  animateColorNodes(targets, opts, callback) {
+    const start = performance.now();
+    const options = {
+      duration: 1000,
+      easing: (t) => t,
+      ...opts,
+    };
+  
+    const initialAttributes = new Map();
+    const targetAttributes = new Map();
+  
+    for (const node of this.graph_manager.graph.nodes()) {
+      const nodeAttributes = this.graph_manager.graph.getNodeAttributes(node);
+      const target = targets[node];
+  
+      initialAttributes.set(node, {
+        color: nodeAttributes.color,
+      });
+  
+      targetAttributes.set(node, {
+        color: target.color,
+      });
+    }
+  
+    const step = () => {
+      const now = performance.now();
+      const t = Math.min((now - start) / options.duration, 1);
+      const easedT = options.easing(t);
+    
+      for (const node of this.graph_manager.graph.nodes()) {
+        const initial = initialAttributes.get(node);
+        const target = targetAttributes.get(node);
+    
+        const currentColor = this.color_lerp(initial.color, target.color, easedT);
+        this.graph_manager.graph.setNodeAttribute(node, "color", currentColor);
+      }
+    
+      this.graph_manager.refresh();
+    
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        if (typeof callback === "function") {
+          callback();
+        }
+      }
+    }
+  
+    requestAnimationFrame(step);
+  }
 
-    this.animate_node_transition(
-      new_color,
-      color_scale_arg,
-      this.ease_in_out_quad,
-    );
+  set_node_color_mode(node_color_mode, new_color, color_scale_arg, immediate = false) {
+    if (this.node_color_mode === node_color_mode && !immediate) return;
+  
+    // Get the graph nodes
+    const nodes = this.graph_manager.graph.nodes();
+  
+    // Prepare an object with the target colors
+    const targetColors = nodes.reduce((acc, node) => {
+      const node_obj = this.graph_manager.graph.getNodeAttributes(node);
+      let color_scale = 1;
+      if (color_scale_arg) {
+        color_scale = node_obj[color_scale_arg];
+        color_scale = (color_scale - this.graph_manager.get_normalized_value(color_scale, MIN_NODE_SIZE, MAX_NODE_SIZE)) / (MAX_NODE_SIZE - MIN_NODE_SIZE);
+        color_scale = 1 / (1 + Math.exp(-this.w_scale * (color_scale - this.b_scale)));
+      }
+  
+      acc[node] = {
+        color: this.color_lerp(DEFAULT_NODE_COLOR, new_color, color_scale),
+      };
+      return acc;
+    }, {});
+  
+    if (immediate) {
+      nodes.forEach(node => {
+        const target = targetColors[node];
+        this.graph_manager.graph.setNodeAttribute(node, "color", target.color);
+      });
 
-    this.node_color_mode = node_color_mode;
+      this.graph_manager.renderer.refresh();
+    } else {
+      // Animate the node colors using Sigma.js's built-in animateNodes function
+      this.animateColorNodes(targetColors, {
+        duration: this.node_color_transition_duration,
+        easing: this.ease_in_out_quad,
+      });
+  
+      this.node_color_mode = node_color_mode;
+    }
   }
 
   handleNodeColorSelectChange(event) {
-    const selectedOption = event.target.value;
+  const selectedOption = event.target.value;
+
+  const mode_map = {
+    fix: 'fixed',
+    ide: 'in_degree',
+    ode: 'out_degree',
+    deg: 'degree',
+    bce: 'betweeness_centrality',
+  };
+
+  const color_map = {
+    fix: DEFAULT_NODE_COLOR,
+    ide: DEGREE_NODE_COLOR,
+    ode: DEGREE_NODE_COLOR,
+    deg: DEGREE_NODE_COLOR,
+    bce: BETWEENESS_CENTRALITY_NODE_COLOR,
+  };
+
+  const color_scale_arg_map = {
+    ide: 'size_ide',
+    ode: 'size_ode',
+    deg: 'size_deg',
+    bce: 'size_bce',
+  };
+
+  const mode = mode_map[selectedOption];
+  const new_color = color_map[selectedOption];
+  const color_scale_arg = color_scale_arg_map[selectedOption] || null;
+
+  this.set_node_color_mode(mode, new_color, color_scale_arg, false);
+}
+
+
+  handleSliderChange() {
+    if (this.node_color_mode === 'fixed') return;
   
-    if (selectedOption === 'fix') {
-      this.set_node_color_mode('fixed', DEFAULT_NODE_COLOR, null);
-    } else if (selectedOption === 'ide') {
-      this.set_node_color_mode('in_degree', DEGREE_NODE_COLOR, 'size_ide');
-    } else if (selectedOption === 'ode') {
-      this.set_node_color_mode('out_degree', DEGREE_NODE_COLOR, 'size_ode');
-    } else if (selectedOption === 'deg') {
-      this.set_node_color_mode('degree', DEGREE_NODE_COLOR, 'size_deg');
-    } else if (selectedOption === 'bce') {
-      this.set_node_color_mode('betweeness_centrality', BETWEENESS_CENTRALITY_NODE_COLOR, 'size_bce', 1);
-    }
+    const color_scale_arg_map = {
+      in_degree: 'size_ide',
+      out_degree: 'size_ode',
+      degree: 'size_deg',
+      betweeness_centrality: 'size_bce',
+    };
+  
+    const color_map = {
+      in_degree: DEGREE_NODE_COLOR,
+      out_degree: DEGREE_NODE_COLOR,
+      degree: DEGREE_NODE_COLOR,
+      betweeness_centrality: BETWEENESS_CENTRALITY_NODE_COLOR,
+    };
+  
+    const color_scale_arg = color_scale_arg_map[this.node_color_mode];
+    const new_color = color_map[this.node_color_mode];
+  
+    this.set_node_color_mode(this.node_color_mode, new_color, color_scale_arg, true);
+    this.graph_manager.renderer.refresh();
+  }
+
+  handleWSliderChange(w_scale) {
+    this.w_scale = w_scale;
+    this.handleSliderChange();
+  }
+
+  handleBSliderChange(b_scale) {
+    this.b_scale = b_scale;
+    this.handleSliderChange();
   }
 
   handleEdgesOpacityCheckboxChange(is_checked) {
@@ -777,33 +713,8 @@ class ColorManager {
 
     this.graph_manager.renderer.refresh();
   }
-
-  handleWSliderChange(w_scale) {
-    this.w_scale = w_scale;
-    this.handleSliderChange();
-  }
-
-  handleBSliderChange(b_scale) {
-    this.b_scale = b_scale;
-    this.handleSliderChange();
-  }
-
-  handleSliderChange() {
-    if (this.node_color_mode === 'fixed') return;
-
-    if (this.node_color_mode === 'in_degree') {
-      this.set_nodes_color(DEGREE_NODE_COLOR, 'size_ide', true);
-    } else if (this.node_color_mode === 'out_degree') {
-      this.set_nodes_color(DEGREE_NODE_COLOR, 'size_ode', true);
-    } else if (this.node_color_mode === 'degree') {
-      this.set_nodes_color(DEGREE_NODE_COLOR, 'size_deg', true);
-    } else if (this.node_color_mode === 'betweeness_centrality') {
-      this.set_nodes_color(BETWEENESS_CENTRALITY_NODE_COLOR, 'size_bce', true);
-    }
-
-    this.graph_manager.renderer.refresh();
-  }
 }
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
