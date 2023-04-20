@@ -4,6 +4,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 body {
@@ -16,23 +17,30 @@ body {
   background-color:#000000;
 }
 
-#select_layout {
+#search {
   position: fixed;
   top: 10px;
   left: 10px;
   z-index: 9999;
 }
 
-#select_node_size {
+#select_layout {
   position: fixed;
   top: 10px;
   right: 10px;
   z-index: 9999;
 }
 
+#select_node_size {
+  position: fixed;
+  top: 30px;
+  right: 10px;
+  z-index: 9999;
+}
+
 #edges_opacity {
   position: fixed;
-  top: 35px;
+  top: 55px;
   right: 10px;
   z-index: 9999;
   color: white;
@@ -41,7 +49,7 @@ body {
 
 #w_slider {
   position: fixed;
-  top: 60px;
+  top: 80px;
   right: 10px;
   z-index: 9999;
   color: white;
@@ -50,7 +58,7 @@ body {
 
 #b_slider {
   position: fixed;
-  top: 80px;
+  top: 100px;
   right: 10px;
   z-index: 9999;
   color: white;

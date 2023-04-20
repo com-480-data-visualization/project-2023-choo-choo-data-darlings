@@ -12,6 +12,8 @@ const W_SLIDER_ID = 'w_slider';
 const W_SLIDER_LABEL_ID = 'w_slider_label';
 const B_SLIDER_ID = 'b_slider';
 const B_SLIDER_LABEL_ID = 'b_slider_label';
+const SEARCH_INPUT_ID = 'search_input';
+const SEARCH_SUGGESTIONS_ID = 'search_suggestions';
 
 const DEFAULT_LAYOUT_MODE = 'random';
 const DEFAULT_LAYOUT_TRANSITION_DURATION = 2_000;
@@ -26,10 +28,13 @@ const DEFAULT_NODE_COLOR_TRANSITION_DURATION = 1_000;
 const DEFAULT_NODE_COLOR = '#dddddd';
 const DEGREE_NODE_COLOR = '#db3927';
 const BETWEENESS_CENTRALITY_NODE_COLOR = '#8d2eb2';
+const SEARCH_SELECTED_NODE_COLOR = '#f7b500';
 
 const DEFAULT_EDGE_SCALING = 50_000;
 const DEFAULT_EDGE_OPACITY = 0.5;
 const DEFAULT_EDGE_COLOR = 'rgba(125, 125, 125, ' + DEFAULT_EDGE_OPACITY + ')';
+
+const SEARCH_ZOOM_RATIO = 0.05;
 
 const NETWORK_SOURCE = 'transports';
 const NODES_FILE_PATH = `/data/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
@@ -42,6 +47,7 @@ class GraphManager {
     this.layoutManager = new LayoutManager(this, this.renderer);
     this.nodeSizeManager = new NodeSizeManager(this, this.renderer);
     this.colorManager = new ColorManager(this, this.renderer);
+    this.searchManager = new SearchManager(this, this.renderer);
   }
 
   /**
@@ -201,7 +207,13 @@ class GraphManager {
     this.loadData().then(graph => {
       // Define graph
       this.graph = graph;
-      this.renderer = new Sigma(this.graph, document.getElementById(GRAPH_CONTAINER_ID));
+      this.renderer = new Sigma(
+        this.graph, 
+        document.getElementById(GRAPH_CONTAINER_ID),
+      );
+
+      // Fill out the search suggestions
+      this.searchManager.initSearchSuggestions();
 
       // Add event listeners
       const selectLayoutElement = document.getElementById(SELECT_LAYOUT_ID);
@@ -226,7 +238,7 @@ class GraphManager {
       });
 
       const wSlider = document.getElementById(W_SLIDER_ID);
-      wSlider.addEventListener("input", (event) => {
+      wSlider.addEventListener('input', (event) => {
         const wScale = parseFloat(event.target.value);
         this.colorManager.handleWSliderChange(wScale);
 
@@ -236,13 +248,18 @@ class GraphManager {
       });
 
       const bSlider = document.getElementById(B_SLIDER_ID);
-      bSlider.addEventListener("input", (event) => {
+      bSlider.addEventListener('input', (event) => {
         const bScale = parseFloat(event.target.value);
         this.colorManager.handleBSliderChange(bScale);
 
         // Rename slider label
         const bSliderLabel = document.getElementById(B_SLIDER_LABEL_ID);
         bSliderLabel.innerHTML = `B ${bScale.toFixed(2)}`;
+      });
+
+      const searchInput = document.getElementById(SEARCH_INPUT_ID);
+      searchInput.addEventListener('input', () => {
+        this.searchManager.setSearchQuery(searchInput.value || '');
       });
 
       // Show graph
@@ -723,12 +740,16 @@ class ColorManager {
         colorScale = 1 / (1 + Math.exp(-this.wScale * (colorScale - this.bScale)));
       }
   
+      const colorLerp = this.colorLerp(DEFAULT_NODE_COLOR, newColor, colorScale);
+      const color = nodeObj.searchSelected ? SEARCH_SELECTED_NODE_COLOR : colorLerp;
       acc[node] = {
-        color: this.colorLerp(DEFAULT_NODE_COLOR, newColor, colorScale),
+        color: color,
+        oldColor: colorLerp, // Only for seach deselect, to avoid old color update, see below
       };
       return acc;
     }, {});
   
+    // Immediate vs animated
     if (immediate) {
       nodes.forEach(node => {
         const target = targetColors[node];
@@ -745,6 +766,12 @@ class ColorManager {
   
       this.nodeColorMode = nodeColorMode;
     }
+
+    // Set oldColor to new color to avoid old update on search deselect
+    nodes.forEach(node => {
+      const target = targetColors[node];
+      this.graphManager.graph.setNodeAttribute(node, "oldColor", target.oldColor);
+    });
   }
 
   /**
@@ -781,6 +808,11 @@ class ColorManager {
     const mode = modeMap[selectedOption];
     const newColor = colorMap[selectedOption];
     const colorScaleArg = `size${colorScaleArgMap[selectedOption]}` || null;
+
+    //this.graphManager.graph.forEachNode((node, attributes) => {
+    //  this.graphManager.graph.setNodeAttribute(node, 'selected', false);
+    //  this.graphManager.graph.setNodeAttribute(node, 'oldColor', null);
+    //});
 
     this.setNodeColorMode(mode, newColor, colorScaleArg, false);
   }
@@ -860,6 +892,90 @@ class ColorManager {
         }
       });
     }
+
+    this.graphManager.renderer.refresh();
+  }
+}
+
+
+
+class SearchManager {
+  constructor(graphManager) {
+    this.graphManager = graphManager;
+    this.searchInput = document.getElementById(SEARCH_INPUT_ID);
+    this.searchSuggestions = document.getElementById(SEARCH_SUGGESTIONS_ID);
+  }
+
+  initSearchSuggestions() {
+    this.searchSuggestions.innerHTML = this.graphManager.graph
+    .nodes()
+    .map(node => {
+      const nodeObj = this.graphManager.graph.getNodeAttributes(node);
+      return `<option value="${nodeObj.label}">`;
+    })
+    .join("\n");
+  }
+
+  setSearchQuery(query) {
+    let suggestions = null
+    if (query === '') {
+      suggestions = [];
+    } else {
+    suggestions = this.graphManager.graph
+      .nodes()
+      .map(node => {
+        const nodeObj = this.graphManager.graph.getNodeAttributes(node);
+        return {
+          id: node,
+          label: nodeObj.label.toLowerCase(),
+        };
+      })
+      .filter(({ label }) => label.includes(query.toLowerCase()))
+      .sort((a, b) => a.label.localeCompare(b.label));
+    }
+
+    // If the query matches exactly one node, select this one only
+    const exactMatch = suggestions.find(({ label }) => label === query.toLowerCase());
+    if (exactMatch) {
+      suggestions = [exactMatch];
+
+      const nodeXPosition = this.graphManager.renderer.getNodeDisplayData(exactMatch.id).x;
+      const nodeYPosition = this.graphManager.renderer.getNodeDisplayData(exactMatch.id).y;
+      this.graphManager.renderer.camera.animate({
+        x: nodeXPosition,
+        y: nodeYPosition,
+        ratio: SEARCH_ZOOM_RATIO,
+      }, {
+        duration: 1000,
+      });
+    }
+
+    // Get new nodes to update
+    const oldSuggestions = this.graphManager.graph
+      .nodes()
+      .filter(node => this.graphManager.graph.getNodeAttributes(node).searchSelected);
+    const nodesToDeselect = oldSuggestions.filter(
+      node => !suggestions.find(suggestion => suggestion.id === node)
+    );
+    const nodesToSelect = suggestions.filter(
+      suggestion => !oldSuggestions.find(node => node === suggestion.id)
+    );
+
+    // Update new unselected nodes
+    nodesToDeselect.forEach(node => {
+      this.graphManager.graph.setNodeAttribute(node, 'searchSelected', false);
+      this.graphManager.graph.setNodeAttribute(node, 'color', this.graphManager.graph.getNodeAttributes(node).oldColor);
+      this.graphManager.graph.setNodeAttribute(node, 'oldColor', null);
+    });
+
+    // Update new selected nodes
+    nodesToSelect.forEach(({ id }) => {
+      this.graphManager.graph.setNodeAttribute(id, 'searchSelected', true);
+      this.graphManager.graph.setNodeAttribute(id, 'oldColor', this.graphManager.graph.getNodeAttributes(id).color);
+      this.graphManager.graph.setNodeAttribute(id, 'color', SEARCH_SELECTED_NODE_COLOR);
+    });
+
+    // If there is an exact match, center the graph on this node
 
     this.graphManager.renderer.refresh();
   }
