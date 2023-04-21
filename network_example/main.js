@@ -939,6 +939,7 @@ class SearchManager {
     if (exactMatch) {
       suggestions = [exactMatch];
 
+      // Center the graph on this node
       const nodeXPosition = this.graphManager.renderer.getNodeDisplayData(exactMatch.id).x;
       const nodeYPosition = this.graphManager.renderer.getNodeDisplayData(exactMatch.id).y;
       this.graphManager.renderer.camera.animate({
@@ -949,6 +950,11 @@ class SearchManager {
         duration: 1000,
       });
     }
+
+    // Set exact node to highlighted, other nodes to not highlighted
+    this.graphManager.graph.forEachNode((node, attributes) => {
+      this.graphManager.graph.setNodeAttribute(node, 'highlighted', node === exactMatch?.id);
+    });
 
     // Get new nodes to update
     const oldSuggestions = this.graphManager.graph
@@ -963,19 +969,17 @@ class SearchManager {
 
     // Update new unselected nodes
     nodesToDeselect.forEach(node => {
-      this.graphManager.graph.setNodeAttribute(node, 'searchSelected', false);
+      this.graphManager.graph.setNodeAttribute(node, 'searchSelected', false, { skipIndexation: true });
       this.graphManager.graph.setNodeAttribute(node, 'color', this.graphManager.graph.getNodeAttributes(node).oldColor);
-      this.graphManager.graph.setNodeAttribute(node, 'oldColor', null);
+      this.graphManager.graph.setNodeAttribute(node, 'oldColor', null, { skipIndexation: true });
     });
 
     // Update new selected nodes
     nodesToSelect.forEach(({ id }) => {
-      this.graphManager.graph.setNodeAttribute(id, 'searchSelected', true);
+      this.graphManager.graph.setNodeAttribute(id, 'searchSelected', true, { skipIndexation: true });
       this.graphManager.graph.setNodeAttribute(id, 'oldColor', this.graphManager.graph.getNodeAttributes(id).color);
-      this.graphManager.graph.setNodeAttribute(id, 'color', SEARCH_SELECTED_NODE_COLOR);
+      this.graphManager.graph.setNodeAttribute(id, 'color', SEARCH_SELECTED_NODE_COLOR, { skipIndexation: true });
     });
-
-    // If there is an exact match, center the graph on this node
 
     this.graphManager.renderer.refresh();
   }
