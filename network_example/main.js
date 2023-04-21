@@ -14,6 +14,7 @@ const B_SLIDER_ID = 'b_slider';
 const B_SLIDER_LABEL_ID = 'b_slider_label';
 const SEARCH_INPUT_ID = 'search_input';
 const SEARCH_SUGGESTIONS_ID = 'search_suggestions';
+const CHECKBOX_SEARCH_BY_CITY_ID = 'search_by_city';
 
 const DEFAULT_LAYOUT_MODE = 'random';
 const DEFAULT_LAYOUT_TRANSITION_DURATION = 2_000;
@@ -29,6 +30,8 @@ const DEFAULT_NODE_COLOR = '#dddddd';
 const DEGREE_NODE_COLOR = '#db3927';
 const BETWEENESS_CENTRALITY_NODE_COLOR = '#8d2eb2';
 const SEARCH_SELECTED_NODE_COLOR = '#f7b500';
+
+const DEFAULT_SEARCH_BY = 'label';
 
 const DEFAULT_EDGE_SCALING = 50_000;
 const DEFAULT_EDGE_OPACITY = 0.5;
@@ -107,6 +110,17 @@ class GraphManager {
         const degree = parseInt(row[8]);
         const betweenessCentrality = parseFloat(row[9]);
 
+        // 10: transportType
+        const city = row[11];
+        // 12: canton
+
+        // 13: isBusStop
+        // 14: isTramStop
+        // 15: isTrainStop
+        // 16: isMetroStop
+        // 17: isRackRailwayStop
+        // 18: isBoatStop
+
         graph.addNode(id, {
           label: label, 
           color: DEFAULT_NODE_COLOR,
@@ -124,6 +138,7 @@ class GraphManager {
           sizeOde: outDegree,
           sizeDeg: degree,
           sizeBce: betweenessCentrality,
+          city: city,
         });
       }
       return null;
@@ -213,7 +228,7 @@ class GraphManager {
       );
 
       // Fill out the search suggestions
-      this.searchManager.initSearchSuggestions();
+      this.searchManager.setSearchSuggestions();
 
       // Add event listeners
       const selectLayoutElement = document.getElementById(SELECT_LAYOUT_ID);
@@ -260,6 +275,12 @@ class GraphManager {
       const searchInput = document.getElementById(SEARCH_INPUT_ID);
       searchInput.addEventListener('input', () => {
         this.searchManager.setSearchQuery(searchInput.value || '');
+      });
+
+      const searchByCityCheckbox = document.getElementById(CHECKBOX_SEARCH_BY_CITY_ID);
+      searchByCityCheckbox.addEventListener('change', (event) => {
+        const isChecked = event.target.checked;
+        this.searchManager.handleSearchByCityCheckboxChange(isChecked);
       });
 
       // Show graph
@@ -904,14 +925,24 @@ class SearchManager {
     this.graphManager = graphManager;
     this.searchInput = document.getElementById(SEARCH_INPUT_ID);
     this.searchSuggestions = document.getElementById(SEARCH_SUGGESTIONS_ID);
+    this.searchBy = DEFAULT_SEARCH_BY;
   }
 
-  initSearchSuggestions() {
+  setSearchSuggestions() {
+    this.setSearchSuggestionBy(this.searchBy);
+  }
+
+  setSearchSuggestionBy(byAttribute) {
+    const existingOptions = []
     this.searchSuggestions.innerHTML = this.graphManager.graph
     .nodes()
     .map(node => {
       const nodeObj = this.graphManager.graph.getNodeAttributes(node);
-      return `<option value="${nodeObj.label}">`;
+      const option = nodeObj[byAttribute];
+      if (existingOptions.includes(option)) return '';
+
+      existingOptions.push(option);
+      return `<option value="${option}">`;
     })
     .join("\n");
   }
@@ -921,22 +952,22 @@ class SearchManager {
     if (query === '') {
       suggestions = [];
     } else {
-    suggestions = this.graphManager.graph
-      .nodes()
-      .map(node => {
-        const nodeObj = this.graphManager.graph.getNodeAttributes(node);
-        return {
-          id: node,
-          label: nodeObj.label.toLowerCase(),
-        };
-      })
-      .filter(({ label }) => label.includes(query.toLowerCase()))
-      .sort((a, b) => a.label.localeCompare(b.label));
+      suggestions = this.graphManager.graph
+        .nodes()
+        .map(node => {
+          const nodeObj = this.graphManager.graph.getNodeAttributes(node);
+          return {
+            id: node,
+            searchBy: nodeObj[this.searchBy].toLowerCase(),
+          };
+        })
+        .filter(({ searchBy }) => searchBy.includes(query.toLowerCase()))
+        .sort((a, b) => a.searchBy.localeCompare(b.searchBy));
     }
 
+    const exactMatch = suggestions.find(({ searchBy }) => searchBy === query.toLowerCase());
     // If the query matches exactly one node, select this one only
-    const exactMatch = suggestions.find(({ label }) => label === query.toLowerCase());
-    if (exactMatch) {
+    if (this.searchBy === DEFAULT_SEARCH_BY && exactMatch) {
       suggestions = [exactMatch];
 
       // Center the graph on this node
@@ -953,7 +984,8 @@ class SearchManager {
 
     // Set exact node to highlighted, other nodes to not highlighted
     this.graphManager.graph.forEachNode((node, attributes) => {
-      this.graphManager.graph.setNodeAttribute(node, 'highlighted', node === exactMatch?.id);
+      const isHighlighted = this.searchBy === DEFAULT_SEARCH_BY && node === exactMatch?.id;
+      this.graphManager.graph.setNodeAttribute(node, 'highlighted', isHighlighted);
     });
 
     // Get new nodes to update
@@ -982,6 +1014,12 @@ class SearchManager {
     });
 
     this.graphManager.renderer.refresh();
+  }
+
+  handleSearchByCityCheckboxChange(isChecked) {
+    this.searchBy = isChecked ? 'city' : DEFAULT_SEARCH_BY;
+    this.setSearchSuggestions()
+    this.setSearchQuery(this.searchInput.value);
   }
 }
 

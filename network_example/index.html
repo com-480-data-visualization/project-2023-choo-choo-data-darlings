@@ -7,6 +7,16 @@
     <title>Network</title>
   </head>
   <body>
+    <div id="search">
+      <input type="search" id="search_input" list="search_suggestions" placeholder="Search stop" />
+      <datalist id="search_suggestions"></datalist>
+    </div>
+
+    <div id="search_by_city">
+      <input type="checkbox" name="search_by_city">
+      <label for="search_by_city">Search by city</label>
+    </div>
+
     <select id="select_layout">
       <option value="rdm" selected>
         Random
@@ -18,11 +28,6 @@
         Geographical
       </option>
     </select>
-
-    <div id="search">
-      <input type="search" id="search_input" list="search_suggestions" placeholder="Search stop" />
-      <datalist id="search_suggestions"></datalist>
-    </div>
 
     <select id="select_node_size">
       <option value="fix" selected>

@@ -24,6 +24,15 @@ body {
   z-index: 9999;
 }
 
+#search_by_city {
+  position: fixed;
+  top: 35px;
+  left: 10px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 #select_layout {
   position: fixed;
   top: 10px;
