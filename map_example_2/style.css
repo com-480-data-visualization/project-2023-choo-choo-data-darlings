@@ -16,3 +16,9 @@ body {
   height: 100%;
   background: #000;
 }
+
+#select_heatmap {
+  left: 10px;
+  top: 10px;
+  position: absolute;
+}

@@ -5,19 +5,28 @@ import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 const DIV_CONTAINER_ID = 'container';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
-const DENSITY_HEATMAP_PATH = 'data/density_heatmap.png';
+const HEATMAP_PATH = 'data/density_heatmap.png';
+const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
+const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder';
+const HEATMAP_SCENE_NAME = 'heatmap';
 
-const BASE_HEATMAP_SCALE_FACTOR = 0.025;
+const SELECT_HEATMAP_ID = 'select_heatmap';
+const DEFAULT_HEATMAP_MODE = null;
+const BASE_HEATMAP_SCALE_FACTOR = 1.03;
 
 const DEFAULT_MAP_BORDER_COLOR = 0xaaaaaa;
 
 class Map {
   constructor() {
     this.initScene();
+    this.initEvents();
+
     this.addSwissBorder();
-    this.addDensityHeatMap();
+
+    this.heatmapMode = null;
+    this.addHeatMap(DEFAULT_HEATMAP_MODE);
   }
 
   initScene() {
@@ -41,6 +50,19 @@ class Map {
 
     // Position the camera
     this.camera.position.z = 10;
+  }
+
+  initEvents() {
+    const selectHeatmap = document.getElementById(SELECT_HEATMAP_ID);
+    selectHeatmap.addEventListener('change', (event) => {
+      const heatmapMode = event.target.value;
+      if (heatmapMode === '') {
+        this.addHeatMap(null);
+        return;
+      }
+
+      this.addHeatMap(heatmapMode);
+    });
   }
 
   initProjection(minLon, maxLon, minLat, maxLat) {
@@ -120,9 +142,32 @@ class Map {
     });
   }
 
-  addDensityHeatMap() {
+  removeHeatMap() {
+    const heatmapScene = this.scene.getObjectByName(HEATMAP_SCENE_NAME);
+    if (heatmapScene) {
+      this.scene.remove(heatmapScene);
+    }
+  }
+
+  addHeatMap(heatmapMode) {
+    if (this.heatmapMode === heatmapMode) { return; }
+    
+    this.heatmapMode = heatmapMode;
+    this.removeHeatMap();
+
+    if (heatmapMode === null) {
+      return;
+    }
+
+    let heatmapPath = null;
+    if (this.heatmapMode === 'all') {
+      heatmapPath = HEATMAP_PATH;
+    } else {
+      heatmapPath = `${HEATMAP_TRANSPORT_TYPE_PATH_PREFIX}${this.heatmapMode}${HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX}`;
+    }
+
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load(DENSITY_HEATMAP_PATH, (texture) => {
+    textureLoader.load(heatmapPath, (texture) => {
       const heatmapMaterial = new THREE.ShaderMaterial({
         uniforms: {
           heatmapTexture: { value: texture },
@@ -151,15 +196,16 @@ class Map {
       });
       const textureWidth = texture.image.width;
       const textureHeight = texture.image.height;
-      const scaleFactor = Math.min(this.width / textureWidth, this.height / textureHeight) + BASE_HEATMAP_SCALE_FACTOR;
+      const scaleFactor = Math.min(this.width / textureWidth, this.height / textureHeight);
 
       const geometry = new THREE.PlaneGeometry(textureWidth * scaleFactor, textureHeight * scaleFactor);
-      const heatmap = new THREE.Mesh(geometry, heatmapMaterial);
+      this.heatmap = new THREE.Mesh(geometry, heatmapMaterial);
     
       // Position the heatmap to match the Swiss border
-      heatmap.position.set(this.width / 2, this.height / 2, -1); // Set a small z-offset to avoid z-fighting
+      this.heatmap.position.set(this.width / 2, this.height / 2, -1); // Set a small z-offset to avoid z-fighting
+      this.heatmap.name = HEATMAP_SCENE_NAME;
     
-      this.scene.add(heatmap);
+      this.scene.add(this.heatmap);
     });
   }
   
