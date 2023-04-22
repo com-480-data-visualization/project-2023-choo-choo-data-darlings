@@ -1,4 +1,10 @@
+# data
 data/local/*
 data/processed/*.parquet
+
+# spark
 spark/dv_project/src/main/resources/*
 spark/dv_project/target/scala-2.11/classes/*
+
+# python
+**/__pycache__/*
