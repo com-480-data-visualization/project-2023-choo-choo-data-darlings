@@ -8,6 +8,27 @@
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
+## **Description**
+
+- [📁 data](data) contains raw and processed data.
+  - [📁 networks](data/networks) contains Gephi files of networks with their respective node and edge files, along with more detailed files for the website's network visualization.
+  - [📁 processed](data/processed) contains processed data.
+    - [📄 operators.csv](data/processed/operators.csv) contains the list of operators.
+    - [📄 stops.csv](data/processed/stops.csv) contains the list of stops.
+    - [🔒 transports.parquet](data/processed/transports.parquet) contains the processed entries of the whole year of 2022.
+    - [🔒 transports_v2.parquet](data/processed/transports_v2.parquet) contains the processed entries of the whole year of 2022, **further processed and filtered to create the network visualization**.
+    - [🔒 trains_v2.parquet](data/processed/trains_v2.parquet) contains the processed entries of **trains only** of the whole year of 2022, further processed and filtered to create the network visualization.
+  - [📄 bav_list_current_timetable.xlsx](data/bav_list_current_timetable.xlsx) contains the list of stations and stops and many informative columns.
+- [📁 generated](generated) contains generated images and charts.
+- [📁 notebooks](notebooks) contains notebooks used for data analysis and visualization.
+  - [📁 preprocessing](notebooks/data_processing) contains notebooks used for data processing.
+  - [📁 analysis](notebooks/analysis) contains notebooks used for data analysis.
+- [📁 src](src) contains source code for the notebook extension.
+- [📁 spark](spark) contains the spark project used to process the data when basic python processing was not enough.
+- [📁 network_example](network_example) contains the website with the network implementation.
+- [📁 map_example_1](map_example_1) contains the website with the map implementation using D3.js, rendered with SVG.
+- [📁 map_example_2](map_example_2) contains the website with the map implementation using D3.js and Three.js, rendered with WebGL.
+
 ## **Milestone 1**
 
 ### **Dataset**
@@ -60,7 +81,7 @@ By implementing these objectives, we aim to create a platform that empowers user
 ### **Exploratory Data Analysis**
 
 #### **Pre-processing of the dataset you chose**
-We performed the following preprocessing tasks (see more 📓 [in this notebook](preprocessing.ipynb)):
+We performed the following preprocessing tasks (see more 📓 [in this notebook](notebooks/preprocessing/preprocessing_one_day.ipynb)):
 
 - **Data completeness**: We analyzed each column in the dataset and identified possible values for each category. This helped us assess the completeness of the data and identify any missing values.
 - **Data cleaning**: We fixed missing values and removed dirty entries to ensure that the dataset is clean and suitable for analysis. We corrected inconsistencies, such as arrival times recorded after departure times at the same stop.
@@ -72,7 +93,7 @@ We performed the following preprocessing tasks (see more 📓 [in this notebook]
 
 #### **Basic statistics and insights about the data**
 
-We performed some basic analysis on the processed dataset (see more 📓 [in this notebook](basic_analysis.ipynb)):
+We performed some basic analysis on the processed dataset (see more 📓 [in this notebook](notebooks/analysis/basic_analysis_one_day.ipynb)):
 
 <p align="center">
   <img src="./generated/products_bar.png" width="500">
@@ -150,6 +171,27 @@ Defne uses the same dataset in the COM-490: Large Scale Data Science course. We 
 
 **(7th May, 5pm) | 10% of the final grade**
 
+### **Sketches**
+
+TODO
+
+### **Tools**
+
+The website will consist of three main parts described as follows:
+
+**Home Page**: The home page will introduce the website, the problem at hand, and offer a first glance at the data and basic analysis. We will use _HTML_, _CSS_, and _JavaScript_ to create the layout and style of the home page. For displaying initial data visualizations, we will use _D3.js_, a popular _JavaScript_ library for creating data-driven graphics. _D3.js_ will allow us to build custom visualizations that can adapt to various data types and update dynamically as needed.
+
+**Network Visualization**: In this section, we will create a network visualization of transport stops using _Sigma.js_. _Sigma.js_ is a lightweight, open-source library that specializes in graph drawing and is optimized for handling large networks, making it an ideal choice for visualizing the transport stop network. Nodes in the network will represent transport stops, while edges will be weighted based on the number of transport trips between stops in 2022. _Sigma.js_ allows for easy interaction and manipulation of the graph, enabling users to explore the network structure and gain insights into Swiss transportation operations.
+
+**Interactive Map**: For the third part of the website, we will use a combination of _Three.js_ and _D3.js_ to create an interactive map displaying various data visualizations related to Swiss transportation. _Three.js_ is a powerful library for creating graphic scenes in the browser using _WebGL_, which allows for efficient rendering of complex graphics. In contrast, _D3.js_ excels at processing and visualizing data, particularly for processing _GeoJSON_ files and managing map projections. The two libraries will work in tandem to present heatmaps, simulate trains moving in Switzerland on an average day, and create isochronic maps using color zones or map deformation. While _D3.js_ will handle data processing, _Three.js_ will be responsible for displaying the visualizations efficiently using _WebGL_.
+
+### **Breakdown of Tasks**
+
+TODO
+
+### **Core Visualization**
+
+TODO
 
 ## **Milestone 3**
 
