@@ -22,8 +22,7 @@
 - [📁 generated](generated) contains generated images and charts.
 - [📁 notebooks](notebooks) contains notebooks used for data analysis and visualization.
   - [📁 preprocessing](notebooks/data_processing) contains notebooks used for data processing.
-  - [📁 basic_analysis](notebooks/basic_analysis) contains notebooks used for basic data analysis.
-  - [📁 heatmap](notebooks/advanced_analysis) contains notebooks used for heatmap analysis annd visualization.
+  - [📁 analysis](notebooks/analysis) contains notebooks used for data analysis.
 - [📁 src](src) contains source code for the notebook extension.
 - [📁 spark](spark) contains the spark project used to process the data when basic python processing was not enough.
 - [📁 network_example](network_example) contains the website with the network implementation.
