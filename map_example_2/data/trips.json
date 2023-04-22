@@ -1,0 +1,98 @@
+{
+    "binSize": 60,
+    "trips": {
+        "bins" : {
+            "0" : {
+                "trip_ids" : ["0", "1"],
+                "trips" : [
+                    {
+                        "trip_id" : "0",
+                        "segments" : [
+                            {
+                                "start_time" : 0,
+                                "start_longitude": 8.0,
+                                "start_latitude": 46.0,
+                                "end_time" : 30,
+                                "end_longitude": 9.0,
+                                "end_latitude": 47.0
+                            }
+                        ]
+                    },
+                    {
+                        "trip_id" : "1",
+                        "segments" : [
+                            {
+                                "start_time" : 15,
+                                "start_longitude": 8.0,
+                                "start_latitude": 46.0,
+                                "end_time" : 30,
+                                "end_longitude": 7.0,
+                                "end_latitude": 46.0
+                            },
+                            {
+                                "start_time" : 30,
+                                "start_longitude": 7.0,
+                                "start_latitude": 46.0,
+                                "end_time" : 60,
+                                "end_longitude": 9.0,
+                                "end_latitude": 47.0
+                            }
+                        ]
+                    }
+                ]
+            },
+            "60" : {
+                "trip_ids" : ["1", "2"],
+                "trips" : [
+                    {
+                        "trip_id" : "1",
+                        "segments" : [
+                            {
+                                "start_time" : 30,
+                                "start_longitude": 7.0,
+                                "start_latitude": 46.0,
+                                "end_time" : 60,
+                                "end_longitude": 9.0,
+                                "end_latitude": 47.0
+                            }
+                        ]
+                    },
+                    {
+                        "trip_id" : "2",
+                        "segments" : [
+                            {
+                                "start_time" : 70,
+                                "start_longitude": 7.0,
+                                "start_latitude": 47.0,
+                                "end_time" : 140,
+                                "end_longitude": 8.0,
+                                "end_latitude": 47.0
+                            }
+                        ]
+                    }
+                ]
+            },
+            "120" : {
+                "trip_ids" : ["2"],
+                "trips" : [
+                    {
+                        "trip_id" : "2",
+                        "segments" : [
+                            {
+                                "start_time" : 70,
+                                "start_longitude": 7.0,
+                                "start_latitude": 47.0,
+                                "end_time" : 140,
+                                "end_longitude": 8.0,
+                                "end_latitude": 47.0
+                            }
+                        ]
+                    }
+                ]
+            },
+            "180" : {
+                "trips" : []
+            }
+        }
+    }
+}

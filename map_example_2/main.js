@@ -1,27 +1,32 @@
 import * as d3 from 'd3';
 import * as THREE from 'three';
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
+import * as TWEEN from '@tweenjs/tween.js';
 
 const DIV_CONTAINER_ID = 'container';
 
+const SELECT_HEATMAP_ID = 'select_heatmap';
+
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
+const TRIPS_PATH = 'data/trips.json'
 const HEATMAP_PATH = 'data/density_heatmap.png';
 const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
 const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder';
 const HEATMAP_SCENE_NAME = 'heatmap';
+const TRAIN_SCENE_NAME_PREFIX = 'train_';
 
-const SELECT_HEATMAP_ID = 'select_heatmap';
+
 const DEFAULT_HEATMAP_MODE = null;
-const BASE_HEATMAP_SCALE_FACTOR = 1.03;
 
 const DEFAULT_MAP_BORDER_COLOR = 0xaaaaaa;
+const DEFAULT_TRAIN_COLOR = 0xddeeff;
 
 class Map {
   constructor() {
     this.initScene();
     this.initEvents();
+    this.initTrips();
 
     this.addSwissBorder();
 
@@ -99,6 +104,13 @@ class Map {
         this.height - (translateY + scaleFactor * mercatorCoordinates[1]) // Invert the y-axis
       ];
     };
+  }
+
+  initTrips() {
+    d3.json(TRIPS_PATH).then((data) => {
+      this.trips = data.trips;
+      this.binSize = data.binSize;
+    });
   }
 
   addSwissBorder() {
@@ -208,9 +220,91 @@ class Map {
       this.scene.add(this.heatmap);
     });
   }
-  
 
-  // TODO: Update or remove this weird function
+  getTrainCoordinates(trip, time) {
+    const segment = trip.segments.find((segment) => segment.start_time <= time && time <= segment.end_time);
+    if (!segment) { return null; }
+
+    const dTime = segment.end_time - segment.start_time;
+    const dLon = segment.end_longitude - segment.start_longitude;
+    const dLat = segment.end_latitude - segment.start_latitude;
+
+    const lon = segment.start_longitude + dLon * (time - segment.start_time) / dTime;
+    const lat = segment.start_latitude + dLat * (time - segment.start_time) / dTime;
+
+    return [lon, lat];
+  }
+
+  drawTrain(trainSceneName, trainCoordinates) {
+    if (!this.projection) { return; }
+
+    const trainPosition = this.projection(trainCoordinates);
+    const train = new THREE.Mesh(
+      new THREE.CircleGeometry(5, 32),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TRAIN_COLOR) })
+    );
+    train.position.set(trainPosition[0], trainPosition[1], 0);
+    train.name = trainSceneName;
+    this.scene.add(train);
+  }
+
+  updateTrain(tripId, trainCoordinates) {
+    const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
+    const trainScene = this.scene.getObjectByName(trainSceneName);
+    if (!trainScene) {
+      this.drawTrain(trainSceneName, trainCoordinates)
+      return;
+    }
+
+    const trainPosition = this.projection(trainCoordinates);
+    trainScene.position.set(trainPosition[0], trainPosition[1], 0);
+  }
+
+  removeTrains() {
+    // Collect all children that should be removed
+    const childrenToRemove = [];
+    this.scene.traverse((child) => {
+      if (child.name.startsWith(TRAIN_SCENE_NAME_PREFIX)) {
+        childrenToRemove.push(child);
+      }
+    });
+
+    // Remove the collected children
+    for (let i = 0; i < childrenToRemove.length; i++) {
+      this.scene.remove(childrenToRemove[i]);
+    }
+  }
+
+  removeTrain(tripId) {
+    const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
+    const trainScene = this.scene.getObjectByName(trainSceneName);
+    if (trainScene) {
+      this.scene.remove(trainScene);
+    }
+  }
+  
+  updateTrains(time) {
+    if (!this.trips) { return; }
+
+    // Find bin
+    const roundedTimeStr = time - time % this.binSize;
+    const trips = this.trips.bins[roundedTimeStr];
+    if (trips.trips.length === 0) { 
+      this.removeTrains() 
+    }
+
+    trips.trips.forEach((trip) => {
+      const trainCoordinates = this.getTrainCoordinates(trip, time);
+      if (trainCoordinates === null) { 
+        this.removeTrain(trip.trip_id);
+        return; 
+      }
+
+      const trainId = trip.trip_id;
+      this.updateTrain(trainId, trainCoordinates);
+    });
+  }
+
   updateMapRender(t) {
     this.scene.traverse((child) => {
       if (child.name !== SWISS_BORDER_LINE_NAME) { return; }
@@ -235,8 +329,10 @@ class Map {
     const animate = () => {
       requestAnimationFrame(animate);
       //this.updateMapRender(t);
+      this.updateTrains(t);
       this.renderer.render(this.scene, this.camera);
-      t += 0.01;
+      t += 0.2;
+      t = t % 200;
     }
     animate();
   }

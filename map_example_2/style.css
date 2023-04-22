@@ -21,4 +21,14 @@ body {
   left: 10px;
   top: 10px;
   position: absolute;
+  z-index: 9999;
+}
+
+#slider_time {
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
