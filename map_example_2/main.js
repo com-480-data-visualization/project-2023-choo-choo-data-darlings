@@ -5,16 +5,19 @@ import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 const DIV_CONTAINER_ID = 'container';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
+const DENSITY_HEATMAP_PATH = 'data/density_heatmap.png';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder';
 
+const BASE_HEATMAP_SCALE_FACTOR = 0.025;
+
 const DEFAULT_MAP_BORDER_COLOR = 0xaaaaaa;
-const DEFAULT_MAP_BORDER_WIDTH = 30;
 
 class Map {
   constructor() {
     this.initScene();
-    this.initMap();
+    this.addSwissBorder();
+    this.addDensityHeatMap();
   }
 
   initScene() {
@@ -76,7 +79,7 @@ class Map {
     };
   }
 
-  initMap() {
+  addSwissBorder() {
     d3.json(MAP_PATH).then((data) => {
       // Define the projection
       function getMinMax(data, coordinateIndex, compareFunc, initialValue) {
@@ -117,9 +120,55 @@ class Map {
     });
   }
 
+  addDensityHeatMap() {
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(DENSITY_HEATMAP_PATH, (texture) => {
+      const heatmapMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          heatmapTexture: { value: texture },
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform sampler2D heatmapTexture;
+          varying vec2 vUv;
+          void main() {
+            vec4 heatmapColor = texture2D(heatmapTexture, vUv);
+            float intensity = heatmapColor.r + heatmapColor.g + heatmapColor.b;
+            heatmapColor.r = intensity;
+            heatmapColor.g = 0.0;
+            heatmapColor.b = 1.0 - intensity;
+            heatmapColor.a = intensity;
+            gl_FragColor = heatmapColor;
+          }
+        `,
+        transparent: true,
+      });
+      const textureWidth = texture.image.width;
+      const textureHeight = texture.image.height;
+      const scaleFactor = Math.min(this.width / textureWidth, this.height / textureHeight) + BASE_HEATMAP_SCALE_FACTOR;
+
+      const geometry = new THREE.PlaneGeometry(textureWidth * scaleFactor, textureHeight * scaleFactor);
+      const heatmap = new THREE.Mesh(geometry, heatmapMaterial);
+    
+      // Position the heatmap to match the Swiss border
+      heatmap.position.set(this.width / 2, this.height / 2, -1); // Set a small z-offset to avoid z-fighting
+    
+      this.scene.add(heatmap);
+    });
+  }
+  
+
+  // TODO: Update or remove this weird function
   updateMapRender(t) {
     this.scene.traverse((child) => {
       if (child.name !== SWISS_BORDER_LINE_NAME) { return; }
+
       const positionArray = child.geometry.attributes.position.array;
       for (let index = 0; index < positionArray.length; index++) {
         if (index % 3 === 0) {
