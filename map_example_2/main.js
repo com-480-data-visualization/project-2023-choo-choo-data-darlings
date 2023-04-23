@@ -5,16 +5,23 @@ import * as TWEEN from '@tweenjs/tween.js';
 const DIV_CONTAINER_ID = 'container';
 
 const SELECT_HEATMAP_ID = 'select_heatmap';
+const SLIDER_FPS_ID = 'slider_fps';
+const SLIDER_FPS_LABEL_ID = 'slider_fps_label';
+
+const DEFAULT_FPS = 60;
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
-const TRIPS_PATH = 'data/train_trips_bins_15.json'
+const TRIPS_PATH = 'data/train_trips_bins.json'
 const HEATMAP_PATH = 'data/density_heatmap.png';
 const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
 const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder';
 const HEATMAP_SCENE_NAME = 'heatmap';
+const TRAIN_INSTANCED_MESH_NAME = 'train_instanced_mesh';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
+
+const MAX_TRAIN_INSTANCES = 10000;
 
 
 const DEFAULT_HEATMAP_MODE = null;
@@ -33,6 +40,16 @@ class Map {
 
     this.heatmapMode = null;
     this.addHeatMap(DEFAULT_HEATMAP_MODE);
+  }
+
+  createTrainInstancedMesh(maxInstances) {
+    const trainGeometry = new THREE.CircleGeometry(5, 32);
+    const trainMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TRAIN_COLOR) });
+  
+    const trainInstancedMesh = new THREE.InstancedMesh(trainGeometry, trainMaterial, maxInstances);
+    trainInstancedMesh.name = TRAIN_INSTANCED_MESH_NAME;
+  
+    return trainInstancedMesh;
   }
 
   initScene() {
@@ -56,6 +73,11 @@ class Map {
 
     // Position the camera
     this.camera.position.z = 10;
+
+    // initialize the train instances
+    this.maxTrainInstances = MAX_TRAIN_INSTANCES;
+    this.trainInstancedMesh = this.createTrainInstancedMesh(this.maxTrainInstances);
+    this.scene.add(this.trainInstancedMesh);
   }
 
   initEvents() {
@@ -69,41 +91,61 @@ class Map {
 
       this.addHeatMap(heatmapMode);
     });
+
+    const sliderFps = document.getElementById(SLIDER_FPS_ID);
+    sliderFps.addEventListener('input', (event) => {
+      const fps = event.target.value;
+      this.setRenderFps(fps);
+
+      // Rename slider label
+      const sliderFpsLabel = document.getElementById(SLIDER_FPS_LABEL_ID);
+      sliderFpsLabel.innerHTML = `FPS (${fps})`;
+    });
   }
 
   initProjection(minLon, maxLon, minLat, maxLat) {
-    // Get real coordinates after geoMercator projection
     const geoMercatorProjection = d3.geoMercator();
     const bottomLeft = geoMercatorProjection([minLon, minLat]);
     const topRight = geoMercatorProjection([maxLon, maxLat]);
-  
-    // Calculate the aspect ratio of the input bounding box and the output dimensions
+
     const inputWidth = topRight[0] - bottomLeft[0];
     const inputHeight = bottomLeft[1] - topRight[1];
     const inputAspectRatio = inputWidth / inputHeight;
-  
+
     const outputAspectRatio = this.width / this.height;
-  
-    // Determine the minimum scale factor
+
     let scaleFactor;
     if (inputAspectRatio > outputAspectRatio) {
       scaleFactor = this.width / inputWidth;
     } else {
       scaleFactor = this.height / inputHeight;
     }
-  
-    // Calculate the translation needed to center the map
+
     const centerX = (bottomLeft[0] + topRight[0]) / 2;
     const centerY = (bottomLeft[1] + topRight[1]) / 2;
     const translateX = this.width / 2 - centerX * scaleFactor;
     const translateY = this.height / 2 - centerY * scaleFactor;
-  
+
+    // Initialize the cache object
+    this.projectionCache = {};
+
     this.projection = (coordinates) => {
+      const cacheKey = `${coordinates[0]},${coordinates[1]}`;
+
+      // Check if the result is already cached
+      if (this.projectionCache[cacheKey]) {
+        return this.projectionCache[cacheKey];
+      }
+
+      // If not cached, calculate and store the result
       const mercatorCoordinates = d3.geoMercator()(coordinates);
-      return [
+      const result = [
         translateX + scaleFactor * mercatorCoordinates[0],
-        this.height - (translateY + scaleFactor * mercatorCoordinates[1]) // Invert the y-axis
+        this.height - (translateY + scaleFactor * mercatorCoordinates[1]), // Invert the y-axis
       ];
+
+      this.projectionCache[cacheKey] = result;
+      return result;
     };
   }
 
@@ -198,11 +240,7 @@ class Map {
           void main() {
             vec4 heatmapColor = texture2D(heatmapTexture, vUv);
             float intensity = heatmapColor.r + heatmapColor.g + heatmapColor.b;
-            heatmapColor.r = intensity;
-            heatmapColor.g = 0.0;
-            heatmapColor.b = 1.0 - intensity;
-            heatmapColor.a = intensity;
-            gl_FragColor = heatmapColor;
+            gl_FragColor = vec4(intensity, 0.0, 1.0 - intensity, intensity);
           }
         `,
         transparent: true,
@@ -236,28 +274,6 @@ class Map {
     return [lon, lat];
   }
 
-  drawTrain(trainSceneName, trainCoordinates) {
-    if (!this.projection) { return; }
-
-    const trainPosition = this.projection(trainCoordinates);
-    const train = new THREE.Mesh(
-      new THREE.CircleGeometry(5, 32),
-      new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TRAIN_COLOR) })
-    );
-    train.position.set(trainPosition[0], trainPosition[1], 0);
-    train.name = trainSceneName;
-    this.scene.add(train);
-
-    return train;
-  }
-
-  removeTrains() {
-    for (const trainSceneName in this.trainObjects) {
-      this.scene.remove(this.trainObjects[trainSceneName]);
-    }
-    this.trainObjects = {};
-  }
-
   removeTrainfromTripId(tripId) {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     if (trainSceneName in this.trainObjects) {
@@ -265,45 +281,39 @@ class Map {
       delete this.trainObjects[trainSceneName];
     }
   }
-
-  removeTrainsFromTripIds(tripIds) {
-    tripIds.forEach((tripId) => {
-      this.removeTrainfromTripId(tripId);
-    });
-  }
-
-  updateTrain(tripId, trainCoordinates) {
-    const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
-    let trainScene = this.trainObjects[trainSceneName];
-    if (!trainScene) {
-      trainScene = this.drawTrain(trainSceneName, trainCoordinates);
-      this.trainObjects[trainSceneName] = trainScene;
-    }
-
-    const trainPosition = this.projection(trainCoordinates);
-    trainScene.position.set(trainPosition[0], trainPosition[1], 0);
-  }
   
   updateTrains(time) {
     if (!this.trips) { return; }
-
+  
     // Find bin
     const roundedTimeStr = time - time % this.binSize;
     const trips = this.trips[roundedTimeStr].trips;
     if (!trips || trips.length === 0) { 
-      this.removeTrains() 
+      this.removeTrains();
     }
-
+  
+    let instanceIndex = 0;
+  
     trips.forEach((trip) => {
       const trainCoordinates = this.getTrainCoordinates(trip, time);
       if (trainCoordinates === null) { 
         this.removeTrainfromTripId(trip.trip_id);
         return; 
       }
-
-      const trainId = trip.trip_id;
-      this.updateTrain(trainId, trainCoordinates);
+  
+      const trainPosition = this.projection(trainCoordinates);
+  
+      // Update the transformation matrix of the instance
+      const matrix = new THREE.Matrix4();
+      matrix.setPosition(new THREE.Vector3(trainPosition[0], trainPosition[1], 0));
+      this.trainInstancedMesh.setMatrixAt(instanceIndex, matrix);
+  
+      instanceIndex++;
     });
+  
+    // Update the instance count to the actual number of instances
+    this.trainInstancedMesh.count = instanceIndex;
+    this.trainInstancedMesh.instanceMatrix.needsUpdate = true;
   }
 
   timestampToTimeStr(timestamp) {
@@ -313,35 +323,38 @@ class Map {
   }
 
   render() {
-    const fps = 60;
-    const fpsInterval = 1000 / fps;
+    this.setRenderFps(DEFAULT_FPS);
     let t = 0;
-    let then = Date.now();
   
-    const animate = () => {
+    const animate = (timestamp) => {
       requestAnimationFrame(animate);
   
-      const now = Date.now();
-      const elapsed = now - then;
+      if (!this.previousTimestamp) {
+        this.previousTimestamp = timestamp;
+      }
+  
+      const elapsed = timestamp - this.previousTimestamp;
   
       // If enough time has passed, update the scene and render it
-      if (elapsed > fpsInterval) {
-        then = now - (elapsed % fpsInterval);
+      if (elapsed > this.fpsInterval) {
+        this.previousTimestamp = timestamp;
   
         this.updateTrains(t);
         this.renderer.render(this.scene, this.camera);
   
-        // print time on screen: TODO REMOVE
+        // Print time on screen: TODO REMOVE
         document.getElementById("time").innerHTML = this.timestampToTimeStr(t);
         t += 1;
-        t = t % 1440;
-        if (t == 4 * 60) {
-          console.log(this.scene.children)
-        }
+        t = t % 1439;
       }
     };
   
     animate();
+  }
+  
+  setRenderFps(value) {
+    this.renderFps = value;
+    this.fpsInterval = 1000 / this.renderFps;
   }
 }
 
