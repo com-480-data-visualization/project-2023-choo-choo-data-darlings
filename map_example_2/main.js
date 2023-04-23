@@ -223,7 +223,7 @@ class Map {
   }
 
   getTrainCoordinates(trip, time) {
-    const segment = trip.segments.find((segment) => segment.start_time <= time && time <= segment.end_time);
+    const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
     if (!segment) { return null; }
 
     const dTime = segment.end_time - segment.start_time;
@@ -251,6 +251,27 @@ class Map {
     return train;
   }
 
+  removeTrains() {
+    for (const trainSceneName in this.trainObjects) {
+      this.scene.remove(this.trainObjects[trainSceneName]);
+    }
+    this.trainObjects = {};
+  }
+
+  removeTrainfromTripId(tripId) {
+    const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
+    if (trainSceneName in this.trainObjects) {
+      this.scene.remove(this.trainObjects[trainSceneName]);
+      delete this.trainObjects[trainSceneName];
+    }
+  }
+
+  removeTrainsFromTripIds(tripIds) {
+    tripIds.forEach((tripId) => {
+      this.removeTrainfromTripId(tripId);
+    });
+  }
+
   updateTrain(tripId, trainCoordinates) {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     let trainScene = this.trainObjects[trainSceneName];
@@ -262,38 +283,13 @@ class Map {
     const trainPosition = this.projection(trainCoordinates);
     trainScene.position.set(trainPosition[0], trainPosition[1], 0);
   }
-
-  removeTrains() {
-    // Collect all children that should be removed
-    const childrenToRemove = [];
-    this.scene.traverse((child) => {
-      if (child.name.startsWith(TRAIN_SCENE_NAME_PREFIX)) {
-        childrenToRemove.push(child);
-        delete this.trainObjects[child.name];
-      }
-    });
-
-    // Remove the collected children
-    for (let i = 0; i < childrenToRemove.length; i++) {
-      this.scene.remove(childrenToRemove[i]);
-    }
-  }
-
-  removeTrain(tripId) {
-    const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
-    const trainScene = this.scene.getObjectByName(trainSceneName);
-    if (trainScene) {
-      this.scene.remove(trainScene);
-      delete this.trainObjects[trainSceneName];
-    }
-  }
   
   updateTrains(time) {
     if (!this.trips) { return; }
 
     // Find bin
     const roundedTimeStr = time - time % this.binSize;
-    const trips = this.trips[roundedTimeStr];
+    const trips = this.trips[roundedTimeStr].trips;
     if (!trips || trips.length === 0) { 
       this.removeTrains() 
     }
@@ -301,7 +297,7 @@ class Map {
     trips.forEach((trip) => {
       const trainCoordinates = this.getTrainCoordinates(trip, time);
       if (trainCoordinates === null) { 
-        this.removeTrain(trip.trip_id);
+        this.removeTrainfromTripId(trip.trip_id);
         return; 
       }
 
