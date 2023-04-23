@@ -2,13 +2,18 @@ import * as d3 from 'd3';
 import * as THREE from 'three';
 import * as TWEEN from '@tweenjs/tween.js';
 
-const DIV_CONTAINER_ID = 'container';
+/*
+ * TODO:
+ * - Add speed as a color gradient for trains
+ * - Add a slider for the choice of MAX_TRAIN_DELAY
+ * - Be able to highlight train types (e.g. IC, IR, RE, etc.)
+ * - Add a legend for the heatmap (maybe)
+*/
 
+const DIV_CONTAINER_ID = 'container';
 const SELECT_HEATMAP_ID = 'select_heatmap';
 const SLIDER_FPS_ID = 'slider_fps';
 const SLIDER_FPS_LABEL_ID = 'slider_fps_label';
-
-const DEFAULT_FPS = 60;
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
 const TRIPS_PATH = 'data/train_trips_bins.json'
@@ -20,13 +25,14 @@ const SWISS_BORDER_LINE_NAME = 'swissborder';
 const HEATMAP_SCENE_NAME = 'heatmap';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
 
+const DEFAULT_FPS = 60;
+
+const MAX_TRAIN_DELAY = 3 * 60
 
 const DEFAULT_HEATMAP_MODE = null;
 
 const DEFAULT_MAP_BORDER_COLOR = 0xaaaaaa;
 const DEFAULT_TRAIN_COLOR = 0xddeeff;
-
-const MAX_TRAIN_DELAY = 2 * 60
 const EARLY_TRAIN_COLOR = '#00ff00';
 const LATE_TRAIN_COLOR = '#ff0000';
 
@@ -37,12 +43,16 @@ class Map {
     this.initTrips();
     this.trainObjects = {};
 
-    this.addSwissBorder();
+    this.drawSwissBorder();
 
     this.heatmapMode = null;
     this.addHeatMap(DEFAULT_HEATMAP_MODE);
   }
 
+  /**
+   * Initialize the scene
+   * @returns {void}
+   */
   initScene() {
     this.container = document.getElementById(DIV_CONTAINER_ID);
     this.width = this.container.clientWidth;
@@ -62,11 +72,15 @@ class Map {
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
     this.container.appendChild(this.renderer.domElement);
 
-    // Position the camera
     this.camera.position.z = 10;
   }
 
+  /**
+   * Initialize the events
+   * @returns {void}
+   */
   initEvents() {
+    // Heatmap
     const selectHeatmap = document.getElementById(SELECT_HEATMAP_ID);
     selectHeatmap.addEventListener('change', (event) => {
       const heatmapMode = event.target.value;
@@ -78,6 +92,7 @@ class Map {
       this.addHeatMap(heatmapMode);
     });
 
+    // FPS
     const sliderFps = document.getElementById(SLIDER_FPS_ID);
     sliderFps.addEventListener('input', (event) => {
       const fps = event.target.value;
@@ -89,11 +104,21 @@ class Map {
     });
   }
 
+  /**
+   * Initialize the projection
+   * @param {number} minLon the minimum longitude
+   * @param {number} maxLon the maximum longitude
+   * @param {number} minLat the minimum latitude
+   * @param {number} maxLat the maximum latitude
+   * @returns {void}
+   */
   initProjection(minLon, maxLon, minLat, maxLat) {
+    // Project the coordinates to the 2D plane
     const geoMercatorProjection = d3.geoMercator();
     const bottomLeft = geoMercatorProjection([minLon, minLat]);
     const topRight = geoMercatorProjection([maxLon, maxLat]);
 
+    // Calculate the scale factor
     const inputWidth = topRight[0] - bottomLeft[0];
     const inputHeight = bottomLeft[1] - topRight[1];
     const inputAspectRatio = inputWidth / inputHeight;
@@ -107,6 +132,7 @@ class Map {
       scaleFactor = this.height / inputHeight;
     }
 
+    // Calculate the translation
     const centerX = (bottomLeft[0] + topRight[0]) / 2;
     const centerY = (bottomLeft[1] + topRight[1]) / 2;
     const translateX = this.width / 2 - centerX * scaleFactor;
@@ -135,6 +161,10 @@ class Map {
     };
   }
 
+  /**
+   * Initialize the trips
+   * @returns {void}
+   */
   initTrips() {
     d3.json(TRIPS_PATH).then((data) => {
       this.trips = data.bins;
@@ -142,7 +172,11 @@ class Map {
     });
   }
 
-  addSwissBorder() {
+  /**
+   * Draw the swiss border
+   * @returns {void}
+   */
+  drawSwissBorder() {
     d3.json(MAP_PATH).then((data) => {
       // Define the projection
       function getMinMax(data, coordinateIndex, compareFunc, initialValue) {
@@ -183,6 +217,10 @@ class Map {
     });
   }
 
+  /**
+   * Remove the heatmap
+   * @returns {void}
+   */
   removeHeatMap() {
     const heatmapScene = this.scene.getObjectByName(HEATMAP_SCENE_NAME);
     if (heatmapScene) {
@@ -190,6 +228,11 @@ class Map {
     }
   }
 
+  /**
+   * Draw the heatmap
+   * @param {string} heatmapMode the heatmap mode of the new heatmap
+   * @returns {void}
+   */
   addHeatMap(heatmapMode) {
     if (this.heatmapMode === heatmapMode) { return; }
     
@@ -207,6 +250,7 @@ class Map {
       heatmapPath = `${HEATMAP_TRANSPORT_TYPE_PATH_PREFIX}${this.heatmapMode}${HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX}`;
     }
 
+    // Load the heatmap texture
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(heatmapPath, (texture) => {
       const heatmapMaterial = new THREE.ShaderMaterial({
@@ -226,7 +270,10 @@ class Map {
           void main() {
             vec4 heatmapColor = texture2D(heatmapTexture, vUv);
             float intensity = heatmapColor.r + heatmapColor.g + heatmapColor.b;
-            gl_FragColor = vec4(intensity, 0.0, 1.0 - intensity, intensity);
+            vec3 lowColor = vec3(0.0, 0.0, 1.0);
+            vec3 highColor = vec3(0.7, 0.2, 1.0);
+            vec3 color = mix(lowColor, highColor, intensity);
+            gl_FragColor = vec4(color.rgb, intensity);
           }
         `,
         transparent: true,
@@ -241,7 +288,6 @@ class Map {
       // Position the heatmap to match the Swiss border
       this.heatmap.position.set(this.width / 2, this.height / 2, -1); // Set a small z-offset to avoid z-fighting
       this.heatmap.name = HEATMAP_SCENE_NAME;
-    
       this.scene.add(this.heatmap);
     });
   }
@@ -295,15 +341,22 @@ class Map {
 
   /**
    * Linear interpolation between two values
-   * @param {*} a, the start color
-   * @param {*} b, the end color
-   * @param {number} t, the interpolation value between 0 and 1
+   * @param {*} a the start color
+   * @param {*} b the end color
+   * @param {number} t the interpolation value between 0 and 1
    * @returns {number} the interpolated value
    */
   lerp(a, b, t) {
     return a + (b - a) * t;
   }
 
+  /**
+   * Linear interpolation between two colors
+   * @param {*} hexColor1 the first color
+   * @param {*} hexColor2 the second color
+   * @param {*} t the interpolation value between 0 and 1
+   * @returns {string} the interpolated color
+   */
   colorLerp(hexColor1, hexColor2, t) {
     const color1 = this.hexToRgbMap(hexColor1);
     const color2 = this.hexToRgbMap(hexColor2);
@@ -320,6 +373,12 @@ class Map {
     return this.rgbMapToHex(rgbMap);
   }
   
+  /**
+   * Get the train coordinates at a given time
+   * @param {object} trip the trip informations
+   * @param {number} time the time
+   * @returns {array} the train coordinates
+   */
   getTrainCoordinates(trip, time) {
     const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
     if (!segment) { return null; }
@@ -334,9 +393,31 @@ class Map {
     return [lon, lat];
   }
 
+  /* TODO
+  fnv1a(str) {
+    let hash = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+      hash ^= str.charCodeAt(i);
+      hash *= 16777619;
+    }
+    return hash;
+  }
+  */
+
+  /**
+   * Get the train color at a given time
+   * @param {*} trip the trip informations
+   * @param {*} time the time
+   * @returns {string} the train color
+   */
   getTrainColor(trip, time) {
     const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
     if (!segment) { return null; }
+
+    // Get random color from hash of line_text TODO
+    //const hash = this.fnv1a(segment.line_text);
+    //const colorrdm = '#' + ('00000' + (hash & 0xFFFFFF).toString(16)).substr(-6);
+    //return colorrdm;
 
     const dTime = segment.end_time - segment.start_time;
     const dDelay = segment.end_arrival_delay - segment.start_departure_delay;
@@ -347,6 +428,12 @@ class Map {
     return color;
   }
 
+  /**
+   * Draw a train
+   * @param {string} trainSceneName the train scene name
+   * @param {object} trainCoordinates the train coordinates
+   * @returns {object} the train object
+   */
   drawTrain(trainSceneName, trainCoordinates) {
     if (!this.projection) { return; }
 
@@ -362,6 +449,10 @@ class Map {
     return train;
   }
 
+  /**
+   * Remove all trains
+   * @returns {void}
+   */
   removeTrains() {
     for (const trainSceneName in this.trainObjects) {
       this.scene.remove(this.trainObjects[trainSceneName]);
@@ -369,6 +460,11 @@ class Map {
     this.trainObjects = {};
   }
 
+  /**
+   * Remove a train from a trip id
+   * @param {string} tripId the trip id
+   * @returns {void}
+   */
   removeTrainfromTripId(tripId) {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     if (trainSceneName in this.trainObjects) {
@@ -377,12 +473,24 @@ class Map {
     }
   }
 
+  /**
+   * Remove trains from a list of trip ids
+   * @param {string} tripIds the list of trip ids
+   * @returns {void}
+   */
   removeTrainsFromTripIds(tripIds) {
     tripIds.forEach((tripId) => {
       this.removeTrainfromTripId(tripId);
     });
   }
 
+  /**
+   * Update a train
+   * @param {string} tripId the trip id
+   * @param {object} trainCoordinates the train coordinates
+   * @param {string} trainColor the train color
+   * @returns {void}
+   */
   updateTrain(tripId, trainCoordinates, trainColor) {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     let trainScene = this.trainObjects[trainSceneName];
@@ -399,6 +507,11 @@ class Map {
     trainScene.material.color.set(trainColor);
   }
   
+  /**
+   * Update trains
+   * @param {number} time 
+   * @returns {void}
+   */
   updateTrains(time) {
     if (!this.trips) { return; }
 
@@ -426,12 +539,21 @@ class Map {
     });
   }
 
+  /**
+   * Convert a timestamp to a time string
+   * @param {number} timestamp 
+   * @returns {string} the time string
+   */
   timestampToTimeStr(timestamp) {
     const hours = Math.floor(timestamp / 60);
     const minutes = timestamp % 60;
     return `${hours}:${minutes}`;
   }
 
+  /**
+   * Render the scene
+   * @returns {void}
+   */
   render() {
     this.setRenderFps(DEFAULT_FPS);
     let t = 0;
@@ -462,6 +584,11 @@ class Map {
     animate();
   }
   
+  /**
+   * Set the render fps
+   * @param {number} value 
+   * @returns {void}
+   */
   setRenderFps(value) {
     this.renderFps = value;
     this.fpsInterval = 1000 / this.renderFps;
