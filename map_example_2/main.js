@@ -18,16 +18,17 @@ const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder';
 const HEATMAP_SCENE_NAME = 'heatmap';
-const TRAIN_INSTANCED_MESH_NAME = 'train_instanced_mesh';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
-
-const MAX_TRAIN_INSTANCES = 10000;
 
 
 const DEFAULT_HEATMAP_MODE = null;
 
 const DEFAULT_MAP_BORDER_COLOR = 0xaaaaaa;
 const DEFAULT_TRAIN_COLOR = 0xddeeff;
+
+const MAX_TRAIN_DELAY = 2 * 60
+const EARLY_TRAIN_COLOR = '#00ff00';
+const LATE_TRAIN_COLOR = '#ff0000';
 
 class Map {
   constructor() {
@@ -42,16 +43,6 @@ class Map {
     this.addHeatMap(DEFAULT_HEATMAP_MODE);
   }
 
-  createTrainInstancedMesh(maxInstances) {
-    const trainGeometry = new THREE.CircleGeometry(5, 32);
-    const trainMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TRAIN_COLOR) });
-  
-    const trainInstancedMesh = new THREE.InstancedMesh(trainGeometry, trainMaterial, maxInstances);
-    trainInstancedMesh.name = TRAIN_INSTANCED_MESH_NAME;
-  
-    return trainInstancedMesh;
-  }
-
   initScene() {
     this.container = document.getElementById(DIV_CONTAINER_ID);
     this.width = this.container.clientWidth;
@@ -63,7 +54,7 @@ class Map {
       this.width,
       this.height,
       0,
-      1,
+      0.1,
       1000
     );
 
@@ -73,11 +64,6 @@ class Map {
 
     // Position the camera
     this.camera.position.z = 10;
-
-    // initialize the train instances
-    this.maxTrainInstances = MAX_TRAIN_INSTANCES;
-    this.trainInstancedMesh = this.createTrainInstancedMesh(this.maxTrainInstances);
-    this.scene.add(this.trainInstancedMesh);
   }
 
   initEvents() {
@@ -260,6 +246,80 @@ class Map {
     });
   }
 
+  /**
+   * Check if a color is in hex format
+   * @param {string} color the color
+   * @returns {boolean} true if the color is in hex format, false otherwise
+   */
+  isHexColor(color) {
+    const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    return hexRegex.test(color);
+  }
+
+  /**
+   * Map a hex color to an rgb map
+   * @param {string} hex the hex color
+   * @returns {object} the rgb map or null if the color is not in hex format
+   */
+  hexToRgbMap(hex) {
+    if (!this.isHexColor(hex)) return null;
+
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16),
+    }
+  }
+
+  /**
+   * Map an rgb map to a hex color
+   * @param {object} rgbMap the rgb map 
+   * @returns {string} the hex color
+   */
+  rgbMapToHex(rgbMap) {
+    const r = rgbMap.r;
+    const g = rgbMap.g;
+    const b = rgbMap.b;
+
+    return (
+      "#" +
+      [r, g, b]
+        .map((x) => {
+          const hex = x.toString(16);
+          return hex.length === 1 ? "0" + hex : hex;
+        })
+        .join("")
+    );
+  }
+
+  /**
+   * Linear interpolation between two values
+   * @param {*} a, the start color
+   * @param {*} b, the end color
+   * @param {number} t, the interpolation value between 0 and 1
+   * @returns {number} the interpolated value
+   */
+  lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  colorLerp(hexColor1, hexColor2, t) {
+    const color1 = this.hexToRgbMap(hexColor1);
+    const color2 = this.hexToRgbMap(hexColor2);
+  
+    const r = Math.round(this.lerp(color1.r, color2.r, t));
+    const g = Math.round(this.lerp(color1.g, color2.g, t));
+    const b = Math.round(this.lerp(color1.b, color2.b, t));
+    const rgbMap = {
+      r: r,
+      g: g,
+      b: b,
+    }
+  
+    return this.rgbMapToHex(rgbMap);
+  }
+  
   getTrainCoordinates(trip, time) {
     const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
     if (!segment) { return null; }
@@ -274,6 +334,41 @@ class Map {
     return [lon, lat];
   }
 
+  getTrainColor(trip, time) {
+    const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
+    if (!segment) { return null; }
+
+    const dTime = segment.end_time - segment.start_time;
+    const dDelay = segment.end_arrival_delay - segment.start_departure_delay;
+
+    const delay = segment.start_departure_delay + dDelay * (time - segment.start_time) / dTime;
+    let delayRatio = Math.min(Math.max(delay / MAX_TRAIN_DELAY, 0), 1);
+    const color = this.colorLerp(EARLY_TRAIN_COLOR, LATE_TRAIN_COLOR, delayRatio);
+    return color;
+  }
+
+  drawTrain(trainSceneName, trainCoordinates) {
+    if (!this.projection) { return; }
+
+    const trainPosition = this.projection(trainCoordinates);
+    const train = new THREE.Mesh(
+      new THREE.CircleGeometry(5, 32),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TRAIN_COLOR) })
+    );
+    train.position.set(trainPosition[0], trainPosition[1], 0);
+    train.name = trainSceneName;
+    this.scene.add(train);
+
+    return train;
+  }
+
+  removeTrains() {
+    for (const trainSceneName in this.trainObjects) {
+      this.scene.remove(this.trainObjects[trainSceneName]);
+    }
+    this.trainObjects = {};
+  }
+
   removeTrainfromTripId(tripId) {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     if (trainSceneName in this.trainObjects) {
@@ -281,39 +376,54 @@ class Map {
       delete this.trainObjects[trainSceneName];
     }
   }
+
+  removeTrainsFromTripIds(tripIds) {
+    tripIds.forEach((tripId) => {
+      this.removeTrainfromTripId(tripId);
+    });
+  }
+
+  updateTrain(tripId, trainCoordinates, trainColor) {
+    const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
+    let trainScene = this.trainObjects[trainSceneName];
+    if (!trainScene) {
+      trainScene = this.drawTrain(trainSceneName, trainCoordinates, trainColor);
+      this.trainObjects[trainSceneName] = trainScene;
+    }
+
+    // Update train position
+    const trainPosition = this.projection(trainCoordinates);
+    trainScene.position.set(trainPosition[0], trainPosition[1], 0);
+
+    // Update train color
+    trainScene.material.color.set(trainColor);
+  }
   
   updateTrains(time) {
     if (!this.trips) { return; }
-  
+
     // Find bin
     const roundedTimeStr = time - time % this.binSize;
     const trips = this.trips[roundedTimeStr].trips;
     if (!trips || trips.length === 0) { 
-      this.removeTrains();
+      this.removeTrains() 
     }
-  
-    let instanceIndex = 0;
-  
+
     trips.forEach((trip) => {
+      // Get train coordinates
       const trainCoordinates = this.getTrainCoordinates(trip, time);
       if (trainCoordinates === null) { 
         this.removeTrainfromTripId(trip.trip_id);
         return; 
       }
-  
-      const trainPosition = this.projection(trainCoordinates);
-  
-      // Update the transformation matrix of the instance
-      const matrix = new THREE.Matrix4();
-      matrix.setPosition(new THREE.Vector3(trainPosition[0], trainPosition[1], 0));
-      this.trainInstancedMesh.setMatrixAt(instanceIndex, matrix);
-  
-      instanceIndex++;
+
+      // Get train color
+      const trainColor = this.getTrainColor(trip, time);
+
+      // Update train
+      const trainId = trip.trip_id;
+      this.updateTrain(trainId, trainCoordinates, trainColor);
     });
-  
-    // Update the instance count to the actual number of instances
-    this.trainInstancedMesh.count = instanceIndex;
-    this.trainInstancedMesh.instanceMatrix.needsUpdate = true;
   }
 
   timestampToTimeStr(timestamp) {
@@ -345,7 +455,7 @@ class Map {
         // Print time on screen: TODO REMOVE
         document.getElementById("time").innerHTML = this.timestampToTimeStr(t);
         t += 1;
-        t = t % 1439;
+        t = t % 1440;
       }
     };
   
