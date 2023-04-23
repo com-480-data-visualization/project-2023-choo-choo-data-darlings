@@ -7,7 +7,7 @@ const DIV_CONTAINER_ID = 'container';
 const SELECT_HEATMAP_ID = 'select_heatmap';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
-const TRIPS_PATH = 'data/trips.json'
+const TRIPS_PATH = 'data/train_trips_bins_15.json'
 const HEATMAP_PATH = 'data/density_heatmap.png';
 const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
 const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
@@ -27,6 +27,7 @@ class Map {
     this.initScene();
     this.initEvents();
     this.initTrips();
+    this.trainObjects = {};
 
     this.addSwissBorder();
 
@@ -108,8 +109,8 @@ class Map {
 
   initTrips() {
     d3.json(TRIPS_PATH).then((data) => {
-      this.trips = data.trips;
-      this.binSize = data.binSize;
+      this.trips = data.bins;
+      this.binSize = data.bin_size;
     });
   }
 
@@ -246,14 +247,16 @@ class Map {
     train.position.set(trainPosition[0], trainPosition[1], 0);
     train.name = trainSceneName;
     this.scene.add(train);
+
+    return train;
   }
 
   updateTrain(tripId, trainCoordinates) {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
-    const trainScene = this.scene.getObjectByName(trainSceneName);
+    let trainScene = this.trainObjects[trainSceneName];
     if (!trainScene) {
-      this.drawTrain(trainSceneName, trainCoordinates)
-      return;
+      trainScene = this.drawTrain(trainSceneName, trainCoordinates);
+      this.trainObjects[trainSceneName] = trainScene;
     }
 
     const trainPosition = this.projection(trainCoordinates);
@@ -266,6 +269,7 @@ class Map {
     this.scene.traverse((child) => {
       if (child.name.startsWith(TRAIN_SCENE_NAME_PREFIX)) {
         childrenToRemove.push(child);
+        delete this.trainObjects[child.name];
       }
     });
 
@@ -280,6 +284,7 @@ class Map {
     const trainScene = this.scene.getObjectByName(trainSceneName);
     if (trainScene) {
       this.scene.remove(trainScene);
+      delete this.trainObjects[trainSceneName];
     }
   }
   
@@ -288,12 +293,12 @@ class Map {
 
     // Find bin
     const roundedTimeStr = time - time % this.binSize;
-    const trips = this.trips.bins[roundedTimeStr];
-    if (trips.trips.length === 0) { 
+    const trips = this.trips[roundedTimeStr];
+    if (!trips || trips.length === 0) { 
       this.removeTrains() 
     }
 
-    trips.trips.forEach((trip) => {
+    trips.forEach((trip) => {
       const trainCoordinates = this.getTrainCoordinates(trip, time);
       if (trainCoordinates === null) { 
         this.removeTrain(trip.trip_id);
@@ -305,35 +310,41 @@ class Map {
     });
   }
 
-  updateMapRender(t) {
-    this.scene.traverse((child) => {
-      if (child.name !== SWISS_BORDER_LINE_NAME) { return; }
-
-      const positionArray = child.geometry.attributes.position.array;
-      for (let index = 0; index < positionArray.length; index++) {
-        if (index % 3 === 0) {
-          positionArray[index] += Math.sin(t * 25) * Math.random();
-        } else if (index % 3 === 1) {
-          positionArray[index] += Math.cos(t) * Math.random();
-        } else {
-        }
-      }
-      child.geometry.attributes.position.needsUpdate = true;
-    });
+  timestampToTimeStr(timestamp) {
+    const hours = Math.floor(timestamp / 60);
+    const minutes = timestamp % 60;
+    return `${hours}:${minutes}`;
   }
-  
-  
 
   render() {
+    const fps = 60;
+    const fpsInterval = 1000 / fps;
     let t = 0;
+    let then = Date.now();
+  
     const animate = () => {
       requestAnimationFrame(animate);
-      //this.updateMapRender(t);
-      this.updateTrains(t);
-      this.renderer.render(this.scene, this.camera);
-      t += 0.2;
-      t = t % 200;
-    }
+  
+      const now = Date.now();
+      const elapsed = now - then;
+  
+      // If enough time has passed, update the scene and render it
+      if (elapsed > fpsInterval) {
+        then = now - (elapsed % fpsInterval);
+  
+        this.updateTrains(t);
+        this.renderer.render(this.scene, this.camera);
+  
+        // print time on screen: TODO REMOVE
+        document.getElementById("time").innerHTML = this.timestampToTimeStr(t);
+        t += 1;
+        t = t % 1440;
+        if (t == 4 * 60) {
+          console.log(this.scene.children)
+        }
+      }
+    };
+  
     animate();
   }
 }
