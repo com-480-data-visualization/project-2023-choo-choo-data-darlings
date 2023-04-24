@@ -9,8 +9,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/node": "^18.16.0",
     "@types/react": "^18.0.38",
+<<<<<<< HEAD
     "typescript": "^5.0.4",
+=======
+    "@types/webpack-env": "^1.18.0",
+    "typescript": "^5.0.2",
+>>>>>>> 26cfcff6d3651569c168b6d76c721e721eaaa3f9
     "vite": "^4.3.1"
   },
   "dependencies": {
