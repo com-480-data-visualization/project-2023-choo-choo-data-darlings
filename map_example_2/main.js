@@ -393,7 +393,6 @@ class Map {
     return [lon, lat];
   }
 
-  /* TODO
   fnv1a(str) {
     let hash = 2166136261;
     for (let i = 0; i < str.length; i++) {
@@ -402,7 +401,6 @@ class Map {
     }
     return hash;
   }
-  */
 
   /**
    * Get the train color at a given time
@@ -428,19 +426,44 @@ class Map {
     return color;
   }
 
+  getTrainAngle(trip, time) {
+    const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
+    if (!segment) { return null; }
+
+    if (!this.angleCache) {
+      this.angleCache = {};
+    }
+
+    const cacheKey = `${segment.start_longitude}-${segment.start_latitude}-${segment.end_longitude}-${segment.end_latitude}`;
+
+    if (this.angleCache[cacheKey]) {
+      return this.angleCache[cacheKey];
+    }
+
+    const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude]);
+    const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude]);
+    const dX = endCoordinates[0] - startCoordinates[0];
+    const dY = endCoordinates[1] - startCoordinates[1];
+    const angle = Math.atan2(dY, dX) + Math.PI / 2;
+
+    this.angleCache[cacheKey] = angle;
+
+    return angle;
+  }
+
   /**
    * Draw a train
    * @param {string} trainSceneName the train scene name
    * @param {object} trainCoordinates the train coordinates
    * @returns {object} the train object
    */
-  drawTrain(trainSceneName, trainCoordinates) {
+  drawTrain(trainSceneName, trainCoordinates, trainColor) {
     if (!this.projection) { return; }
 
     const trainPosition = this.projection(trainCoordinates);
     const train = new THREE.Mesh(
-      new THREE.CircleGeometry(5, 32),
-      new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TRAIN_COLOR) })
+      new THREE.PlaneGeometry(3, 10),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(trainColor) })
     );
     train.position.set(trainPosition[0], trainPosition[1], 0);
     train.name = trainSceneName;
@@ -489,9 +512,10 @@ class Map {
    * @param {string} tripId the trip id
    * @param {object} trainCoordinates the train coordinates
    * @param {string} trainColor the train color
+   * @param {number} trainAngle the train angle
    * @returns {void}
    */
-  updateTrain(tripId, trainCoordinates, trainColor) {
+  updateTrain(tripId, trainCoordinates, trainColor, trainAngle) {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     let trainScene = this.trainObjects[trainSceneName];
     if (!trainScene) {
@@ -505,6 +529,9 @@ class Map {
 
     // Update train color
     trainScene.material.color.set(trainColor);
+
+    // Update train angle
+    trainScene.rotation.z = trainAngle;
   }
   
   /**
@@ -533,9 +560,12 @@ class Map {
       // Get train color
       const trainColor = this.getTrainColor(trip, time);
 
+      // Get train angle
+      const trainAngle = this.getTrainAngle(trip, time);
+
       // Update train
       const trainId = trip.trip_id;
-      this.updateTrain(trainId, trainCoordinates, trainColor);
+      this.updateTrain(trainId, trainCoordinates, trainColor, trainAngle);
     });
   }
 
