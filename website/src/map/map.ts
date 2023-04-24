@@ -95,7 +95,7 @@ class Map {
   initEvents() {
     // Heatmap
     const selectHeatmap = document.getElementById(SELECT_HEATMAP_ID);
-    selectHeatmap.addEventListener('change', (event) => {
+    selectHeatmap.addEventListener('change', (event: ChangeEvent) => {
       const heatmapMode = event.target.value;
       if (heatmapMode === '') {
         this.addHeatMap(null);
