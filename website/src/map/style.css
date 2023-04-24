@@ -1,0 +1,65 @@
+a {
+  display: block;
+  margin: auto;
+  width: 50%;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+#time {
+  position: absolute;
+  top: -5px;
+  left: 120px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#select_heatmap {
+  left: 10px;
+  top: 10px;
+  position: absolute;
+  z-index: 9999;
+}
+
+#select_train_color_mode {
+  left: 10px;
+  top: 30px;
+  position: absolute;
+  z-index: 9999;
+}
+
+#slider_render_fps {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#slider_simulation_fps {
+  position: fixed;
+  top: 30px;
+  right: 10px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

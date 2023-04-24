@@ -1,6 +1,7 @@
 import './style.css';
 
 document.addEventListener("DOMContentLoaded", () => {
+    
     const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
     let colorIndex = 0;
   
