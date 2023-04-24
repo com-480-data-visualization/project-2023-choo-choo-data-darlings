@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link rel="stylesheet" href="./style.css">
-    <title>Map</title>
-  </head>
-  <body>
-    <div id="container">
-      <a href="../../index.html">BACK YAS</a>
-    </div>
-    <script type="module" src="./map.ts"></script>
-  </body>
+<html lang="tr">
 
+<head>
+  <link rel="stylesheet" href="./style.css">
+  <title>Map</title>
+</head>
+
+<body>
+  <div id="container">
+    <a href="../../index.html">BACK YAS</a>
+  </div>
+  <script type="module" src="./map.ts"></script>
   <p id="time"></p>
 
   <select id="select_heatmap">
@@ -32,29 +32,14 @@
 
   <div id="slider_render_fps">
     <label id="slider_render_fps_label" for="render_fps">render FPS (60)</label>
-    <input
-      type="range"
-      id="render_fps"
-      name="render_fps"
-      min="5"
-      max="144"
-      step="1"
-      value="144"
-    >
+    <input type="range" id="render_fps" name="render_fps" min="5" max="144" step="1" value="144">
   </div>
 
   <div id="slider_simulation_fps">
     <label id="slider_simulation_fps_label" for="simulation_fps">simulation FPS (60)</label>
-    <input
-      type="range"
-      id="simulation_fps"
-      name="simulation_fps"
-      min="5"
-      max="240"
-      step="1"
-      value="60"
-    >
+    <input type="range" id="simulation_fps" name="simulation_fps" min="5" max="240" step="1" value="60">
   </div>
 
+</body>
 
 </html>
