@@ -1,14 +1,16 @@
 import * as d3 from 'd3';
 import * as THREE from 'three';
+import { Clock } from './clock';
 
 /*
  * TODO:
- * - Add speed as a color gradient for trains
- * - Add a slider for the choice of MAX_TRAIN_DELAY
- * - Be able to highlight train types (e.g. IC, IR, RE, etc.)
- * - Add a legend for the heatmap (maybe)
-*/
+ * Add speed as a color gradient for trains
+ * Add a slider for the choice of MAX_TRAIN_DELAY
+ * Be able to highlight train types (e.g. IC, IR, RE, etc.)
+ * Add a legend for the heatmap (maybe)
+ */
 
+// MAP
 const DIV_CONTAINER_ID = 'container';
 const SELECT_HEATMAP_ID = 'select_heatmap';
 const SELECT_TRAIN_COLOR_MODE_ID = 'select_train_color_mode';
@@ -18,70 +20,261 @@ const SLIDER_SIMULATION_FPS_ID = 'slider_simulation_fps';
 const SLIDER_SIMULATION_FPS_LABEL_ID = 'slider_simulation_fps_label';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
-const TRIPS_PATH = 'data/train_trips_bins.json'
+const TRAINS_PATH = 'data/train_trips_bins.json'
 const HEATMAP_PATH = 'data/density_heatmap.png';
 const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
 const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
 
-const SWISS_BORDER_LINE_NAME = 'swissborder';
+const SWISS_BORDER_LINE_NAME = 'swissborder_line';
+const SWISS_BORDER_GROUP_NAME = 'swissborder_group';
 const HEATMAP_SCENE_NAME = 'heatmap';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
 
 const DEFAULT_RENDER_FPS = 144;
 const DEFAULT_SIMULATION_FPS = 60;
 
-const MAX_TRAIN_DELAY = 3 * 60
+const MAX_TRAIN_DELAY = 3 * 60;
 const MAX_TRAIN_SPEED = 7;
 
 const DEFAULT_HEATMAP_MODE = null;
 const DEFAULT_TRAIN_COLOR_MODE = 'uniform';
 
-const DEFAULT_MAP_BORDER_COLOR = 0xaaaaaa;
-const DEFAULT_TRAIN_COLOR = 0xeeeeee;
+const DEFAULT_MAP_BORDER_COLOR = '#aaaaaa';
+const DEFAULT_TRAIN_COLOR = '#eeeeee';
 const EARLY_TRAIN_COLOR = '#00ff00';
 const LATE_TRAIN_COLOR = '#ff0000';
 const SLOW_TRAIN_COLOR = '#0000ff';
-const FAST_TRAIN_COLOR = '#ff00ff';
+const FAST_TRAIN_COLOR = '#ffff00';
 
 const DEFAULT_HEATMAP_SCALE_FACTOR_INC = 0.02;
 const DEFAULT_HEATMAP_X_OFFSET = 10;
 const DEFAULT_HEATMAP_Y_OFFSET = 5;
 
+// CLOCK
+const CLOCK_RADIUS = 100;
+const CLOCK_SCALE_FACTOR = 0.8;
+const CLOCK_MARGIN = CLOCK_RADIUS * CLOCK_SCALE_FACTOR + 20;
+
+class Clock {
+  private scene: THREE.Scene;
+  private clock!: THREE.Object3D;
+
+  private hourHandMesh!: THREE.Mesh;
+  private hourHandPivot: THREE.Object3D = new THREE.Object3D();
+  private minuteHandMesh!: THREE.Mesh;
+  private minuteHandPivot: THREE.Object3D = new THREE.Object3D();
+
+  private x: number;
+  private y: number;
+  private radius: number;
+  private scaleFactor: number;
+  private backgroundColor: THREE.Color;
+  private markerColor: THREE.Color;
+  private clockHandColor: THREE.Color;
+
+  private time: number;
+
+  constructor(
+      scene: THREE.Scene,
+
+      x: number,
+      y: number,
+      scaleFactor: number,
+      backgroundColor: THREE.Color,
+      markerColor: THREE.Color,
+      clockHandColor: THREE.Color,
+  ) {
+      this.scene = scene;
+      this.x = x;
+      this.y = y;
+      this.radius = CLOCK_RADIUS;
+      this.scaleFactor = scaleFactor;
+      this.backgroundColor = backgroundColor;
+      this.markerColor = markerColor;
+      this.clockHandColor = clockHandColor;
+
+      this.time = 0;
+
+      this.init();
+  }
+
+  setTime(time: number) {
+      this.time = time;
+  }
+
+  getTime() {
+      return this.time;
+  }
+
+  init() {
+      // Draw the clock background
+      this.clock = new THREE.Object3D();
+      const clockGeometry = new THREE.CircleGeometry(this.radius, 64);
+      const clockMaterial = new THREE.MeshBasicMaterial({
+          color: this.backgroundColor,
+          side: THREE.DoubleSide,
+      });
+      const clockMesh = new THREE.Mesh(clockGeometry, clockMaterial);
+      this.clock.add(clockMesh);
+
+      // Draw the first 12 markers
+      const markerGeometry = new THREE.PlaneGeometry(7, 25);
+      const markerMaterial = new THREE.MeshBasicMaterial({
+          color: this.markerColor,
+          side: THREE.DoubleSide,
+      });
+      for (let i = 0; i < 12; i++) {
+          const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+          markerMesh.position.set(
+              0.8 * this.radius * Math.cos(i * Math.PI / 6),
+              0.8 * this.radius * Math.sin(i * Math.PI / 6),
+              0
+          );
+          markerMesh.rotation.z = Math.PI / 2 + i * Math.PI / 6;
+          this.clock.add(markerMesh);
+      }
+
+      // Draw the other smaller markers
+      const markerGeometry2 = new THREE.PlaneGeometry(2.5, 8);
+      for (let i = 0; i < 60; i++) {
+          const markerMesh = new THREE.Mesh(markerGeometry2, markerMaterial);
+          markerMesh.position.set(
+              0.87 * this.radius * Math.cos(i * Math.PI / 30),
+              0.87 * this.radius * Math.sin(i * Math.PI / 30),
+              0
+          );
+          markerMesh.rotation.z = Math.PI / 2 + i * Math.PI / 30;
+          this.clock.add(markerMesh);
+      }
+
+      // Draw the hour hand
+      const hourHandGeometry = new THREE.PlaneGeometry(9, 75);
+      const hourHandMaterial = new THREE.MeshBasicMaterial({
+          color: this.clockHandColor,
+          side: THREE.DoubleSide,
+      });
+      this.hourHandMesh = new THREE.Mesh(hourHandGeometry, hourHandMaterial);
+      this.hourHandMesh.position.set(0, 15, 0); // Offset the mesh by half its length
+      this.hourHandPivot.add(this.hourHandMesh);
+      this.hourHandPivot.position.set(0, 0, 0);
+      this.clock.add(this.hourHandPivot);
+
+      // Draw the minute hand
+      const minuteHandGeometry = new THREE.PlaneGeometry(6, 100);
+      const minuteHandMaterial = new THREE.MeshBasicMaterial({
+          color: this.clockHandColor,
+          side: THREE.DoubleSide,
+      });
+      this.minuteHandMesh = new THREE.Mesh(minuteHandGeometry, minuteHandMaterial);
+      this.minuteHandMesh.position.set(0, 30, 0); // Offset the mesh by half its length
+      this.minuteHandPivot.add(this.minuteHandMesh);
+      this.minuteHandPivot.position.set(0, 0, 0);
+      this.clock.add(this.minuteHandPivot);
+
+      // Scale and translate the clock
+      this.clock.scale.set(this.scaleFactor, this.scaleFactor, 1);
+      this.clock.position.set(this.x, this.y, 0);
+
+  }
+
+  draw() {
+    // update rotation of hour hand
+    this.hourHandPivot.rotation.z = -this.time * Math.PI / 360;
+
+    // update rotation of minute hand
+    this.minuteHandPivot.rotation.z = -this.time * Math.PI / 30;
+
+  }
+
+  addToScene() {
+    this.scene.add(this.clock);
+  }
+}
+
 class Map {
+  // Loaded data
+  private swissBorderData!: any;
+  private trips!: any;
+  private binSize!: number;
+
+  // Scene
+  private container!: HTMLElement;
+  private width!: number;
+  private height!: number;
+  private scene!: THREE.Scene;
+  private camera!: THREE.OrthographicCamera;
+  private renderer!: THREE.WebGLRenderer;
+  private projection!: (coordinates: [number, number], cached: boolean) => [number, number] | null;
+
+  // Clock
+  private clock!: Clock;
+
+  // Heatmap
+  private heatmapMode: string | null = DEFAULT_HEATMAP_MODE;
+  private heatmapObject!: THREE.Mesh;
+
+  // Train
+  private trainColorMode: string = DEFAULT_TRAIN_COLOR_MODE;
+  private trainObjects: { [key: string]: THREE.Mesh } = {};
+  private trainPool: THREE.Mesh[] = [];
+  private swissBorderObjects!: THREE.Group;
+
+  // Cache
+  private projectionCache: { [key: string]: [number, number] } = {};
+  private angleCache: { [key: string]: number } = {};
+
+  // Render
+  private renderFps: number = DEFAULT_RENDER_FPS;
+  private renderInterval: number = 1000 / this.renderFps;
+  private simulationFps: number = DEFAULT_SIMULATION_FPS;
+  private simulationInterval: number = 1000 / this.simulationFps;
+  private renderPreviousTimestamp!: number | null;
+
   constructor() {
-    this.initScene();
-    this.initEvents();
-    this.initTrips();
-    this.trainObjects = {};
+    this.loadData().then(() => {
+      this.initScene();
+      this.initEvents();
 
-    this.drawSwissBorder();
+      this.drawSwissBorder();
+      this.drawHeatMap(DEFAULT_HEATMAP_MODE);
 
-    this.heatmapMode = null;
-    this.addHeatMap(DEFAULT_HEATMAP_MODE);
+      this.clock = new Clock(
+        this.scene,
+        CLOCK_MARGIN,
+        this.height - CLOCK_MARGIN,
+        CLOCK_SCALE_FACTOR,
+        new THREE.Color(0xdddddd),
+        new THREE.Color(0x000000),
+        new THREE.Color(0x000000)
+      );
+      this.clock.addToScene();
 
-    this.setTrainColorMode(DEFAULT_TRAIN_COLOR_MODE);
+      this.render();
+    });
   }
 
   /**
    * Initialize the scene
    * @returns {void}
    */
-  initScene() {
-    this.container = document.getElementById(DIV_CONTAINER_ID);
+  private initScene(): void {
+    this.container = document.getElementById(DIV_CONTAINER_ID) as HTMLElement;
     this.width = this.container.clientWidth;
     this.height = this.container.clientHeight;
-
     this.scene = new THREE.Scene();
     this.camera = new THREE.OrthographicCamera(
       0,
       this.width,
       this.height,
       0,
-      0.1,
-      1000
+      0.1, // near plane
+      1000 // far plane
     );
 
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({ 
+      antialias: true
+    });
+    this.renderer.autoClear = true;
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
     this.container.appendChild(this.renderer.domElement);
 
@@ -92,45 +285,53 @@ class Map {
    * Initialize the events
    * @returns {void}
    */
-  initEvents() {
+  private initEvents(): void {
     // Heatmap
-    const selectHeatmap = document.getElementById(SELECT_HEATMAP_ID);
-    selectHeatmap.addEventListener('change', (event: ChangeEvent) => {
-      const heatmapMode = event.target.value;
+    const selectHeatmap = document.getElementById(SELECT_HEATMAP_ID) as HTMLSelectElement;
+    selectHeatmap.addEventListener('change', (event: Event) => {
+      if (!event || !event.target) return;
+
+      const target = event.target as HTMLSelectElement;
+      const heatmapMode = target.value;
       if (heatmapMode === '') {
-        this.addHeatMap(null);
+        this.drawHeatMap(null);
         return;
       }
 
-      this.addHeatMap(heatmapMode);
+      this.drawHeatMap(heatmapMode);
     });
 
     // Train color mode
-    const selectTrainColor = document.getElementById(SELECT_TRAIN_COLOR_MODE_ID);
+    const selectTrainColor = document.getElementById(SELECT_TRAIN_COLOR_MODE_ID) as HTMLSelectElement;
     selectTrainColor.addEventListener('change', (event) => {
-      const trainColorMode = event.target.value;
+      if (!event || !event.target) return;
+
+      const target = event.target as HTMLSelectElement;
+      const trainColorMode = target.value;
       this.setTrainColorMode(trainColorMode);
     });
 
     // Render FPS
-    const sliderFps = document.getElementById(SLIDER_RENDER_FPS_ID);
+    const sliderFps = document.getElementById(SLIDER_RENDER_FPS_ID) as HTMLInputElement;
     sliderFps.addEventListener('input', (event) => {
-      const fps = event.target.value;
-      this.setRenderFps(fps);
+      const target = event.target as HTMLInputElement;
+      const fps = target.value;
+      this.setRenderFps(Number(fps));
 
       // Rename slider label
-      const sliderFpsLabel = document.getElementById(SLIDER_RENDER_FPS_LABEL_ID);
+      const sliderFpsLabel = document.getElementById(SLIDER_RENDER_FPS_LABEL_ID) as HTMLElement;
       sliderFpsLabel.innerHTML = `render FPS (${fps})`;
     });
 
     // Simulation FPS
-    const sliderSimulationFps = document.getElementById(SLIDER_SIMULATION_FPS_ID);
+    const sliderSimulationFps = document.getElementById(SLIDER_SIMULATION_FPS_ID) as HTMLInputElement;
     sliderSimulationFps.addEventListener('input', (event) => {
-      const fps = event.target.value;
-      this.setSimulationFps(fps);
+      const target = event.target as HTMLInputElement;
+      const fps = target.value;
+      this.setSimulationFps(Number(fps));
 
       // Rename slider label
-      const sliderSimulationFpsLabel = document.getElementById(SLIDER_SIMULATION_FPS_LABEL_ID);
+      const sliderSimulationFpsLabel = document.getElementById(SLIDER_SIMULATION_FPS_LABEL_ID) as HTMLElement;
       sliderSimulationFpsLabel.innerHTML = `simulation FPS (${fps})`;
     });
   }
@@ -142,12 +343,14 @@ class Map {
    * @param {number} minLat the minimum latitude
    * @param {number} maxLat the maximum latitude
    * @returns {void}
+   * @throws {Error} if the screen coordinates are invalid
    */
-  initProjection(minLon, maxLon, minLat, maxLat) {
+  private initProjection(minLon: number, maxLon: number, minLat: number, maxLat: number): void {
     // Project the coordinates to the 2D plane
     const geoMercatorProjection = d3.geoMercator();
     const bottomLeft = geoMercatorProjection([minLon, minLat]);
     const topRight = geoMercatorProjection([maxLon, maxLat]);
+    if (!bottomLeft || !topRight) throw new Error('Invalid screen coordinates for projection initialization.');
 
     // Calculate the scale factor
     const inputWidth = topRight[0] - bottomLeft[0];
@@ -156,7 +359,7 @@ class Map {
 
     const outputAspectRatio = this.width / this.height;
 
-    let scaleFactor;
+    let scaleFactor: number;
     if (inputAspectRatio > outputAspectRatio) {
       scaleFactor = this.width / inputWidth;
     } else {
@@ -169,11 +372,8 @@ class Map {
     const translateX = this.width / 2 - centerX * scaleFactor;
     const translateY = this.height / 2 - centerY * scaleFactor;
 
-    // Initialize the cache object
-    this.projectionCache = {};
-
-    this.projection = (coordinates) => {
-      const cacheKey = `${coordinates[0]},${coordinates[1]}`;
+    this.projection = (coordinates: [number, number], cache: boolean): [number, number] | null => {
+      const cacheKey = `${coordinates[0]}-${coordinates[1]}`;
 
       // Check if the result is already cached
       if (this.projectionCache[cacheKey]) {
@@ -182,53 +382,77 @@ class Map {
 
       // If not cached, calculate and store the result
       const mercatorCoordinates = d3.geoMercator()(coordinates);
-      const result = [
+      if (!mercatorCoordinates) return null;
+
+      const result: [number, number] = [
         translateX + scaleFactor * mercatorCoordinates[0],
         this.height - (translateY + scaleFactor * mercatorCoordinates[1]), // Invert the y-axis
       ];
 
-      this.projectionCache[cacheKey] = result;
+      if (cache) {
+        this.projectionCache[cacheKey] = result;
+      }
       return result;
     };
   }
 
   /**
-   * Initialize the trips
-   * @returns {void}
+   * Load the swiss border data
+   * @returns {Promise<void>}
+   * @throws {Error} if the data could not be loaded
    */
-  initTrips() {
-    d3.json(TRIPS_PATH).then((data) => {
-      this.trips = data.bins;
-      this.binSize = data.bin_size;
-    });
+  async loadSwissBorder(): Promise<void> {
+    const data = await d3.json(MAP_PATH);
+    if (!data) throw new Error('Invalid Swiss border data at path: ' + MAP_PATH);
+    this.swissBorderData = data;
+  }
+
+  /**
+   * Load the train data
+   * @returns {Promise<void>}
+   * @throws {Error} if the data could not be loaded
+   */
+  async loadTrains(): Promise<void> {
+    const data = await d3.json(TRAINS_PATH) as { bins: any; bin_size: number };
+    if (!data) throw new Error('Invalid train data at path: ' + TRAINS_PATH);
+    this.trips = data.bins;
+    this.binSize = data.bin_size;
+  }
+
+  /**
+   * Load all data
+   * @returns {Promise<void>}
+   */
+  async loadData(): Promise<void> {
+    await this.loadSwissBorder();
+    await this.loadTrains();
   }
 
   /**
    * Draw the swiss border
    * @returns {void}
    */
-  drawSwissBorder() {
-    d3.json(MAP_PATH).then((data) => {
+  private drawSwissBorder(): void {
       // Define the projection
-      function getMinMax(data, coordinateIndex, compareFunc, initialValue) {
-        return data.features.map((feature) => {
+      function getMinMax(data: any, coordinateIndex: number, compareFunc: (a: number, b: number) => boolean, initialValue: number): number {
+        return data.features.map((feature: any) => {
           const coordinates = feature.geometry.coordinates[0];
-          return coordinates.reduce((acc, p) => compareFunc(p[coordinateIndex], acc) ? p[coordinateIndex] : acc, initialValue);
-        }).reduce((acc, p) => compareFunc(p, acc) ? p : acc, initialValue);
+          return coordinates.reduce((acc: number, p: [number, number]) => compareFunc(p[coordinateIndex], acc) ? p[coordinateIndex] : acc, initialValue);
+        }).reduce((acc: number, p: number) => compareFunc(p, acc) ? p : acc, initialValue);
       }
-      const minLon = getMinMax(data, 0, (a, b) => a < b, Infinity);
-      const maxLon = getMinMax(data, 0, (a, b) => a > b, -Infinity);
-      const minLat = getMinMax(data, 1, (a, b) => a < b, Infinity);
-      const maxLat = getMinMax(data, 1, (a, b) => a > b, -Infinity);
+      const minLon = getMinMax(this.swissBorderData, 0, (a, b) => a < b, Infinity);
+      const maxLon = getMinMax(this.swissBorderData, 0, (a, b) => a > b, -Infinity);
+      const minLat = getMinMax(this.swissBorderData, 1, (a, b) => a < b, Infinity);
+      const maxLat = getMinMax(this.swissBorderData, 1, (a, b) => a > b, -Infinity);
 
       this.initProjection(minLon, maxLon, minLat, maxLat);
 
       // Draw the swiss borders
-      const drawFeature = (feature) => {
+      const drawFeature = (feature: any) => {
         const coordinates = feature.geometry.coordinates[0];
-        const points = coordinates.map((coordinate) => {
-          const x = this.projection(coordinate)[0];
-          const y = this.projection(coordinate)[1];
+        const points = coordinates.map((coordinate: [number, number]) => {
+          const x = this.projection(coordinate, false)![0];
+          const y = this.projection(coordinate, false)![1];
           return new THREE.Vector3(x, y, 0);
         });
 
@@ -237,24 +461,37 @@ class Map {
           color: new THREE.Color(DEFAULT_MAP_BORDER_COLOR),
         });
 
-        this.swissBorder = new THREE.Line(geometry, material);
-        this.swissBorder.name = SWISS_BORDER_LINE_NAME;
-        this.scene.add(this.swissBorder);
+        const line = new THREE.Line(geometry, material);
+        line.name = SWISS_BORDER_LINE_NAME;
+        this.swissBorderObjects.add(line);
       }
 
-      data.features.forEach((feature) => {
+      this.swissBorderObjects = new THREE.Group();
+      this.swissBorderObjects.name = SWISS_BORDER_GROUP_NAME;
+
+      this.swissBorderData.features.forEach((feature: any) => {
         drawFeature(feature);
       });
-    });
+
+      this.scene.add(this.swissBorderObjects);
   }
 
   /**
-   * Remove the heatmap
-   * @returns {void}
-   */
-  removeHeatMap() {
+    * Remove the heatmap
+    * @returns {void}
+    */
+  private removeHeatMap(): void {
     const heatmapScene = this.scene.getObjectByName(HEATMAP_SCENE_NAME);
     if (heatmapScene) {
+      heatmapScene.traverse((child: THREE.Object3D) => {
+        if (child instanceof THREE.Mesh) {
+          child.geometry.dispose();
+          child.material.dispose();
+          if (child.material.map) {
+            child.material.map.dispose();
+          }
+        }
+      });
       this.scene.remove(heatmapScene);
     }
   }
@@ -264,17 +501,15 @@ class Map {
    * @param {string} heatmapMode the heatmap mode of the new heatmap
    * @returns {void}
    */
-  addHeatMap(heatmapMode) {
+  public drawHeatMap(heatmapMode: string | null): void {
     if (this.heatmapMode === heatmapMode) { return; }
-    
+
     this.heatmapMode = heatmapMode;
     this.removeHeatMap();
 
-    if (heatmapMode === null) {
-      return;
-    }
+    if (!heatmapMode) return;
 
-    let heatmapPath = null;
+    let heatmapPath: string | null = null;
     if (this.heatmapMode === 'all') {
       heatmapPath = HEATMAP_PATH;
     } else {
@@ -283,7 +518,7 @@ class Map {
 
     // Load the heatmap texture
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load(heatmapPath, (texture) => {
+    textureLoader.load(heatmapPath, (texture: THREE.Texture) => {
       const heatmapMaterial = new THREE.ShaderMaterial({
         uniforms: {
           heatmapTexture: { value: texture },
@@ -314,24 +549,24 @@ class Map {
       const scaleFactor = Math.min(this.width / textureWidth, this.height / textureHeight) + DEFAULT_HEATMAP_SCALE_FACTOR_INC;
 
       const geometry = new THREE.PlaneGeometry(textureWidth * scaleFactor, textureHeight * scaleFactor);
-      this.heatmap = new THREE.Mesh(geometry, heatmapMaterial);
-    
+      this.heatmapObject = new THREE.Mesh(geometry, heatmapMaterial);
+
       // Position the heatmap to match the Swiss border
-      this.heatmap.position.set(
-        this.width / 2 + DEFAULT_HEATMAP_X_OFFSET, 
+      this.heatmapObject.position.set(
+        this.width / 2 + DEFAULT_HEATMAP_X_OFFSET,
         this.height / 2 + DEFAULT_HEATMAP_Y_OFFSET, -1
       ); // Set a small z-offset to avoid z-fighting
-      this.heatmap.name = HEATMAP_SCENE_NAME;
-      this.scene.add(this.heatmap);
+      this.heatmapObject.name = HEATMAP_SCENE_NAME;
+      this.scene.add(this.heatmapObject);
     });
   }
 
   /**
-   * Check if a color is in hex format
-   * @param {string} color the color
-   * @returns {boolean} true if the color is in hex format, false otherwise
-   */
-  isHexColor(color) {
+ * Check if a color is in hex format
+ * @param {string} color the color
+ * @returns {boolean} true if the color is in hex format, false otherwise
+ */
+  private isHexColor(color: string): boolean {
     const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
     return hexRegex.test(color);
   }
@@ -341,23 +576,25 @@ class Map {
    * @param {string} hex the hex color
    * @returns {object} the rgb map or null if the color is not in hex format
    */
-  hexToRgbMap(hex) {
+  private hexToRgbMap(hex: string): { r: number; g: number; b: number } | null {
     if (!this.isHexColor(hex)) return null;
 
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (!result) return null;
+
     return {
       r: parseInt(result[1], 16),
       g: parseInt(result[2], 16),
       b: parseInt(result[3], 16),
-    }
+    };
   }
 
   /**
    * Map an rgb map to a hex color
-   * @param {object} rgbMap the rgb map 
+   * @param {object} rgbMap the rgb map
    * @returns {string} the hex color
    */
-  rgbMapToHex(rgbMap) {
+  private rgbMapToHex(rgbMap: { r: number; g: number; b: number }): string {
     const r = rgbMap.r;
     const g = rgbMap.g;
     const b = rgbMap.b;
@@ -380,7 +617,7 @@ class Map {
    * @param {number} t the interpolation value between 0 and 1
    * @returns {number} the interpolated value
    */
-  lerp(a, b, t) {
+  private lerp(a: number, b: number, t: number): number {
     return a + (b - a) * t;
   }
 
@@ -391,10 +628,11 @@ class Map {
    * @param {*} t the interpolation value between 0 and 1
    * @returns {string} the interpolated color
    */
-  colorLerp(hexColor1, hexColor2, t) {
+  public colorLerp(hexColor1: string, hexColor2: string, t: number): string {
     const color1 = this.hexToRgbMap(hexColor1);
     const color2 = this.hexToRgbMap(hexColor2);
-  
+    if (!color1 || !color2) return hexColor1;
+
     const r = Math.round(this.lerp(color1.r, color2.r, t));
     const g = Math.round(this.lerp(color1.g, color2.g, t));
     const b = Math.round(this.lerp(color1.b, color2.b, t));
@@ -402,18 +640,28 @@ class Map {
       r: r,
       g: g,
       b: b,
-    }
-  
+    };
+
     return this.rgbMapToHex(rgbMap);
   }
-  
+
   /**
    * Get the train coordinates at a given time
    * @param {object} segment the segment informations
    * @param {number} time the time
-   * @returns {array} the train coordinates
+   * @returns {number[]} the train coordinates
    */
-  getTrainCoordinates(segment, time) {
+  private getTrainCoordinates(
+    segment: {
+      start_time: number;
+      end_time: number;
+      start_longitude: number;
+      end_longitude: number;
+      start_latitude: number;
+      end_latitude: number
+    },
+    time: number
+  ): [number, number] {
     const dTime = segment.end_time - segment.start_time;
     const dLon = segment.end_longitude - segment.start_longitude;
     const dLat = segment.end_latitude - segment.start_latitude;
@@ -424,7 +672,12 @@ class Map {
     return [lon, lat];
   }
 
-  setTrainColorMode(trainColorMode) {
+  /**
+   * Set the train color mode
+   * @param trainColorMode the train color mode to set
+   * @returns {void}
+   */
+  public setTrainColorMode(trainColorMode: string): void {
     this.trainColorMode = trainColorMode;
   }
 
@@ -433,15 +686,31 @@ class Map {
    * @param {*} segment the segment informations
    * @param {*} time the time
    * @returns {string} the train color
+   * @throws {Error} if the train color mode is not supported
    */
-  getTrainColor(segment, time) {
+  private getTrainColor(
+    segment: {
+      start_time: number;
+      end_time: number;
+      start_longitude: number;
+      end_longitude: number;
+      start_latitude: number;
+      end_latitude: number;
+      start_departure_delay: number;
+      end_arrival_delay: number
+    },
+    time: number
+  ): string {
     if (this.trainColorMode === DEFAULT_TRAIN_COLOR_MODE) {
       return DEFAULT_TRAIN_COLOR;
     } else if (this.trainColorMode === 'speed') {
       const dTime = segment.end_time - segment.start_time;
 
-      const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude]);
-      const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude]);
+      // Get train speed by computing the distance between the start and end coordinates
+      const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true);
+      const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true);
+      if (!startCoordinates || !endCoordinates) return DEFAULT_TRAIN_COLOR;
+
       const dX = endCoordinates[0] - startCoordinates[0];
       const dY = endCoordinates[1] - startCoordinates[1];
       const distance = Math.sqrt(dX * dX + dY * dY);
@@ -451,7 +720,7 @@ class Map {
       const color = this.colorLerp(SLOW_TRAIN_COLOR, FAST_TRAIN_COLOR, speedRatio);
 
       return color;
-    } if (this.trainColorMode === 'delay') {
+    } else if (this.trainColorMode === 'delay') {
       const dTime = segment.end_time - segment.start_time;
       const dDelay = segment.end_arrival_delay - segment.start_departure_delay;
 
@@ -460,61 +729,59 @@ class Map {
       const color = this.colorLerp(EARLY_TRAIN_COLOR, LATE_TRAIN_COLOR, delayRatio);
 
       return color;
+    } else {
+      throw new Error(`Unknown train color mode: ${this.trainColorMode}`);
     }
   }
 
-  getTrainAngle(segment) {
-    if (!this.angleCache) {
-      this.angleCache = {};
+  /**
+   * Get the train angle at a given segment
+   * @param segment the segment informations
+   * @returns {number} the train angle
+   */
+  private getTrainAngle(
+    segment: {
+      start_longitude: number;
+      start_latitude: number;
+      end_longitude: number;
+      end_latitude: number
     }
-
+  ): number {
     const cacheKey = `${segment.start_longitude}-${segment.start_latitude}-${segment.end_longitude}-${segment.end_latitude}`;
 
     if (this.angleCache[cacheKey]) {
       return this.angleCache[cacheKey];
     }
 
-    const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude]);
-    const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude]);
+    const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true);
+    const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true);
+    if (!startCoordinates || !endCoordinates) return 0;
+
     const dX = endCoordinates[0] - startCoordinates[0];
     const dY = endCoordinates[1] - startCoordinates[1];
     const angle = Math.atan2(dY, dX) + Math.PI / 2;
 
     this.angleCache[cacheKey] = angle;
-
     return angle;
   }
 
   /**
    * Draw a train
    * @param {string} trainSceneName the train scene name
-   * @param {object} trainCoordinates the train coordinates
-   * @returns {object} the train object
+   * @returns {THREE.Mesh} the train object
    */
-  drawTrain(trainSceneName, trainCoordinates, trainColor) {
-    if (!this.projection) { return; }
-
-    const trainPosition = this.projection(trainCoordinates);
-    const train = new THREE.Mesh(
-      new THREE.PlaneGeometry(3, 10),
-      new THREE.MeshBasicMaterial({ color: new THREE.Color(trainColor) })
-    );
-    train.position.set(trainPosition[0], trainPosition[1], 0);
-    train.name = trainSceneName;
-    this.scene.add(train);
-
-    return train;
-  }
-
-  /**
-   * Remove all trains
-   * @returns {void}
-   */
-  removeTrains() {
-    for (const trainSceneName in this.trainObjects) {
-      this.scene.remove(this.trainObjects[trainSceneName]);
+  private getTrainFromPool(): THREE.Mesh {
+    if (this.trainPool.length > 0) {
+      const poolTrain = this.trainPool.pop()
+      if (poolTrain) {
+        return poolTrain;
+      } 
     }
-    this.trainObjects = {};
+
+    return new THREE.Mesh(
+      new THREE.PlaneGeometry(3, 10),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TRAIN_COLOR) })
+    );
   }
 
   /**
@@ -522,23 +789,13 @@ class Map {
    * @param {string} tripId the trip id
    * @returns {void}
    */
-  removeTrainfromTripId(tripId) {
+  removeTrainfromTripId(tripId: string): void {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     if (trainSceneName in this.trainObjects) {
+      this.trainPool.push(this.trainObjects[trainSceneName]);
       this.scene.remove(this.trainObjects[trainSceneName]);
       delete this.trainObjects[trainSceneName];
     }
-  }
-
-  /**
-   * Remove trains from a list of trip ids
-   * @param {string} tripIds the list of trip ids
-   * @returns {void}
-   */
-  removeTrainsFromTripIds(tripIds) {
-    tripIds.forEach((tripId) => {
-      this.removeTrainfromTripId(tripId);
-    });
   }
 
   /**
@@ -549,50 +806,59 @@ class Map {
    * @param {number} trainAngle the train angle
    * @returns {void}
    */
-  updateTrain(tripId, trainCoordinates, trainColor, trainAngle) {
-    const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
-    let trainScene = this.trainObjects[trainSceneName];
-    if (!trainScene) {
-      trainScene = this.drawTrain(trainSceneName, trainCoordinates, trainColor);
-      this.trainObjects[trainSceneName] = trainScene;
+  drawTrain(tripId: string, trainCoordinates: [number, number], trainColor: string, trainAngle: number): void {
+    // Check that train position is valid first
+    const trainPosition = this.projection(trainCoordinates, true);
+    if (!trainPosition) return;
+
+    // Get existing train or get it from the pool
+    const trainName = TRAIN_SCENE_NAME_PREFIX + tripId
+    let train = this.trainObjects[trainName];
+    if (!train) {
+      train = this.getTrainFromPool();
+      this.trainObjects[trainName] = train;
     }
 
     // Update train position
-    const trainPosition = this.projection(trainCoordinates);
-    trainScene.position.set(trainPosition[0], trainPosition[1], 0);
+    train.position.set(trainPosition[0], trainPosition[1], 0);
 
     // Update train color
-    trainScene.material.color.set(trainColor);
+    if (train.material instanceof THREE.MeshBasicMaterial) {
+      train.material.color.set(trainColor);
+    }
 
     // Update train angle
-    trainScene.rotation.z = trainAngle;
+    train.rotation.z = trainAngle;
+
+    // Update train name
+    train.name = trainName;
+
+    this.scene.add(train);
   }
-  
+
   /**
    * Update trains
    * @param {number} time 
    * @returns {void}
    */
-  updateTrains(time) {
-    if (!this.trips) { return; }
+  drawTrains(time: number): void {
+    if (!this.trips) return;
 
     // Find bin
     const roundedTimeStr = time - time % this.binSize;
     const trips = this.trips[roundedTimeStr].trips;
-    if (!trips || trips.length === 0) { 
-      this.removeTrains() 
-    }
 
-    trips.forEach((trip) => {
+    trips.forEach((trip: any) => {
       // Find the current segment
-      const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
-      if (!segment) { 
+      const segment = trip.segments.find((segment: any) => segment.start_time <= time && time < segment.end_time);
+      if (!segment) {
         this.removeTrainfromTripId(trip.trip_id);
-        return null; 
+        return;
       }
-      
+
       // Get train coordinates
       const trainCoordinates = this.getTrainCoordinates(segment, time);
+      if (!trainCoordinates) return;
 
       // Get train color
       const trainColor = this.getTrainColor(segment, time);
@@ -600,9 +866,9 @@ class Map {
       // Get train angle
       const trainAngle = this.getTrainAngle(segment);
 
-      // Update train
+      // draw train
       const trainId = trip.trip_id;
-      this.updateTrain(trainId, trainCoordinates, trainColor, trainAngle);
+      this.drawTrain(trainId, trainCoordinates, trainColor, trainAngle);
     });
   }
 
@@ -611,7 +877,7 @@ class Map {
    * @param {number} timestamp 
    * @returns {string} the time string
    */
-  timestampToTimeStr(timestamp) {
+  timestampToTimeStr(timestamp: number): string {
     const hours = Math.floor(timestamp / 60);
     const minutes = timestamp % 60;
     return `${hours}:${minutes}`;
@@ -621,82 +887,84 @@ class Map {
    * Render the scene
    * @returns {void}
    */
-  render() {
-    this.setRenderFps(DEFAULT_RENDER_FPS);
-    this.setSimulationFps(DEFAULT_SIMULATION_FPS);
-    let t = 0;
-    let simulationPreviousTimestamp = null;
-  
+  render(): void {
+    let t: number = 0;
+    let simulationPreviousTimestamp: number | null = null;
+
     // SIMULATION
-    const updateSimulation = (timestamp) => {
-      this.updateTrains(t);
-  
-      // Print time on screen: TODO REMOVE
-      document.getElementById("time").innerHTML = this.timestampToTimeStr(t);
+    const updateSimulation = (timestamp: number) => {
+      this.drawTrains(t);
+
       t += 1;
       t = t % 1440;
-  
+
       if (!simulationPreviousTimestamp) {
         simulationPreviousTimestamp = timestamp;
       }
-  
+
       const simulationElapsed = timestamp - simulationPreviousTimestamp;
       simulationPreviousTimestamp = timestamp;
-  
+
       // Print actual simulation fps on screen
       let simulationFps = Math.round(1000 / simulationElapsed);
       const simulationFpsLabel = document.getElementById(SLIDER_SIMULATION_FPS_LABEL_ID);
-      simulationFpsLabel.innerHTML = `simulation FPS (${simulationFps})`;
-  
+      simulationFpsLabel!.innerHTML = `simulation FPS (${simulationFps})`;
+
       setTimeout(() => updateSimulation(performance.now()), this.simulationInterval);
     };
-  
+
     updateSimulation(performance.now());
-  
+
     // RENDER
-    const animate = (timestamp) => {
+    const animate = (timestamp: number) => {
       requestAnimationFrame(animate);
-  
+
       if (!this.renderPreviousTimestamp) {
         this.renderPreviousTimestamp = timestamp;
       }
-  
+
+      // Clock
+      this.clock.setTime(t);
+      this.clock.draw()
+
       const renderElapsed = timestamp - this.renderPreviousTimestamp;
 
       // Avoid flickering between days
       if (t === 0) {
         return;
       }
-  
+
       // If enough time has passed, render the scene
       if (renderElapsed > this.renderInterval) {
         this.renderPreviousTimestamp = timestamp;
         this.renderer.render(this.scene, this.camera);
-  
+
         // Print actual render fps on screen
         let currentFps = Math.round(1000 / renderElapsed);
         const sliderFpsLabel = document.getElementById(SLIDER_RENDER_FPS_LABEL_ID);
-        sliderFpsLabel.innerHTML = `render FPS (${currentFps})`;
+        sliderFpsLabel!.innerHTML = `render FPS (${currentFps})`;
       }
     };
-  
-    animate();
+
+    animate(performance.now());
   }
-  
+
   /**
    * Set the render fps
    * @param {number} value 
    * @returns {void}
    */
-  setRenderFps(value) {
+  setRenderFps(value: number): void {
     this.renderFps = value;
     this.renderInterval = 1000 / this.renderFps;
   }
 
   /**
-   * 
+   * Set the simulation fps
+   * @param {number} value
+   * @returns {void}
    */
-  setSimulationFps(value) {
+  setSimulationFps(value: number): void {
     this.simulationFps = value;
     this.simulationInterval = 1000 / this.simulationFps;
   }
@@ -704,5 +972,4 @@ class Map {
 
 document.addEventListener("DOMContentLoaded", () => {
   const map = new Map();
-  map.render();
 });
