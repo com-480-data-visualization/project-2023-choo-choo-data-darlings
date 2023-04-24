@@ -1,3 +1,32 @@
+.banner {
+  background-color: #2d327d;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100px; /* Set the height of the container based on the size of your SVGs */
+  width: 100%; /* Set the width to 100% to cover the entire page */
+  overflow: hidden; /* Hide any overflowing content */
+  font-size: 0; /* Remove any gaps between the SVGs */
+}
+
+.banner svg {
+  height: 100%; /* Set the height of the SVG to 100% to fill the container */
+  width: auto; /* Set the width to auto to maintain the aspect ratio of the SVG */
+  position: absolute; /* Position the SVG absolutely inside the container */
+  right: -100%; /* Start the SVGs off the right edge of the screen */
+  animation: banner-move 3s linear infinite; /* Use the banner-move animation to move the SVGs */
+  letter-spacing: -1em; /* Remove any gaps between the SVGs */
+}
+
+@keyframes banner-move {
+  0% {
+    right: -100%; /* Start the SVGs off the right edge of the screen */
+  }
+  100% {
+    right: 100%; /* Move the SVGs to the left edge of the screen */
+  }
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
