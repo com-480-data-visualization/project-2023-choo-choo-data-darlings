@@ -33,9 +33,25 @@ body {
   z-index: 9999;
 }
 
-#slider_fps {
+#select_train_color_mode {
+  left: 10px;
+  top: 30px;
+  position: absolute;
+  z-index: 9999;
+}
+
+#slider_render_fps {
   position: fixed;
   top: 10px;
+  right: 10px;
+  z-index: 9999;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#slider_simulation_fps {
+  position: fixed;
+  top: 30px;
   right: 10px;
   z-index: 9999;
   color: white;

@@ -12,8 +12,11 @@ import * as TWEEN from '@tweenjs/tween.js';
 
 const DIV_CONTAINER_ID = 'container';
 const SELECT_HEATMAP_ID = 'select_heatmap';
-const SLIDER_FPS_ID = 'slider_fps';
-const SLIDER_FPS_LABEL_ID = 'slider_fps_label';
+const SELECT_TRAIN_COLOR_MODE_ID = 'select_train_color_mode';
+const SLIDER_RENDER_FPS_ID = 'slider_render_fps';
+const SLIDER_RENDER_FPS_LABEL_ID = 'slider_render_fps_label';
+const SLIDER_SIMULATION_FPS_ID = 'slider_simulation_fps';
+const SLIDER_SIMULATION_FPS_LABEL_ID = 'slider_simulation_fps_label';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
 const TRIPS_PATH = 'data/train_trips_bins.json'
@@ -25,16 +28,25 @@ const SWISS_BORDER_LINE_NAME = 'swissborder';
 const HEATMAP_SCENE_NAME = 'heatmap';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
 
-const DEFAULT_FPS = 60;
+const DEFAULT_RENDER_FPS = 144;
+const DEFAULT_SIMULATION_FPS = 60;
 
 const MAX_TRAIN_DELAY = 3 * 60
+const MAX_TRAIN_SPEED = 7;
 
 const DEFAULT_HEATMAP_MODE = null;
+const DEFAULT_TRAIN_COLOR_MODE = 'uniform';
 
 const DEFAULT_MAP_BORDER_COLOR = 0xaaaaaa;
-const DEFAULT_TRAIN_COLOR = 0xddeeff;
+const DEFAULT_TRAIN_COLOR = 0xeeeeee;
 const EARLY_TRAIN_COLOR = '#00ff00';
 const LATE_TRAIN_COLOR = '#ff0000';
+const SLOW_TRAIN_COLOR = '#0000ff';
+const FAST_TRAIN_COLOR = '#ff00ff';
+
+const DEFAULT_HEATMAP_SCALE_FACTOR_INC = 0.02;
+const DEFAULT_HEATMAP_X_OFFSET = 10;
+const DEFAULT_HEATMAP_Y_OFFSET = 5;
 
 class Map {
   constructor() {
@@ -47,6 +59,8 @@ class Map {
 
     this.heatmapMode = null;
     this.addHeatMap(DEFAULT_HEATMAP_MODE);
+
+    this.setTrainColorMode(DEFAULT_TRAIN_COLOR_MODE);
   }
 
   /**
@@ -92,15 +106,33 @@ class Map {
       this.addHeatMap(heatmapMode);
     });
 
-    // FPS
-    const sliderFps = document.getElementById(SLIDER_FPS_ID);
+    // Train color mode
+    const selectTrainColor = document.getElementById(SELECT_TRAIN_COLOR_MODE_ID);
+    selectTrainColor.addEventListener('change', (event) => {
+      const trainColorMode = event.target.value;
+      this.setTrainColorMode(trainColorMode);
+    });
+
+    // Render FPS
+    const sliderFps = document.getElementById(SLIDER_RENDER_FPS_ID);
     sliderFps.addEventListener('input', (event) => {
       const fps = event.target.value;
       this.setRenderFps(fps);
 
       // Rename slider label
-      const sliderFpsLabel = document.getElementById(SLIDER_FPS_LABEL_ID);
-      sliderFpsLabel.innerHTML = `FPS (${fps})`;
+      const sliderFpsLabel = document.getElementById(SLIDER_RENDER_FPS_LABEL_ID);
+      sliderFpsLabel.innerHTML = `render FPS (${fps})`;
+    });
+
+    // Simulation FPS
+    const sliderSimulationFps = document.getElementById(SLIDER_SIMULATION_FPS_ID);
+    sliderSimulationFps.addEventListener('input', (event) => {
+      const fps = event.target.value;
+      this.setSimulationFps(fps);
+
+      // Rename slider label
+      const sliderSimulationFpsLabel = document.getElementById(SLIDER_SIMULATION_FPS_LABEL_ID);
+      sliderSimulationFpsLabel.innerHTML = `simulation FPS (${fps})`;
     });
   }
 
@@ -270,8 +302,8 @@ class Map {
           void main() {
             vec4 heatmapColor = texture2D(heatmapTexture, vUv);
             float intensity = heatmapColor.r + heatmapColor.g + heatmapColor.b;
-            vec3 lowColor = vec3(0.0, 0.0, 1.0);
-            vec3 highColor = vec3(0.7, 0.2, 1.0);
+            vec3 lowColor = vec3(0.0, 0.0, 0.2);
+            vec3 highColor = vec3(0.2, 0.0, 0.1);
             vec3 color = mix(lowColor, highColor, intensity);
             gl_FragColor = vec4(color.rgb, intensity);
           }
@@ -280,13 +312,16 @@ class Map {
       });
       const textureWidth = texture.image.width;
       const textureHeight = texture.image.height;
-      const scaleFactor = Math.min(this.width / textureWidth, this.height / textureHeight);
+      const scaleFactor = Math.min(this.width / textureWidth, this.height / textureHeight) + DEFAULT_HEATMAP_SCALE_FACTOR_INC;
 
       const geometry = new THREE.PlaneGeometry(textureWidth * scaleFactor, textureHeight * scaleFactor);
       this.heatmap = new THREE.Mesh(geometry, heatmapMaterial);
     
       // Position the heatmap to match the Swiss border
-      this.heatmap.position.set(this.width / 2, this.height / 2, -1); // Set a small z-offset to avoid z-fighting
+      this.heatmap.position.set(
+        this.width / 2 + DEFAULT_HEATMAP_X_OFFSET, 
+        this.height / 2 + DEFAULT_HEATMAP_Y_OFFSET, -1
+      ); // Set a small z-offset to avoid z-fighting
       this.heatmap.name = HEATMAP_SCENE_NAME;
       this.scene.add(this.heatmap);
     });
@@ -375,14 +410,11 @@ class Map {
   
   /**
    * Get the train coordinates at a given time
-   * @param {object} trip the trip informations
+   * @param {object} segment the segment informations
    * @param {number} time the time
    * @returns {array} the train coordinates
    */
-  getTrainCoordinates(trip, time) {
-    const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
-    if (!segment) { return null; }
-
+  getTrainCoordinates(segment, time) {
     const dTime = segment.end_time - segment.start_time;
     const dLon = segment.end_longitude - segment.start_longitude;
     const dLat = segment.end_latitude - segment.start_latitude;
@@ -393,43 +425,46 @@ class Map {
     return [lon, lat];
   }
 
-  fnv1a(str) {
-    let hash = 2166136261;
-    for (let i = 0; i < str.length; i++) {
-      hash ^= str.charCodeAt(i);
-      hash *= 16777619;
-    }
-    return hash;
+  setTrainColorMode(trainColorMode) {
+    this.trainColorMode = trainColorMode;
   }
 
   /**
    * Get the train color at a given time
-   * @param {*} trip the trip informations
+   * @param {*} segment the segment informations
    * @param {*} time the time
    * @returns {string} the train color
    */
-  getTrainColor(trip, time) {
-    const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
-    if (!segment) { return null; }
+  getTrainColor(segment, time) {
+    if (this.trainColorMode === DEFAULT_TRAIN_COLOR_MODE) {
+      return DEFAULT_TRAIN_COLOR;
+    } else if (this.trainColorMode === 'speed') {
+      const dTime = segment.end_time - segment.start_time;
 
-    // Get random color from hash of line_text TODO
-    //const hash = this.fnv1a(segment.line_text);
-    //const colorrdm = '#' + ('00000' + (hash & 0xFFFFFF).toString(16)).substr(-6);
-    //return colorrdm;
+      const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude]);
+      const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude]);
+      const dX = endCoordinates[0] - startCoordinates[0];
+      const dY = endCoordinates[1] - startCoordinates[1];
+      const distance = Math.sqrt(dX * dX + dY * dY);
+      const speed = distance / dTime;
 
-    const dTime = segment.end_time - segment.start_time;
-    const dDelay = segment.end_arrival_delay - segment.start_departure_delay;
+      const speedRatio = Math.min(Math.max(speed / MAX_TRAIN_SPEED, 0), 1);
+      const color = this.colorLerp(SLOW_TRAIN_COLOR, FAST_TRAIN_COLOR, speedRatio);
 
-    const delay = segment.start_departure_delay + dDelay * (time - segment.start_time) / dTime;
-    let delayRatio = Math.min(Math.max(delay / MAX_TRAIN_DELAY, 0), 1);
-    const color = this.colorLerp(EARLY_TRAIN_COLOR, LATE_TRAIN_COLOR, delayRatio);
-    return color;
+      return color;
+    } if (this.trainColorMode === 'delay') {
+      const dTime = segment.end_time - segment.start_time;
+      const dDelay = segment.end_arrival_delay - segment.start_departure_delay;
+
+      const delay = segment.start_departure_delay + dDelay * (time - segment.start_time) / dTime;
+      const delayRatio = Math.min(Math.max(delay / MAX_TRAIN_DELAY, 0), 1);
+      const color = this.colorLerp(EARLY_TRAIN_COLOR, LATE_TRAIN_COLOR, delayRatio);
+
+      return color;
+    }
   }
 
-  getTrainAngle(trip, time) {
-    const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
-    if (!segment) { return null; }
-
+  getTrainAngle(segment) {
     if (!this.angleCache) {
       this.angleCache = {};
     }
@@ -550,18 +585,21 @@ class Map {
     }
 
     trips.forEach((trip) => {
-      // Get train coordinates
-      const trainCoordinates = this.getTrainCoordinates(trip, time);
-      if (trainCoordinates === null) { 
+      // Find the current segment
+      const segment = trip.segments.find((segment) => segment.start_time <= time && time < segment.end_time);
+      if (!segment) { 
         this.removeTrainfromTripId(trip.trip_id);
-        return; 
+        return null; 
       }
+      
+      // Get train coordinates
+      const trainCoordinates = this.getTrainCoordinates(segment, time);
 
       // Get train color
-      const trainColor = this.getTrainColor(trip, time);
+      const trainColor = this.getTrainColor(segment, time);
 
       // Get train angle
-      const trainAngle = this.getTrainAngle(trip, time);
+      const trainAngle = this.getTrainAngle(segment);
 
       // Update train
       const trainId = trip.trip_id;
@@ -585,29 +623,61 @@ class Map {
    * @returns {void}
    */
   render() {
-    this.setRenderFps(DEFAULT_FPS);
+    this.setRenderFps(DEFAULT_RENDER_FPS);
+    this.setSimulationFps(DEFAULT_SIMULATION_FPS);
     let t = 0;
+    let simulationPreviousTimestamp = null;
   
+    // SIMULATION
+    const updateSimulation = (timestamp) => {
+      this.updateTrains(t);
+  
+      // Print time on screen: TODO REMOVE
+      document.getElementById("time").innerHTML = this.timestampToTimeStr(t);
+      t += 1;
+      t = t % 1440;
+  
+      if (!simulationPreviousTimestamp) {
+        simulationPreviousTimestamp = timestamp;
+      }
+  
+      const simulationElapsed = timestamp - simulationPreviousTimestamp;
+      simulationPreviousTimestamp = timestamp;
+  
+      // Print actual simulation fps on screen
+      let simulationFps = Math.round(1000 / simulationElapsed);
+      const simulationFpsLabel = document.getElementById(SLIDER_SIMULATION_FPS_LABEL_ID);
+      simulationFpsLabel.innerHTML = `simulation FPS (${simulationFps})`;
+  
+      setTimeout(() => updateSimulation(performance.now()), this.simulationInterval);
+    };
+  
+    updateSimulation(performance.now());
+  
+    // RENDER
     const animate = (timestamp) => {
       requestAnimationFrame(animate);
   
-      if (!this.previousTimestamp) {
-        this.previousTimestamp = timestamp;
+      if (!this.renderPreviousTimestamp) {
+        this.renderPreviousTimestamp = timestamp;
       }
   
-      const elapsed = timestamp - this.previousTimestamp;
+      const renderElapsed = timestamp - this.renderPreviousTimestamp;
+
+      // Avoid flickering between days
+      if (t === 0) {
+        return;
+      }
   
-      // If enough time has passed, update the scene and render it
-      if (elapsed > this.fpsInterval) {
-        this.previousTimestamp = timestamp;
-  
-        this.updateTrains(t);
+      // If enough time has passed, render the scene
+      if (renderElapsed > this.renderInterval) {
+        this.renderPreviousTimestamp = timestamp;
         this.renderer.render(this.scene, this.camera);
   
-        // Print time on screen: TODO REMOVE
-        document.getElementById("time").innerHTML = this.timestampToTimeStr(t);
-        t += 1;
-        t = t % 1440;
+        // Print actual render fps on screen
+        let currentFps = Math.round(1000 / renderElapsed);
+        const sliderFpsLabel = document.getElementById(SLIDER_RENDER_FPS_LABEL_ID);
+        sliderFpsLabel.innerHTML = `render FPS (${currentFps})`;
       }
     };
   
@@ -621,7 +691,15 @@ class Map {
    */
   setRenderFps(value) {
     this.renderFps = value;
-    this.fpsInterval = 1000 / this.renderFps;
+    this.renderInterval = 1000 / this.renderFps;
+  }
+
+  /**
+   * 
+   */
+  setSimulationFps(value) {
+    this.simulationFps = value;
+    this.simulationInterval = 1000 / this.simulationFps;
   }
 }
 
