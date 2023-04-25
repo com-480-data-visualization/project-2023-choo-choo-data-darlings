@@ -1,10 +1,8 @@
 import * as d3 from 'd3';
 import * as THREE from 'three';
-import { Clock } from './clock';
 
 /*
  * TODO:
- * Add speed as a color gradient for trains
  * Add a slider for the choice of MAX_TRAIN_DELAY
  * Be able to highlight train types (e.g. IC, IR, RE, etc.)
  * Add a legend for the heatmap (maybe)
@@ -14,10 +12,8 @@ import { Clock } from './clock';
 const DIV_CONTAINER_ID = 'container';
 const SELECT_HEATMAP_ID = 'select_heatmap';
 const SELECT_TRAIN_COLOR_MODE_ID = 'select_train_color_mode';
-const SLIDER_RENDER_FPS_ID = 'slider_render_fps';
-const SLIDER_RENDER_FPS_LABEL_ID = 'slider_render_fps_label';
-const SLIDER_SIMULATION_FPS_ID = 'slider_simulation_fps';
-const SLIDER_SIMULATION_FPS_LABEL_ID = 'slider_simulation_fps_label';
+const SLIDER_SIMULATION_SPEED_ID = 'slider_simulation_speed';
+const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider_simulation_speed_label';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
 const TRAINS_PATH = 'data/train_trips_bins.json'
@@ -30,8 +26,7 @@ const SWISS_BORDER_GROUP_NAME = 'swissborder_group';
 const HEATMAP_SCENE_NAME = 'heatmap';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
 
-const DEFAULT_RENDER_FPS = 144;
-const DEFAULT_SIMULATION_FPS = 60;
+const DEFAULT_SIMULATION_SPEED = 60;
 
 const MAX_TRAIN_DELAY = 3 * 60;
 const MAX_TRAIN_SPEED = 7;
@@ -223,12 +218,7 @@ class Map {
   private projectionCache: { [key: string]: [number, number] } = {};
   private angleCache: { [key: string]: number } = {};
 
-  // Render
-  private renderFps: number = DEFAULT_RENDER_FPS;
-  private renderInterval: number = 1000 / this.renderFps;
-  private simulationFps: number = DEFAULT_SIMULATION_FPS;
-  private simulationInterval: number = 1000 / this.simulationFps;
-  private renderPreviousTimestamp!: number | null;
+  private simulationSpeed: number = DEFAULT_SIMULATION_SPEED;
 
   constructor() {
     this.loadData().then(() => {
@@ -311,28 +301,16 @@ class Map {
       this.setTrainColorMode(trainColorMode);
     });
 
-    // Render FPS
-    const sliderFps = document.getElementById(SLIDER_RENDER_FPS_ID) as HTMLInputElement;
-    sliderFps.addEventListener('input', (event) => {
-      const target = event.target as HTMLInputElement;
-      const fps = target.value;
-      this.setRenderFps(Number(fps));
-
-      // Rename slider label
-      const sliderFpsLabel = document.getElementById(SLIDER_RENDER_FPS_LABEL_ID) as HTMLElement;
-      sliderFpsLabel.innerHTML = `render FPS (${fps})`;
-    });
-
     // Simulation FPS
-    const sliderSimulationFps = document.getElementById(SLIDER_SIMULATION_FPS_ID) as HTMLInputElement;
+    const sliderSimulationFps = document.getElementById(SLIDER_SIMULATION_SPEED_ID) as HTMLInputElement;
     sliderSimulationFps.addEventListener('input', (event) => {
       const target = event.target as HTMLInputElement;
       const fps = target.value;
       this.setSimulationFps(Number(fps));
 
       // Rename slider label
-      const sliderSimulationFpsLabel = document.getElementById(SLIDER_SIMULATION_FPS_LABEL_ID) as HTMLElement;
-      sliderSimulationFpsLabel.innerHTML = `simulation FPS (${fps})`;
+      const sliderSimulationFpsLabel = document.getElementById(SLIDER_SIMULATION_SPEED_LABEL_ID) as HTMLElement;
+      sliderSimulationFpsLabel.innerHTML = `simulation FPS`;
     });
   }
 
@@ -884,80 +862,41 @@ class Map {
   }
 
   /**
-   * Render the scene
-   * @returns {void}
-   */
-  render(): void {
-    let t: number = 0;
-    let simulationPreviousTimestamp: number | null = null;
+ * Render the scene
+ * @returns {void}
+ */
+render(): void {
+  let t: number = 0;
+  let previousTimestamp: number | null = null;
 
-    // SIMULATION
-    const updateSimulation = (timestamp: number) => {
-      this.drawTrains(t);
+  // RENDER AND SIMULATION
+  const animate = (timestamp: number) => {
+    requestAnimationFrame(animate);
 
-      t += 1;
-      t = t % 1440;
+    if (!previousTimestamp) {
+      previousTimestamp = timestamp;
+    }
 
-      if (!simulationPreviousTimestamp) {
-        simulationPreviousTimestamp = timestamp;
-      }
+    const elapsed = timestamp - previousTimestamp;
+    const dt = Math.min(this.simulationSpeed * elapsed / 1000, 1);
 
-      const simulationElapsed = timestamp - simulationPreviousTimestamp;
-      simulationPreviousTimestamp = timestamp;
+    // Update simulation
+    t += dt;
+    t = t % 1440;
+    this.drawTrains(t);
 
-      // Print actual simulation fps on screen
-      let simulationFps = Math.round(1000 / simulationElapsed);
-      const simulationFpsLabel = document.getElementById(SLIDER_SIMULATION_FPS_LABEL_ID);
-      simulationFpsLabel!.innerHTML = `simulation FPS (${simulationFps})`;
+    // Update clock
+    this.clock.setTime(t);
+    this.clock.draw();
 
-      setTimeout(() => updateSimulation(performance.now()), this.simulationInterval);
-    };
+    // Render the scene
+    this.renderer.render(this.scene, this.camera);
 
-    updateSimulation(performance.now());
+    previousTimestamp = timestamp;
+  };
 
-    // RENDER
-    const animate = (timestamp: number) => {
-      requestAnimationFrame(animate);
-
-      if (!this.renderPreviousTimestamp) {
-        this.renderPreviousTimestamp = timestamp;
-      }
-
-      // Clock
-      this.clock.setTime(t);
-      this.clock.draw()
-
-      const renderElapsed = timestamp - this.renderPreviousTimestamp;
-
-      // Avoid flickering between days
-      if (t === 0) {
-        return;
-      }
-
-      // If enough time has passed, render the scene
-      if (renderElapsed > this.renderInterval) {
-        this.renderPreviousTimestamp = timestamp;
-        this.renderer.render(this.scene, this.camera);
-
-        // Print actual render fps on screen
-        let currentFps = Math.round(1000 / renderElapsed);
-        const sliderFpsLabel = document.getElementById(SLIDER_RENDER_FPS_LABEL_ID);
-        sliderFpsLabel!.innerHTML = `render FPS (${currentFps})`;
-      }
-    };
-
-    animate(performance.now());
-  }
-
-  /**
-   * Set the render fps
-   * @param {number} value 
-   * @returns {void}
-   */
-  setRenderFps(value: number): void {
-    this.renderFps = value;
-    this.renderInterval = 1000 / this.renderFps;
-  }
+  animate(performance.now());
+}
 
   /**
    * Set the simulation fps
@@ -965,8 +904,7 @@ class Map {
    * @returns {void}
    */
   setSimulationFps(value: number): void {
-    this.simulationFps = value;
-    this.simulationInterval = 1000 / this.simulationFps;
+    this.simulationSpeed = value;
   }
 }
 
