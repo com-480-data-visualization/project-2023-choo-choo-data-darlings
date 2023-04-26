@@ -40,8 +40,8 @@ const DEFAULT_EDGE_COLOR = 'rgba(125, 125, 125, ' + DEFAULT_EDGE_OPACITY + ')';
 const SEARCH_ZOOM_RATIO = 0.05;
 
 const NETWORK_SOURCE = 'transports';
-const NODES_FILE_PATH = `/data/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
-const EDGES_FILE_PATH = `/data/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
+const NODES_FILE_PATH = `./data/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
+const EDGES_FILE_PATH = `./data/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
 
 class GraphManager {
   constructor() {

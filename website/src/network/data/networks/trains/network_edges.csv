@@ -1,0 +1,2659 @@
+source,source_name,target,target_name,weight
+8500010,Basel SBB,8500016,Basel St. Johann,11443
+8500010,Basel SBB,8500020,Muttenz,43662
+8500010,Basel SBB,8500021,Pratteln,522
+8500020,Muttenz,8500021,Pratteln,43361
+8500010,Basel SBB,8500023,Liestal,31297
+8500020,Muttenz,8500023,Liestal,569
+8500022,Frenkendorf-Füllinsdorf,8500023,Liestal,20603
+8500010,Basel SBB,8500090,Basel Bad Bf,33589
+8500023,Liestal,8500090,Basel Bad Bf,1990
+8500010,Basel SBB,8500105,Moutier,8229
+8500104,Court,8500105,Moutier,10333
+8500010,Basel SBB,8500109,Delémont,880
+8500028,Tecknau,8500109,Delémont,10488
+8500105,Moutier,8500109,Delémont,17499
+8500010,Basel SBB,8500113,Laufen,1410
+8500028,Tecknau,8500113,Laufen,8902
+8500109,Delémont,8500113,Laufen,19893
+8500010,Basel SBB,8500117,Aesch BL,141
+8500115,Grellingen,8500117,Aesch BL,538
+8500116,Duggingen,8500117,Aesch BL,20805
+8500010,Basel SBB,8500119,Münchenstein,26
+8500118,Dornach-Arlesheim,8500119,Münchenstein,20610
+8500010,Basel SBB,8500218,Olten,17090
+8500023,Liestal,8500218,Olten,9623
+8500026,Sissach,8500218,Olten,216
+8500027,Gelterkinden,8500218,Olten,9767
+8500028,Tecknau,8500218,Olten,534
+8500037,Trimbach,8500218,Olten,9428
+8500090,Basel Bad Bf,8500218,Olten,2253
+8500136,Basel Dreispitz,8500218,Olten,18959
+8500207,Solothurn,8500218,Olten,8796
+8500212,Oensingen,8500218,Olten,10342
+8500217,Olten Hammer,8500218,Olten,19053
+8500010,Basel SBB,8500301,Rheinfelden,17295
+8500021,Pratteln,8500301,Rheinfelden,359
+8500300,Kaiseraugst,8500301,Rheinfelden,22716
+8500010,Basel SBB,8503000,Zürich HB,13984
+8500090,Basel Bad Bf,8503000,Zürich HB,4602
+8500218,Olten,8503000,Zürich HB,10025
+8500309,Brugg AG,8503000,Zürich HB,27446
+8500320,Stein-Säckingen,8503000,Zürich HB,10017
+8500329,Koblenz,8503000,Zürich HB,3005
+8501120,Lausanne,8503000,Zürich HB,15964
+8501609,Brig,8503000,Zürich HB,7004
+8502113,Aarau,8503000,Zürich HB,18022
+8502115,Wildegg,8503000,Zürich HB,488
+8502119,Lenzburg,8503000,Zürich HB,35256
+8502204,Zug,8503000,Zürich HB,25218
+8502206,Baar,8503000,Zürich HB,10503
+8502208,Horgen Oberdorf,8503000,Zürich HB,251
+8502209,Oberrieden Dorf,8503000,Zürich HB,19369
+8502215,Muri AG,8503000,Zürich HB,3492
+8502229,Urdorf Weihermatt,8503000,Zürich HB,35459
+8500021,Pratteln,8500022,Frenkendorf-Füllinsdorf,20739
+8500021,Pratteln,8500300,Kaiseraugst,22711
+8500023,Liestal,8500024,Lausen,20387
+8500023,Liestal,8500025,Itingen,289
+8500024,Lausen,8500025,Itingen,20411
+8500023,Liestal,8500026,Sissach,20497
+8500025,Itingen,8500026,Sissach,20702
+8500026,Sissach,8500027,Gelterkinden,29664
+8500026,Sissach,8500028,Tecknau,25
+8500027,Gelterkinden,8500028,Tecknau,19899
+8500026,Sissach,8500031,Diepflingen,10182
+8500026,Sissach,8502113,Aarau,10807
+8500218,Olten,8502113,Aarau,1823
+8500309,Brugg AG,8502113,Aarau,18748
+8501037,Morges,8502113,Aarau,7942
+8501120,Lausanne,8502113,Aarau,967
+8502001,Zofingen,8502113,Aarau,8041
+8502010,St. Erhard-Knutwil,8502113,Aarau,7041
+8502103,Suhr,8502113,Aarau,34467
+8502105,Othmarsingen,8502113,Aarau,252
+8502106,Mägenwil,8502113,Aarau,13520
+8502112,Schönenwerd SO,8502113,Aarau,19565
+8500031,Diepflingen,8500032,Sommerau,10182
+8500032,Sommerau,8500033,Rümlingen,10182
+8500033,Rümlingen,8500034,Buckten,10182
+8500034,Buckten,8500035,Läufelfingen,10182
+8500035,Läufelfingen,8500037,Trimbach,9678
+8500037,Trimbach,8500240,Olten RB,60
+8500090,Basel Bad Bf,8503424,Schaffhausen,7357
+8503000,Zürich HB,8503424,Schaffhausen,7921
+8503400,Bülach,8503424,Schaffhausen,8835
+8503423,Neuhausen,8503424,Schaffhausen,47459
+8500100,Tavannes,8500101,Reconvilier,14686
+8500100,Tavannes,8500162,Tramelan-Dessous,13978
+8500101,Reconvilier,8500102,Malleray-Bévilard,14686
+8500102,Malleray-Bévilard,8500103,Sorvilier,10333
+8500102,Malleray-Bévilard,8500135,Pontenet,4353
+8500105,Moutier,8500135,Pontenet,10333
+8500103,Sorvilier,8500104,Court,10333
+8500105,Moutier,8500206,Solothurn West,9092
+8500205,Bellach,8500206,Solothurn West,19166
+8500109,Delémont,8500120,Courtételle,10469
+8500119,Münchenstein,8500120,Courtételle,8969
+8500109,Delémont,8500159,Grenchen Nord,512
+8500113,Laufen,8500159,Grenchen Nord,8484
+8500126,Porrentruy,8500159,Grenchen Nord,500
+8500144,Buix,8500159,Grenchen Nord,7984
+8500113,Laufen,8500114,Zwingen,21621
+8500114,Zwingen,8500115,Grellingen,21351
+8500115,Grellingen,8500116,Duggingen,20491
+8500117,Aesch BL,8500118,Dornach-Arlesheim,21199
+8500119,Münchenstein,8500136,Basel Dreispitz,11641
+8500126,Porrentruy,8500136,Basel Dreispitz,9532
+8500120,Courtételle,8500121,Courfaivre,19701
+8500121,Courfaivre,8500122,Bassecourt,19942
+8500122,Bassecourt,8500123,Glovelier,19986
+8500123,Glovelier,8500124,St-Ursanne,19978
+8500123,Glovelier,8500169,Muriaux,7999
+8500124,St-Ursanne,8500125,Courgenay,19978
+8500125,Courgenay,8500126,Porrentruy,19978
+8500126,Porrentruy,8500127,Courtemaîche,9881
+8500126,Porrentruy,8500186,Alle,13067
+8500127,Courtemaîche,8500128,Boncourt,9881
+8500128,Boncourt,8500141,Courchavon,9838
+8500135,Pontenet,8504300,Biel/Bienne,1787
+8500159,Grenchen Nord,8504300,Biel/Bienne,17047
+8500207,Solothurn,8504300,Biel/Bienne,9305
+8500218,Olten,8504300,Biel/Bienne,9862
+8503000,Zürich HB,8504300,Biel/Bienne,603
+8503016,Zürich Flughafen,8504300,Biel/Bienne,598
+8504221,Neuchâtel,8504300,Biel/Bienne,19131
+8504229,Tüscherz,8504300,Biel/Bienne,13600
+8500135,Pontenet,8504304,Sonceboz-Sombeval,12899
+8504300,Biel/Bienne,8504304,Sonceboz-Sombeval,9449
+8504303,La Heutte,8504304,Sonceboz-Sombeval,10180
+8500141,Courchavon,8500143,Grandgourt,3097
+8500141,Courchavon,8500144,Buix,6770
+8500143,Grandgourt,8500144,Buix,3053
+8500159,Grenchen Nord,8501008,Genève,170
+8500218,Olten,8501008,Genève,8173
+8501007,Vernier,8501008,Genève,20560
+8500159,Grenchen Nord,8501120,Lausanne,282
+8500218,Olten,8501120,Lausanne,10040
+8501008,Genève,8501120,Lausanne,3437
+8501026,Genève-Aéroport,8501120,Lausanne,15322
+8501037,Morges,8501120,Lausanne,16873
+8501103,Vallorbe,8501120,Lausanne,1684
+8501118,Renens VD,8501120,Lausanne,71758
+8500162,Tramelan-Dessous,8500164,Tramelan-Chalet,9199
+8500162,Tramelan-Dessous,8500170,Tramelan,4779
+8500167,Les Breuleux-Eglise,8500170,Tramelan,9502
+8500164,Tramelan-Chalet,8500165,Le Pied-d'Or,9516
+8500165,Le Pied-d'Or,8500167,Les Breuleux-Eglise,9516
+8500167,Les Breuleux-Eglise,8500173,Les Breuleux,991
+8500172,La Chaux-des-Breuleux,8500173,Les Breuleux,9516
+8500169,Muriaux,8500174,Le Noirmont,13925
+8500173,Les Breuleux,8500174,Le Noirmont,10479
+8500170,Tramelan,8500171,Les Reussilles,9446
+8500171,Les Reussilles,8500172,La Chaux-des-Breuleux,9516
+8500174,Le Noirmont,8500175,Le Creux-des-Biches,11200
+8500174,Le Noirmont,8500190,Les Emibois,3169
+8500177,Les Bois,8500190,Les Emibois,366
+8500184,La Chaux-de-Fonds-Est,8500190,Les Emibois,10430
+8500175,Le Creux-des-Biches,8500176,Le Boéchet,11296
+8500176,Le Boéchet,8500177,Les Bois,11296
+8500177,Les Bois,8500178,La Ferrière,10930
+8500178,La Ferrière,8500179,La Cibourg,10930
+8500179,La Cibourg,8500180,La Large-Journée,10900
+8500179,La Cibourg,8500184,La Chaux-de-Fonds-Est,28
+8500181,La Chaux-d'Abel,8500184,La Chaux-de-Fonds-Est,10930
+8500180,La Large-Journée,8500181,La Chaux-d'Abel,10930
+8500184,La Chaux-de-Fonds-Est,8504314,La Chaux-de-Fonds,556
+8500191,Saignelégier,8504314,La Chaux-de-Fonds,3141
+8500199,Combe-Tabeillon,8504314,La Chaux-de-Fonds,7249
+8504237,Les Hauts-Geneveys,8504314,La Chaux-de-Fonds,19009
+8504310,St-Imier,8504314,La Chaux-de-Fonds,7267
+8504312,Renan BE,8504314,La Chaux-de-Fonds,10335
+8500186,Alle,8500187,Vendlincourt,11472
+8500187,Vendlincourt,8500188,Bonfol,8033
+8500190,Les Emibois,8500191,Saignelégier,13925
+8500191,Saignelégier,8500192,Le Bémont JU,7998
+8500192,Le Bémont JU,8500194,Pré-Petitjean,7999
+8500194,Pré-Petitjean,8500195,La Combe,7999
+8500195,La Combe,8500196,Bollement,7999
+8500196,Bollement,8500199,Combe-Tabeillon,7999
+8500200,Pieterlen,8500201,Lengnau BE,19169
+8500201,Lengnau BE,8500202,Grenchen Süd,19169
+8500202,Grenchen Süd,8500203,Bettlach,19166
+8500202,Grenchen Süd,8500207,Solothurn,11000
+8500206,Solothurn West,8500207,Solothurn,33028
+8500203,Bettlach,8500204,Selzach,19166
+8500204,Selzach,8500205,Bellach,19166
+8500207,Solothurn,8500208,Luterbach-Attisholz,19253
+8500207,Solothurn,8500211,Niederbipp,18340
+8500210,Wangen an der Aare,8500211,Niederbipp,19094
+8500207,Solothurn,8500212,Oensingen,10341
+8500211,Niederbipp,8500212,Oensingen,55775
+8500207,Solothurn,8500260,Crémines-Zoo,8944
+8500207,Solothurn,8500261,Langendorf,502
+8500218,Olten,8500261,Langendorf,4449
+8500260,Crémines-Zoo,8500261,Langendorf,9092
+8500207,Solothurn,8500272,Solothurn Sternen,250
+8500212,Oensingen,8500272,Solothurn Sternen,18341
+8500207,Solothurn,8504410,Zollikofen,878
+8503225,Ziegelbrücke,8504410,Zollikofen,27
+8503508,Dietikon,8504410,Zollikofen,27
+8504300,Biel/Bienne,8504410,Zollikofen,21169
+8500207,Solothurn,8507000,Bern,19485
+8500218,Olten,8507000,Bern,25487
+8501609,Brig,8507000,Bern,5850
+8503000,Zürich HB,8507000,Bern,2595
+8503001,Zürich Altstetten,8507000,Bern,214
+8503225,Ziegelbrücke,8507000,Bern,6813
+8503504,Baden,8507000,Bern,7576
+8503508,Dietikon,8507000,Bern,188
+8504100,Fribourg/Freiburg,8507000,Bern,1550
+8504101,Düdingen,8507000,Bern,5988
+8504103,Flamatt,8507000,Bern,484
+8504115,Thörishaus Dorf,8507000,Bern,17806
+8504117,Oberwangen,8507000,Bern,1221
+8504194,Laupen BE,8507000,Bern,18036
+8504410,Zollikofen,8507000,Bern,44820
+8504411,Münchenbuchsee,8507000,Bern,11835
+8504414,Lyss,8507000,Bern,18964
+8504441,Studen BE,8507000,Bern,18350
+8504483,Ins,8507000,Bern,9499
+8504486,Gümmenen,8507000,Bern,248
+8504489,Bern Bümpliz Nord,8507000,Bern,7529
+8504495,Bern Stöckacker,8507000,Bern,26715
+8505000,Luzern,8507000,Bern,9689
+8506121,Romanshorn,8507000,Bern,8281
+8506302,St. Gallen,8507000,Bern,8401
+8500207,Solothurn,8507100,Thun,7011
+8507000,Bern,8507100,Thun,27040
+8507006,Münsingen,8507100,Thun,8004
+8507009,Uttigen,8507100,Thun,19065
+8507094,Uetendorf Allmend,8507100,Thun,19352
+8500207,Solothurn,8508005,Burgdorf,10348
+8503221,Siebnen-Wangen,8508005,Burgdorf,27
+8504410,Zollikofen,8508005,Burgdorf,27
+8507000,Bern,8508005,Burgdorf,18616
+8507100,Thun,8508005,Burgdorf,9347
+8508003,Hindelbank,8508005,Burgdorf,236
+8508004,Lyssach,8508005,Burgdorf,19555
+8500207,Solothurn,8508066,Lohn-Lüterkofen,3755
+8508064,Bätterkinden,8508066,Lohn-Lüterkofen,20128
+8500207,Solothurn,8508085,Aefligen,592
+8508005,Burgdorf,8508085,Aefligen,236
+8508084,Kirchberg-Alchenflüh,8508085,Aefligen,17870
+8500208,Luterbach-Attisholz,8500209,Deitingen,19107
+8500209,Deitingen,8500210,Wangen an der Aare,19108
+8500212,Oensingen,8500213,Oberbuchsiten,19261
+8500212,Oensingen,8500287,Wiedlisbach,751
+8500286,Attiswil,8500287,Wiedlisbach,18590
+8500212,Oensingen,8500292,Klus,13729
+8500212,Oensingen,8508100,Langenthal,17632
+8500218,Olten,8508100,Langenthal,114
+8502000,Aarburg-Oftringen,8508100,Langenthal,8080
+8503504,Baden,8508100,Langenthal,8728
+8508008,Herzogenbuchsee,8508100,Langenthal,18601
+8500213,Oberbuchsiten,8500214,Egerkingen,19263
+8500214,Egerkingen,8500215,Hägendorf,19263
+8500215,Hägendorf,8500216,Wangen bei Olten,18836
+8500216,Wangen bei Olten,8500217,Olten Hammer,19263
+8500218,Olten,8500309,Brugg AG,46830
+8500305,Frick,8500309,Brugg AG,18145
+8500218,Olten,8501037,Morges,596
+8501008,Genève,8501037,Morges,277
+8501026,Genève-Aéroport,8501037,Morges,7595
+8501030,Nyon,8501037,Morges,16576
+8501031,Gland,8501037,Morges,642
+8501035,Allaman,8501037,Morges,19779
+8501036,St-Prex,8501037,Morges,18427
+8500218,Olten,8501605,Visp,4898
+8501506,Sion,8501605,Visp,176
+8501509,Sierre/Siders,8501605,Visp,8290
+8501601,Leuk,8501605,Visp,9488
+8501604,Raron,8501605,Visp,17673
+8500218,Olten,8502000,Aarburg-Oftringen,9527
+8500309,Brugg AG,8502000,Aarburg-Oftringen,27084
+8500218,Olten,8502001,Zofingen,18838
+8501120,Lausanne,8502001,Zofingen,8473
+8502000,Aarburg-Oftringen,8502001,Zofingen,19757
+8500218,Olten,8502110,Dulliken,9588
+8500309,Brugg AG,8502110,Dulliken,251
+8502105,Othmarsingen,8502110,Dulliken,735
+8500218,Olten,8505000,Luzern,9813
+8502007,Sursee,8505000,Luzern,9170
+8502021,Emmenbrücke,8505000,Luzern,9793
+8502028,Emmenbrücke Gersag,8505000,Luzern,982
+8502042,Hochdorf Schönau,8505000,Luzern,4687
+8502119,Lenzburg,8505000,Luzern,15693
+8502230,Zug Chollermüli,8505000,Luzern,10276
+8502306,Hünenberg Chämleten,8505000,Luzern,9523
+8503000,Zürich HB,8505000,Luzern,8904
+8503010,Zürich Enge,8505000,Luzern,815
+8503202,Thalwil,8505000,Luzern,9211
+8503284,Biberbrugg,8505000,Luzern,6543
+8504023,Romont FR,8505000,Luzern,30
+8504100,Fribourg/Freiburg,8505000,Luzern,7739
+8500220,Dotzigen,8500221,Büren an der Aare,12352
+8500221,Büren an der Aare,8504414,Lyss,12352
+8504300,Biel/Bienne,8504414,Lyss,17354
+8504404,Aarberg,8504414,Lyss,9553
+8504412,Schüpfen,8504414,Lyss,2945
+8504413,Suberg-Grossaffoltern,8504414,Lyss,18977
+8500261,Langendorf,8500262,Lommiswil,11073
+8500262,Lommiswil,8500263,Im Holz,9594
+8500263,Im Holz,8500264,Oberdorf SO,9594
+8500264,Oberdorf SO,8500265,Gänsbrunnen,9594
+8500265,Gänsbrunnen,8500266,Corcelles BE,9092
+8500266,Corcelles BE,8500267,Crémines,9092
+8500267,Crémines,8500268,Grandval,9092
+8500272,Solothurn Sternen,8500273,St. Katharinen,18590
+8500273,St. Katharinen,8500274,Feldbrunnen,18590
+8500274,Feldbrunnen,8500275,Bei den Weihern,18590
+8500275,Bei den Weihern,8500280,Solothurn Baseltor,18590
+8500280,Solothurn Baseltor,8500283,Riedholz,18590
+8500283,Riedholz,8500285,Flumenthal,18590
+8500285,Flumenthal,8500286,Attiswil,18590
+8500287,Wiedlisbach,8500288,Oberbipp,19090
+8500288,Oberbipp,8500289,Buchli,19092
+8500289,Buchli,8518690,Niederbipp Industrie,19092
+8508193,Aarwangen Vorstadt,8518690,Niederbipp Industrie,17705
+8500292,Klus,8500293,Thalbrücke,13729
+8500293,Thalbrücke,8500294,Balsthal,13729
+8500301,Rheinfelden,8500302,Möhlin,23075
+8500301,Rheinfelden,8500305,Frick,17283
+8500302,Möhlin,8500305,Frick,359
+8500304,Eiken,8500305,Frick,11704
+8500302,Möhlin,8500303,Mumpf,21226
+8500302,Möhlin,8500313,Rheinfelden Augarten,989
+8500303,Mumpf,8500313,Rheinfelden Augarten,9522
+8500305,Frick,8500313,Rheinfelden Augarten,11216
+8500309,Brugg AG,8500313,Rheinfelden Augarten,488
+8500302,Möhlin,8500320,Stein-Säckingen,501
+8500309,Brugg AG,8500320,Stein-Säckingen,10003
+8500313,Rheinfelden Augarten,8500320,Stein-Säckingen,22215
+8500303,Mumpf,8500304,Eiken,11704
+8500309,Brugg AG,8502105,Othmarsingen,9805
+8502000,Aarburg-Oftringen,8502105,Othmarsingen,8730
+8500320,Stein-Säckingen,8500322,Laufenburg,9737
+8500320,Stein-Säckingen,8517131,Pratteln Salina Raurica,11734
+8500322,Laufenburg,8517131,Pratteln Salina Raurica,9492
+8500329,Koblenz,8503400,Bülach,18024
+8503006,Zürich Oerlikon,8503400,Bülach,8835
+8503312,Oberglatt ZH,8503400,Bülach,3396
+8503313,Niederglatt ZH,8503400,Bülach,19097
+8500329,Koblenz,8503408,Rekingen AG,752
+8503405,Zweidlen,8503408,Rekingen AG,17955
+8500329,Koblenz,8503409,Bad Zurzach,9828
+8503408,Rekingen AG,8503409,Bad Zurzach,18706
+8500329,Koblenz,8503501,Döttingen,9181
+8503306,Dietlikon,8503501,Döttingen,3005
+8503411,Koblenz Dorf,8503501,Döttingen,10078
+8501000,Zimeysa,8501001,La Plaine,16753
+8501000,Zimeysa,8501002,Russin,3806
+8501001,La Plaine,8501002,Russin,16503
+8501001,La Plaine,8501003,Satigny,250
+8501002,Russin,8501003,Satigny,20198
+8501003,Satigny,8501006,Meyrin,20309
+8501003,Satigny,8501007,Vernier,250
+8501006,Meyrin,8501007,Vernier,20279
+8501008,Genève,8501011,Les Tuileries,35953
+8501008,Genève,8501022,Versoix,707
+8501021,Genthod-Bellevue,8501022,Versoix,34892
+8501008,Genève,8501023,Coppet,20412
+8501022,Versoix,8501023,Coppet,36191
+8501008,Genève,8501026,Genève-Aéroport,40429
+8501023,Coppet,8501026,Genève-Aéroport,3476
+8501008,Genève,8501030,Nyon,624
+8501022,Versoix,8501030,Nyon,471
+8501023,Coppet,8501030,Nyon,16695
+8501026,Genève-Aéroport,8501030,Nyon,19842
+8501008,Genève,8501031,Gland,193
+8501023,Coppet,8501031,Gland,100
+8501030,Nyon,8501031,Gland,20830
+8501008,Genève,8516155,Lancy-Pont-Rouge,3162
+8501023,Coppet,8516155,Lancy-Pont-Rouge,35719
+8501120,Lausanne,8516155,Lancy-Pont-Rouge,1703
+8501200,Vevey,8516155,Lancy-Pont-Rouge,6737
+8501403,St-Maurice,8516155,Lancy-Pont-Rouge,6524
+8501506,Sion,8516155,Lancy-Pont-Rouge,473
+8501011,Les Tuileries,8501012,Creux-de-Genthod,35955
+8501012,Creux-de-Genthod,8501013,Pont-Céard,35955
+8501013,Pont-Céard,8501014,Mies,35955
+8501014,Mies,8501015,Tannay,35955
+8501015,Tannay,8501020,Chambésy,35955
+8501020,Chambésy,8501021,Genthod-Bellevue,35955
+8501023,Coppet,8501035,Allaman,249
+8501031,Gland,8501035,Allaman,100
+8501033,Rolle,8501035,Allaman,19727
+8501023,Coppet,8516283,Genève-Sécheron,236
+8516274,Chêne-Bourg,8516283,Genève-Sécheron,35717
+8501030,Nyon,8501053,La Vuarpillière,25194
+8501031,Gland,8501033,Rolle,19647
+8501033,Rolle,8501118,Renens VD,112
+8501037,Morges,8501118,Renens VD,20082
+8501042,Etoy,8501118,Renens VD,9458
+8501048,Lonay-Préverenges,8501118,Renens VD,8969
+8501117,Bussigny,8501118,Renens VD,32315
+8501035,Allaman,8501036,St-Prex,18427
+8501037,Morges,8501042,Etoy,18427
+8501037,Morges,8501054,La Gottaz,17084
+8501037,Morges,8501200,Vevey,30
+8501120,Lausanne,8501200,Vevey,34177
+8501124,Cully,8501200,Vevey,8731
+8501127,St-Saphorin,8501200,Vevey,9794
+8501037,Morges,8504200,Yverdon-les-Bains,413
+8501120,Lausanne,8504200,Yverdon-les-Bains,14267
+8501200,Vevey,8504200,Yverdon-les-Bains,564
+8501400,Aigle,8504200,Yverdon-les-Bains,977
+8501402,Bex,8504200,Yverdon-les-Bains,7105
+8501403,St-Maurice,8504200,Yverdon-les-Bains,248
+8503000,Zürich HB,8504200,Yverdon-les-Bains,8253
+8503016,Zürich Flughafen,8504200,Yverdon-les-Bains,8688
+8504144,Yverdon-Champ Pittet,8504200,Yverdon-les-Bains,472
+8504181,Givisiez,8504200,Yverdon-les-Bains,17256
+8501042,Etoy,8501045,Denges-Echandens,8969
+8501045,Denges-Echandens,8501047,Morges-St-Jean,8969
+8501047,Morges-St-Jean,8501048,Lonay-Préverenges,8969
+8501053,La Vuarpillière,8501055,Les Pralies,7248
+8501053,La Vuarpillière,8501056,Sus-Châtel,9228
+8501055,Les Pralies,8501056,Sus-Châtel,7262
+8501053,La Vuarpillière,8501059,Les Plantaz,8718
+8501058,La Joy-Clinique,8501059,Les Plantaz,16432
+8501054,La Gottaz,8501080,Le Marais,17084
+8501055,Les Pralies,8501060,La Cure,2231
+8501059,Les Plantaz,8501060,La Cure,7248
+8501056,Sus-Châtel,8501057,La Chèvrerie-Monteret,16432
+8501057,La Chèvrerie-Monteret,8501058,La Joy-Clinique,16336
+8501059,Les Plantaz,8501062,St-Cergue,9228
+8501061,La Givrine,8501062,St-Cergue,9493
+8501059,Les Plantaz,8501066,Genolier,8718
+8501065,Le Muids,8501066,Genolier,15796
+8501060,La Cure,8501061,La Givrine,9478
+8501062,St-Cergue,8501063,Arzier,16378
+8501062,St-Cergue,8519077,St-Cergue Les Cheseaux,2203
+8501069,L'Asse,8519077,St-Cergue Les Cheseaux,7248
+8501063,Arzier,8501064,Bassins,16378
+8501064,Bassins,8501065,Le Muids,16378
+8501066,Genolier,8501067,Givrins,25150
+8501067,Givrins,8501068,Trélex,25150
+8501068,Trélex,8501069,L'Asse,25179
+8501080,Le Marais,8501081,Chigny,17084
+8501081,Chigny,8501082,Chardonney-Château,17084
+8501082,Chardonney-Château,8501083,Reverolle,17084
+8501083,Reverolle,8501085,Ballens-Froideville,17084
+8501084,Le Manège,8501087,Mauraz,6206
+8501085,Ballens-Froideville,8501090,Prélionne,17084
+8501087,Mauraz,8501088,Tuilerie,6206
+8501088,Tuilerie,8501089,Villars-Bozon,6206
+8501089,Villars-Bozon,8501094,Apples,7478
+8501093,Yens,8501094,Apples,7100
+8501089,Villars-Bozon,8501097,Pampigny-Sévery,888
+8501094,Apples,8501097,Pampigny-Sévery,8366
+8501090,Prélionne,8501091,Vufflens-le-Château,17084
+8501091,Vufflens-le-Château,8501092,Bussy-Chardonney,17084
+8501092,Bussy-Chardonney,8501093,Yens,17074
+8501094,Apples,8501095,Ballens,17084
+8501095,Ballens,8501096,Bière,17084
+8501097,Pampigny-Sévery,8501098,Montricher,8346
+8501098,Montricher,8501099,L'Isle,4125
+8501100,Le Pont,8501103,Vallorbe,6872
+8501100,Le Pont,8501104,Le Day,2988
+8501103,Vallorbe,8501104,Le Day,18171
+8501103,Vallorbe,8501106,Croy-Romainmôtier,1325
+8501104,Le Day,8501106,Croy-Romainmôtier,1401
+8501105,Bretonnières,8501106,Croy-Romainmôtier,9892
+8501103,Vallorbe,8501108,La Sarraz,26
+8501107,Arnex,8501108,La Sarraz,12618
+8501103,Vallorbe,8501151,Les Charbonnières,150
+8501104,Le Day,8501151,Les Charbonnières,9710
+8501104,Le Day,8501105,Bretonnières,9892
+8501106,Croy-Romainmôtier,8501107,Arnex,12618
+8501108,La Sarraz,8501115,Cossonay-Penthalaz,11890
+8501112,Chavornay,8501115,Cossonay-Penthalaz,9367
+8501114,Eclépens,8501115,Cossonay-Penthalaz,11148
+8501110,Ependes VD,8501111,Essert-Pittet,11133
+8501111,Essert-Pittet,8501112,Chavornay,11133
+8501112,Chavornay,8501113,Bavois,11133
+8501112,Chavornay,8501191,Orbe,4701
+8501113,Bavois,8501114,Eclépens,11148
+8501115,Cossonay-Penthalaz,8501116,Vufflens-la-Ville,18952
+8501115,Cossonay-Penthalaz,8501117,Bussigny,13378
+8501116,Vufflens-la-Ville,8501117,Bussigny,18937
+8501120,Lausanne,8501121,Pully,18298
+8501120,Lausanne,8501124,Cully,236
+8501122,Lutry,8501124,Cully,8495
+8501123,Villette VD,8501124,Cully,9794
+8501120,Lausanne,8501300,Montreux,1650
+8501198,Château-d'Oex La Palaz,8501300,Montreux,9242
+8501200,Vevey,8501300,Montreux,26500
+8501203,Clarens,8501300,Montreux,19049
+8501120,Lausanne,8504000,Pully-Nord,19275
+8501120,Lausanne,8504012,Puidoux,9461
+8501200,Vevey,8504012,Puidoux,9114
+8504011,Grandvaux,8504012,Puidoux,19275
+8501120,Lausanne,8504014,Palézieux,908
+8502007,Sursee,8504014,Palézieux,8472
+8504007,Moreillon,8504014,Palézieux,100
+8504012,Puidoux,8504014,Palézieux,28736
+8501120,Lausanne,8504100,Fribourg/Freiburg,236
+8502007,Sursee,8504100,Fribourg/Freiburg,188
+8503000,Zürich HB,8504100,Fribourg/Freiburg,683
+8503016,Zürich Flughafen,8504100,Fribourg/Freiburg,7937
+8504023,Romont FR,8504100,Fribourg/Freiburg,9386
+8504030,Villars-sur-Glâne,8504100,Fribourg/Freiburg,15377
+8504086,Bulle,8504100,Fribourg/Freiburg,17710
+8501120,Lausanne,8518452,Prilly-Malley,9894
+8501400,Aigle,8518452,Prilly-Malley,7330
+8501403,St-Maurice,8518452,Prilly-Malley,401
+8504200,Yverdon-les-Bains,8518452,Prilly-Malley,284
+8504201,Grandson,8518452,Prilly-Malley,11052
+8501121,Pully,8501122,Lutry,18298
+8501122,Lutry,8501123,Villette VD,9794
+8501124,Cully,8501125,Epesses,9794
+8501125,Epesses,8501126,Rivaz,9794
+8501126,Rivaz,8501127,St-Saphorin,9794
+8501151,Les Charbonnières,8501152,Le Séchey,9860
+8501152,Le Séchey,8501153,Le Lieu,9860
+8501153,Le Lieu,8501154,Les Esserts-de-Rive,9860
+8501154,Les Esserts-de-Rive,8501155,Le Rocheray,9860
+8501155,Le Rocheray,8501156,Le Solliat-La Golisse,9860
+8501156,Le Solliat-La Golisse,8501157,Le Sentier-L'Orient,9860
+8501157,Le Sentier-L'Orient,8501159,Le Brassus,9860
+8501159,Le Brassus,8530783,Chez-le-Maître-Ecoles,9860
+8501160,Lausanne-Chauderon,8501162,Union-Prilly,21736
+8501162,Union-Prilly,8501163,Prilly-Chasseur,21736
+8501163,Prilly-Chasseur,8501164,Cery-Fleur-de-Lys,29576
+8501164,Cery-Fleur-de-Lys,8501165,Jouxtens-Mézery,21905
+8501165,Jouxtens-Mézery,8501166,Romanel-sur-Lausanne,23014
+8501166,Romanel-sur-Lausanne,8501168,Vernand-Camarès,32042
+8501168,Vernand-Camarès,8501169,Cheseaux,32042
+8501169,Cheseaux,8501170,Bel-Air LEB,32042
+8501170,Bel-Air LEB,8501171,Etagnières,32042
+8501171,Etagnières,8501172,Assens,32042
+8501172,Assens,8501173,Echallens,32042
+8501173,Echallens,8501174,Sur Roche,18373
+8501173,Echallens,8501181,Lausanne-Flon,14651
+8501178,Grésaley,8501181,Lausanne-Flon,17164
+8501173,Echallens,8587727,Les Ripes,115
+8501178,Grésaley,8587727,Les Ripes,142
+8501181,Lausanne-Flon,8587727,Les Ripes,21736
+8501174,Sur Roche,8501175,Sugnens,18539
+8501175,Sugnens,8501176,Fey,18539
+8501176,Fey,8501177,Bercher,18539
+8501177,Bercher,8501178,Grésaley,18539
+8501179,Pont-de-Drapel,8501199,La Roulaz,10354
+8501191,Orbe,8501194,Les Granges (Orbe),4701
+8501194,Les Granges (Orbe),8530262,St-Eloi,4701
+8501198,Château-d'Oex La Palaz,8501388,Les Combes,486
+8501387,Les Cases,8501388,Les Combes,8677
+8501199,La Roulaz,8501400,Aigle,10119
+8501229,Monthey-En Place,8501400,Aigle,13763
+8501300,Montreux,8501400,Aigle,20358
+8501303,Villeneuve VD,8501400,Aigle,15670
+8501304,Roche VD,8501400,Aigle,9864
+8501199,La Roulaz,8501480,Rennaz (Leysin),235
+8501400,Aigle,8501480,Rennaz (Leysin),10133
+8501200,Vevey,8501201,La Tour-de-Peilz,19239
+8501200,Vevey,8501260,Gilamont,24632
+8501201,La Tour-de-Peilz,8501202,Burier,18879
+8501201,La Tour-de-Peilz,8501203,Clarens,241
+8501202,Burier,8501203,Clarens,18809
+8501229,Monthey-En Place,8501448,Champéry,528
+8501400,Aigle,8501448,Champéry,8720
+8501229,Monthey-En Place,8501453,La Cour,147
+8501448,Champéry,8501453,La Cour,528
+8501452,St-Triphon-Gare,8501453,La Cour,8720
+8501229,Monthey-En Place,8501459,St-Triphon-Village,3651
+8501458,Villy,8501459,St-Triphon-Village,15993
+8501260,Gilamont,8501262,Hauteville,23262
+8501262,Hauteville,8501263,Château-d'Hauteville,24632
+8501263,Château-d'Hauteville,8501264,St-Légier-Village,24632
+8501264,St-Légier-Village,8501265,La Chiésaz,24632
+8501265,La Chiésaz,8501266,Château-de-Blonay,24632
+8501266,Château-de-Blonay,8501280,St-Légier-Gare,24632
+8501280,St-Légier-Gare,8501281,Blonay,24632
+8501281,Blonay,8501282,Prélaz-sur-Blonay,8883
+8501282,Prélaz-sur-Blonay,8501283,Tusinge,8925
+8501283,Tusinge,8501284,Les Chevalleyres,8925
+8501284,Les Chevalleyres,8501285,Fayaux,7001
+8501285,Fayaux,8501286,Ondallaz-L'Alliaz,7001
+8501286,Ondallaz-L'Alliaz,8501287,Lally,7001
+8501287,Lally,8501288,Les Pléiades,6005
+8501287,Lally,8530261,Bois-de-Chexbres,996
+8501288,Les Pléiades,8530261,Bois-de-Chexbres,6005
+8501300,Montreux,8501301,Territet,9628
+8501300,Montreux,8501303,Villeneuve VD,15908
+8501302,Veytaux-Chillon,8501303,Villeneuve VD,9628
+8501300,Montreux,8501374,Fontanivent,16503
+8501300,Montreux,8501506,Sion,1562
+8501500,Martigny,8501506,Sion,19666
+8501505,Ardon,8501506,Sion,17643
+8501301,Territet,8501302,Veytaux-Chillon,9628
+8501303,Villeneuve VD,8501304,Roche VD,9855
+8501374,Fontanivent,8501375,Chernex,16443
+8501375,Chernex,8501376,Chamby,16263
+8501376,Chamby,8501377,Les Avants,16278
+8501377,Les Avants,8501378,Allières,9565
+8501377,Les Avants,8501380,Montreux-Collège,6389
+8501379,Les Sciernes,8501380,Montreux-Collège,3179
+8501378,Allières,8501379,Les Sciernes,9865
+8501379,Les Sciernes,8501384,Sonzier,6459
+8501380,Montreux-Collège,8501384,Sonzier,446
+8501383,Planchamp,8501384,Sonzier,9358
+8501380,Montreux-Collège,8501381,Vuarennes,9073
+8501381,Vuarennes,8501382,Châtelard VD,9133
+8501382,Châtelard VD,8501383,Planchamp,9133
+8501384,Sonzier,8501385,Sendy-Sollard,9298
+8501384,Sonzier,8501386,Jor,6905
+8501385,Sendy-Sollard,8501386,Jor,2699
+8501385,Sendy-Sollard,8501390,Belmont-sur-Montreux,6389
+8501387,Les Cases,8501390,Belmont-sur-Montreux,1128
+8501388,Les Combes,8501390,Belmont-sur-Montreux,1648
+8501386,Jor,8501387,Les Cases,9790
+8501388,Les Combes,8501391,La Tine,7309
+8501390,Belmont-sur-Montreux,8501391,La Tine,2332
+8501388,Les Combes,8501394,Château-d'Oex,471
+8501393,La Chaudanne-Les Moulins,8501394,Château-d'Oex,9666
+8501390,Belmont-sur-Montreux,8504070,Montbovon,472
+8501394,Château-d'Oex,8504070,Montbovon,709
+8501399,Gstaad,8504070,Montbovon,9242
+8501391,La Tine,8501392,Rossinière,9651
+8501392,Rossinière,8501393,La Chaudanne-Les Moulins,9681
+8501394,Château-d'Oex,8501395,Les Granges-Gérignoz,9443
+8501395,Les Granges-Gérignoz,8501396,Flendruz,9428
+8501396,Flendruz,8501397,Rougemont,9428
+8501397,Rougemont,8501398,Saanen,9428
+8501398,Saanen,8501399,Gstaad,9428
+8501399,Gstaad,8507270,Gruben,3185
+8504070,Montbovon,8507270,Gruben,6368
+8501399,Gstaad,8507271,Schönried,1474
+8507270,Gruben,8507271,Schönried,11583
+8501400,Aigle,8501402,Bex,20138
+8501400,Aigle,8501403,St-Maurice,9215
+8501402,Bex,8501403,St-Maurice,12969
+8501400,Aigle,8501452,St-Triphon-Gare,7101
+8501448,Champéry,8501452,St-Triphon-Gare,8734
+8501400,Aigle,8501458,Villy,172
+8501452,St-Triphon-Gare,8501458,Villy,7101
+8501457,Monthey-Hôpital,8501458,Villy,8734
+8501400,Aigle,8501468,Aigle-Château,7904
+8501400,Aigle,8501500,Martigny,7363
+8501403,St-Maurice,8501500,Martigny,11637
+8501405,Vernayaz,8501500,Martigny,492
+8501421,Monthey,8501500,Martigny,8436
+8501428,St-Gingolph (Suisse),8501500,Martigny,8459
+8501402,Bex,8501446,Villars-sur-Ollon Golf,4107
+8501402,Bex,8501487,Bex-Place-du-Marché,3480
+8501447,Roches Grises,8501487,Bex-Place-du-Marché,3787
+8501403,St-Maurice,8501404,Evionnaz,17406
+8501403,St-Maurice,8501420,Massongex,1729
+8501405,Vernayaz,8501420,Massongex,16312
+8501404,Evionnaz,8501405,Vernayaz,17309
+8501420,Massongex,8501421,Monthey,18829
+8501421,Monthey,8501422,Collombey,9388
+8501422,Collombey,8501423,Vionnaz,9388
+8501423,Vionnaz,8501424,Vouvry,9388
+8501424,Vouvry,8501425,Les Evouettes,9388
+8501425,Les Evouettes,8501426,Bouveret,9175
+8501426,Bouveret,8501428,St-Gingolph (Suisse),9343
+8501446,Villars-sur-Ollon Golf,8501447,Roches Grises,7502
+8501447,Roches Grises,8501492,Gryon,98
+8501491,Les Posses,8501492,Gryon,7806
+8501447,Roches Grises,8501495,Villars-sur-Ollon,3617
+8501494,Arveyes,8501495,Villars-sur-Ollon,7973
+8501453,La Cour,8501454,Fayot,9253
+8501454,Fayot,8501456,Chemex,9101
+8501454,Fayot,8501465,Val-d'Illiez,138
+8501464,Troistorrents,8501465,Val-d'Illiez,9261
+8501456,Chemex,8501457,Monthey-Hôpital,9262
+8501457,Monthey-Hôpital,8501460,Croix-du-Nant,528
+8501459,St-Triphon-Village,8501460,Croix-du-Nant,6865
+8501459,St-Triphon-Village,8501461,Ollon VD,5110
+8501460,Croix-du-Nant,8501461,Ollon VD,8734
+8501460,Croix-du-Nant,8501463,Monthey-Ville,528
+8501462,Collombey-Muraz,8501463,Monthey-Ville,15836
+8501461,Ollon VD,8501462,Collombey-Muraz,15821
+8501461,Ollon VD,8530335,Aigle-Hôpital,172
+8501726,Corbier,8530335,Aigle-Hôpital,15836
+8501463,Monthey-Ville,8501464,Troistorrents,9262
+8501463,Monthey-Ville,8501726,Corbier,7101
+8501466,Champéry-Village,8501726,Corbier,8587
+8501465,Val-d'Illiez,8501466,Champéry-Village,9253
+8501466,Champéry-Village,8530378,Les Neys,528
+8530366,Pont du Rhône,8530378,Les Neys,8720
+8501466,Champéry-Village,8530463,En Charnet,138
+8530430,Route de Morgins,8530463,En Charnet,9262
+8501468,Aigle-Château,8501469,Les Fontanelles,6701
+8501468,Aigle-Château,8501470,Verschiez,910
+8501469,Les Fontanelles,8501470,Verschiez,6033
+8501470,Verschiez,8501471,Plambuit,7419
+8501470,Verschiez,8501554,Aigle-Place-du-Marché,175
+8501471,Plambuit,8501554,Aigle-Place-du-Marché,44
+8501472,Exergillod,8501554,Aigle-Place-du-Marché,567
+8501473,Les Planches (Aigle),8501554,Aigle-Place-du-Marché,44
+8501479,Les Diablerets,8501554,Aigle-Place-du-Marché,7290
+8501485,Fontanney,8501554,Aigle-Place-du-Marché,10119
+8501471,Plambuit,8501472,Exergillod,7480
+8501471,Plambuit,8501473,Les Planches (Aigle),125
+8501472,Exergillod,8501473,Les Planches (Aigle),6655
+8501473,Les Planches (Aigle),8501474,Le Sépey,7130
+8501474,Le Sépey,8501475,Les Echenards,6365
+8501475,Les Echenards,8501476,Les Aviolats,6813
+8501475,Les Echenards,8517485,Sur-le-Buis,914
+8501479,Les Diablerets,8517485,Sur-le-Buis,712
+8517484,Aigle-Parc Aventure,8517485,Sur-le-Buis,6701
+8501476,Les Aviolats,8501477,Vers-l'Eglise,8002
+8501477,Vers-l'Eglise,8501479,Les Diablerets,8002
+8501480,Rennaz (Leysin),8501481,Leysin-Village,10354
+8501481,Leysin-Village,8501482,Leysin-Feydey,10354
+8501482,Leysin-Feydey,8501483,Leysin-Grand-Hôtel,8144
+8501482,Leysin-Feydey,8501484,Aigle-Dépôt,2062
+8501483,Leysin-Grand-Hôtel,8501484,Aigle-Dépôt,8127
+8501484,Aigle-Dépôt,8501485,Fontanney,10354
+8501485,Fontanney,8501725,Versmont,235
+8501554,Aigle-Place-du-Marché,8501725,Versmont,9652
+8501487,Bex-Place-du-Marché,8501488,Bévieux,7422
+8501488,Bévieux,8501490,Fontannaz-Seulaz,7392
+8501488,Bévieux,8530064,Bex Pont-Neuf,235
+8501727,La Clairière,8530064,Bex Pont-Neuf,7376
+8501490,Fontannaz-Seulaz,8501491,Les Posses,7806
+8501492,Gryon,8501493,La Barboleuse,7963
+8501493,La Barboleuse,8501494,Arveyes,7738
+8501495,Villars-sur-Ollon,8501497,Col-de-Soud,6128
+8501495,Villars-sur-Ollon,8501727,La Clairière,3579
+8501499,Col-de-Bretaye,8501727,La Clairière,3885
+8501497,Col-de-Soud,8501498,Bouquetins,7502
+8501498,Bouquetins,8501499,Col-de-Bretaye,7502
+8501500,Martigny,8501501,Charrat-Fully,17099
+8501500,Martigny,8501561,Vernayaz MC,7739
+8501500,Martigny,8501562,Salvan,2516
+8501561,Vernayaz MC,8501562,Salvan,10255
+8501500,Martigny,8501572,Martigny-Bourg,8283
+8501500,Martigny,8501575,Bovernier,236
+8501573,Martigny-Croix,8501575,Bovernier,8238
+8501500,Martigny,8501576,Sembrancher,3726
+8501575,Bovernier,8501576,Sembrancher,8519
+8501501,Charrat-Fully,8501502,Saxon,17626
+8501502,Saxon,8501503,Riddes,17441
+8501503,Riddes,8501504,Chamoson-St-Pierre-de-Clages,17598
+8501504,Chamoson-St-Pierre-de-Clages,8501505,Ardon,17657
+8501506,Sion,8501507,St-Léonard,18159
+8501506,Sion,8501509,Sierre/Siders,17716
+8501507,St-Léonard,8501509,Sierre/Siders,18135
+8501506,Sion,8501510,Châteauneuf-Conthey,486
+8501509,Sierre/Siders,8501510,Châteauneuf-Conthey,17421
+8501506,Sion,8501609,Brig,1675
+8501605,Visp,8501609,Brig,48675
+8501509,Sierre/Siders,8501600,Salgesch,502
+8501510,Châteauneuf-Conthey,8501600,Salgesch,16566
+8501509,Sierre/Siders,8501601,Leuk,9246
+8501510,Châteauneuf-Conthey,8501601,Leuk,250
+8501600,Salgesch,8501601,Leuk,17673
+8501554,Aigle-Place-du-Marché,8517484,Aigle-Parc Aventure,7611
+8501562,Salvan,8501563,Les Marécottes,7552
+8501562,Salvan,8501564,Le Trétien,2694
+8501563,Les Marécottes,8501564,Le Trétien,8174
+8501563,Les Marécottes,8501565,Finhaut,2072
+8501564,Le Trétien,8501565,Finhaut,6851
+8501564,Le Trétien,8501566,Le Châtelard VS,2424
+8501565,Finhaut,8501566,Le Châtelard VS,7379
+8501565,Finhaut,8501568,Le Châtelard-Frontière,1862
+8501566,Le Châtelard VS,8501568,Le Châtelard-Frontière,6950
+8501566,Le Châtelard VS,8530303,Les Fumeaux,2291
+8501568,Le Châtelard-Frontière,8530303,Les Fumeaux,9241
+8501572,Martigny-Bourg,8501573,Martigny-Croix,8238
+8501576,Sembrancher,8501577,La Douay,8238
+8501576,Sembrancher,8501578,Orsières,4096
+8501577,La Douay,8501578,Orsières,8238
+8501576,Sembrancher,8501579,Le Châble VS,12481
+8501579,Le Châble VS,8501580,Etiez,8755
+8501601,Leuk,8501602,Turtmann,17658
+8501602,Turtmann,8501603,Gampel-Steg,17673
+8501603,Gampel-Steg,8501604,Raron,17673
+8501605,Visp,8501636,Eyholz,12111
+8501605,Visp,8501683,Stalden-Saas,9239
+8501636,Eyholz,8501683,Stalden-Saas,4852
+8501609,Brig,8501950,Preglia,2836
+8501609,Brig,8501951,Varzo,2652
+8501950,Preglia,8501951,Varzo,2836
+8501609,Brig,8501952,Iselle di Trasquera,236
+8501951,Varzo,8501952,Iselle di Trasquera,5488
+8501609,Brig,8507471,Eggerberg,3702
+8501952,Iselle di Trasquera,8507471,Eggerberg,4401
+8501609,Brig,8507472,Ausserberg,94
+8501952,Iselle di Trasquera,8507472,Ausserberg,379
+8507471,Eggerberg,8507472,Ausserberg,8280
+8501636,Eyholz,8501661,Oberwald,5506
+8501636,Eyholz,8501672,Fiesch,707
+8501671,Fürgangen-Bellwald Talstation,8501672,Fiesch,6660
+8501636,Eyholz,8515296,Brig Bahnhofplatz,1413
+8501689,Zermatt,8515296,Brig Bahnhofplatz,4485
+8501729,Fiesch Feriendorf,8515296,Brig Bahnhofplatz,1649
+8505165,Andermatt,8515296,Brig Bahnhofplatz,6408
+8509179,Disentis/Mustér,8515296,Brig Bahnhofplatz,1090
+8501661,Oberwald,8501662,Obergesteln,6660
+8501662,Obergesteln,8501663,Ulrichen,6660
+8501663,Ulrichen,8501664,Geschinen,6660
+8501664,Geschinen,8501665,Münster VS,6660
+8501665,Münster VS,8501666,Reckingen VS,6660
+8501666,Reckingen VS,8501667,Gluringen,6660
+8501667,Gluringen,8501668,Biel (Goms),6660
+8501668,Biel (Goms),8501669,Blitzingen,6660
+8501669,Blitzingen,8501670,Niederwald,6660
+8501670,Niederwald,8501671,Fürgangen-Bellwald Talstation,6660
+8501672,Fiesch,8501673,Lax,7823
+8501673,Lax,8501674,Grengiols,8056
+8501674,Grengiols,8501675,Betten Talstation,8056
+8501675,Betten Talstation,8501676,Mörel,8056
+8501676,Mörel,8501677,Bitsch,8056
+8501677,Bitsch,8501729,Fiesch Feriendorf,8056
+8501683,Stalden-Saas,8501684,Kalpetran,13859
+8501684,Kalpetran,8501685,St. Niklaus VS,13844
+8501685,St. Niklaus VS,8501686,Herbriggen,13844
+8501686,Herbriggen,8501687,Randa,13859
+8501687,Randa,8501688,Täsch,13859
+8501688,Täsch,8501689,Zermatt,36890
+8501689,Zermatt,8505165,Andermatt,884
+8505119,Göschenen,8505165,Andermatt,11568
+8505164,Hospental,8505165,Andermatt,10644
+8501727,La Clairière,8588193,Gryon Bois-Gentil,372
+8530523,La Ruaz,8588193,Gryon Bois-Gentil,7187
+8501729,Fiesch Feriendorf,8505163,Realp,6407
+8505119,Göschenen,8505163,Realp,3938
+8502001,Zofingen,8502002,Brittnau-Wikon,11221
+8502001,Zofingen,8502003,Reiden,9311
+8502002,Brittnau-Wikon,8502003,Reiden,11224
+8502001,Zofingen,8502007,Sursee,18661
+8502006,Wauwil,8502007,Sursee,20008
+8502001,Zofingen,8502100,Safenwil,16642
+8502003,Reiden,8502004,Dagmersellen,20550
+8502004,Dagmersellen,8502005,Nebikon,20550
+8502005,Nebikon,8502006,Wauwil,19950
+8502007,Sursee,8502008,Nottwil,20221
+8502007,Sursee,8502009,Sempach-Neuenkirch,9599
+8502008,Nottwil,8502009,Sempach-Neuenkirch,20231
+8502007,Sursee,8502010,St. Erhard-Knutwil,10141
+8502009,Sempach-Neuenkirch,8502010,St. Erhard-Knutwil,249
+8502009,Sempach-Neuenkirch,8502011,Oberkirch LU,19957
+8502010,St. Erhard-Knutwil,8502011,Oberkirch LU,251
+8502009,Sempach-Neuenkirch,8502020,Rothenburg,9599
+8502012,Rothenburg Dorf,8502020,Rothenburg,20227
+8502011,Oberkirch LU,8502012,Rothenburg Dorf,20221
+8502017,Waldibrücke,8502019,Ermensee,17504
+8502017,Waldibrücke,8502021,Emmenbrücke,2716
+8502019,Ermensee,8502021,Emmenbrücke,17633
+8502020,Rothenburg,8502021,Emmenbrücke,29811
+8502021,Emmenbrücke,8502022,Eschenbach LU,20382
+8502021,Emmenbrücke,8502028,Emmenbrücke Gersag,19978
+8502024,Hochdorf,8502028,Emmenbrücke Gersag,1491
+8502027,Hitzkirch,8502028,Emmenbrücke Gersag,17633
+8502022,Eschenbach LU,8502023,Ballwil,20382
+8502023,Ballwil,8502024,Hochdorf,20382
+8502024,Hochdorf,8502025,Baldegg,17648
+8502024,Hochdorf,8502042,Hochdorf Schönau,1225
+8502028,Emmenbrücke Gersag,8502042,Hochdorf Schönau,1491
+8502029,Mosen,8502042,Hochdorf Schönau,30
+8502034,Beinwil am See,8502042,Hochdorf Schönau,17317
+8502025,Baldegg,8502026,Gelfingen,17648
+8502026,Gelfingen,8502027,Hitzkirch,17648
+8502028,Emmenbrücke Gersag,8502029,Mosen,17666
+8502028,Emmenbrücke Gersag,8502200,Ebikon,18996
+8502029,Mosen,8502030,Seon,15662
+8502029,Mosen,8502034,Beinwil am See,1941
+8502033,Birrwil,8502034,Beinwil am See,16224
+8502030,Seon,8502031,Hallwil,16224
+8502031,Hallwil,8502032,Boniswil,16224
+8502032,Boniswil,8502033,Birrwil,16224
+8502034,Beinwil am See,8502119,Lenzburg,531
+8502042,Hochdorf Schönau,8502119,Lenzburg,15695
+8502104,Hunzenschwil,8502119,Lenzburg,16894
+8502113,Aarau,8502119,Lenzburg,44593
+8502114,Rupperswil,8502119,Lenzburg,10732
+8502100,Safenwil,8502101,Kölliken,16642
+8502101,Kölliken,8502102,Oberentfelden,16894
+8502102,Oberentfelden,8502103,Suhr,16894
+8502103,Suhr,8502104,Hunzenschwil,16894
+8502105,Othmarsingen,8502106,Mägenwil,13520
+8502105,Othmarsingen,8502111,Däniken SO,8993
+8502110,Dulliken,8502111,Däniken SO,10574
+8502105,Othmarsingen,8502211,Hendschiken,10291
+8502106,Mägenwil,8502211,Hendschiken,1754
+8502119,Lenzburg,8502211,Hendschiken,3759
+8502202,Rotkreuz,8502211,Hendschiken,15641
+8502111,Däniken SO,8502112,Schönenwerd SO,19525
+8502113,Aarau,8502114,Rupperswil,29806
+8502113,Aarau,8502115,Wildegg,9536
+8502114,Rupperswil,8502115,Wildegg,19091
+8502113,Aarau,8502123,Buchs AG,34467
+8502113,Aarau,8502177,Schöftland Nordweg,34206
+8502115,Wildegg,8502116,Schinznach Bad,18822
+8502115,Wildegg,8503503,Turgi,9048
+8502128,Holderbank AG,8503503,Turgi,18590
+8502247,Birr,8503503,Turgi,9980
+8503000,Zürich HB,8503503,Turgi,175
+8503001,Zürich Altstetten,8503503,Turgi,487
+8503020,Zürich Hardbrücke,8503503,Turgi,252
+8503147,Stettbach,8503503,Turgi,9778
+8503306,Dietlikon,8503503,Turgi,250
+8503424,Schaffhausen,8503503,Turgi,9055
+8503502,Siggenthal-Würenlingen,8503503,Turgi,22234
+8502116,Schinznach Bad,8502128,Holderbank AG,19091
+8502119,Lenzburg,8502120,Küngoldingen,16657
+8502119,Lenzburg,8502202,Rotkreuz,18988
+8502201,Gisikon-Root,8502202,Rotkreuz,20234
+8502119,Lenzburg,8502237,Lupfig,9980
+8502215,Muri AG,8502237,Lupfig,8553
+8502120,Küngoldingen,8502121,Walterswil-Striegel,16642
+8502121,Walterswil-Striegel,8502122,Kölliken Oberdorf,16642
+8502123,Buchs AG,8502160,Gränichen,34467
+8502160,Gränichen,8502161,Teufenthal AG,34467
+8502161,Teufenthal AG,8502162,Unterkulm,33093
+8502162,Unterkulm,8502163,Oberkulm,33068
+8502162,Unterkulm,8502174,Bleien Liebegg,25
+8502169,Menziken,8502174,Bleien Liebegg,33054
+8502163,Oberkulm,8502164,Gontenschwil,33054
+8502164,Gontenschwil,8502165,Zetzwil,33054
+8502165,Zetzwil,8502166,Leimbach AG,33054
+8502166,Leimbach AG,8502167,Reinach AG Nord,33054
+8502167,Reinach AG Nord,8502168,Reinach AG,33054
+8502168,Reinach AG,8502169,Menziken,33054
+8502174,Bleien Liebegg,8502176,Reinach AG Mitte,33436
+8502174,Bleien Liebegg,8502183,Oberkulm Post,27
+8502176,Reinach AG Mitte,8502183,Oberkulm Post,33054
+8502177,Schöftland Nordweg,8502178,Obermuhen,34206
+8502178,Obermuhen,8502179,Mittelmuhen,34206
+8502179,Mittelmuhen,8502180,Muhen Nord,34206
+8502180,Muhen Nord,8502181,Oberentfelden Uerkenbrücke,29766
+8502180,Muhen Nord,8502195,Muhen,4440
+8502194,Oberentfelden Engelplatz,8502195,Muhen,34206
+8502181,Oberentfelden Uerkenbrücke,8502182,Unterentfelden Oberdorf,34206
+8502182,Unterentfelden Oberdorf,8502191,Binzenhof,34206
+8502183,Oberkulm Post,8502184,Gränichen Oberdorf,33093
+8502184,Gränichen Oberdorf,8502189,Gränichen Töndler,34467
+8502185,Bremgarten Isenlauf,8502186,Dietikon Stoffelbach,34406
+8502185,Bremgarten Isenlauf,8502188,Zufikon Hammergut,249
+8502187,Rudolfstetten Hofacker,8502188,Zufikon Hammergut,34640
+8502185,Bremgarten Isenlauf,8502213,Wohlen AG,1002
+8502188,Zufikon Hammergut,8502213,Wohlen AG,19368
+8502204,Zug,8502213,Wohlen AG,216
+8502212,Dottikon-Dintikon,8502213,Wohlen AG,34799
+8502186,Dietikon Stoffelbach,8502187,Rudolfstetten Hofacker,34640
+8502188,Zufikon Hammergut,8502248,Bremgarten Obertor,15289
+8502213,Wohlen AG,8502248,Bremgarten Obertor,20225
+8502188,Zufikon Hammergut,8502268,Zufikon Belvédère,250
+8502248,Bremgarten Obertor,8502268,Zufikon Belvédère,34479
+8502189,Gränichen Töndler,8516450,Unterkulm Nord,34467
+8502191,Binzenhof,8502192,Distelberg,34206
+8502192,Distelberg,8502194,Oberentfelden Engelplatz,34206
+8502195,Muhen,8502196,Unterentfelden Post,29346
+8502195,Muhen,8502197,Hirschthal,4440
+8502196,Unterentfelden Post,8502197,Hirschthal,34206
+8502197,Hirschthal,8502199,Schöftland,34206
+8502200,Ebikon,8502201,Gisikon-Root,20234
+8502202,Rotkreuz,8502203,Cham,36076
+8502202,Rotkreuz,8502204,Zug,9728
+8502203,Cham,8502204,Zug,36076
+8502202,Rotkreuz,8502212,Dottikon-Dintikon,3364
+8502211,Hendschiken,8502212,Dottikon-Dintikon,31445
+8502204,Zug,8502205,Walchwil,16793
+8502204,Zug,8502206,Baar,64658
+8502204,Zug,8502220,Urdorf,19363
+8502204,Zug,8502230,Zug Chollermüli,1238
+8502206,Baar,8502230,Zug Chollermüli,33847
+8502205,Walchwil,8502231,Zug Oberwil,16793
+8502206,Baar,8502208,Horgen Oberdorf,19620
+8502206,Baar,8515992,Baar Neufeld,721
+8502230,Zug Chollermüli,8515992,Baar Neufeld,7768
+8502306,Hünenberg Chämleten,8515992,Baar Neufeld,7518
+8505000,Luzern,8515992,Baar Neufeld,18562
+8502208,Horgen Oberdorf,8502209,Oberrieden Dorf,19369
+8502213,Wohlen AG,8502214,Boswil-Bünzen,26210
+8502213,Wohlen AG,8502215,Muri AG,8553
+8502214,Boswil-Bünzen,8502215,Muri AG,24961
+8502215,Muri AG,8502216,Benzenschwil,13439
+8502215,Muri AG,8502218,Sins,5785
+8502217,Mühlau,8502218,Sins,13439
+8502216,Benzenschwil,8502217,Mühlau,13439
+8502218,Sins,8502219,Oberrüti,19235
+8502220,Urdorf,8502221,Birmensdorf ZH,35459
+8502221,Birmensdorf ZH,8502222,Bonstetten-Wettswil,35459
+8502222,Bonstetten-Wettswil,8502223,Hedingen,35459
+8502223,Hedingen,8502224,Affoltern am Albis,35459
+8502224,Affoltern am Albis,8502225,Mettmenstetten,19363
+8502224,Affoltern am Albis,8502229,Urdorf Weihermatt,16096
+8502227,Steinhausen,8502229,Urdorf Weihermatt,19363
+8502225,Mettmenstetten,8502226,Knonau,19363
+8502226,Knonau,8502227,Steinhausen,19363
+8502230,Zug Chollermüli,8502306,Hünenberg Chämleten,17041
+8502231,Zug Oberwil,8502300,Zug Postplatz,16793
+8502237,Lupfig,8502247,Birr,18533
+8502248,Bremgarten Obertor,8502269,Erdmannlistein,998
+8502268,Zufikon Belvédère,8502269,Erdmannlistein,19368
+8502268,Zufikon Belvédère,8502270,Bergfrieden,15539
+8502269,Erdmannlistein,8502270,Bergfrieden,18990
+8502269,Erdmannlistein,8502271,Wohlen Oberdorf,1235
+8502270,Bergfrieden,8502271,Wohlen Oberdorf,19102
+8502270,Bergfrieden,8502272,Bremgarten West,15288
+8502271,Wohlen Oberdorf,8502272,Bremgarten West,20225
+8502270,Bergfrieden,8502273,Bremgarten,250
+8502272,Bremgarten West,8502273,Bremgarten,35503
+8502273,Bremgarten,8502274,Zufikon,34905
+8502273,Bremgarten,8502276,Berikon-Widen,691
+8502275,Widen Heinrüti,8502276,Berikon-Widen,34907
+8502274,Zufikon,8502275,Widen Heinrüti,34907
+8502276,Berikon-Widen,8502277,Rudolfstetten,35331
+8502276,Berikon-Widen,8517377,Bibenlos-Sonnenhof,251
+8517376,Dietikon Schöneggstrasse,8517377,Bibenlos-Sonnenhof,34640
+8502277,Rudolfstetten,8502278,Reppischhof,34640
+8502277,Rudolfstetten,8503508,Dietikon,435
+8502278,Reppischhof,8503508,Dietikon,34640
+8503001,Zürich Altstetten,8503508,Dietikon,3728
+8503016,Zürich Flughafen,8503508,Dietikon,215
+8503020,Zürich Hardbrücke,8503508,Dietikon,753
+8503147,Stettbach,8503508,Dietikon,4464
+8503306,Dietlikon,8503508,Dietikon,11778
+8503504,Baden,8503508,Dietikon,7640
+8503505,Wettingen,8503508,Dietikon,3241
+8503506,Killwangen-Spreitenbach,8503508,Dietikon,32539
+8502300,Zug Postplatz,8505004,Arth-Goldau,10026
+8503000,Zürich HB,8505004,Arth-Goldau,16300
+8503284,Biberbrugg,8505004,Arth-Goldau,472
+8503286,Samstagern,8505004,Arth-Goldau,754
+8503292,Altmatt,8505004,Arth-Goldau,8514
+8503295,Wilen bei Wollerau,8505004,Arth-Goldau,472
+8505000,Luzern,8505004,Arth-Goldau,9029
+8505002,Küssnacht am Rigi,8505004,Arth-Goldau,6794
+8505003,Immensee,8505004,Arth-Goldau,11252
+8502300,Zug Postplatz,8515993,Baar Lindenpark,6767
+8505004,Arth-Goldau,8515993,Baar Lindenpark,501
+8505112,Flüelen,8515993,Baar Lindenpark,487
+8505114,Erstfeld,8515993,Baar Lindenpark,8551
+8515992,Baar Neufeld,8515993,Baar Lindenpark,34568
+8503000,Zürich HB,8503001,Zürich Altstetten,111070
+8503000,Zürich HB,8503003,Zürich Stadelhofen,118049
+8503001,Zürich Altstetten,8503003,Zürich Stadelhofen,54944
+8503000,Zürich HB,8503006,Zürich Oerlikon,90476
+8503001,Zürich Altstetten,8503006,Zürich Oerlikon,41497
+8503003,Zürich Stadelhofen,8503006,Zürich Oerlikon,58894
+8503004,Zürich Tiefenbrunnen,8503006,Zürich Oerlikon,37460
+8503000,Zürich HB,8503009,Zürich Wollishofen,752
+8503006,Zürich Oerlikon,8503009,Zürich Wollishofen,38232
+8503000,Zürich HB,8503010,Zürich Enge,1313
+8503006,Zürich Oerlikon,8503010,Zürich Enge,16996
+8503009,Zürich Wollishofen,8503010,Zürich Enge,38984
+8503000,Zürich HB,8503016,Zürich Flughafen,30322
+8503006,Zürich Oerlikon,8503016,Zürich Flughafen,45111
+8503011,Zürich Wiedikon,8503016,Zürich Flughafen,17247
+8503015,Zürich Wipkingen,8503016,Zürich Flughafen,19870
+8503000,Zürich HB,8503202,Thalwil,4648
+8503001,Zürich Altstetten,8503202,Thalwil,7047
+8503010,Zürich Enge,8503202,Thalwil,498
+8503016,Zürich Flughafen,8503202,Thalwil,23739
+8503201,Rüschlikon,8503202,Thalwil,38984
+8503000,Zürich HB,8503206,Wädenswil,7547
+8503202,Thalwil,8503206,Wädenswil,9047
+8503204,Horgen,8503206,Wädenswil,16996
+8503205,Au ZH,8503206,Wädenswil,19589
+8503000,Zürich HB,8503504,Baden,19071
+8503016,Zürich Flughafen,8503504,Baden,7640
+8503020,Zürich Hardbrücke,8503504,Baden,3264
+8503141,Küsnacht Goldbach,8503504,Baden,15600
+8503503,Turgi,8503504,Baden,61307
+8503000,Zürich HB,8509000,Chur,12085
+8503225,Ziegelbrücke,8509000,Chur,1706
+8506319,Altstätten SG,8509000,Chur,7303
+8508005,Burgdorf,8509000,Chur,27
+8508100,Langenthal,8509000,Chur,4932
+8503000,Zürich HB,8509404,Buchs SG,4299
+8506319,Altstätten SG,8509404,Buchs SG,1919
+8509004,Bad Ragaz,8509404,Buchs SG,7303
+8509402,Salez-Sennwald,8509404,Buchs SG,10007
+8503001,Zürich Altstetten,8503020,Zürich Hardbrücke,2491
+8503003,Zürich Stadelhofen,8503020,Zürich Hardbrücke,70273
+8503004,Zürich Tiefenbrunnen,8503020,Zürich Hardbrücke,251
+8503006,Zürich Oerlikon,8503020,Zürich Hardbrücke,62147
+8503008,Zürich Affoltern,8503020,Zürich Hardbrücke,21119
+8503016,Zürich Flughafen,8503020,Zürich Hardbrücke,18845
+8503003,Zürich Stadelhofen,8503004,Zürich Tiefenbrunnen,38662
+8503003,Zürich Stadelhofen,8503110,Rapperswil SG,499
+8503006,Zürich Oerlikon,8503110,Rapperswil SG,250
+8503011,Zürich Wiedikon,8503110,Rapperswil SG,752
+8503020,Zürich Hardbrücke,8503110,Rapperswil SG,36943
+8503109,Feldbach,8503110,Rapperswil SG,19395
+8503003,Zürich Stadelhofen,8503123,Wetzikon ZH,2008
+8503006,Zürich Oerlikon,8503123,Wetzikon ZH,19078
+8503020,Zürich Hardbrücke,8503123,Wetzikon ZH,16976
+8503122,Bubikon,8503123,Wetzikon ZH,37694
+8503003,Zürich Stadelhofen,8503125,Uster,502
+8503020,Zürich Hardbrücke,8503125,Uster,18595
+8503123,Wetzikon ZH,8503125,Uster,37193
+8503124,Aathal,8503125,Uster,19578
+8503003,Zürich Stadelhofen,8506000,Winterthur,2255
+8503016,Zürich Flughafen,8506000,Winterthur,24272
+8503134,Bauma,8506000,Winterthur,4650
+8503139,Tann-Dürnten,8506000,Winterthur,14845
+8503306,Dietlikon,8506000,Winterthur,16100
+8503307,Bassersdorf,8506000,Winterthur,8803
+8503340,Opfikon,8506000,Winterthur,19318
+8503400,Bülach,8506000,Winterthur,19362
+8503424,Schaffhausen,8506000,Winterthur,18611
+8503512,Glanzenberg,8506000,Winterthur,36082
+8504100,Fribourg/Freiburg,8506000,Winterthur,7138
+8504300,Biel/Bienne,8506000,Winterthur,9282
+8505000,Luzern,8506000,Winterthur,6743
+8503004,Zürich Tiefenbrunnen,8503100,Zollikon,951
+8503020,Zürich Hardbrücke,8503100,Zollikon,34446
+8503006,Zürich Oerlikon,8503007,Zürich Seebach,18864
+8503006,Zürich Oerlikon,8503008,Zürich Affoltern,2255
+8503007,Zürich Seebach,8503008,Zürich Affoltern,18864
+8503006,Zürich Oerlikon,8503015,Zürich Wipkingen,1003
+8503011,Zürich Wiedikon,8503015,Zürich Wipkingen,18867
+8503006,Zürich Oerlikon,8503126,Nänikon-Greifensee,32
+8503125,Uster,8503126,Nänikon-Greifensee,38675
+8503006,Zürich Oerlikon,8503129,Wallisellen,15534
+8503011,Zürich Wiedikon,8503129,Wallisellen,18612
+8503110,Rapperswil SG,8503129,Wallisellen,502
+8503128,Dübendorf,8503129,Wallisellen,19360
+8503010,Zürich Enge,8503011,Zürich Wiedikon,55980
+8503011,Zürich Wiedikon,8503200,Kilchberg ZH,502
+8503016,Zürich Flughafen,8503200,Kilchberg ZH,19118
+8503110,Rapperswil SG,8503200,Kilchberg ZH,250
+8503129,Wallisellen,8503200,Kilchberg ZH,19114
+8503016,Zürich Flughafen,8503304,Kemptthal,251
+8503020,Zürich Hardbrücke,8503304,Kemptthal,252
+8503112,Kempraten,8503304,Kemptthal,3155
+8503202,Thalwil,8503304,Kemptthal,15855
+8503016,Zürich Flughafen,8503305,Effretikon,752
+8503020,Zürich Hardbrücke,8503305,Effretikon,502
+8503112,Kempraten,8503305,Effretikon,15289
+8503129,Wallisellen,8503305,Effretikon,10523
+8503202,Thalwil,8503305,Effretikon,2510
+8503210,Freienbach SBB,8503305,Effretikon,18337
+8503225,Ziegelbrücke,8503305,Effretikon,753
+8503303,Illnau,8503305,Effretikon,24253
+8503304,Kemptthal,8503305,Effretikon,19593
+8503016,Zürich Flughafen,8503307,Bassersdorf,251
+8503202,Thalwil,8503307,Bassersdorf,251
+8503305,Effretikon,8503307,Bassersdorf,38936
+8503020,Zürich Hardbrücke,8503101,Küsnacht ZH,1749
+8503100,Zollikon,8503101,Küsnacht ZH,35397
+8503020,Zürich Hardbrücke,8503104,Meilen,18814
+8503101,Küsnacht ZH,8503104,Meilen,1749
+8503103,Herrliberg-Feldmeilen,8503104,Meilen,19800
+8503020,Zürich Hardbrücke,8503147,Stettbach,36082
+8503123,Wetzikon ZH,8503147,Stettbach,18742
+8503128,Dübendorf,8503147,Stettbach,19350
+8503130,Hinwil,8503147,Stettbach,250
+8503020,Zürich Hardbrücke,8503310,Glattbrugg,1003
+8503125,Uster,8503310,Glattbrugg,18081
+8503147,Stettbach,8503310,Glattbrugg,18599
+8503306,Dietlikon,8503310,Glattbrugg,3404
+8503020,Zürich Hardbrücke,8503506,Killwangen-Spreitenbach,985
+8503147,Stettbach,8503506,Killwangen-Spreitenbach,12535
+8503505,Wettingen,8503506,Killwangen-Spreitenbach,19555
+8503020,Zürich Hardbrücke,8503526,Regensdorf-Watt,4009
+8503525,Otelfingen Golfpark,8503526,Regensdorf-Watt,18864
+8503020,Zürich Hardbrücke,8518459,Steinhausen Rigiblick,501
+8503125,Uster,8518459,Steinhausen Rigiblick,3012
+8503209,Pfäffikon SZ,8518459,Steinhausen Rigiblick,15850
+8503051,Zürich Binz,8503052,Zürich Friesenberg,38944
+8503051,Zürich Binz,8503088,Zürich HB SZU,1110
+8503054,Zürich Triemli,8503088,Zürich HB SZU,19573
+8503055,Uitikon Waldegg,8503088,Zürich HB SZU,486
+8503056,Ringlikon,8503088,Zürich HB SZU,1451
+8503057,Uetliberg,8503088,Zürich HB SZU,16931
+8503087,Zürich Saalsporthalle,8503088,Zürich HB SZU,37437
+8503052,Zürich Friesenberg,8503053,Zürich Schweighof,38944
+8503053,Zürich Schweighof,8503054,Zürich Triemli,38889
+8503054,Zürich Triemli,8503055,Uitikon Waldegg,19371
+8503055,Uitikon Waldegg,8503056,Ringlikon,18884
+8503056,Ringlikon,8503057,Uetliberg,16931
+8503059,"Zürich Stadelhofen, Bahnhof",8503060,Esslingen,20498
+8503059,"Zürich Stadelhofen, Bahnhof",8503061,Langwies ZH,5420
+8503060,Esslingen,8503061,Langwies ZH,25318
+8503059,"Zürich Stadelhofen, Bahnhof",8503062,Egg,221
+8503061,Langwies ZH,8503062,Egg,25303
+8503059,"Zürich Stadelhofen, Bahnhof",8503065,Forch,14340
+8503064,Scheuren,8503065,Forch,24140
+8503059,"Zürich Stadelhofen, Bahnhof",8503067,Zollikerberg,354
+8503066,Zumikon,8503067,Zollikerberg,32043
+8503062,Egg,8503063,Hinteregg,25088
+8503062,Egg,8503066,Zumikon,432
+8503065,Forch,8503066,Zumikon,28515
+8503063,Hinteregg,8503064,Scheuren,24735
+8503065,Forch,8503070,Emmat,5068
+8503066,Zumikon,8503070,Emmat,246
+8503068,Maiacher,8503070,Emmat,18957
+8503065,Forch,8530811,"Zürich, Balgrist",1028
+8503072,Neuhaus bei Hinteregg,8530811,"Zürich, Balgrist",4332
+8503078,Waldburg,8530811,"Zürich, Balgrist",32464
+8503067,Zollikerberg,8503068,Maiacher,32002
+8503067,Zollikerberg,8503077,Spital Zollikerberg,748
+8503075,Waltikon,8503077,Spital Zollikerberg,32043
+8503068,Maiacher,8503072,Neuhaus bei Hinteregg,217
+8503070,Emmat,8503072,Neuhaus bei Hinteregg,25303
+8503068,Maiacher,8503074,Neue Forch,12869
+8503072,Neuhaus bei Hinteregg,8503074,Neue Forch,18118
+8503072,Neuhaus bei Hinteregg,8503075,Waltikon,432
+8503074,Neue Forch,8503075,Waltikon,30162
+8503077,Spital Zollikerberg,8503078,Waldburg,32825
+8503086,Zürich Brunau,8503087,Zürich Saalsporthalle,37437
+8503088,Zürich HB SZU,8503089,Wildpark-Höfli,28627
+8503088,Zürich HB SZU,8503090,Zürich Selnau,48362
+8503089,Wildpark-Höfli,8503090,Zürich Selnau,28627
+8503090,Zürich Selnau,8503091,Zürich Giesshübel,37437
+8503091,Zürich Giesshübel,8503093,Zürich Manegg,37437
+8503093,Zürich Manegg,8503094,Zürich Leimbach,37437
+8503094,Zürich Leimbach,8503095,Sood-Oberleimbach,37437
+8503095,Sood-Oberleimbach,8503096,Adliswil,37437
+8503096,Adliswil,8503097,Langnau-Gattikon,37437
+8503097,Langnau-Gattikon,8503098,Sihlwald,4228
+8503097,Langnau-Gattikon,8503099,Sihlau,29005
+8503098,Sihlwald,8503099,Sihlau,4228
+8503101,Küsnacht ZH,8503102,Erlenbach ZH,35397
+8503102,Erlenbach ZH,8503103,Herrliberg-Feldmeilen,35397
+8503103,Herrliberg-Feldmeilen,8503111,Winkel am Zürichsee,15597
+8503104,Meilen,8503111,Winkel am Zürichsee,2998
+8503105,Uetikon,8503111,Winkel am Zürichsee,15851
+8503110,Rapperswil SG,8503111,Winkel am Zürichsee,949
+8503104,Meilen,8503105,Uetikon,35246
+8503104,Meilen,8503106,Männedorf,1749
+8503105,Uetikon,8503106,Männedorf,19395
+8503106,Männedorf,8503107,Stäfa,21114
+8503107,Stäfa,8503108,Uerikon,21114
+8503108,Uerikon,8503109,Feldbach,19395
+8503110,Rapperswil SG,8503112,Kempraten,18436
+8503111,Winkel am Zürichsee,8503112,Kempraten,936
+8503110,Rapperswil SG,8503113,Blumenau,9653
+8503110,Rapperswil SG,8503115,Schmerikon,9553
+8503113,Blumenau,8503115,Schmerikon,9653
+8503110,Rapperswil SG,8503120,Jona,37694
+8503110,Rapperswil SG,8503209,Pfäffikon SZ,19029
+8503116,Uznach,8503209,Pfäffikon SZ,6554
+8503125,Uster,8503209,Pfäffikon SZ,16100
+8503202,Thalwil,8503209,Pfäffikon SZ,27
+8503206,Wädenswil,8503209,Pfäffikon SZ,16372
+8503207,Richterswil,8503209,Pfäffikon SZ,16996
+8503208,Bäch SZ,8503209,Pfäffikon SZ,19019
+8503111,Winkel am Zürichsee,8503141,Küsnacht Goldbach,34446
+8503112,Kempraten,8503141,Küsnacht Goldbach,951
+8503115,Schmerikon,8503116,Uznach,19071
+8503116,Uznach,8503117,Kaltbrunn,10152
+8503116,Uznach,8503118,Benken SG,9623
+8503116,Uznach,8503119,Schänis,7098
+8503118,Benken SG,8503119,Schänis,9489
+8503116,Uznach,8506200,Wattwil,359
+8503117,Kaltbrunn,8506200,Wattwil,10164
+8503284,Biberbrugg,8506200,Wattwil,1210
+8503286,Samstagern,8506200,Wattwil,251
+8505004,Arth-Goldau,8506200,Wattwil,754
+8505018,Meggen Zentrum,8506200,Wattwil,6543
+8503119,Schänis,8503225,Ziegelbrücke,18799
+8503209,Pfäffikon SZ,8503225,Ziegelbrücke,28
+8503221,Siebnen-Wangen,8503225,Ziegelbrücke,30365
+8503223,Reichenburg,8503225,Ziegelbrücke,956
+8503224,Bilten,8503225,Ziegelbrücke,7742
+8503120,Jona,8503121,Rüti ZH,37694
+8503121,Rüti ZH,8503122,Bubikon,37680
+8503121,Rüti ZH,8503134,Bauma,15096
+8503123,Wetzikon ZH,8503124,Aathal,19578
+8503123,Wetzikon ZH,8503130,Hinwil,250
+8503129,Wallisellen,8503130,Hinwil,18858
+8503123,Wetzikon ZH,8503300,Kempten,250
+8503147,Stettbach,8503300,Kempten,18992
+8503126,Nänikon-Greifensee,8503127,Schwerzenbach ZH,38356
+8503127,Schwerzenbach ZH,8503128,Dübendorf,38708
+8503129,Wallisellen,8503301,Pfäffikon ZH,5011
+8503300,Kempten,8503301,Pfäffikon ZH,19242
+8503134,Bauma,8503135,Steg,15096
+8503135,Steg,8503136,Fischenthal,15096
+8503136,Fischenthal,8503137,Gibswil,15096
+8503137,Gibswil,8503138,Wald ZH,15096
+8503138,Wald ZH,8503139,Tann-Dürnten,15096
+8503147,Stettbach,8503306,Dietlikon,250
+8503305,Effretikon,8503306,Dietlikon,53430
+8503147,Stettbach,8503423,Neuhausen,9055
+8503307,Bassersdorf,8503423,Neuhausen,8054
+8503421,Jestetten,8503423,Neuhausen,19598
+8503200,Kilchberg ZH,8503201,Rüschlikon,38984
+8503202,Thalwil,8503203,Oberrieden,19613
+8503202,Thalwil,8503204,Horgen,16996
+8503203,Oberrieden,8503204,Horgen,19613
+8503204,Horgen,8503205,Au ZH,19613
+8503206,Wädenswil,8503207,Richterswil,36585
+8503206,Wädenswil,8503283,Einsiedeln,19139
+8503209,Pfäffikon SZ,8503283,Einsiedeln,16389
+8503206,Wädenswil,8503286,Samstagern,1252
+8503209,Pfäffikon SZ,8503286,Samstagern,251
+8503284,Biberbrugg,8503286,Samstagern,1005
+8503285,Schindellegi-Feusisberg,8503286,Samstagern,36501
+8503207,Richterswil,8503208,Bäch SZ,19589
+8503209,Pfäffikon SZ,8503210,Freienbach SBB,19589
+8503209,Pfäffikon SZ,8503211,Altendorf,16996
+8503210,Freienbach SBB,8503211,Altendorf,1002
+8503209,Pfäffikon SZ,8503220,Lachen SZ,7126
+8503211,Altendorf,8503220,Lachen SZ,17998
+8503209,Pfäffikon SZ,8503221,Siebnen-Wangen,8221
+8503220,Lachen SZ,8503221,Siebnen-Wangen,25357
+8503209,Pfäffikon SZ,8503280,Steinerberg,472
+8503209,Pfäffikon SZ,8503282,Rothenthurm,7297
+8503281,Sattel-Aegeri,8503282,Rothenthurm,8986
+8503209,Pfäffikon SZ,8503284,Biberbrugg,2006
+8503282,Rothenthurm,8503284,Biberbrugg,16755
+8503283,Einsiedeln,8503284,Biberbrugg,36266
+8503209,Pfäffikon SZ,8503299,Hurden,472
+8503295,Wilen bei Wollerau,8503299,Hurden,16891
+8503221,Siebnen-Wangen,8503222,Schübelbach-Buttikon,8683
+8503222,Schübelbach-Buttikon,8503223,Reichenburg,8683
+8503223,Reichenburg,8503224,Bilten,7742
+8503225,Ziegelbrücke,8503226,Nieder- und Oberurnen,17002
+8503225,Ziegelbrücke,8509411,Sargans,7062
+8509002,Landquart,8509411,Sargans,12152
+8509004,Bad Ragaz,8509411,Sargans,27351
+8509404,Buchs SG,8509411,Sargans,13644
+8509406,Sevelen,8509411,Sargans,9454
+8503226,Nieder- und Oberurnen,8503227,Näfels-Mollis,17030
+8503227,Näfels-Mollis,8503228,Netstal,17295
+8503228,Netstal,8503230,Glarus,17295
+8503230,Glarus,8503231,Ennenda,17310
+8503231,Ennenda,8503232,Mitlödi,17937
+8503232,Mitlödi,8503233,Schwanden GL,17937
+8503233,Schwanden GL,8503234,Nidfurn-Haslen,10235
+8503234,Nidfurn-Haslen,8503235,Leuggelbach,10235
+8503235,Leuggelbach,8503236,Luchsingen-Hätzingen,10235
+8503236,Luchsingen-Hätzingen,8503237,Diesbach-Betschwanden,10235
+8503237,Diesbach-Betschwanden,8503238,Rüti GL,10235
+8503238,Rüti GL,8503239,Linthal,10235
+8503239,Linthal,8503240,Linthal Braunwaldbahn,10235
+8503280,Steinerberg,8503281,Sattel-Aegeri,8986
+8503284,Biberbrugg,8503285,Schindellegi-Feusisberg,36501
+8503284,Biberbrugg,8503290,Biberegg,8514
+8503289,Freienbach SOB,8503290,Biberegg,472
+8503286,Samstagern,8503287,Burghalden,20391
+8503286,Samstagern,8503288,Wollerau,17613
+8503287,Burghalden,8503293,Grüenfeld,20391
+8503288,Wollerau,8503289,Freienbach SOB,17363
+8503289,Freienbach SOB,8503294,Riedmatt SZ,16891
+8503292,Altmatt,8503294,Riedmatt SZ,472
+8503290,Biberegg,8503292,Altmatt,8986
+8503294,Riedmatt SZ,8503295,Wilen bei Wollerau,17363
+8503301,Pfäffikon ZH,8503302,Fehraltorf,24253
+8503302,Fehraltorf,8503303,Illnau,24253
+8503307,Bassersdorf,8503308,Kloten,19318
+8503308,Kloten,8503309,Kloten Balsberg,19318
+8503309,Kloten Balsberg,8503340,Opfikon,19318
+8503310,Glattbrugg,8503311,Rümlang,37679
+8503310,Glattbrugg,8503312,Oberglatt ZH,3396
+8503311,Rümlang,8503312,Oberglatt ZH,37679
+8503312,Oberglatt ZH,8503313,Niederglatt ZH,19097
+8503312,Oberglatt ZH,8503314,Niederhasli,19333
+8503314,Niederhasli,8503315,Dielsdorf,19333
+8503315,Dielsdorf,8503316,Steinmaur,19333
+8503316,Steinmaur,8503317,Schöfflisdorf-Oberweningen,19333
+8503317,Schöfflisdorf-Oberweningen,8503318,Niederweningen Dorf,19333
+8503318,Niederweningen Dorf,8503319,Niederweningen,19318
+8503400,Bülach,8503401,Glattfelden,19347
+8503400,Bülach,8503402,Eglisau,17955
+8503401,Glattfelden,8503402,Eglisau,19347
+8503402,Eglisau,8503403,Hüntwangen-Wil,19347
+8503402,Eglisau,8503405,Zweidlen,17949
+8503403,Hüntwangen-Wil,8503404,Rafz,19347
+8503404,Rafz,8503420,Lottstetten,14314
+8503409,Bad Zurzach,8503410,Rietheim,28535
+8503410,Rietheim,8503411,Koblenz Dorf,28612
+8503411,Koblenz Dorf,8503413,Kaiserstuhl AG,18032
+8503413,Kaiserstuhl AG,8503414,Mellikon,17955
+8503414,Mellikon,8503415,Rümikon AG,17955
+8503420,Lottstetten,8503421,Jestetten,14318
+8503424,Schaffhausen,8503425,Feuerthalen,18310
+8503424,Schaffhausen,8506039,Schloss Laufen am Rheinfall,195
+8506000,Winterthur,8506039,Schloss Laufen am Rheinfall,19096
+8503424,Schaffhausen,8518243,Beringerfeld,23619
+8503424,Schaffhausen,8518924,Neuhausen Rheinfall,19598
+8503425,Feuerthalen,8503426,Langwiesen,18310
+8503426,Langwiesen,8503427,Schlatt TG,18310
+8503427,Schlatt TG,8503428,Diessenhofen,18250
+8503428,Diessenhofen,8503429,Schlattingen,18280
+8503429,Schlattingen,8506025,Etzwilen,18250
+8506024,Stammheim,8506025,Etzwilen,17311
+8503501,Döttingen,8503502,Siggenthal-Würenlingen,22264
+8503503,Turgi,8516176,Klingnau,188
+8503504,Baden,8516176,Klingnau,18292
+8503505,Wettingen,8516176,Klingnau,752
+8503508,Dietikon,8516176,Klingnau,3005
+8503504,Baden,8503505,Wettingen,51467
+8503505,Wettingen,8503525,Otelfingen Golfpark,18864
+8503508,Dietikon,8503509,Schlieren,38323
+8503508,Dietikon,8517376,Dietikon Schöneggstrasse,34640
+8503509,Schlieren,8503511,Neuenhof,19586
+8503509,Schlieren,8503512,Glanzenberg,18737
+8503511,Neuenhof,8503512,Glanzenberg,19586
+8503512,Glanzenberg,8516219,Mellingen Heitersberg,985
+8506003,Sennhof-Kyburg,8516219,Mellingen Heitersberg,740
+8506008,Wila,8516219,Mellingen Heitersberg,2991
+8506038,Winterthur Wallrüti,8516219,Mellingen Heitersberg,8803
+8503526,Regensdorf-Watt,8503527,Buchs-Dällikon,18864
+8503527,Buchs-Dällikon,8503528,Otelfingen,18864
+8503528,Otelfingen,8503529,Würenlos,18864
+8504000,Pully-Nord,8504003,Bossière,9013
+8504000,Pully-Nord,8504007,Moreillon,10262
+8504003,Bossière,8504007,Moreillon,499
+8504003,Bossière,8504010,La Conversion,8514
+8504007,Moreillon,8504010,La Conversion,10661
+8504010,La Conversion,8504011,Grandvaux,19275
+8504012,Puidoux,8504013,Chexbres-Village,9114
+8504013,Chexbres-Village,8504015,Vevey-Funi,9114
+8504014,Palézieux,8504016,Palézieux-Village,17934
+8504014,Palézieux,8504020,Oron,2837
+8504014,Palézieux,8504023,Romont FR,10272
+8504021,Vauderens,8504023,Romont FR,2837
+8504014,Palézieux,8504060,Bossonnens,15068
+8504015,Vevey-Funi,8504040,Corseaux-Cornalles,9114
+8504016,Palézieux-Village,8504017,Châtillens,17934
+8504017,Châtillens,8504018,Ecublens-Rue,17934
+8504018,Ecublens-Rue,8504120,Moudon,17934
+8504020,Oron,8504021,Vauderens,2837
+8504023,Romont FR,8504024,Villaz-St-Pierre,15377
+8504023,Romont FR,8504084,Vaulruz-Nord,1475
+8504023,Romont FR,8504086,Bulle,16462
+8504066,Vuadens-Sud,8504086,Bulle,15030
+8504079,La Tour-de-Trême Ronclina,8504086,Bulle,4312
+8504084,Vaulruz-Nord,8504086,Bulle,728
+8504024,Villaz-St-Pierre,8504025,Chénens,15377
+8504025,Chénens,8504026,Cottens FR,15377
+8504026,Cottens FR,8504027,Neyruz FR,15377
+8504027,Neyruz FR,8504028,Rosé,15377
+8504028,Rosé,8504029,Matran,15377
+8504029,Matran,8504030,Villars-sur-Glâne,15377
+8504060,Bossonnens,8504061,Remaufens,15323
+8504061,Remaufens,8504062,Châtel-St-Denis,15323
+8504062,Châtel-St-Denis,8504063,Semsales,15068
+8504063,Semsales,8504064,La Verrerie,11235
+8504063,Semsales,8504065,Vaulruz-Sud,4088
+8504064,La Verrerie,8504065,Vaulruz-Sud,11935
+8504065,Vaulruz-Sud,8504066,Vuadens-Sud,15323
+8504070,Montbovon,8504071,Lessoc,4312
+8504071,Lessoc,8504072,Albeuve,4312
+8504072,Albeuve,8504073,Neirivue,4312
+8504073,Neirivue,8504074,Villars-sous-Mont,4312
+8504074,Villars-sous-Mont,8504075,Enney,4301
+8504075,Enney,8504077,Gruyères,4312
+8504077,Gruyères,8504078,Le Pâquier-Montbarry,4312
+8504078,Le Pâquier-Montbarry,8504079,La Tour-de-Trême Ronclina,4312
+8504100,Fribourg/Freiburg,8504101,Düdingen,31713
+8504100,Fribourg/Freiburg,8504103,Flamatt,200
+8504101,Düdingen,8504103,Flamatt,251
+8504102,Schmitten FR,8504103,Flamatt,17693
+8504100,Fribourg/Freiburg,8504128,Murten/Morat,14030
+8504126,Avenches,8504128,Murten/Morat,1199
+8504127,Faoug,8504128,Murten/Morat,12416
+8504100,Fribourg/Freiburg,8504130,Yvonand,17256
+8504100,Fribourg/Freiburg,8504181,Givisiez,3608
+8504128,Murten/Morat,8504181,Givisiez,8466
+8504140,Muntelier-Löwenberg,8504181,Givisiez,9033
+8504144,Yverdon-Champ Pittet,8504181,Givisiez,17257
+8504100,Fribourg/Freiburg,8519133,Fribourg/Freiburg Poya,1097
+8504101,Düdingen,8519133,Fribourg/Freiburg Poya,42
+8504102,Schmitten FR,8519133,Fribourg/Freiburg Poya,1867
+8507000,Bern,8519133,Fribourg/Freiburg Poya,498
+8516161,Bern Wankdorf,8519133,Fribourg/Freiburg Poya,19098
+8504101,Düdingen,8504102,Schmitten FR,18965
+8504103,Flamatt,8504104,Thörishaus Station,19747
+8504103,Flamatt,8504105,Niederwangen,18345
+8504104,Thörishaus Station,8504105,Niederwangen,19776
+8504103,Flamatt,8504191,Flamatt Dorf,29
+8504117,Oberwangen,8504191,Flamatt Dorf,18555
+8504105,Niederwangen,8504106,Bern Bümpliz Süd,37056
+8504106,Bern Bümpliz Süd,8504108,Bern Europaplatz,37056
+8504108,Bern Europaplatz,8504113,Wünnewil,18488
+8504108,Bern Europaplatz,8504115,Thörishaus Dorf,17475
+8504113,Wünnewil,8504115,Thörishaus Dorf,19030
+8504115,Thörishaus Dorf,8504117,Oberwangen,19777
+8504120,Moudon,8504121,Lucens,17934
+8504121,Lucens,8504122,Granges-Marnand,17934
+8504122,Granges-Marnand,8504123,Corcelles-Nord,10467
+8504122,Granges-Marnand,8504124,Dompierre FR,236
+8504123,Corcelles-Nord,8504124,Dompierre FR,10941
+8504122,Granges-Marnand,8504134,Payerne,7007
+8504126,Avenches,8504134,Payerne,946
+8504129,Galmiz,8504134,Payerne,13634
+8504133,Cugy FR,8504134,Payerne,17729
+8504123,Corcelles-Nord,8504126,Avenches,473
+8504125,Domdidier,8504126,Avenches,12655
+8504124,Dompierre FR,8504125,Domdidier,11177
+8504126,Avenches,8504127,Faoug,12416
+8504128,Murten/Morat,8504129,Galmiz,20100
+8504128,Murten/Morat,8504140,Muntelier-Löwenberg,9037
+8504129,Galmiz,8504140,Muntelier-Löwenberg,6544
+8504134,Payerne,8504140,Muntelier-Löwenberg,13631
+8504130,Yvonand,8504131,Cheyres,17729
+8504131,Cheyres,8504132,Estavayer-le-Lac,17729
+8504132,Estavayer-le-Lac,8504133,Cugy FR,17729
+8504134,Payerne,8504135,Corcelles-Sud,17257
+8504134,Payerne,8504141,Henniez,1008
+8504140,Muntelier-Löwenberg,8504141,Henniez,9757
+8504134,Payerne,8504144,Yverdon-Champ Pittet,472
+8504139,Belfaux CFF,8504144,Yverdon-Champ Pittet,17257
+8504135,Corcelles-Sud,8504136,Cousset,17257
+8504136,Cousset,8504137,Léchelles,17257
+8504137,Léchelles,8504138,Grolley,17257
+8504138,Grolley,8504139,Belfaux CFF,17257
+8504140,Muntelier-Löwenberg,8504400,Kerzers,10197
+8504141,Henniez,8504400,Kerzers,9966
+8504221,Neuchâtel,8504400,Kerzers,10776
+8504314,La Chaux-de-Fonds,8504400,Kerzers,9233
+8504181,Givisiez,8504182,Belfaux-Village,15189
+8504182,Belfaux-Village,8504183,Pensier,17736
+8504183,Pensier,8504184,Courtepin,17741
+8504184,Courtepin,8504185,Cressier FR,17506
+8504185,Cressier FR,8504186,Münchenwiler-Courgevaux,17506
+8504186,Münchenwiler-Courgevaux,8504188,Sugiez,17083
+8504188,Sugiez,8504221,Neuchâtel,8044
+8504200,Yverdon-les-Bains,8504221,Neuchâtel,19793
+8504215,Travers,8504221,Neuchâtel,1480
+8504220,Neuchâtel-Serrières,8504221,Neuchâtel,23607
+8504188,Sugiez,8504483,Ins,9033
+8504400,Kerzers,8504483,Ins,11610
+8504468,Ins Dorf,8504483,Ins,634
+8504475,Gerolfingen,8504483,Ins,14362
+8504480,St-Blaise-Lac,8504483,Ins,248
+8504481,Marin-Epagnier,8504483,Ins,8275
+8504482,Gampelen,8504483,Ins,9756
+8504191,Flamatt Dorf,8504192,Neuenegg,18605
+8504192,Neuenegg,8504194,Laupen BE,18065
+8504200,Yverdon-les-Bains,8504201,Grandson,23168
+8504200,Yverdon-les-Bains,8504291,La Brinaz,13772
+8504201,Grandson,8504203,Concise,2952
+8504203,Concise,8504204,Vaumarcus,2952
+8504204,Vaumarcus,8504205,Gorgier-St-Aubin,2910
+8504205,Gorgier-St-Aubin,8504206,Bevaix,9475
+8504206,Bevaix,8504208,Boudry,9280
+8504208,Boudry,8504209,Colombier NE,9475
+8504209,Colombier NE,8504219,Auvernier,9449
+8504218,Bôle,8504219,Auvernier,14266
+8504215,Travers,8504216,Noiraigue,14266
+8504216,Noiraigue,8504217,Champ-du-Moulin,14266
+8504217,Champ-du-Moulin,8504218,Bôle,14266
+8504219,Auvernier,8504220,Neuchâtel-Serrières,23607
+8504221,Neuchâtel,8504222,St-Blaise CFF,13916
+8504221,Neuchâtel,8504231,Les Deurres,16526
+8504221,Neuchâtel,8504234,Chambrelien,19009
+8504221,Neuchâtel,8504284,La Presta Mines d'asphalte,14171
+8504221,Neuchâtel,8504480,St-Blaise-Lac,8034
+8504400,Kerzers,8504480,St-Blaise-Lac,10510
+8504222,St-Blaise CFF,8504223,Cornaux NE,13916
+8504223,Cornaux NE,8504224,Cressier NE,13916
+8504224,Cressier NE,8504225,Le Landeron,13916
+8504225,Le Landeron,8504226,La Neuveville,13600
+8504226,La Neuveville,8504227,Ligerz,13600
+8504227,Ligerz,8504228,Twann,13600
+8504228,Twann,8504229,Tüscherz,13600
+8504231,Les Deurres,8504232,Corcelles-Peseux,16526
+8504234,Chambrelien,8504236,Les Geneveys-sur-Coffrane,19009
+8504236,Les Geneveys-sur-Coffrane,8504237,Les Hauts-Geneveys,19009
+8504284,La Presta Mines d'asphalte,8504285,Couvet,14266
+8504285,Couvet,8504286,Môtiers NE,14266
+8504286,Môtiers NE,8504287,Fleurier,14266
+8504287,Fleurier,8504288,Buttes,16252
+8504291,La Brinaz,8504292,Valeyres-sous-Montagny,13772
+8504292,Valeyres-sous-Montagny,8504293,Essert-sous-Champvent,13772
+8504293,Essert-sous-Champvent,8504294,Vuiteboeuf,13772
+8504294,Vuiteboeuf,8504295,Baulmes,13772
+8504295,Baulmes,8504296,Six-Fontaines,13772
+8504296,Six-Fontaines,8504298,Ste-Croix,13772
+8504298,Ste-Croix,8530263,Yverdon-les-Bains William Barbey,11154
+8504300,Biel/Bienne,8504301,Frinvillier-Taubenloch,9930
+8504300,Biel/Bienne,8504302,Reuchenette-Péry,250
+8504301,Frinvillier-Taubenloch,8504302,Reuchenette-Péry,9930
+8504300,Biel/Bienne,8504419,Biel Mett,19169
+8504300,Biel/Bienne,8504461,Nidau,27194
+8504302,Reuchenette-Péry,8504303,La Heutte,10180
+8504304,Sonceboz-Sombeval,8504305,Corgémont,10585
+8504304,Sonceboz-Sombeval,8504307,Courtelary,7266
+8504306,Cortébert,8504307,Courtelary,10585
+8504305,Corgémont,8504306,Cortébert,10585
+8504307,Courtelary,8504308,Cormoret,10585
+8504307,Courtelary,8504310,St-Imier,7267
+8504309,Villeret,8504310,St-Imier,10585
+8504308,Cormoret,8504309,Villeret,10585
+8504310,St-Imier,8504311,Sonvilier,10335
+8504311,Sonvilier,8504312,Renan BE,10335
+8504314,La Chaux-de-Fonds,8504315,Le Crêt-du-Locle,22611
+8504314,La Chaux-de-Fonds,8504316,Le Locle,250
+8504315,Le Crêt-du-Locle,8504316,Le Locle,22607
+8504314,La Chaux-de-Fonds,8504381,La Chaux-de-Fonds-Grenier,8586
+8504316,Le Locle,8504317,Le Locle-Col-des-Roches,3118
+8504316,Le Locle,8504321,La Chaux-de-Fonds Les Forges,9769
+8504316,Le Locle,8504391,Les Frêtes,10139
+8504325,Colombier NE Littorail,8504398,"Neuchâtel,Place Pury Littorail",21443
+8504381,La Chaux-de-Fonds-Grenier,8504382,Le Reymond,8586
+8504382,Le Reymond,8504383,La Corbatière,8586
+8504383,La Corbatière,8504384,La Sagne-Eglise,8775
+8504383,La Corbatière,8504385,La Sagne,189
+8504384,La Sagne-Eglise,8504385,La Sagne,8775
+8504385,La Sagne,8504386,Les Coeudres,8775
+8504385,La Sagne,8504388,Les Ponts-de-Martel,189
+8504387,Petit-Martel,8504388,Les Ponts-de-Martel,8775
+8504386,Les Coeudres,8504387,Petit-Martel,8775
+8504388,Les Ponts-de-Martel,8530011,Les Coeudres-Est,8774
+8504391,Les Frêtes,8504392,Les Brenets,10139
+8504392,Les Brenets,8530260,Le Locle Le Chalet,10139
+8504398,"Neuchâtel,Place Pury Littorail",8504509,"Neuchâtel, Port-de-Serrières",21346
+8504398,"Neuchâtel,Place Pury Littorail",8504510,Auvernier Littorail,94
+8504509,"Neuchâtel, Port-de-Serrières",8504510,Auvernier Littorail,21347
+8504400,Kerzers,8504401,Fräschels,9553
+8504400,Kerzers,8504486,Gümmenen,16054
+8504484,Müntschemier,8504486,Gümmenen,3351
+8504401,Fräschels,8504402,Kallnach,9553
+8504402,Kallnach,8504403,Bargen BE,9553
+8504403,Bargen BE,8504404,Aarberg,9553
+8504410,Zollikofen,8504411,Münchenbuchsee,34195
+8504410,Zollikofen,8507002,Ostermundigen,469
+8507000,Bern,8507002,Ostermundigen,38805
+8504411,Münchenbuchsee,8504412,Schüpfen,21746
+8504412,Schüpfen,8504413,Suberg-Grossaffoltern,18975
+8504414,Lyss,8504415,Busswil BE,31530
+8504414,Lyss,8516444,Kerzers Papiliorama,6039
+8504414,Lyss,8518749,Lyss Grien,3514
+8516444,Kerzers Papiliorama,8518749,Lyss Grien,6039
+8504415,Busswil BE,8504416,Brügg BE,18962
+8504416,Brügg BE,8504441,Studen BE,18960
+8504419,Biel Mett,8518771,Biel/Bienne Bözingenfeld/Champs-de-Boujean,19169
+8504461,Nidau,8504462,Lattrigen,27194
+8504462,Lattrigen,8504463,Täuffelen,27194
+8504463,Täuffelen,8504464,Hagneck,15381
+8504463,Täuffelen,8504469,Nidau Beunden,12044
+8504466,Siselen-Finsterhennen,8504469,Nidau Beunden,751
+8504468,Ins Dorf,8504469,Nidau Beunden,14065
+8504464,Hagneck,8504465,Lüscherz,15381
+8504465,Lüscherz,8504466,Siselen-Finsterhennen,15381
+8504466,Siselen-Finsterhennen,8504467,Brüttelen,14961
+8504467,Brüttelen,8504468,Ins Dorf,15100
+8504469,Nidau Beunden,8504470,Ipsach Herdi,27194
+8504470,Ipsach Herdi,8504471,Ipsach,27194
+8504471,Ipsach,8504472,Sutz,27194
+8504472,Sutz,8504474,Mörigen,27194
+8504474,Mörigen,8504475,Gerolfingen,27194
+8504480,St-Blaise-Lac,8504481,Marin-Epagnier,18001
+8504481,Marin-Epagnier,8504482,Gampelen,10026
+8504483,Ins,8504484,Müntschemier,12891
+8504484,Müntschemier,8504490,Zihlbrücke,9540
+8504489,Bern Bümpliz Nord,8504490,Zihlbrücke,486
+8504486,Gümmenen,8504487,Rosshäusern,19127
+8504487,Rosshäusern,8504488,Riedbach,10105
+8504487,Rosshäusern,8504489,Bern Bümpliz Nord,9018
+8504488,Riedbach,8504489,Bern Bümpliz Nord,10104
+8504489,Bern Bümpliz Nord,8504495,Bern Stöckacker,26704
+8504490,Zihlbrücke,8504495,Bern Stöckacker,486
+8504510,Auvernier Littorail,8504511,Boudry Littorail,21439
+8504511,Boudry Littorail,8530708,"Neuchâtel, Evole",21346
+8504511,Boudry Littorail,8530711,Colombier NE Allées Littorail,94
+8530710,"Neuchâtel, Serrières Ruau",8530711,Colombier NE Allées Littorail,21346
+8505000,Luzern,8505001,Meggen,11545
+8505000,Luzern,8505002,Küssnacht am Rigi,7768
+8505001,Meggen,8505002,Küssnacht am Rigi,11504
+8505000,Luzern,8507492,Interlaken Ost,6344
+8507389,Zweilütschinen,8507492,Interlaken Ost,16484
+8507483,Spiez,8507492,Interlaken Ost,18466
+8505000,Luzern,8508207,Langnau i.E.,253
+8508081,Burgdorf Steinhof,8508207,Langnau i.E.,9136
+8508202,Konolfingen,8508207,Langnau i.E.,9036
+8508205,Signau,8508207,Langnau i.E.,320
+8508206,Emmenmatt,8508207,Langnau i.E.,19027
+8505000,Luzern,8508215,Wolhusen,21633
+8508187,Huttwil,8508215,Wolhusen,14305
+8508213,Entlebuch,8508215,Wolhusen,19264
+8505000,Luzern,8508308,Meiringen,1212
+8508305,Brienz,8508308,Meiringen,5919
+8508306,Brienzwiler,8508308,Meiringen,9262
+8505000,Luzern,8508312,Giswil,19016
+8508311,Kaiserstuhl OW,8508312,Giswil,7556
+8505000,Luzern,8508313,Sachseln,2004
+8508312,Giswil,8508313,Sachseln,27160
+8505000,Luzern,8508318,Hergiswil NW,23094
+8508316,Alpnach Dorf,8508318,Hergiswil NW,2004
+8508317,Alpnachstad,8508318,Hergiswil NW,19604
+8505000,Luzern,8508319,Horw,2839
+8508318,Hergiswil NW,8508319,Horw,39930
+8505000,Luzern,8508384,Niederrickenbach Station,8804
+8508318,Hergiswil NW,8508384,Niederrickenbach Station,236
+8508319,Horw,8508384,Niederrickenbach Station,252
+8505000,Luzern,8515995,Cham Alpenblick,1222
+8515993,Baar Lindenpark,8515995,Cham Alpenblick,33847
+8505000,Luzern,8516353,Baldegg Kloster,17670
+8505002,Küssnacht am Rigi,8505003,Immensee,11537
+8505002,Küssnacht am Rigi,8505018,Meggen Zentrum,974
+8505004,Arth-Goldau,8505018,Meggen Zentrum,6794
+8505011,Merlischachen,8505018,Meggen Zentrum,10934
+8505004,Arth-Goldau,8505005,Steinen,21297
+8505004,Arth-Goldau,8505006,Schwyz,8329
+8505005,Steinen,8505006,Schwyz,21286
+8505004,Arth-Goldau,8505011,Merlischachen,751
+8505007,Brunnen,8505011,Merlischachen,10784
+8505004,Arth-Goldau,8505112,Flüelen,204
+8505007,Brunnen,8505112,Flüelen,8329
+8505111,Sisikon,8505112,Flüelen,10022
+8505004,Arth-Goldau,8505113,Altdorf UR,4016
+8505112,Flüelen,8505113,Altdorf UR,17864
+8505004,Arth-Goldau,8505213,Bellinzona,9838
+8505113,Altdorf UR,8505213,Bellinzona,3371
+8505201,Airolo,8505213,Bellinzona,204
+8505209,Biasca,8505213,Bellinzona,405
+8505212,Castione-Arbedo,8505213,Bellinzona,48402
+8505004,Arth-Goldau,8515994,Zug Fridbach,251
+8505007,Brunnen,8515994,Zug Fridbach,235
+8515993,Baar Lindenpark,8515994,Zug Fridbach,16306
+8505006,Schwyz,8505007,Brunnen,29626
+8505007,Brunnen,8505111,Sisikon,9761
+8505018,Meggen Zentrum,8505111,Sisikon,247
+8505018,Meggen Zentrum,8517336,Luzern Verkehrshaus,12511
+8505114,Erstfeld,8517336,Luzern Verkehrshaus,246
+8506302,St. Gallen,8517336,Luzern Verkehrshaus,6543
+8505112,Flüelen,8505119,Göschenen,204
+8505114,Erstfeld,8505119,Göschenen,8077
+8505113,Altdorf UR,8505114,Erstfeld,17864
+8505113,Altdorf UR,8505209,Biasca,390
+8505207,Bodio TI,8505209,Biasca,8803
+8505119,Göschenen,8505201,Airolo,8281
+8505163,Realp,8505164,Hospental,10644
+8505165,Andermatt,8505170,Nätschen,6348
+8505165,Andermatt,8509179,Disentis/Mustér,1090
+8505180,Acla da Fontauna,8509179,Disentis/Mustér,6488
+8509000,Chur,8509179,Disentis/Mustér,1066
+8509178,Sumvitg-Cumpadials,8509179,Disentis/Mustér,8992
+8505170,Nätschen,8505172,Oberalppass,6348
+8505172,Oberalppass,8505173,Tschamut-Selva,6348
+8505173,Tschamut-Selva,8505174,Dieni,6348
+8505174,Dieni,8505175,Rueras,8308
+8505175,Rueras,8505176,Sedrun,8308
+8505176,Sedrun,8505177,Bugnei,6488
+8505177,Bugnei,8505178,Mumpé Tujetsch,6488
+8505178,Mumpé Tujetsch,8505179,Segnas,6488
+8505179,Segnas,8505180,Acla da Fontauna,6488
+8505201,Airolo,8505202,Ambrì-Piotta,8803
+8505202,Ambrì-Piotta,8505204,Faido,8803
+8505204,Faido,8505205,Lavorgo,8803
+8505205,Lavorgo,8505207,Bodio TI,8803
+8505209,Biasca,8505212,Castione-Arbedo,27903
+8505213,Bellinzona,8505214,Giubiasco,51331
+8505213,Bellinzona,8505300,Lugano,13606
+8505214,Giubiasco,8505300,Lugano,18527
+8505219,Lamone-Cadempino,8505300,Lugano,21009
+8505213,Bellinzona,8505405,Quartino,370
+8505214,Giubiasco,8505405,Quartino,321
+8505404,Cadenazzo,8505405,Quartino,3364
+8505213,Bellinzona,8505415,S. Antonino,28
+8505214,Giubiasco,8505415,S. Antonino,28
+8505401,Tenero,8505415,S. Antonino,1396
+8505404,Cadenazzo,8505415,S. Antonino,325
+8505410,Gerra (Gambarogno),8505415,S. Antonino,943
+8505412,Riazzino,8505415,S. Antonino,37834
+8505214,Giubiasco,8505216,Rivera-Bironico,20962
+8505214,Giubiasco,8505400,Locarno,26350
+8505300,Lugano,8505400,Locarno,1946
+8505307,Chiasso,8505400,Locarno,16125
+8505214,Giubiasco,8505401,Tenero,467
+8505300,Lugano,8505401,Tenero,146
+8505307,Chiasso,8505401,Tenero,175
+8505400,Locarno,8505401,Tenero,45059
+8505214,Giubiasco,8505404,Cadenazzo,642
+8505300,Lugano,8505404,Cadenazzo,130
+8505307,Chiasso,8505404,Cadenazzo,130
+8505401,Tenero,8505404,Cadenazzo,5675
+8505402,Gordola,8505404,Cadenazzo,32879
+8505216,Rivera-Bironico,8505217,Mezzovico,20899
+8505217,Mezzovico,8505218,Taverne-Torricella,20979
+8505218,Taverne-Torricella,8505219,Lamone-Cadempino,20933
+8505226,Grindelwald Terminal,8507380,Grindelwald,8169
+8505300,Lugano,8505301,Lugano-Paradiso,43917
+8505300,Lugano,8505305,Mendrisio,1325
+8505301,Lugano-Paradiso,8505305,Mendrisio,13222
+8505303,Maroggia-Melano,8505305,Mendrisio,251
+8505304,Capolago-Riva S. Vitale,8505305,Mendrisio,30045
+8505300,Lugano,8505307,Chiasso,5931
+8505305,Mendrisio,8505307,Chiasso,16171
+8505306,Balerna,8505307,Chiasso,28814
+8505301,Lugano-Paradiso,8505302,Melide,30204
+8505301,Lugano-Paradiso,8505303,Maroggia-Melano,251
+8505302,Melide,8505303,Maroggia-Melano,30204
+8505303,Maroggia-Melano,8505304,Capolago-Riva S. Vitale,30199
+8505305,Mendrisio,8505306,Balerna,29685
+8505305,Mendrisio,8517519,Stabio,17265
+8505305,Mendrisio,8518475,Mendrisio S. Martino,16250
+8505307,Chiasso,8518475,Mendrisio S. Martino,10782
+8505415,S. Antonino,8518475,Mendrisio S. Martino,3157
+8505390,Serocca,8505391,Lugano FLP,31021
+8505391,Lugano FLP,8505392,Magliaso Paese,31021
+8505392,Magliaso Paese,8505393,Cappella-Agnuzzo,31021
+8505393,Cappella-Agnuzzo,8505394,Bioggio,30895
+8505394,Bioggio,8505395,Agno,31021
+8505395,Agno,8505396,Magliaso,31021
+8505396,Magliaso,8505397,Caslano,30958
+8505397,Caslano,8505398,Ponte Tresa,31021
+8505398,Ponte Tresa,8505399,Sorengo,31021
+8505399,Sorengo,8530789,Bioggio Molinazzo,31021
+8505401,Tenero,8505402,Gordola,38464
+8505402,Gordola,8505412,Riazzino,5585
+8505404,Cadenazzo,8505412,Riazzino,30182
+8505405,Quartino,8505406,Magadino-Vira,4104
+8505406,Magadino-Vira,8505407,S. Nazzaro,4104
+8505407,S. Nazzaro,8505408,Ranzo-S. Abbondio,4042
+8505407,S. Nazzaro,8505410,Gerra (Gambarogno),62
+8505408,Ranzo-S. Abbondio,8505410,Gerra (Gambarogno),3969
+8505408,Ranzo-S. Abbondio,8505861,Maccagno,72
+8505410,Gerra (Gambarogno),8505861,Maccagno,2964
+8505415,S. Antonino,8505861,Maccagno,943
+8505467,S. Martino,8505470,Locarno FART,10231
+8505470,Locarno FART,8505471,Locarno S. Antonio,13672
+8505470,Locarno FART,8505473,Ponte Brolla,708
+8505471,Locarno S. Antonio,8505473,Ponte Brolla,5467
+8505472,Solduno,8505473,Ponte Brolla,8205
+8505471,Locarno S. Antonio,8505472,Solduno,8205
+8505473,Ponte Brolla,8505491,Tegna,10732
+8505473,Ponte Brolla,8505494,Intragna,3648
+8505493,Cavigliano,8505494,Intragna,10230
+8505491,Tegna,8505492,Verscio,10732
+8505492,Verscio,8505493,Cavigliano,10732
+8505494,Intragna,8505495,Corcapolo,6746
+8505494,Intragna,8505496,Verdasio,890
+8505495,Corcapolo,8505496,Verdasio,6731
+8505494,Intragna,8505499,Camedo,2509
+8505496,Verdasio,8505499,Camedo,920
+8505497,Palagnedra,8505499,Camedo,589
+8505498,Borgnone-Cadanza,8505499,Camedo,4978
+8505496,Verdasio,8505497,Palagnedra,5713
+8505497,Palagnedra,8505498,Borgnone-Cadanza,4978
+8505499,Camedo,8505578,Zornasco,986
+8505499,Camedo,8505580,Re,3118
+8505578,Zornasco,8505580,Re,986
+8505580,Re,8505581,S. Maria Maggiore,4119
+8505581,S. Maria Maggiore,8505584,Malesco,4119
+8505584,Malesco,8505585,Druogno,4119
+8505585,Druogno,8505588,Creggio,690
+8505585,Druogno,8505589,Folsogno-Dissimo,236
+8505588,Creggio,8505589,Folsogno-Dissimo,455
+8505585,Druogno,8505590,Gagnone-Orcesco,295
+8505588,Creggio,8505590,Gagnone-Orcesco,235
+8505589,Folsogno-Dissimo,8505590,Gagnone-Orcesco,691
+8505585,Druogno,8505593,Masera,2898
+8505590,Gagnone-Orcesco,8505593,Masera,985
+8505592,Marone,8505593,Masera,236
+8505590,Gagnone-Orcesco,8505592,Marone,236
+8505593,Masera,8505594,Prestinone,1207
+8505593,Masera,8505597,Trontano,2912
+8505594,Prestinone,8505597,Trontano,1207
+8505597,Trontano,8505599,Verigo,926
+8505861,Maccagno,8505862,Pino-Tronzano,3907
+8505862,Pino-Tronzano,8505874,Colmegna,3907
+8506000,Winterthur,8506001,Winterthur Grüze,47738
+8506000,Winterthur,8506016,Oberwinterthur,48489
+8506000,Winterthur,8506041,Embrach-Rorbas,19362
+8506000,Winterthur,8506047,Andelfingen,8555
+8506046,Henggart,8506047,Andelfingen,19306
+8506000,Winterthur,8506100,Frauenfeld,20641
+8506019,Islikon,8506100,Frauenfeld,19867
+8506000,Winterthur,8506206,Wil SG,18676
+8506035,Schottikon,8506206,Wil SG,19834
+8506121,Romanshorn,8506206,Wil SG,185
+8506143,Münsterlingen Spital,8506206,Wil SG,1161
+8506148,St. Katharinental,8506206,Wil SG,16330
+8506178,Münchwilen TG,8506206,Wil SG,4236
+8506179,Lüdem,8506206,Wil SG,18615
+8506190,Bussnang,8506206,Wil SG,17312
+8506205,Bazenheid,8506206,Wil SG,19863
+8506000,Winterthur,8506302,St. Gallen,12499
+8506121,Romanshorn,8506302,St. Gallen,473
+8506148,St. Katharinental,8506302,St. Gallen,724
+8506210,Gossau SG,8506302,St. Gallen,19112
+8506270,St. Gallen Marktplatz,8506302,St. Gallen,7019
+8506276,Strahlholz,8506302,St. Gallen,660
+8506286,Appenzell,8506302,St. Gallen,17808
+8506290,Herisau,8506302,St. Gallen,34358
+8506292,Degersheim,8506302,St. Gallen,1253
+8506294,Brunnadern-Neckertal,8506302,St. Gallen,9892
+8506299,Nesslau-Neu St. Johann,8506302,St. Gallen,8304
+8506301,St. Gallen Bruggen,8506302,St. Gallen,32844
+8506001,Winterthur Grüze,8506002,Winterthur Seen,27941
+8506001,Winterthur Grüze,8506010,Sirnach,19803
+8506002,Winterthur Seen,8506003,Sennhof-Kyburg,27690
+8506003,Sennhof-Kyburg,8506004,Kollbrunn,24240
+8506004,Kollbrunn,8506005,Rikon,24240
+8506005,Rikon,8506006,Rämismühle-Zell,24240
+8506006,Rämismühle-Zell,8506007,Turbenthal,24240
+8506007,Turbenthal,8506008,Wila,24240
+8506008,Wila,8506009,Saland,19495
+8506010,Sirnach,8506011,Eschlikon TG,19833
+8506011,Eschlikon TG,8506012,Guntershausen,19833
+8506012,Guntershausen,8506013,Aadorf,19833
+8506013,Aadorf,8506014,Elgg,19833
+8506014,Elgg,8506015,Räterschen,19833
+8506015,Räterschen,8506035,Schottikon,19834
+8506016,Oberwinterthur,8506017,Wiesendangen,19867
+8506016,Oberwinterthur,8506020,Seuzach,28372
+8506017,Wiesendangen,8506018,Rickenbach-Attikon,19867
+8506018,Rickenbach-Attikon,8506019,Islikon,19867
+8506020,Seuzach,8506021,Dinhard,16507
+8506020,Seuzach,8506036,Reutlingen,10560
+8506025,Etzwilen,8506036,Reutlingen,17820
+8506021,Dinhard,8506022,Thalheim-Altikon,16507
+8506022,Thalheim-Altikon,8506023,Ossingen,16507
+8506023,Ossingen,8506024,Stammheim,17820
+8506025,Etzwilen,8506118,Triboltingen,18250
+8506036,Reutlingen,8506038,Winterthur Wallrüti,28380
+8506038,Winterthur Wallrüti,8506139,Stein am Rhein,17820
+8506138,Eschenz,8506139,Stein am Rhein,18737
+8506039,Schloss Laufen am Rheinfall,8506045,Hettlingen,19111
+8506039,Schloss Laufen am Rheinfall,8506046,Henggart,195
+8506045,Hettlingen,8506046,Henggart,19111
+8506041,Embrach-Rorbas,8506042,Pfungen,19362
+8506042,Pfungen,8506043,Winterthur Wülflingen,19342
+8506043,Winterthur Wülflingen,8506044,Winterthur Töss,19362
+8506047,Andelfingen,8506048,Marthalen,19807
+8506048,Marthalen,8506049,Dachsen,19523
+8506100,Frauenfeld,8506101,Felben-Wellhausen,19867
+8506100,Frauenfeld,8506105,Weinfelden,20642
+8506104,Märstetten,8506105,Weinfelden,19867
+8506100,Frauenfeld,8506169,Wiesengrund,18615
+8506101,Felben-Wellhausen,8506102,Hüttlingen-Mettendorf,19867
+8506102,Hüttlingen-Mettendorf,8506103,Müllheim-Wigoltingen,19867
+8506103,Müllheim-Wigoltingen,8506104,Märstetten,19867
+8506105,Weinfelden,8506106,Bürglen TG,36490
+8506105,Weinfelden,8506109,Amriswil,19577
+8506108,Oberaach,8506109,Amriswil,17310
+8506105,Weinfelden,8506128,Kreuzlingen Hafen,476
+8506121,Romanshorn,8506128,Kreuzlingen Hafen,15736
+8506127,Bottighofen,8506128,Kreuzlingen Hafen,18922
+8506105,Weinfelden,8506131,Kreuzlingen,45090
+8506118,Triboltingen,8506131,Kreuzlingen,739
+8506128,Kreuzlingen Hafen,8506131,Kreuzlingen,19367
+8506105,Weinfelden,8506168,Tägerschen,503
+8506121,Romanshorn,8506168,Tägerschen,16809
+8506106,Bürglen TG,8506107,Erlen,17295
+8506106,Bürglen TG,8506210,Gossau SG,14580
+8506209,Flawil,8506210,Gossau SG,37310
+8506106,Bürglen TG,8506213,Bischofszell Stadt,4522
+8506212,Hauptwil,8506213,Bischofszell Stadt,14648
+8506106,Bürglen TG,8506217,Sulgen,93
+8506121,Romanshorn,8506217,Sulgen,1755
+8506206,Wil SG,8506217,Sulgen,16809
+8506216,Kradolf,8506217,Sulgen,18715
+8506107,Erlen,8506108,Oberaach,17310
+8506109,Amriswil,8506121,Romanshorn,36872
+8506119,Kurzrickenbach Seepark,8506121,Romanshorn,18953
+8506118,Triboltingen,8506119,Kurzrickenbach Seepark,18028
+8506121,Romanshorn,8506122,Uttwil,18968
+8506121,Romanshorn,8506306,Rorschach Hafen,19588
+8506278,Seebleiche,8506306,Rorschach Hafen,3844
+8506122,Uttwil,8506123,Kesswil,18968
+8506123,Kesswil,8506124,Güttingen,14405
+8506123,Kesswil,8506125,Altnau,4548
+8506124,Güttingen,8506125,Altnau,14374
+8506124,Güttingen,8506127,Bottighofen,31
+8506126,Münsterlingen-Scherzingen,8506127,Bottighofen,18877
+8506125,Altnau,8506126,Münsterlingen-Scherzingen,18877
+8506127,Bottighofen,8506143,Münsterlingen Spital,31
+8506131,Kreuzlingen,8506143,Münsterlingen Spital,894
+8506139,Stein am Rhein,8506143,Münsterlingen Spital,18028
+8506128,Kreuzlingen Hafen,8506290,Herisau,16029
+8506200,Wattwil,8506290,Herisau,9633
+8506201,Lichtensteig,8506290,Herisau,18196
+8506286,Appenzell,8506290,Herisau,6282
+8506289,Wasserauen,8506290,Herisau,10137
+8506131,Kreuzlingen,8506132,Tägerwilen-Gottlieben,18737
+8506131,Kreuzlingen,8506193,Kehlhof,34895
+8506132,Tägerwilen-Gottlieben,8506133,Ermatingen,18767
+8506133,Ermatingen,8506134,Mannenbach-Salenstein,18797
+8506134,Mannenbach-Salenstein,8506135,Berlingen,18797
+8506135,Berlingen,8506136,Steckborn,18797
+8506136,Steckborn,8506137,Mammern,18737
+8506137,Mammern,8506138,Eschenz,18737
+8506139,Stein am Rhein,8506148,St. Katharinental,488
+8506143,Münsterlingen Spital,8506148,St. Katharinental,17792
+8506148,St. Katharinental,8588122,Landschlacht,708
+8506398,Neukirch-Egnach,8588122,Landschlacht,18200
+8506168,Tägerschen,8506181,Bronschhofen,17312
+8506169,Wiesengrund,8506170,Münchwilen Pflegeheim,18614
+8506170,Münchwilen Pflegeheim,8506171,Frauenfeld Marktplatz,18614
+8506170,Münchwilen Pflegeheim,8506176,Wängi,4236
+8506175,Jakobstal,8506176,Wängi,18614
+8506171,Frauenfeld Marktplatz,8506173,Weberei Matzingen,18615
+8506173,Weberei Matzingen,8506174,Matzingen,18615
+8506174,Matzingen,8506175,Jakobstal,18614
+8506176,Wängi,8506177,Rosental,22850
+8506177,Rosental,8506178,Münchwilen TG,22850
+8506178,Münchwilen TG,8506179,Lüdem,18614
+8506181,Bronschhofen,8506182,Bettwiesen,17312
+8506182,Bettwiesen,8506183,Tobel-Affeltrangen,17312
+8506183,Tobel-Affeltrangen,8506184,Märwil,17312
+8506184,Märwil,8506185,Oppikon,17312
+8506185,Oppikon,8506188,Bronschhofen AMP,17312
+8506188,Bronschhofen AMP,8506190,Bussnang,17312
+8506193,Kehlhof,8506194,Berg,34975
+8506194,Berg,8506195,Siegershausen,34973
+8506195,Siegershausen,8506196,Lengwil,34974
+8506196,Lengwil,8506197,Kreuzlingen Bernrain,34690
+8506197,Kreuzlingen Bernrain,8506198,Tägerwilen Dorf,34975
+8506200,Wattwil,8506201,Lichtensteig,38059
+8506200,Wattwil,8506297,Ebnat-Kappel,251
+8506294,Brunnadern-Neckertal,8506297,Ebnat-Kappel,8304
+8506201,Lichtensteig,8506202,Dietfurt,19863
+8506202,Dietfurt,8506203,Bütschwil,19863
+8506203,Bütschwil,8506204,Lütisburg,19863
+8506204,Lütisburg,8506205,Bazenheid,19863
+8506206,Wil SG,8506208,Uzwil,37310
+8506206,Wil SG,8516218,Winterthur Hegi,19833
+8506208,Uzwil,8506209,Flawil,37310
+8506210,Gossau SG,8506211,Arnegg,14667
+8506210,Gossau SG,8506271,Gontenbad,17104
+8506210,Gossau SG,8506300,St. Gallen Winkeln,18177
+8506216,Kradolf,8506300,St. Gallen Winkeln,87
+8506217,Sulgen,8506300,St. Gallen Winkeln,14580
+8506211,Arnegg,8506212,Hauptwil,14667
+8506213,Bischofszell Stadt,8506214,Sitterdorf,19197
+8506214,Sitterdorf,8506215,Bischofszell Nord,19197
+8506215,Bischofszell Nord,8506216,Kradolf,19197
+8506270,St. Gallen Marktplatz,8506276,Strahlholz,19316
+8506270,St. Gallen Marktplatz,8506286,Appenzell,999
+8506276,Strahlholz,8506286,Appenzell,16901
+8506285,Gonten,8506286,Appenzell,17102
+8506271,Gontenbad,8506275,Steinegg,10300
+8506271,Gontenbad,8506280,Herisau Wilen,6802
+8506277,Schwende,8506280,Herisau Wilen,10137
+8506275,Steinegg,8506277,Schwende,10137
+8506276,Strahlholz,8506377,Bühler,214
+8506375,Teufen AR,8506377,Bühler,909
+8506376,Steigbach,8506377,Bühler,17810
+8506278,Seebleiche,8506311,Rorschach,3983
+8506302,St. Gallen,8506311,Rorschach,16678
+8506305,Goldach,8506311,Rorschach,28435
+8506306,Rorschach Hafen,8506311,Rorschach,3844
+8506309,Egnach,8506311,Rorschach,19588
+8506280,Herisau Wilen,8506281,Waldstatt,17102
+8506281,Waldstatt,8506282,Zürchersmühle,17102
+8506282,Zürchersmühle,8506283,Urnäsch,17102
+8506283,Urnäsch,8506284,Jakobsbad,17102
+8506284,Jakobsbad,8506285,Gonten,17102
+8506286,Appenzell,8506288,Weissbad,9938
+8506288,Weissbad,8506289,Wasserauen,10137
+8506290,Herisau,8506291,Schachen (Herisau),18196
+8506290,Herisau,8506292,Degersheim,1253
+8506291,Schachen (Herisau),8506292,Degersheim,18196
+8506292,Degersheim,8506293,Mogelsberg,18196
+8506293,Mogelsberg,8506294,Brunnadern-Neckertal,18196
+8506297,Ebnat-Kappel,8506298,Krummenau,8555
+8506298,Krummenau,8506299,Nesslau-Neu St. Johann,8555
+8506300,St. Gallen Winkeln,8506301,St. Gallen Bruggen,32844
+8506302,St. Gallen,8506303,St. Gallen St. Fiden,52152
+8506302,St. Gallen,8506314,St. Margrethen SG,2629
+8506311,Rorschach,8506314,St. Margrethen SG,9252
+8506313,Rheineck,8506314,St. Margrethen SG,28183
+8506302,St. Gallen,8506358,St. Gallen Spisertor,27624
+8506302,St. Gallen,8506392,St. Gallen Haggen,9375
+8506322,Rorschach Stadt,8506392,St. Gallen Haggen,18093
+8506303,St. Gallen St. Fiden,8506304,Mörschwil,19847
+8506303,St. Gallen St. Fiden,8506305,Goldach,8588
+8506304,Mörschwil,8506305,Goldach,19847
+8506303,St. Gallen St. Fiden,8506393,Wittenbach,23719
+8506306,Rorschach Hafen,8506307,Horn,19588
+8506307,Horn,8506308,Arbon,19588
+8506308,Arbon,8506309,Egnach,19588
+8506311,Rorschach,8506312,Staad SG,28183
+8506311,Rorschach,8506322,Rorschach Stadt,501
+8506314,St. Margrethen SG,8506322,Rorschach Stadt,8337
+8506319,Altstätten SG,8506322,Rorschach Stadt,19597
+8506311,Rorschach,8506352,Wartensee,7827
+8506311,Rorschach,8516270,Arbon Seemoosriet,19588
+8506312,Staad SG,8506313,Rheineck,28183
+8506313,Rheineck,8506350,Walzenhausen,12514
+8506314,St. Margrethen SG,8506316,Au SG,20096
+8506314,St. Margrethen SG,8506317,Heerbrugg,9252
+8506316,Au SG,8506317,Heerbrugg,20096
+8506317,Heerbrugg,8506318,Rebstein-Marbach,20096
+8506317,Heerbrugg,8506319,Altstätten SG,9192
+8506318,Rebstein-Marbach,8506319,Altstätten SG,20096
+8506319,Altstätten SG,8509400,Oberriet SG,250
+8506392,St. Gallen Haggen,8509400,Oberriet SG,9788
+8506350,Walzenhausen,8506351,Ruderbach,12514
+8506352,Wartensee,8506353,Wienacht-Tobel,7827
+8506353,Wienacht-Tobel,8506354,Schwendi bei Heiden,7827
+8506354,Schwendi bei Heiden,8506355,Heiden,7827
+8506355,Heiden,8506400,Sandbüchel,7827
+8506358,St. Gallen Spisertor,8506359,St. Gallen Schülerhaus,27334
+8506359,St. Gallen Schülerhaus,8506361,St. Gallen Notkersegg,27334
+8506361,St. Gallen Notkersegg,8506362,Schwarzer Bären,27624
+8506362,Schwarzer Bären,8506364,Vögelinsegg,27624
+8506364,Vögelinsegg,8506365,Schützengarten,27624
+8506365,Schützengarten,8506366,Speicher,27624
+8506366,Speicher,8506367,Bendlehn,28625
+8506366,Speicher,8506371,St. Gallen Riethüsli,1506
+8506369,Trogen,8506371,St. Gallen Riethüsli,24117
+8506367,Bendlehn,8506368,Gfeld,28508
+8506368,Gfeld,8506369,Trogen,28627
+8506369,Trogen,8506373,Niederteufen,999
+8506372,Lustmühle,8506373,Niederteufen,25622
+8506369,Trogen,8518100,St. Gallen Birnbäumen,1003
+8506381,Sammelplatz,8518100,St. Gallen Birnbäumen,909
+8506470,Teufen AR Stofel,8518100,St. Gallen Birnbäumen,25622
+8506371,St. Gallen Riethüsli,8506372,Lustmühle,25622
+8506373,Niederteufen,8506374,Sternen bei Teufen,25622
+8506373,Niederteufen,8506375,Teufen AR,999
+8506374,Sternen bei Teufen,8506375,Teufen AR,25622
+8506375,Teufen AR,8506376,Steigbach,17782
+8506375,Teufen AR,8506470,Teufen AR Stofel,6016
+8506382,Zweibrücken,8506470,Teufen AR Stofel,17561
+8506377,Bühler,8506378,Gais,18684
+8506378,Gais,8506379,Altstätten Stadt,6539
+8506378,Gais,8506380,Hirschberg,17806
+8506378,Gais,8506382,Zweibrücken,874
+8506381,Sammelplatz,8506382,Zweibrücken,16899
+8506379,Altstätten Stadt,8506383,Hebrig,6539
+8506380,Hirschberg,8506381,Sammelplatz,17808
+8506383,Hebrig,8506384,Schachen (Gais),6539
+8506384,Schachen (Gais),8506385,Rietli,6539
+8506385,Rietli,8506386,Stoss AR,6539
+8506386,Stoss AR,8506387,Kreuzstrasse,6539
+8506387,Kreuzstrasse,8506388,Warmesberg,6539
+8506388,Warmesberg,8506389,Alter Zoll,6539
+8506393,Wittenbach,8506394,Roggwil-Berg,18416
+8506394,Roggwil-Berg,8506395,Häggenschwil-Winden,18416
+8506395,Häggenschwil-Winden,8506396,Muolen,18416
+8506396,Muolen,8506397,Steinebrunn,18416
+8506397,Steinebrunn,8506398,Neukirch-Egnach,18416
+8507000,Bern,8507006,Münsingen,7476
+8507003,Gümligen,8507006,Münsingen,28
+8507005,Rubigen,8507006,Münsingen,19581
+8507000,Bern,8507063,Worb Dorf,35589
+8507000,Bern,8507068,Bolligen,15386
+8507063,Worb Dorf,8507068,Bolligen,966
+8507067,Deisswil,8507068,Bolligen,33318
+8507000,Bern,8507070,Uetendorf,19168
+8507000,Bern,8507076,Belp,32963
+8507075,Toffen,8507076,Belp,19352
+8507000,Bern,8507079,Bern Weissenbühl,25
+8507078,Wabern bei Bern,8507079,Bern Weissenbühl,34544
+8507000,Bern,8507082,Bern  Europaplatz,17949
+8507079,Bern Weissenbühl,8507082,Bern  Europaplatz,34554
+8507000,Bern,8508001,Schönbühl SBB,483
+8507002,Ostermundigen,8508001,Schönbühl SBB,468
+8507100,Thun,8508001,Schönbühl SBB,9310
+8507000,Bern,8508051,Bern Felsenau,29350
+8507000,Bern,8508054,Worblaufen,35227
+8507096,Papiermühle,8508054,Worblaufen,49536
+8508052,Bern Tiefenau,8508054,Worblaufen,250
+8508053,Steinibach,8508054,Worblaufen,29572
+8507000,Bern,8508059,Jegenstorf,23646
+8508054,Worblaufen,8508059,Jegenstorf,209
+8508058,Urtenen,8508059,Jegenstorf,34740
+8507000,Bern,8508202,Konolfingen,9108
+8507100,Thun,8508202,Konolfingen,11100
+8508081,Burgdorf Steinhof,8508202,Konolfingen,2892
+8508086,Utzenstorf,8508202,Konolfingen,236
+8508089,Biberist Ost,8508202,Konolfingen,7011
+8508200,Worb SBB,8508202,Konolfingen,9121
+8508201,Tägertschi,8508202,Konolfingen,9977
+8507000,Bern,8516154,Bern Brünnen Westside,34699
+8507000,Bern,8516161,Bern Wankdorf,1249
+8507093,Kehrsatz Nord,8516161,Bern Wankdorf,33068
+8507100,Thun,8516161,Bern Wankdorf,19565
+8508003,Hindelbank,8516161,Bern Wankdorf,63
+8508005,Burgdorf,8516161,Bern Wankdorf,9659
+8508207,Langnau i.E.,8516161,Bern Wankdorf,19223
+8508265,Hasle-Rüegsau,8516161,Bern Wankdorf,236
+8508266,Lützelflüh-Goldbach,8516161,Bern Wankdorf,169
+8508269,Neumühle,8516161,Bern Wankdorf,9088
+8507002,Ostermundigen,8507003,Gümligen,38634
+8507002,Ostermundigen,8508200,Worb SBB,192
+8507003,Gümligen,8508200,Worb SBB,19009
+8507003,Gümligen,8507005,Rubigen,19581
+8507006,Münsingen,8507007,Wichtrach,19065
+8507007,Wichtrach,8507008,Kiesen,19065
+8507008,Kiesen,8507009,Uttigen,19065
+8507063,Worb Dorf,8507064,Vechigen,33318
+8507064,Vechigen,8507065,Boll-Utzigen,33318
+8507065,Boll-Utzigen,8507066,Stettlen,33318
+8507066,Stettlen,8507067,Deisswil,33318
+8507068,Bolligen,8507069,Ittigen bei Bern,49528
+8507069,Ittigen bei Bern,8507096,Papiermühle,49536
+8507070,Uetendorf,8507071,Seftigen,19352
+8507071,Seftigen,8507072,Burgistein,19352
+8507072,Burgistein,8507073,Thurnen,19352
+8507073,Thurnen,8507074,Kaufdorf,19352
+8507074,Kaufdorf,8507075,Toffen,19352
+8507076,Belp,8507077,Kehrsatz,34544
+8507076,Belp,8507094,Uetendorf Allmend,18127
+8507093,Kehrsatz Nord,8507094,Uetendorf Allmend,1225
+8507077,Kehrsatz,8507078,Wabern bei Bern,34544
+8507082,Bern  Europaplatz,8507083,Köniz,17949
+8507082,Bern  Europaplatz,8507092,Belp Steinbach,34529
+8507083,Köniz,8507084,Moos,17944
+8507084,Moos,8507085,Gasel,17949
+8507085,Gasel,8507086,Niederscherli,17949
+8507086,Niederscherli,8507087,Mittelhäusern,17949
+8507087,Mittelhäusern,8507088,Lanzenhäusern,17958
+8507088,Lanzenhäusern,8507089,Schwarzenburg,17949
+8507089,Schwarzenburg,8507091,Liebefeld,17958
+8507091,Liebefeld,8507095,Schwarzwasserbrücke,17949
+8507092,Belp Steinbach,8507093,Kehrsatz Nord,34529
+8507100,Thun,8507478,Frutigen,494
+8507475,Kandersteg,8507478,Frutigen,8283
+8507476,Blausee-Mitholz,8507478,Frutigen,220
+8507100,Thun,8507483,Spiez,34085
+8507298,Wimmis,8507483,Spiez,3901
+8507299,Lattigen bei Spiez,8507483,Spiez,9494
+8507478,Frutigen,8507483,Spiez,494
+8507481,Mülenen,8507483,Spiez,12227
+8507100,Thun,8508003,Hindelbank,9540
+8508001,Schönbühl SBB,8508003,Hindelbank,10254
+8507271,Schönried,8507272,Saanenmöser,13281
+8507272,Saanenmöser,8507273,Oeschseite,11685
+8507272,Saanenmöser,8507290,Zweisimmen,1414
+8507273,Oeschseite,8507290,Zweisimmen,12137
+8507279,Lenk im Simmental,8507290,Zweisimmen,11941
+8507288,Eifeld,8507290,Zweisimmen,9284
+8507274,Blankenburg,8507275,Stöckli,11941
+8507275,Stöckli,8507276,St. Stephan,11941
+8507276,St. Stephan,8507277,Matten i.S.,11941
+8507277,Matten i.S.,8507278,Boden,11941
+8507278,Boden,8507279,Lenk im Simmental,11941
+8507281,Grubenwald,8507284,Enge im Simmental,2214
+8507284,Enge im Simmental,8507286,Ringoldingen,9299
+8507286,Ringoldingen,8507287,Burgholz,9299
+8507287,Burgholz,8507288,Eifeld,9494
+8507290,Zweisimmen,8507291,Weissenbach,2214
+8507290,Zweisimmen,8507292,Boltigen,11183
+8507291,Weissenbach,8507292,Boltigen,2214
+8507292,Boltigen,8507293,Oberwil im Simmental,9549
+8507292,Boltigen,8507296,Erlenbach im Simmental,3650
+8507293,Oberwil im Simmental,8507296,Erlenbach im Simmental,250
+8507295,Därstetten,8507296,Erlenbach im Simmental,9074
+8507293,Oberwil im Simmental,8507294,Weissenburg,9299
+8507294,Weissenburg,8507295,Därstetten,9269
+8507296,Erlenbach im Simmental,8507297,Oey-Diemtigen,13397
+8507297,Oey-Diemtigen,8507298,Wimmis,13397
+8507298,Wimmis,8507299,Lattigen bei Spiez,9494
+8507361,Eigergletscher,8507364,Jungfraujoch,2161
+8507364,Jungfraujoch,8507374,Kleine Scheidegg,2161
+8507372,Wengen,8507384,Lauterbrunnen,260
+8507378,Grütschalp,8507379,Mürren BLM,11343
+8507379,Mürren BLM,8507560,Winteregg,11439
+8507380,Grindelwald,8507381,Schwendi bei Grindelwald,8787
+8507381,Schwendi bei Grindelwald,8507382,Burglauenen,7641
+8507382,Burglauenen,8507383,Lütschental,7569
+8507383,Lütschental,8507388,Wilderswil,7947
+8507384,Lauterbrunnen,8507388,Wilderswil,7859
+8507384,Lauterbrunnen,8507555,Wengwald,260
+8507388,Wilderswil,8507389,Zweilütschinen,16852
+8507472,Ausserberg,8507473,Hohtenn,4331
+8507472,Ausserberg,8507474,Goppenstein,4274
+8507473,Hohtenn,8507474,Goppenstein,4331
+8507474,Goppenstein,8507475,Kandersteg,8503
+8507475,Kandersteg,8507476,Blausee-Mitholz,220
+8507478,Frutigen,8507480,Reichenbach im Kandertal,12018
+8507480,Reichenbach im Kandertal,8507481,Mülenen,12229
+8507492,Interlaken Ost,8507493,Interlaken West,18475
+8507492,Interlaken Ost,8508301,Ringgenberg,9026
+8507492,Interlaken Ost,8508302,Niederried,237
+8508301,Ringgenberg,8508302,Niederried,9026
+8507492,Interlaken Ost,8508303,Oberried am Brienzersee,709
+8508302,Niederried,8508303,Oberried am Brienzersee,9263
+8507492,Interlaken Ost,8508305,Brienz,5209
+8508303,Oberried am Brienzersee,8508305,Brienz,710
+8508304,Ebligen,8508305,Brienz,9262
+8508003,Hindelbank,8508004,Lyssach,19471
+8508005,Burgdorf,8508006,Wynigen,9923
+8508005,Burgdorf,8508008,Herzogenbuchsee,8719
+8508006,Wynigen,8508008,Herzogenbuchsee,9920
+8508005,Burgdorf,8508080,Oberburg,30291
+8508005,Burgdorf,8508083,Burgdorf Buchmatt,10456
+8508081,Burgdorf Steinhof,8508083,Burgdorf Buchmatt,7412
+8508051,Bern Felsenau,8508052,Bern Tiefenau,29350
+8508052,Bern Tiefenau,8508053,Steinibach,29100
+8508054,Worblaufen,8508055,Unterzollikofen,29572
+8508054,Worblaufen,8508056,Moosseedorf,34768
+8508054,Worblaufen,8589198,Worbboden,34567
+8508056,Moosseedorf,8508057,Schönbühl RBS,34753
+8508057,Schönbühl RBS,8508058,Urtenen,34740
+8508059,Jegenstorf,8508060,Grafenried,11674
+8508059,Jegenstorf,8508061,Fraubrunnen,209
+8508060,Grafenried,8508061,Fraubrunnen,16148
+8508059,Jegenstorf,8508064,Bätterkinden,3228
+8508062,Büren zum Hof,8508064,Bätterkinden,6499
+8508063,Schalunen,8508064,Bätterkinden,9634
+8508059,Jegenstorf,8508070,Oberzollikofen,34032
+8508062,Büren zum Hof,8508070,Oberzollikofen,209
+8508068,Biberist RBS,8508070,Oberzollikofen,642
+8508061,Fraubrunnen,8508062,Büren zum Hof,9860
+8508061,Fraubrunnen,8508063,Schalunen,6497
+8508062,Büren zum Hof,8508063,Schalunen,3152
+8508066,Lohn-Lüterkofen,8508068,Biberist RBS,23880
+8508070,Oberzollikofen,8508071,Schönbühl Shoppyland,34768
+8508080,Oberburg,8508081,Burgdorf Steinhof,30037
+8508081,Burgdorf Steinhof,8508265,Hasle-Rüegsau,10420
+8508207,Langnau i.E.,8508265,Hasle-Rüegsau,9299
+8508262,Walkringen,8508265,Hasle-Rüegsau,8614
+8508264,Schafhausen i.E.,8508265,Hasle-Rüegsau,10568
+8508083,Burgdorf Buchmatt,8508084,Kirchberg-Alchenflüh,14598
+8508085,Aefligen,8508086,Utzenstorf,18698
+8508086,Utzenstorf,8508087,Wiler,18447
+8508087,Wiler,8508088,Gerlafingen,18498
+8508088,Gerlafingen,8508089,Biberist Ost,18099
+8508100,Langenthal,8508101,Roggwil-Wynau,16641
+8508100,Langenthal,8508151,Langenthal Gaswerk,36658
+8508100,Langenthal,8508174,Gutenburg,16404
+8508101,Roggwil-Wynau,8508102,Murgenthal,16634
+8508102,Murgenthal,8508103,Rothrist,15747
+8508151,Langenthal Gaswerk,8508152,Hard-Mumenthal,18553
+8508151,Langenthal Gaswerk,8508161,Kaltenherberg,18105
+8508152,Hard-Mumenthal,8508153,Aarwangen,18553
+8508153,Aarwangen,8508154,Aarwangen Schloss,18553
+8508154,Aarwangen Schloss,8508155,Bannwil,18553
+8508155,Bannwil,8508157,Holzhäusern,17684
+8508155,Bannwil,8508193,Aarwangen Vorstadt,818
+8508159,Niederbipp Dorf,8508193,Aarwangen Vorstadt,17632
+8508157,Holzhäusern,8508158,Scharnageln,17632
+8508158,Scharnageln,8508159,Niederbipp Dorf,17632
+8508161,Kaltenherberg,8508162,Roggwil Dorf,18105
+8508162,Roggwil Dorf,8508163,St. Urban,18105
+8508163,St. Urban,8508164,St. Urban Ziegelei,9556
+8508163,St. Urban,8508168,Roggwil Buchägerten,8549
+8508164,St. Urban Ziegelei,8508168,Roggwil Buchägerten,9556
+8508168,Roggwil Buchägerten,8508173,Roggwil Schmitten,18105
+8508173,Roggwil Schmitten,8594258,Langenthal Industrie Nord,18105
+8508174,Gutenburg,8508181,Langenthal Süd,16051
+8508181,Langenthal Süd,8508182,Lotzwil,16404
+8508182,Lotzwil,8508183,Madiswil,16404
+8508183,Madiswil,8508184,Lindenholz,16051
+8508184,Lindenholz,8508185,Kleindietwil,16404
+8508185,Kleindietwil,8508186,Rohrbach,16404
+8508186,Rohrbach,8508187,Huttwil,16374
+8508200,Worb SBB,8508201,Tägertschi,9977
+8508202,Konolfingen,8508203,Zäziwil,19313
+8508202,Konolfingen,8508250,Schwäbis,11572
+8508202,Konolfingen,8508251,Steffisburg,8875
+8508250,Schwäbis,8508251,Steffisburg,11572
+8508202,Konolfingen,8508260,Grosshöchstetten,9835
+8508255,Oberdiessbach,8508260,Grosshöchstetten,8875
+8508256,Stalden i.E.,8508260,Grosshöchstetten,472
+8508203,Zäziwil,8508204,Bowil,19126
+8508203,Zäziwil,8508205,Signau,88
+8508204,Bowil,8508205,Signau,19131
+8508205,Signau,8508206,Emmenmatt,19027
+8508207,Langnau i.E.,8508208,Trubschachen,18985
+8508208,Trubschachen,8508210,Escholzmatt,19257
+8508210,Escholzmatt,8508211,Schüpfheim,18999
+8508211,Schüpfheim,8508212,Hasle LU,10459
+8508211,Schüpfheim,8508213,Entlebuch,8790
+8508212,Hasle LU,8508213,Entlebuch,10190
+8508215,Wolhusen,8508216,Werthenstein,10060
+8508215,Wolhusen,8508218,Malters,12491
+8508217,Schachen LU,8508218,Malters,10060
+8508215,Wolhusen,8508292,Hüswil,9735
+8508215,Wolhusen,8508293,Zell LU,4609
+8508292,Hüswil,8508293,Zell LU,9686
+8508215,Wolhusen,8508295,Willisau,3244
+8508219,Littau,8508295,Willisau,3437
+8508294,Gettnau,8508295,Willisau,14334
+8508216,Werthenstein,8508217,Schachen LU,10060
+8508218,Malters,8508219,Littau,13480
+8508251,Steffisburg,8508252,Lädeli,20282
+8508252,Lädeli,8508253,Heimberg,20087
+8508253,Heimberg,8508254,Brenzikofen,11572
+8508253,Heimberg,8508255,Oberdiessbach,8875
+8508254,Brenzikofen,8508255,Oberdiessbach,11558
+8508255,Oberdiessbach,8508256,Stalden i.E.,11572
+8508260,Grosshöchstetten,8508261,Biglen,19182
+8508261,Biglen,8508262,Walkringen,19036
+8508262,Walkringen,8508263,Bigenthal,10568
+8508263,Bigenthal,8508264,Schafhausen i.E.,10568
+8508265,Hasle-Rüegsau,8508266,Lützelflüh-Goldbach,19713
+8508265,Hasle-Rüegsau,8508272,Sumiswald-Grünen,63
+8508271,Grünenmatt,8508272,Sumiswald-Grünen,18309
+8508266,Lützelflüh-Goldbach,8508267,Ramsei,19357
+8508267,Ramsei,8508268,Zollbrück,9299
+8508267,Ramsei,8508271,Grünenmatt,18309
+8508268,Zollbrück,8508269,Neumühle,9299
+8508293,Zell LU,8508294,Gettnau,14334
+8508295,Willisau,8508297,Menznau,21019
+8508297,Menznau,8516354,Wolhusen Weid,17338
+8508303,Oberried am Brienzersee,8508304,Ebligen,9262
+8508305,Brienz,8508306,Brienzwiler,9262
+8508308,Meiringen,8508309,Brünig-Hasliberg,7468
+8508308,Meiringen,8508329,Brienz West,8790
+8508314,Sarnen,8508329,Brienz West,425
+8508308,Meiringen,8508359,Innertkirchen Kraftwerk (Bahn),12390
+8508309,Brünig-Hasliberg,8508310,Lungern,7556
+8508310,Lungern,8508311,Kaiserstuhl OW,7556
+8508313,Sachseln,8508314,Sarnen,29164
+8508314,Sarnen,8508316,Alpnach Dorf,21608
+8508316,Alpnach Dorf,8508317,Alpnachstad,19604
+8508318,Hergiswil NW,8508323,Sarnen Nord,2004
+8508321,Luzern Allmend/Messe,8508323,Sarnen Nord,19604
+8508318,Hergiswil NW,8508390,Stansstad,3075
+8508321,Luzern Allmend/Messe,8508390,Stansstad,20089
+8508384,Niederrickenbach Station,8508390,Stansstad,488
+8508319,Horw,8508320,Hergiswil Matt,39693
+8508319,Horw,8508321,Luzern Allmend/Messe,2839
+8508320,Hergiswil Matt,8508321,Luzern Allmend/Messe,39678
+8508321,Luzern Allmend/Messe,8516351,Kriens Mattenhof,2839
+8508327,Ewil Maxon,8516351,Kriens Mattenhof,19604
+8508391,Stans,8516351,Kriens Mattenhof,9035
+8508392,Dallenwil,8516351,Kriens Mattenhof,502
+8508394,Wolfenschiessen,8516351,Kriens Mattenhof,10522
+8508399,Engelberg,8516351,Kriens Mattenhof,252
+8508323,Sarnen Nord,8508327,Ewil Maxon,19604
+8508359,Innertkirchen Kraftwerk (Bahn),8508395,Innertkirchen Grimseltor,12390
+8508384,Niederrickenbach Station,8508391,Stans,8804
+8508390,Stansstad,8508391,Stans,23637
+8508391,Stans,8508392,Dallenwil,20316
+8508392,Dallenwil,8508394,Wolfenschiessen,19814
+8508394,Wolfenschiessen,8508396,Grafenort,9056
+8508395,Innertkirchen Grimseltor,8530760,Aareschlucht West,12390
+8508396,Grafenort,8508399,Engelberg,9056
+8509000,Chur,8509002,Landquart,61970
+8509000,Chur,8509050,Chur West,10506
+8509006,Chur Wiesental,8509050,Chur West,11577
+8509000,Chur,8509150,Chur Altstadt,8462
+8509000,Chur,8509168,Versam-Safien,237
+8509055,Igis,8509168,Versam-Safien,250
+8509167,Trin,8509168,Versam-Safien,9026
+8509000,Chur,8509171,Ilanz,764
+8509050,Chur West,8509171,Ilanz,32
+8509168,Versam-Safien,8509171,Ilanz,473
+8509170,Castrisch,8509171,Ilanz,9543
+8509000,Chur,8509180,Felsberg,743
+8509050,Chur West,8509180,Felsberg,7739
+8509056,Landquart Ried,8509180,Felsberg,1236
+8509060,Schiers,8509180,Felsberg,6538
+8509171,Ilanz,8509180,Felsberg,534
+8509179,Disentis/Mustér,8509180,Felsberg,1000
+8509000,Chur,8509181,Domat/Ems,4315
+8509050,Chur West,8509181,Domat/Ems,237
+8509171,Ilanz,8509181,Domat/Ems,1692
+8509179,Disentis/Mustér,8509181,Domat/Ems,4512
+8509180,Felsberg,8509181,Domat/Ems,17714
+8509000,Chur,8509183,Reichenau-Tamins,3421
+8509179,Disentis/Mustér,8509183,Reichenau-Tamins,3259
+8509181,Domat/Ems,8509183,Reichenau-Tamins,8154
+8509182,Ems Werk,8509183,Reichenau-Tamins,18492
+8509000,Chur,8509184,Bonaduz,250
+8509183,Reichenau-Tamins,8509184,Bonaduz,16717
+8509000,Chur,8509189,Thusis,460
+8509183,Reichenau-Tamins,8509189,Thusis,6736
+8509186,Rothenbrunnen,8509189,Thusis,250
+8509188,Cazis,8509189,Thusis,10317
+8509000,Chur,8509192,Tiefencastel,237
+8509179,Disentis/Mustér,8509192,Tiefencastel,657
+8509189,Thusis,8509192,Tiefencastel,8575
+8509000,Chur,8509251,Samedan,25
+8509068,Klosters Platz,8509251,Samedan,29
+8509195,Filisur,8509251,Samedan,679
+8509198,Preda,8509251,Samedan,2770
+8509199,Spinas,8509251,Samedan,2518
+8509250,Bever,8509251,Samedan,16889
+8509002,Landquart,8509003,Maienfeld,19343
+8509002,Landquart,8509004,Bad Ragaz,15311
+8509003,Maienfeld,8509004,Bad Ragaz,19343
+8509002,Landquart,8509006,Chur Wiesental,14886
+8509002,Landquart,8509057,Malans GR,10013
+8509056,Landquart Ried,8509057,Malans GR,6542
+8509002,Landquart,8509059,Grüsch,6041
+8509057,Malans GR,8509059,Grüsch,240
+8509058,Seewis-Pardisla,8509059,Grüsch,9806
+8509002,Landquart,8509060,Schiers,4514
+8509057,Malans GR,8509060,Schiers,5907
+8509058,Seewis-Pardisla,8509060,Schiers,240
+8509059,Grüsch,8509060,Schiers,16085
+8509002,Landquart,8509064,Küblis,250
+8509060,Schiers,8509064,Küblis,10125
+8509062,Jenaz,8509064,Küblis,6786
+8509063,Fideris,8509064,Küblis,3453
+8509002,Landquart,8509068,Klosters Platz,60
+8509064,Küblis,8509068,Klosters Platz,4278
+8509065,Saas im Prättigau,8509068,Klosters Platz,6292
+8509067,Klosters Dorf,8509068,Klosters Platz,10044
+8509006,Chur Wiesental,8509051,Haldenstein,3078
+8509050,Chur West,8509051,Haldenstein,4864
+8509006,Chur Wiesental,8509053,Untervaz-Trimmis,250
+8509050,Chur West,8509053,Untervaz-Trimmis,6790
+8509051,Haldenstein,8509053,Untervaz-Trimmis,7863
+8509050,Chur West,8509167,Trin,2396
+8509056,Landquart Ried,8509167,Trin,6877
+8509053,Untervaz-Trimmis,8509054,Zizers,14905
+8509054,Zizers,8509055,Igis,14905
+8509055,Igis,8509056,Landquart Ried,14655
+8509057,Malans GR,8509058,Seewis-Pardisla,10196
+8509060,Schiers,8509061,Furna,3452
+8509060,Schiers,8509062,Jenaz,6602
+8509061,Furna,8509062,Jenaz,3453
+8509062,Jenaz,8509063,Fideris,3453
+8509064,Küblis,8509065,Saas im Prättigau,10255
+8509064,Küblis,8509067,Klosters Dorf,6041
+8509065,Saas im Prättigau,8509067,Klosters Dorf,4003
+8509068,Klosters Platz,8509069,Cavadürli,8234
+8509068,Klosters Platz,8509070,Davos Laret,2903
+8509069,Cavadürli,8509070,Davos Laret,8246
+8509068,Klosters Platz,8509072,Davos Dorf,3075
+8509070,Davos Laret,8509072,Davos Dorf,504
+8509071,Davos Wolfgang,8509072,Davos Dorf,10646
+8509068,Klosters Platz,8509250,Bever,4011
+8509197,Bergün/Bravuogn,8509250,Bever,121
+8509198,Preda,8509250,Bever,1286
+8509199,Spinas,8509250,Bever,1234
+8509068,Klosters Platz,8509255,Pontresina,31
+8509197,Bergün/Bravuogn,8509255,Pontresina,712
+8509251,Samedan,8509255,Pontresina,29
+8509253,St. Moritz,8509255,Pontresina,7524
+8509254,Punt Muragl,8509255,Pontresina,9270
+8509068,Klosters Platz,8509264,Lavin,7995
+8509263,Susch,8509264,Lavin,6772
+8509068,Klosters Platz,8509269,Sagliains,230
+8509263,Susch,8509269,Sagliains,2361
+8509268,Scuol-Tarasp,8509269,Sagliains,14868
+8509070,Davos Laret,8509071,Davos Wolfgang,10646
+8509072,Davos Dorf,8509073,Davos Platz,14330
+8509073,Davos Platz,8509075,Davos Frauenkirch,7786
+8509075,Davos Frauenkirch,8509076,Davos Glaris,7786
+8509076,Davos Glaris,8509077,Davos Monstein,7546
+8509077,Davos Monstein,8509078,Davos Wiesen,7546
+8509078,Davos Wiesen,8509195,Filisur,7546
+8509192,Tiefencastel,8509195,Filisur,7556
+8509193,Surava,8509195,Filisur,251
+8509194,Alvaneu,8509195,Filisur,1541
+8509150,Chur Altstadt,8509152,Lüen-Castiel,8491
+8509152,Lüen-Castiel,8509153,St. Peter-Molinis,8541
+8509153,St. Peter-Molinis,8509154,Peist,8541
+8509154,Peist,8509155,Langwies GR,8535
+8509155,Langwies GR,8509156,Litzirüti,8535
+8509156,Litzirüti,8509157,Arosa,8371
+8509167,Trin,8509169,Valendas-Sagogn,756
+8509168,Versam-Safien,8509169,Valendas-Sagogn,8803
+8509169,Valendas-Sagogn,8509170,Castrisch,9543
+8509171,Ilanz,8509173,Rueun,8992
+8509173,Rueun,8509174,Waltensburg/Vuorz,8745
+8509173,Rueun,8509175,Tavanasa-Breil/Brigels,247
+8509174,Waltensburg/Vuorz,8509175,Tavanasa-Breil/Brigels,8745
+8509175,Tavanasa-Breil/Brigels,8509176,Trun,9022
+8509176,Trun,8509177,Rabius-Surrein,8992
+8509177,Rabius-Surrein,8509178,Sumvitg-Cumpadials,9022
+8509179,Disentis/Mustér,8509182,Ems Werk,251
+8509181,Domat/Ems,8509182,Ems Werk,18952
+8509184,Bonaduz,8509185,Rhäzüns,17430
+8509184,Bonaduz,8509186,Rothenbrunnen,236
+8509185,Rhäzüns,8509186,Rothenbrunnen,10366
+8509186,Rothenbrunnen,8509187,Rodels-Realta,10364
+8509187,Rodels-Realta,8509188,Cazis,10336
+8509192,Tiefencastel,8509193,Surava,1807
+8509192,Tiefencastel,8509197,Bergün/Bravuogn,115
+8509195,Filisur,8509197,Bergün/Bravuogn,8649
+8509193,Surava,8509194,Alvaneu,1556
+8509197,Bergün/Bravuogn,8509198,Preda,8250
+8509198,Preda,8509199,Spinas,3762
+8509251,Samedan,8509252,Celerina,13802
+8509251,Samedan,8509253,St. Moritz,664
+8509252,Celerina,8509253,St. Moritz,13844
+8509251,Samedan,8509254,Punt Muragl,9134
+8509251,Samedan,8509256,La Punt Chamues-ch,795
+8509252,Celerina,8509256,La Punt Chamues-ch,60
+8509253,St. Moritz,8509256,La Punt Chamues-ch,2050
+8509255,Pontresina,8509256,La Punt Chamues-ch,8705
+8509253,St. Moritz,8509258,Zuoz,2768
+8509257,Madulain,8509258,Zuoz,11466
+8509255,Pontresina,8509350,Celerina Staz,6780
+8509255,Pontresina,8509352,Surovas,236
+8509351,Punt Muragl Staz,8509352,Surovas,6545
+8509255,Pontresina,8509356,Ospizio Bernina,359
+8509354,Bernina Suot,8509356,Ospizio Bernina,6779
+8509255,Pontresina,8509357,Alp Grüm,1142
+8509356,Ospizio Bernina,8509357,Alp Grüm,7153
+8509256,La Punt Chamues-ch,8509257,Madulain,11466
+8509258,Zuoz,8509259,S-chanf,14219
+8509259,S-chanf,8509260,Cinuos-chel-Brail,10128
+8509259,S-chanf,8509262,Zernez,3006
+8509260,Cinuos-chel-Brail,8509262,Zernez,9922
+8509260,Cinuos-chel-Brail,8509263,Susch,31
+8509262,Zernez,8509263,Susch,13039
+8509264,Lavin,8509265,Guarda,15130
+8509265,Guarda,8509266,Ardez,15115
+8509266,Ardez,8509267,Ftan Baraigla,9058
+8509266,Ardez,8509268,Scuol-Tarasp,5863
+8509267,Ftan Baraigla,8509268,Scuol-Tarasp,9101
+8509350,Celerina Staz,8509351,Punt Muragl Staz,6796
+8509352,Surovas,8509353,Morteratsch,6779
+8509353,Morteratsch,8509354,Bernina Suot,6779
+8509357,Alp Grüm,8509358,Cavaglia,6765
+8509357,Alp Grüm,8509361,Poschiavo,1506
+8509358,Cavaglia,8509361,Poschiavo,2518
+8509359,Cadera,8509361,Poschiavo,4276
+8509358,Cavaglia,8509359,Cadera,4172
+8509361,Poschiavo,8509363,Li Curt,5239
+8509361,Poschiavo,8509364,Le Prese,2632
+8509363,Li Curt,8509364,Le Prese,5150
+8509361,Poschiavo,8509368,Campocologno,132
+8509364,Le Prese,8509368,Campocologno,1322
+8509366,Brusio,8509368,Campocologno,2498
+8509367,Campascio,8509368,Campocologno,3991
+8509361,Poschiavo,8509373,Bernina Lagalb,1256
+8509369,Tirano,8509373,Bernina Lagalb,5495
+8509364,Le Prese,8509365,Miralago,6414
+8509364,Le Prese,8509369,Tirano,61
+8509368,Campocologno,8509369,Tirano,7823
+8509365,Miralago,8509366,Brusio,6474
+8509366,Brusio,8509367,Campascio,3976
+8509369,Tirano,8519370,Bernina Diavolezza,776
+8509373,Bernina Lagalb,8519370,Bernina Diavolezza,6765
+8509400,Oberriet SG,8509401,Rüthi SG,10039
+8509401,Rüthi SG,8509402,Salez-Sennwald,10039
+8509404,Buchs SG,8509406,Sevelen,9454
+8509411,Sargans,8509412,Mels,9269
+8509411,Sargans,8509413,Flums,1236
+8509412,Mels,8509413,Flums,9809
+8509411,Sargans,8509414,Walenstadt,7755
+8509413,Flums,8509414,Walenstadt,10745
+8509414,Walenstadt,8509416,Unterterzen,9809
+8509416,Unterterzen,8509417,Murg,9224
+8509417,Murg,8509418,Mühlehorn,9524
+8515994,Zug Fridbach,8517112,Walchwil Hörndli,16793
+8515995,Cham Alpenblick,8515996,Hünenberg Zythus,35085
+8515996,Hünenberg Zythus,8515997,Root D4,19799
+8515996,Hünenberg Zythus,8516187,Zug Schutzengel,15286
+8515997,Root D4,8516187,Zug Schutzengel,19800
+8516155,Lancy-Pont-Rouge,8516272,Genève-Champel,38628
+8516155,Lancy-Pont-Rouge,8516273,Genève-Eaux-Vives,15675
+8516272,Genève-Champel,8516273,Genève-Eaux-Vives,38628
+8516187,Zug Schutzengel,8516350,Buchrain,19799
+8516270,Arbon Seemoosriet,8516271,Steinach,19588
+8516273,Genève-Eaux-Vives,8516274,Chêne-Bourg,38628
+8516274,Chêne-Bourg,8517142,Lancy-Bachet,2911
+8516283,Genève-Sécheron,8517142,Lancy-Bachet,35719
+8516450,Unterkulm Nord,8519685,Aarau Torfeld,33093
+8517112,Walchwil Hörndli,8517527,Zug Casino,16793
+8517485,Sur-le-Buis,8593773,Les Bovets,6813
+8518100,St. Gallen Birnbäumen,8519306,St. Gallen Güterbahnhof,25332
+8518771,Biel/Bienne Bözingenfeld/Champs-de-Boujean,8518963,Solothurn Allmend,19169
+8530011,Les Coeudres-Est,8530012,Petit-Martel-Est,8775
+8530012,Petit-Martel-Est,8530225,Le Stand,8775
+8530064,Bex Pont-Neuf,8530066,Grand-Moulin,7407
+8530066,Grand-Moulin,8530067,Les Salines,7407
+8530067,Les Salines,8530246,Foyer Dents-du-Midi,7407
+8530246,Foyer Dents-du-Midi,8530523,La Ruaz,7407
+8530303,Les Fumeaux,8530334,La Médettaz,10246
+8530335,Aigle-Hôpital,8530355,Les Arnoux,15993
+8530355,Les Arnoux,8530366,Pont du Rhône,15821
+8530378,Les Neys,8530430,Route de Morgins,9262
+8530463,En Charnet,8593467,Pont de Fayot,9253
+8530708,"Neuchâtel, Evole",8530709,"Neuchâtel, Champ-Bougin",21346
+8530709,"Neuchâtel, Champ-Bougin",8530710,"Neuchâtel, Serrières Ruau",21346
+8530711,Colombier NE Allées Littorail,8530712,"Colombier NE, Les Chézards",21440
+8530712,"Colombier NE, Les Chézards",8530713,"Boudry, Tuilière",21440
+8530713,"Boudry, Tuilière",8595245,Areuse Littorail,21440
+8530760,Aareschlucht West,8530799,Meiringen Alpbach,12390
+8530789,Bioggio Molinazzo,8530790,Sorengo Laghetto,31021
+8530799,Meiringen Alpbach,8530800,Innertkirchen Unterwasser,12390
+8530800,Innertkirchen Unterwasser,8530801,Aareschlucht Ost (Bahn),4650
+8530811,"Zürich, Balgrist",8530812,"Zürich, Hegibachplatz",40832
+8530812,"Zürich, Hegibachplatz",8530813,"Zürich, Kreuzplatz",40818
+8530813,"Zürich, Kreuzplatz",8591315,"Zürich, Rehalp",40813
+8588193,Gryon Bois-Gentil,8593772,Gryon-Chalméry,7821
+8591315,"Zürich, Rehalp",8591429,"Zürich, Wetlistrasse",217
+8593773,Les Bovets,8593774,La Faverge,8002
+8593774,La Faverge,8593775,Les Nicolets,8002
+8593775,Les Nicolets,8593776,Plan Morier,8002
