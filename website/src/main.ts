@@ -6,6 +6,48 @@ const NETWORK_PATH = "src/network/data/networks/transports/web_data/";
 const EDGES_PATH = NETWORK_PATH + "network_edges.csv";
 const NODES_PATH = NETWORK_PATH + "network_nodes.csv";
 
+const width = 954;
+const radius = width / 2;
+
+const colorin = "#00f";
+const colorout = "#f00";
+const colornone = "#ccc";
+
+const tree = d3.cluster()
+    .size([2 * Math.PI, radius - 100])
+
+const line = d3.lineRadial()
+    .curve(d3.curveBundle.beta(0.85))
+    .radius(d => d.y)
+    .angle(d => d.x)
+
+function bilink(root) {
+    const map = new Map(root.leaves().map(d => [id(d), d]));
+    return root;
+  }
+
+function id(node) {
+    return `${node.parent ? id(node.parent) + "." : ""}${node.data.name}`;
+}
+
+function overed(event, d) {
+    link.style("mix-blend-mode", null);
+    d3.select(this).attr("font-weight", "bold");
+    d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", colorin).raise();
+    d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", colorin).attr("font-weight", "bold");
+    d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", colorout).raise();
+    d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", colorout).attr("font-weight", "bold");
+}
+
+function outed(event, d) {
+    link.style("mix-blend-mode", "multiply");
+    d3.select(this).attr("font-weight", null);
+    d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", null);
+    d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", null).attr("font-weight", null);
+    d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", null);
+    d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", null).attr("font-weight", null);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
@@ -34,11 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
         d3.csv(NODES_PATH).then((nodes: any) => {
             // Process the data
             var data = {};
-            nodes.forEach(function(node) {
+            nodes.forEach(function (node) {
                 var id = node.id;
                 data[id] = { name: node.label, children: [] };
             });
-            edges.forEach(function(edge) {
+            edges.forEach(function (edge) {
                 var source = edge.source;
                 var target = edge.target;
                 if (data[source] && data[target]) {
@@ -46,44 +88,44 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // Create the hierarchical layout
-            var hierarchy = d3.hierarchy(data);
-            var treeLayout = d3.tree().size([2*Math.PI, 500]);
+            const root = tree(bilink(d3.hierarchy(data)
+                .sort((a, b) => d3.ascending(a.data.name, b.data.name))
+            ));
 
-            // Compute the positions of the nodes
-            treeLayout(hierarchy);
+            const svg = d3.select("#hierarchy").append("svg")
+                .attr("viewBox", [-width / 2, -width / 2, width, width]);
 
-            // Create the links between the nodes
-            var links = hierarchy.links();
+            const node = svg.append("g")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 10)
+                .selectAll("g")
+                .data(root.leaves())
+                .join("g")
+                .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
+                .append("text")
+                .attr("dy", "0.31em")
+                .attr("x", d => d.x < Math.PI ? 6 : -6)
+                .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
+                .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+                .text(d => d.data.name)
+                .each(function (d) { d.text = this; })
+                .on("mouseover", overed)
+                .on("mouseout", outed)
+                .call(text => text.append("title").text(d => {
+                    `${id(d)}`
+                }));
 
-            // Create the nodes with the station names displayed
-            var nodes = hierarchy.descendants();
-            var svg = d3.select("#hierarchy").append("svg")
-                .attr("width", 1000)
-                .attr("height", 1000);
-            var g = svg.append("g")
-                .attr("transform", "translate(500,500)");
-            var node = g.selectAll(".node")
-                .data(nodes)
-                .enter().append("g")
-                .attr("class", "node")
-                .attr("transform", function(d) { return "rotate(" + (d.x * 180 / Math.PI - 90) + ")translate(" + d.y + ")"; });
-            node.append("circle")
-                .attr("r", 4);
-            node.append("text")
-                .attr("dy", ".31em")
-                .attr("text-anchor", function(d) { return d.x < Math.PI ? "start" : "end"; })
-                .attr("transform", function(d) { return d.x < Math.PI ? "translate(8)" : "rotate(180)translate(-8)"; })
-                .text(function (d) { return d.data.name; });
-            
-            // Create the links
-            var link = g.selectAll(".link")
-            .data(links)
-            .enter().append("path")
-            .attr("class", "link")
-            .attr("d", d3.linkRadial()
-                .angle(function(d) { return d.x; })
-                .radius(function(d) { return d.y; }));
+            const link = svg.append("g")
+                .attr("stroke", colornone)
+                .attr("fill", "none")
+                .selectAll("path")
+                .data(root.leaves().flatMap(leaf => leaf.outgoing))
+                .join("path")
+                .style("mix-blend-mode", "multiply")
+                .attr("d", ([i, o]) => line(i.path(o)))
+                .each(function (d) { d.path = this; });
+
+            return svg.nodes();
         });
     });
 });
