@@ -19,12 +19,21 @@ const tree = d3.cluster()
 const line = d3.lineRadial()
     .curve(d3.curveBundle.beta(0.85))
     .radius(d => d.y)
-    .angle(d => d.x)
+    .angle(d => d.x);
 
 function bilink(root) {
     const map = new Map(root.leaves().map(d => [id(d), d]));
+    console.log(map);
+    for (const d of root.leaves()) {
+        d.outgoing = d.data.children.map(i => [d, map.get(i)]);
+        console.log(d.outgoing);
+        break;
+    }
+    throw new Error();
+    d.incoming = [], d.outgoing = d.data.map(i => [d, map.get(i)]);
+    for (const d of root.leaves()) for (const o of d.outgoing) o[1].incoming.push(o);
     return root;
-  }
+}
 
 function id(node) {
     return `${node.parent ? id(node.parent) + "." : ""}${node.data.name}`;
@@ -87,7 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     data[source].children.push(data[target]);
                 }
             });
-
+            console.log(d3.hierarchy(data));
+            throw new Error();
             const root = tree(bilink(d3.hierarchy(data)
                 .sort((a, b) => d3.ascending(a.data.name, b.data.name))
             ));
@@ -114,16 +124,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 .call(text => text.append("title").text(d => {
                     `${id(d)}`
                 }));
-
+            
+            root.leaves().flatMap(leaf => leaf.outgoing).forEach(element => {
+                console.log(element);
+                throw new Error("Method not implemented.");
+            });
+            
             const link = svg.append("g")
                 .attr("stroke", colornone)
                 .attr("fill", "none")
                 .selectAll("path")
                 .data(root.leaves().flatMap(leaf => leaf.outgoing))
                 .join("path")
-                .style("mix-blend-mode", "multiply")
-                .attr("d", ([i, o]) => line(i.path(o)))
-                .each(function (d) { d.path = this; });
+                    .style("mix-blend-mode", "multiply")
+                    .attr("d", ([i, o]) => line(i.path(o)))
+                    .each(function (d) { d.path = this; });
 
             return svg.nodes();
         });
