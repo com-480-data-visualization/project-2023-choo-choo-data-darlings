@@ -16,7 +16,8 @@ const SLIDER_SIMULATION_SPEED_ID = 'slider_simulation_speed';
 const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider_simulation_speed_label';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
-const TRAINS_PATH = 'data/train_trips_bins.json'
+const TRAINS_PATH = 'data/train_trips_bins.json';
+const TRAINS_FOLDER_PATH = 'data/train_trips_bins/';
 const HEATMAP_PATH = 'data/density_heatmap.png';
 const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
 const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
@@ -25,6 +26,8 @@ const SWISS_BORDER_LINE_NAME = 'swissborder_line';
 const SWISS_BORDER_GROUP_NAME = 'swissborder_group';
 const HEATMAP_SCENE_NAME = 'heatmap';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
+
+const TRAIN_FILES_BIN_SIZE = 15;
 
 const DEFAULT_SIMULATION_SPEED = 60;
 
@@ -391,8 +394,25 @@ class Map {
    * @throws {Error} if the data could not be loaded
    */
   async loadTrains(): Promise<void> {
-    const data = await d3.json(TRAINS_PATH) as { bins: any; bin_size: number };
-    if (!data) throw new Error('Invalid train data at path: ' + TRAINS_PATH);
+    const data: {
+      bins: { [index: number]: any };
+      bin_size: number;
+    } = { bins: {}, bin_size: TRAIN_FILES_BIN_SIZE };
+
+    // Generate an array of promises to read all bin files concurrently
+    const binFilePromises = [];
+    for (let i = 0; i < 60 * 24; i += TRAIN_FILES_BIN_SIZE) {
+      binFilePromises.push(
+        d3.json(TRAINS_FOLDER_PATH + i + '.json').then((trainData) => {
+          if (!trainData) throw new Error('Invalid train data at path: ' + TRAINS_PATH + i + '.json');
+          data.bins[i] = trainData;
+        })
+      );
+    }
+
+    // Wait for all bin files to be read and processed
+    await Promise.all(binFilePromises);
+
     this.trips = data.bins;
     this.binSize = data.bin_size;
   }
