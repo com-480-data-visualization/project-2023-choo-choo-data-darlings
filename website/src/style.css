@@ -34,7 +34,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: white/*#242424*/;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -82,4 +82,9 @@ footer {
 #hierarchy {
   width: 100%;
   height: 100%
+}
+
+/* Add thickness and color to lines */
+path {
+  stroke: black;
 }

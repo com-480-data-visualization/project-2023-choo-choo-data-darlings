@@ -13,25 +13,6 @@ const colorin = "#00f";
 const colorout = "#f00";
 const colornone = "#ccc";
 
-const tree = d3.cluster()
-    .size([2 * Math.PI, radius - 100])
-
-const line = d3.lineRadial()
-    .curve(d3.curveBundle.beta(0.85))
-    .radius(d => d.y)
-    .angle(d => d.x);
-
-function bilink(root) {
-    const map = new Map(root.leaves().map(d => [id(d), d]));
-    d.incoming = [], d.outgoing = d.data.map(i => [d, map.get(i)]);
-    for (const d of root.leaves()) for (const o of d.outgoing) o[1].incoming.push(o);
-    return root;
-}
-
-function id(node) {
-    return `${node.parent ? id(node.parent) + "." : ""}${node.data.name}`;
-}
-
 function overed(event, d) {
     link.style("mix-blend-mode", null);
     d3.select(this).attr("font-weight", "bold");
@@ -51,81 +32,112 @@ function outed(event, d) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    function hierarchy(data, delimiter = ".") {
-        let root;
-        const map = new Map;
-        data.forEach(function find(data) {
-            const { name } = data;
-            if (map.has(name)) return map.get(name);
-            const i = name.lastIndexOf(delimiter);
-            map.set(name, data);
-            if (i >= 0) {
-                find({ name: name.substring(0, i), children: [] }).children.push(data);
-                data.name = name.substring(i + 1);
-            } else {
-                root = data;
-            }
-            return data;
-        });
-        return root;
-    }
-    d3.csv(EDGES_PATH).then((edges: any) => {
-        d3.csv(NODES_PATH).then((nodes: any) => {
-            // Process the data
-            var data = {};
-            nodes.forEach(function (node) {
-                console.log(node.is_train_stop)
-                if (node.is_train_stop === "True") {
-                    var id = node.id;
-                    data[id] = { name: node.label, children: [] };              
-                }
+
+    const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+    let colorIndex = 0;
+
+    const app = document.querySelector("body");
+
+    // setInterval(() => {
+    //     colorIndex = (colorIndex + 1) % colors.length;
+    //     app!.style.transition = "background-color 2s ease";
+    //     app!.style.backgroundColor = colors[colorIndex];
+    // }, 1000);
+
+    // d3.json(SVG_FILES_PATH).then((data: any) => {
+    //     const svgFiles = data.files;
+    //     const banner = document.querySelector(".banner");
+    //     svgFiles.forEach((svgFile: any) => {
+    //         // Append the SVG to the banner
+    //         d3.xml(svgFile).then((data: any) => {
+    //             banner!.appendChild(data.documentElement);
+    //         })
+    //     });
+    // });
+    d3.csv(NODES_PATH).then((nodes: any) => {
+        d3.csv(EDGES_PATH).then((edges: any) => {
+            // Filter the stations to only include train stops
+            var stations = nodes.filter(function (station) {
+                return station.is_train_stop === "True";
             });
-            edges.forEach(function (edge) {
-                var source = edge.source;
-                var target = edge.target;
-                if (data[source] && data[target]) {
-                    data[source].children.push(data[target]);
-                }
+
+            // Map the station IDs to names
+            var stationNames = {};
+            stations.forEach(function (station) {
+                stationNames[station.id] = station.label;
             });
-            console.log(hierarchy(data));
-            const root = tree(bilink(d3.hierarchy(data)
-                .sort((a, b) => d3.ascending(a.data.name, b.data.name))
-            ));
 
-            const svg = d3.select("#hierarchy").append("svg")
-                .attr("viewBox", [-width / 2, -width / 2, width, width]);
+            // Create a hierarchy of the stations
+            var root = { name: "Network", children: [] };
+            stations.forEach(function (station) {
+                root.children.push({ name: station.label });
+            });
 
-            const node = svg.append("g")
-                .attr("font-family", "sans-serif")
-                .attr("font-size", 10)
-                .selectAll("g")
-                .data(root.leaves())
-                .join("g")
-                .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-                .append("text")
-                .attr("dy", "0.31em")
-                .attr("x", d => d.x < Math.PI ? 6 : -6)
-                .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
-                .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
-                .text(d => d.data.name)
-                .each(function (d) { d.text = this; })
-                .on("mouseover", overed)
-                .on("mouseout", outed)
-                .call(text => text.append("title").text(d => {
-                    `${id(d)}`
-                }));
+            // Filter the links to only include train stations
+            var links = edges.filter(function (link) {
+                return stations.some(function (station) {
+                    return station.id === link.source && station.is_train_stop === "True";
+                }) && stations.some(function (station) {
+                    return station.id === link.target && station.is_train_stop === "True";
+                });
+            });
 
-            const link = svg.append("g")
-                .attr("stroke", colornone)
-                .attr("fill", "none")
-                .selectAll("path")
-                .data(root.leaves().flatMap(leaf => leaf.outgoing))
-                .join("path")
-                .style("mix-blend-mode", "multiply")
-                .attr("d", ([i, o]) => line(i.path(o)))
-                .each(function (d) { d.path = this; });
+            // Create an array of link objects
+            var linkArray = links.map(function (link) {
+                return {
+                    source: stationNames[link.source],
+                    target: stationNames[link.target]
+                };
+            });
 
-            return svg.nodes();
+            // Use d3's Hierarchy and Cluster layout to calculate the layout of the visualization
+            var cluster = d3.cluster()
+                .size([360, 500]);
+            var rootNodes = d3.hierarchy(root);
+            cluster(rootNodes);
+            
+            // Create an SVG element in the #network div
+            var svg = d3.select("#hierarchy").append("svg")
+                .attr("width", 10000)
+                .attr("height", 10000)
+                .append("g")
+                .attr("transform", "translate(500,500)");
+
+            // Use d3's Line radial generator to create curved links between the stations
+            var link = d3.linkRadial()
+                .angle(function (d) { return d.x / 180 * Math.PI; })
+                .radius(function (d) { return d.y; });
+            
+            var linkPath = svg.selectAll(".link")
+                .data(linkArray)
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", function (d) {
+                    var source = rootNodes.descendants().find(function (node) {
+                        return node.data.name === d.source;
+                    });
+                    var target = rootNodes.descendants().find(function (node) {
+                        return node.data.name === d.target;
+                    });
+                    return link({ source: source, target: target });
+                });
+
+            // Use d3's Circle generator to create circles for each station
+            var node = svg.selectAll(".node")
+                .data(rootNodes.descendants())
+                .enter().append("g")
+                .attr("class", "node")
+                .attr("transform", function (d) {
+                    return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
+                });
+            node.append("circle")
+                .attr("r", 4.5);
+            node.append("text")
+                .attr("dy", ".31em")
+                .attr("x", function (d) { return d.x < 180 ? 8 : -8; })
+                .style("text-anchor", function (d) { return d.x < 180 ? "start" : "end"; })
+                .attr("transform", function (d) { return d.x < 180 ? null : "rotate(180)"; })
+                .text(function (d) { return d.data.name; });
         });
     });
 });
