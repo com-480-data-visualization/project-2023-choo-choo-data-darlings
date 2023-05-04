@@ -3,8 +3,8 @@ import './style.css';
 
 const SVG_FILES_PATH = "data/svgs.json";
 const NETWORK_PATH = "src/network/data/networks/transports/web_data/";
-const EDGES_PATH = NETWORK_PATH + "network_edges_test.csv";
-const NODES_PATH = NETWORK_PATH + "network_nodes_test.csv";
+const EDGES_PATH = NETWORK_PATH + "network_edges.csv";
+const NODES_PATH = NETWORK_PATH + "network_nodes.csv";
 
 const width = 954;
 const radius = width / 2;
@@ -12,6 +12,9 @@ const radius = width / 2;
 const colorin = "#00f";
 const colorout = "#f00";
 const colornone = "#ccc";
+
+const CIRCLE_MARGIN = 200
+const CIRCLE_RADIUS = 2000;
 
 function overed(event, d) {
     link.style("mix-blend-mode", null);
@@ -58,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         d3.csv(EDGES_PATH).then((edges: any) => {
             // Filter the stations to only include train stops
             var stations = nodes.filter(function (station) {
-                return station.is_train_stop === "True";
+                return station.is_train_stop === "True" && (station.canton === 'VD' || station.canton === 'SZ')
             });
 
             // Map the station IDs to names
@@ -84,42 +87,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Create an array of link objects
             var linkArray = links.map(function (link) {
-                return {
-                    source: stationNames[link.source],
-                    target: stationNames[link.target]
-                };
+                return [
+                    {
+                        name: stationNames[link.source],
+                        id: link.source
+                    },
+                    {
+                        name: stationNames[link.target],
+                        id: link.target
+                    }
+                ];
             });
 
             // Use d3's Hierarchy and Cluster layout to calculate the layout of the visualization
             var cluster = d3.cluster()
-                .size([360, 500]);
+                .size([360, CIRCLE_RADIUS]);
+
+            function bilink(root) {
+                const map = new Map(root.leaves().map(d => [d.data.name, d]));
+                for (const d of root.leaves()) {
+                    d.incoming = [];
+                    d.outgoing = [];
+                    const nodeEdges = linkArray.filter(edge => edge[0].name === d.data.name);
+                    nodeEdges.forEach(edge => {
+                        const targetNode = map.get(edge[1].name);
+                        if (targetNode) d.outgoing.push([d, targetNode]);
+                    });
+                }
+                for (const d of root.leaves()) {
+                    for (const o of d.outgoing) {
+                        o[1].incoming.push(o);
+                    }
+                }
+                return root;
+            }
             var rootNodes = d3.hierarchy(root);
             cluster(rootNodes);
+            bilink(rootNodes);
             
             // Create an SVG element in the #network div
             var svg = d3.select("#hierarchy").append("svg")
-                .attr("width", 10000)
-                .attr("height", 10000)
+                .attr("width", 2 * CIRCLE_RADIUS + 2 * CIRCLE_MARGIN)
+                .attr("height", 2 * CIRCLE_RADIUS + 2 * CIRCLE_MARGIN)
                 .append("g")
-                .attr("transform", "translate(500,500)");
+                .attr("transform", `translate(${CIRCLE_RADIUS + CIRCLE_MARGIN},${CIRCLE_RADIUS + CIRCLE_MARGIN})`);
 
             // Use d3's Line radial generator to create curved links between the stations
-            var link = d3.linkRadial()
-                .angle(function (d) { return d.x / 180 * Math.PI; })
-                .radius(function (d) { return d.y; });
-            
-            var linkPath = svg.selectAll(".link")
-                .data(linkArray)
-                .enter().append("path")
-                .attr("class", "link")
-                .attr("d", function (d) {
-                    var source = rootNodes.descendants().find(function (node) {
-                        return node.data.name === d.source;
-                    });
-                    var target = rootNodes.descendants().find(function (node) {
-                        return node.data.name === d.target;
-                    });
-                    return link({ source: source, target: target });
+            var line = d3.lineRadial()
+                .curve(d3.curveBundle.beta(0.2))
+                .radius(d => d.y)
+                .angle(d => d.x * Math.PI / 180);
+
+            const link = svg.append("g")
+                .attr("stroke", "black")
+                .attr("fill", "none")
+                .selectAll("path")
+                .data(rootNodes.leaves().flatMap(leaf => leaf.outgoing))
+                .join("path")
+                .style("mix-blend-mode", "multiply")
+                .attr("d", ([i, o]) => line(i.path(o)))
+                .each(function(d) {
+                    d.path = this;
                 });
 
             // Use d3's Circle generator to create circles for each station
