@@ -3,8 +3,8 @@ import './style.css';
 
 const SVG_FILES_PATH = "data/svgs.json";
 const NETWORK_PATH = "src/network/data/networks/transports/web_data/";
-const EDGES_PATH = NETWORK_PATH + "network_edges.csv";
-const NODES_PATH = NETWORK_PATH + "network_nodes.csv";
+const EDGES_PATH = NETWORK_PATH + "network_edges_test.csv";
+const NODES_PATH = NETWORK_PATH + "network_nodes_test.csv";
 
 const width = 954;
 const radius = width / 2;
@@ -23,13 +23,6 @@ const line = d3.lineRadial()
 
 function bilink(root) {
     const map = new Map(root.leaves().map(d => [id(d), d]));
-    console.log(map);
-    for (const d of root.leaves()) {
-        d.outgoing = d.data.children.map(i => [d, map.get(i)]);
-        console.log(d.outgoing);
-        break;
-    }
-    throw new Error();
     d.incoming = [], d.outgoing = d.data.map(i => [d, map.get(i)]);
     for (const d of root.leaves()) for (const o of d.outgoing) o[1].incoming.push(o);
     return root;
@@ -58,36 +51,34 @@ function outed(event, d) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
-    let colorIndex = 0;
-
-    const app = document.querySelector("body");
-
-    // setInterval(() => {
-    //     colorIndex = (colorIndex + 1) % colors.length;
-    //     app!.style.transition = "background-color 2s ease";
-    //     app!.style.backgroundColor = colors[colorIndex];
-    // }, 1000);
-
-    // d3.json(SVG_FILES_PATH).then((data: any) => {
-    //     const svgFiles = data.files;
-    //     const banner = document.querySelector(".banner");
-    //     svgFiles.forEach((svgFile: any) => {
-    //         // Append the SVG to the banner
-    //         d3.xml(svgFile).then((data: any) => {
-    //             banner!.appendChild(data.documentElement);
-    //         })
-    //     });
-    // });
-
+    function hierarchy(data, delimiter = ".") {
+        let root;
+        const map = new Map;
+        data.forEach(function find(data) {
+            const { name } = data;
+            if (map.has(name)) return map.get(name);
+            const i = name.lastIndexOf(delimiter);
+            map.set(name, data);
+            if (i >= 0) {
+                find({ name: name.substring(0, i), children: [] }).children.push(data);
+                data.name = name.substring(i + 1);
+            } else {
+                root = data;
+            }
+            return data;
+        });
+        return root;
+    }
     d3.csv(EDGES_PATH).then((edges: any) => {
         d3.csv(NODES_PATH).then((nodes: any) => {
             // Process the data
             var data = {};
             nodes.forEach(function (node) {
-                var id = node.id;
-                data[id] = { name: node.label, children: [] };
+                console.log(node.is_train_stop)
+                if (node.is_train_stop === "True") {
+                    var id = node.id;
+                    data[id] = { name: node.label, children: [] };              
+                }
             });
             edges.forEach(function (edge) {
                 var source = edge.source;
@@ -96,8 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data[source].children.push(data[target]);
                 }
             });
-            console.log(d3.hierarchy(data));
-            throw new Error();
+            console.log(hierarchy(data));
             const root = tree(bilink(d3.hierarchy(data)
                 .sort((a, b) => d3.ascending(a.data.name, b.data.name))
             ));
@@ -124,21 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 .call(text => text.append("title").text(d => {
                     `${id(d)}`
                 }));
-            
-            root.leaves().flatMap(leaf => leaf.outgoing).forEach(element => {
-                console.log(element);
-                throw new Error("Method not implemented.");
-            });
-            
+
             const link = svg.append("g")
                 .attr("stroke", colornone)
                 .attr("fill", "none")
                 .selectAll("path")
                 .data(root.leaves().flatMap(leaf => leaf.outgoing))
                 .join("path")
-                    .style("mix-blend-mode", "multiply")
-                    .attr("d", ([i, o]) => line(i.path(o)))
-                    .each(function (d) { d.path = this; });
+                .style("mix-blend-mode", "multiply")
+                .attr("d", ([i, o]) => line(i.path(o)))
+                .each(function (d) { d.path = this; });
 
             return svg.nodes();
         });
