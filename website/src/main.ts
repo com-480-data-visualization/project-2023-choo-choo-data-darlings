@@ -12,8 +12,8 @@ const CANTONS_SELECTION_ID = "select_cantons";
 const BUNDLING_MARGIN = 200;
 const BUNDLING_RADIUS_SCALE = 20;
 
-const BUNDLING_WIDTH = 2000;
-const BUNDLING_HEIGHT = 2000;
+const BUNDLING_WIDTH = 800;
+const BUNDLING_HEIGHT = 800;
 
 const MIN_WEIGHT_SCALE = 1;
 const MAX_WEIGHT_SCALE = 10;
@@ -48,6 +48,8 @@ const CANTON_COLORS: { [x: string]: string } = {
 }
 
 const BUNDLE_SELECTED_EDGE_COLOR = "#EB0000";
+const BUNDLE_DEFAULT_EDGE_COLOR = "#000000";
+const BUNDLE_INCREASE_EDGE_WIDTH = 5;   
 
 class HierarchicalEdgeBundling {
     private root!: any;
@@ -142,7 +144,6 @@ class HierarchicalEdgeBundling {
 
     initBundle() {
         // Update useful variables before creating the bundle
-        console.log(this.selectedNodes);
         this.radius = BUNDLING_RADIUS_SCALE * this.selectedNodes.length / (2 * Math.PI);
 
         const scaleFactor = Math.min(this.width, this.height) / (2 * (this.radius + this.margin));
@@ -231,12 +232,12 @@ class HierarchicalEdgeBundling {
                 const nodeEdges = this.selectedEdges.filter((edge: any) => edge[0].name === d.data.name);
                 nodeEdges.forEach((edge: any[]) => {
                     const targetNode = map.get(edge[1].name);
-                    if (targetNode) d.outgoing.push({ path: [d, targetNode], weight: edge[0].weight });
+                    if (targetNode) d.outgoing.push({ nodes: [d, targetNode], weight: edge[0].weight });
                 });
             }
             for (const d of root.leaves()) {
                 for (const o of d.outgoing) {
-                    o.path[1].incoming.push(o);
+                    o.nodes[1].incoming.push(o);
                 }
             }
             return root;
@@ -259,7 +260,7 @@ class HierarchicalEdgeBundling {
 
         // Use d3's Line radial generator to create curved links between the stations
         const line = d3.lineRadial()
-            .curve(d3.curveBundle.beta(0.4))
+            .curve(d3.curveBundle.beta(0.5))
             .radius((d: any) => d.y)
             .angle((d: any) => d.x * Math.PI / 180);
 
@@ -271,7 +272,7 @@ class HierarchicalEdgeBundling {
             .join("path")
             .style("mix-blend-mode", "multiply")
             .attr("stroke-width", d => this.weightScale(d.weight))
-            .attr("d", (d) => line(d.path[0].path(d.path[1])))
+            .attr("d", (d) => line(d.nodes[0].path(d.nodes[1])))
             .each(function(d) {
                 d.path = this;
             });
@@ -302,27 +303,39 @@ class HierarchicalEdgeBundling {
             .each(function (d: any) { d.text = this; })
             .attr("fill", function (d) { return CANTON_COLORS[d.data.canton]; })
             .on("mouseover", overed)
-            .on("mouseout", outed)
-    
+            .on("mouseout", outed);
+
         function overed(event, d) {
             link.style("mix-blend-mode", null);
             // Get the font-size of the text element
             const fontSize = parseFloat(d3.select(this).style("font-size"));
             d3.select(this).attr("font-weight", "bold").attr("font-size", fontSize * 1.5);
-            d3.selectAll(d.incoming.map((d: any) => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
-            d3.selectAll(d.incoming.map((d: any) => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
-            d3.selectAll(d.outgoing.map((d: any) => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
-            d3.selectAll(d.outgoing.map((d: any) => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
+            d3.selectAll(d.incoming.map((d: any) => d.nodes[0].text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
+            d3.selectAll(d.outgoing.map((d: any) => d.nodes[1].text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
+            d3.selectAll(d.incoming.map((d: any) => d.path)).each(function() {
+                const strokeWidth = parseFloat(d3.select(this).style("stroke-width"));
+                d3.select(this).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", strokeWidth + BUNDLE_INCREASE_EDGE_WIDTH);
+            });
+            d3.selectAll(d.outgoing.map((d: any) => d.path)).each(function() {
+                const strokeWidth = parseFloat(d3.select(this).style("stroke-width"));
+                d3.select(this).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", strokeWidth + BUNDLE_INCREASE_EDGE_WIDTH);
+            });
         }
 
         function outed (event, d) {
             link.style("mix-blend-mode", "multiply");
             const fontSize = parseFloat(d3.select(this).style("font-size"));
             d3.select(this).attr("font-weight", null).attr("font-size", fontSize / 1.5);
-            d3.selectAll(d.incoming.map((d: any) => d.path)).attr("stroke", null).attr("stroke-width", null);
-            d3.selectAll(d.incoming.map((d: any) => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
-            d3.selectAll(d.outgoing.map((d: any) => d.path)).attr("stroke", null).attr("stroke-width", null);
-            d3.selectAll(d.outgoing.map((d: any) => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.incoming.map((d: any) => d.nodes[0].text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.outgoing.map((d: any) => d.nodes[1].text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.incoming.map((d: any) => d.path)).each(function() {
+                const strokeWidth = parseFloat(d3.select(this).style("stroke-width"));
+                d3.select(this).attr("stroke", BUNDLE_DEFAULT_EDGE_COLOR).attr("stroke-width", strokeWidth - BUNDLE_INCREASE_EDGE_WIDTH);
+            });
+            d3.selectAll(d.outgoing.map((d: any) => d.path)).each(function() {
+                const strokeWidth = parseFloat(d3.select(this).style("stroke-width"));
+                d3.select(this).attr("stroke", BUNDLE_DEFAULT_EDGE_COLOR).attr("stroke-width", strokeWidth - BUNDLE_INCREASE_EDGE_WIDTH);
+            });
         }
     }
 
