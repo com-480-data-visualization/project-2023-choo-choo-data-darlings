@@ -13,6 +13,9 @@ const BUNDLING_RADIUS = 4000;
 const BUNDLING_WIDTH = 2000;
 const BUNDLING_HEIGHT = 2000;
 
+const MIN_WEIGHT_SCALE = 1;
+const MAX_WEIGHT_SCALE = 10;
+
 const CANTON_COLORS: { [x: string]: string } = {
     "ZH": "#c94be1",
     "BE": "#b2e431",
@@ -53,6 +56,8 @@ class HierarchicalEdgeBundling {
     private radius!: number;
     private margin!: number;
 
+    private weightScale!: any;
+
     constructor() {
         this.loadData().then(() => {
             this.initBundle();
@@ -83,6 +88,20 @@ class HierarchicalEdgeBundling {
                             return node.id === edge.target && node.is_train_stop === "True";
                         });
                     })
+
+                    // Degine the weight scale
+                    const minWeight = d3.min(
+                        edges, 
+                        function (edge: { weight: string; }) { return parseInt(edge.weight); }
+                    ) ?? 0;
+                    const maxWeight = d3.max(
+                        edges,
+                        function (edge: { weight: string; }) { return parseInt(edge.weight); }
+                    ) ?? 0;
+
+                    this.weightScale = d3.scaleLinear()
+                        .domain([minWeight, maxWeight])
+                        .range([MIN_WEIGHT_SCALE, MAX_WEIGHT_SCALE]);
 
                     // Create a hierarchy of the stations
                     const root: 
@@ -144,11 +163,13 @@ class HierarchicalEdgeBundling {
                         return [
                             {
                                 name: stationNames[edge.source],
-                                id: edge.source
+                                id: edge.source,
+                                weight: edge.weight
                             },
                             {
                                 name: stationNames[edge.target],
-                                id: edge.target
+                                id: edge.target,
+                                weight: edge.weight
                             }
                         ];
                     });
@@ -183,25 +204,25 @@ class HierarchicalEdgeBundling {
                 const nodeEdges = this.edges.filter((edge: any) => edge[0].name === d.data.name);
                 nodeEdges.forEach((edge: any[]) => {
                     const targetNode = map.get(edge[1].name);
-                    if (targetNode) d.outgoing.push([d, targetNode]);
+                    if (targetNode) d.outgoing.push({ path: [d, targetNode], weight: edge[0].weight });
                 });
             }
             for (const d of root.leaves()) {
                 for (const o of d.outgoing) {
-                    o[1].incoming.push(o);
+                    o.path[1].incoming.push(o);
                 }
             }
             return root;
         }
 
-        var rootNodes = d3.hierarchy(this.root);
+        const rootNodes = d3.hierarchy(this.root);
         cluster(rootNodes);
         bilink(rootNodes);
 
         const zoomBehavior = zoom<SVGSVGElement, unknown>().on("zoom", (event) => this.zoomed(event));
 
         // Create an SVG element in the #network div
-        var svg = d3.select("#hierarchy").append("svg")
+        const svg = d3.select("#hierarchy").append("svg")
             .attr("width", this.width)
             .attr("height", this.height)
             .call(zoomBehavior)
@@ -209,7 +230,7 @@ class HierarchicalEdgeBundling {
             .attr("transform", `translate(${translateX},${translateY})scale(${scaleFactor})`);
 
         // Use d3's Line radial generator to create curved links between the stations
-        var line = d3.lineRadial()
+        const line = d3.lineRadial()
             .curve(d3.curveBundle.beta(0.4))
             .radius((d: any) => d.y)
             .angle((d: any) => d.x * Math.PI / 180);
@@ -221,13 +242,14 @@ class HierarchicalEdgeBundling {
             .data(rootNodes.leaves().flatMap((leaf: any) => leaf.outgoing))
             .join("path")
             .style("mix-blend-mode", "multiply")
-            .attr("d", ([i, o]) => line(i.path(o)))
+            .attr("stroke-width", d => this.weightScale(d.weight))
+            .attr("d", (d) => line(d.path[0].path(d.path[1])))
             .each(function(d) {
                 d.path = this;
             });
 
         // Use d3's Circle generator to create circles for each station
-        var node = svg.selectAll(".node")
+        const node = svg.selectAll(".node")
             .data(rootNodes.descendants())
             .enter().append("g")
             .attr("class", "node")
@@ -257,22 +279,22 @@ class HierarchicalEdgeBundling {
         function overed(event, d) {
             link.style("mix-blend-mode", null);
             // Get the font-size of the text element
-            var fontSize = parseFloat(d3.select(this).style("font-size"));
+            const fontSize = parseFloat(d3.select(this).style("font-size"));
             d3.select(this).attr("font-weight", "bold").attr("font-size", fontSize * 1.5);
             d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
-            d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
+            d3.selectAll(d.incoming.map(d => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
             d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
-            d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
+            d3.selectAll(d.outgoing.map(d => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
         }
 
         function outed (event, d) {
             link.style("mix-blend-mode", "multiply");
-            var fontSize = parseFloat(d3.select(this).style("font-size"));
+            const fontSize = parseFloat(d3.select(this).style("font-size"));
             d3.select(this).attr("font-weight", null).attr("font-size", fontSize / 1.5);
             d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", null).attr("stroke-width", null);
-            d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.incoming.map(d => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
             d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", null).attr("stroke-width", null);
-            d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.outgoing.map(d => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
         }
     }
 
