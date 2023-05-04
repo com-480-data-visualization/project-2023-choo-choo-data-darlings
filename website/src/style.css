@@ -90,8 +90,9 @@ footer {
   position: relative;
 }
 
-#hierarchy {
-}
-
-#circle_packing {
+#select_cantons {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
 }

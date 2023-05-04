@@ -7,8 +7,10 @@ const NETWORK_PATH = "src/network/data/networks/transports/web_data/";
 const EDGES_PATH = NETWORK_PATH + "network_edges.csv";
 const NODES_PATH = NETWORK_PATH + "network_nodes.csv";
 
+const CANTONS_SELECTION_ID = "select_cantons";
+
 const BUNDLING_MARGIN = 200;
-const BUNDLING_RADIUS = 4000;
+const BUNDLING_RADIUS_SCALE = 20;
 
 const BUNDLING_WIDTH = 2000;
 const BUNDLING_HEIGHT = 2000;
@@ -50,11 +52,15 @@ const BUNDLE_SELECTED_EDGE_COLOR = "#EB0000";
 class HierarchicalEdgeBundling {
     private root!: any;
     private edges!: any;
+    private nodes!: any;
 
-    private width!: number;
-    private height!: number;
+    private selectedEdges!: any;
+    private selectedNodes!: any;
+
+    private width: number = BUNDLING_WIDTH;
+    private height: number = BUNDLING_HEIGHT;
     private radius!: number;
-    private margin!: number;
+    private margin: number = BUNDLING_MARGIN;
 
     private weightScale!: any;
 
@@ -103,79 +109,30 @@ class HierarchicalEdgeBundling {
                         .domain([minWeight, maxWeight])
                         .range([MIN_WEIGHT_SCALE, MAX_WEIGHT_SCALE]);
 
-                    // Create a hierarchy of the stations
-                    const root: 
-                        { 
-                            name: string; 
-                            children: { 
-                                name: string; 
-                                children: { 
-                                    name: string; 
-                                    children: { 
-                                        name: string; 
-                                        canton: string; 
-                                        city: string; }[] 
-                                    }[] 
-                                }[] 
-                        } = { name: "Network", children: [] };
-
-                    // Group nodes by canton
-                    const cantons = d3.group(nodes, (d: any) => d.canton);
-
-                    cantons.forEach((cantonNodes, cantonName) => {
-                        // For each canton, create a child of the root node
-                        const cantonChild = { name: cantonName, children: [] as any[] };
-                        
-                        // Group nodes within the canton by city
-                        const cities = d3.group(cantonNodes, d => d.city);
-
-                        cities.forEach((cityNodes, cityName) => {
-                            // For each city, create a child of the canton node
-                            const cityChild = { name: cityName, children: [] as any[] };
-
-                            // Then create children for each station in the city
-                            cityNodes.forEach(node => {
-                                cityChild.children.push(
-                                    { 
-                                        name: node.label,
-                                        canton: node.canton,
-                                        city: node.city,
-                                    }
-                                );
-                            });
-
-                            // Add the city child to the canton node
-                            cantonChild.children.push(cityChild);
+                    // Add selections to the cantons selection
+                    const cantonsSelection = document.getElementById(CANTONS_SELECTION_ID);
+                    if (cantonsSelection) {
+                        // Fill the cantons selection with the cantons
+                        Object.keys(CANTON_COLORS).forEach(canton => {
+                            const option = document.createElement("option");
+                            option.value = canton;
+                            option.text = canton;
+                            cantonsSelection.appendChild(option);
                         });
 
-                        // Add the canton child to the root node
-                        root.children.push(cantonChild);
-                    });
+                        // Set event listener for cantons selection
+                        cantonsSelection.addEventListener("change", () => {
+                            const cantons = (cantonsSelection as HTMLSelectElement).selectedOptions;
+                            const cantonsList = Array.from(cantons).map(canton => canton.value);
+                            
+                            this.filterByCantons(cantonsList);
+                        });
+                    }
 
-                    // Map station IDs to names
-                    const stationNames: { [x: string]: string; } = {};
-                    nodes.forEach(function (node: { id: string; label: string; }) {
-                        stationNames[node.id] = node.label;
-                    });
-
-                    // Map edges to list of stops
-                    edges = edges.map(function (edge: any) {
-                        return [
-                            {
-                                name: stationNames[edge.source],
-                                id: edge.source,
-                                weight: edge.weight
-                            },
-                            {
-                                name: stationNames[edge.target],
-                                id: edge.target,
-                                weight: edge.weight
-                            }
-                        ];
-                    });
-
-                    this.root = root;
+                    this.nodes = nodes;
                     this.edges = edges;
+                    this.selectedEdges = edges;
+                    this.selectedNodes = nodes;
 
                     resolve();
                 });
@@ -184,14 +141,84 @@ class HierarchicalEdgeBundling {
     }
 
     initBundle() {
-        this.width = BUNDLING_WIDTH;
-        this.height = BUNDLING_HEIGHT;
-        this.radius = BUNDLING_RADIUS;
-        this.margin = BUNDLING_MARGIN;
+        // Update useful variables before creating the bundle
+        console.log(this.selectedNodes);
+        this.radius = BUNDLING_RADIUS_SCALE * this.selectedNodes.length / (2 * Math.PI);
 
         const scaleFactor = Math.min(this.width, this.height) / (2 * (this.radius + this.margin));
         const translateX = (this.width / 2);
         const translateY = (this.height / 2);
+
+        // Create a hierarchy of the stations
+        const root: 
+            { 
+                name: string; 
+                children: { 
+                    name: string; 
+                    children: { 
+                        name: string; 
+                        children: { 
+                            name: string; 
+                            canton: string; 
+                            city: string; }[] 
+                        }[] 
+                    }[] 
+            } = { name: "Network", children: [] };
+
+        // Group nodes by canton
+        const cantons = d3.group(this.selectedNodes, (d: any) => d.canton);
+
+        cantons.forEach((cantonNodes, cantonName) => {
+            // For each canton, create a child of the root node
+            const cantonChild = { name: cantonName, children: [] as any[] };
+            
+            // Group nodes within the canton by city
+            const cities = d3.group(cantonNodes, d => d.city);
+
+            cities.forEach((cityNodes, cityName) => {
+                // For each city, create a child of the canton node
+                const cityChild = { name: cityName, children: [] as any[] };
+
+                // Then create children for each station in the city
+                cityNodes.forEach(node => {
+                    cityChild.children.push(
+                        { 
+                            name: node.label,
+                            canton: node.canton,
+                            city: node.city,
+                        }
+                    );
+                });
+
+                // Add the city child to the canton node
+                cantonChild.children.push(cityChild);
+            });
+
+            // Add the canton child to the root node
+            root.children.push(cantonChild);
+        });
+
+        // Map station IDs to names
+        const stationNames: { [x: string]: string; } = {};
+        this.selectedNodes.forEach(function (node: { id: string; label: string; }) {
+            stationNames[node.id] = node.label;
+        });
+
+        // Map edges to list of stops
+        this.selectedEdges = this.selectedEdges.map(function (edge: any) {
+            return [
+                {
+                    name: stationNames[edge.source],
+                    id: edge.source,
+                    weight: edge.weight
+                },
+                {
+                    name: stationNames[edge.target],
+                    id: edge.target,
+                    weight: edge.weight
+                }
+            ];
+        });
 
 
         // Use d3's Hierarchy and Cluster layout to calculate the layout of the visualization
@@ -201,7 +228,7 @@ class HierarchicalEdgeBundling {
             for (const d of root.leaves()) {
                 d.incoming = [];
                 d.outgoing = [];
-                const nodeEdges = this.edges.filter((edge: any) => edge[0].name === d.data.name);
+                const nodeEdges = this.selectedEdges.filter((edge: any) => edge[0].name === d.data.name);
                 nodeEdges.forEach((edge: any[]) => {
                     const targetNode = map.get(edge[1].name);
                     if (targetNode) d.outgoing.push({ path: [d, targetNode], weight: edge[0].weight });
@@ -215,6 +242,7 @@ class HierarchicalEdgeBundling {
             return root;
         }
 
+        this.root = root;
         const rootNodes = d3.hierarchy(this.root);
         cluster(rootNodes);
         bilink(rootNodes);
@@ -281,21 +309,36 @@ class HierarchicalEdgeBundling {
             // Get the font-size of the text element
             const fontSize = parseFloat(d3.select(this).style("font-size"));
             d3.select(this).attr("font-weight", "bold").attr("font-size", fontSize * 1.5);
-            d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
-            d3.selectAll(d.incoming.map(d => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
-            d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
-            d3.selectAll(d.outgoing.map(d => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
+            d3.selectAll(d.incoming.map((d: any) => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
+            d3.selectAll(d.incoming.map((d: any) => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
+            d3.selectAll(d.outgoing.map((d: any) => d.path)).attr("stroke", BUNDLE_SELECTED_EDGE_COLOR).attr("stroke-width", 10).raise();
+            d3.selectAll(d.outgoing.map((d: any) => d.path.text)).attr("fill", BUNDLE_SELECTED_EDGE_COLOR).attr("font-weight", "bold");
         }
 
         function outed (event, d) {
             link.style("mix-blend-mode", "multiply");
             const fontSize = parseFloat(d3.select(this).style("font-size"));
             d3.select(this).attr("font-weight", null).attr("font-size", fontSize / 1.5);
-            d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", null).attr("stroke-width", null);
-            d3.selectAll(d.incoming.map(d => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
-            d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", null).attr("stroke-width", null);
-            d3.selectAll(d.outgoing.map(d => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.incoming.map((d: any) => d.path)).attr("stroke", null).attr("stroke-width", null);
+            d3.selectAll(d.incoming.map((d: any) => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.outgoing.map((d: any) => d.path)).attr("stroke", null).attr("stroke-width", null);
+            d3.selectAll(d.outgoing.map((d: any) => d.path.text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
         }
+    }
+
+    filterByCantons(cantons: string[]) {
+        // Filter nodes based on selected cantons
+        this.selectedNodes = this.nodes.filter((node: any) => cantons.includes(node.canton));
+    
+        // Filter edges based on selected cantons
+        this.selectedEdges = this.edges.filter((edge: any) => {
+            return this.selectedNodes.some((node: any) => node.id === edge.source) &&
+                this.selectedNodes.some((node: any) => node.id === edge.target);
+        });
+    
+        // Remove the old bundle and create a new one
+        d3.select("#hierarchy svg").remove();
+        this.initBundle();
     }
 
     zoomed(event) {
