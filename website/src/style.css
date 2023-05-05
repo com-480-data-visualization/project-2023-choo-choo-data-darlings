@@ -152,6 +152,8 @@ footer {
   flex-direction: row; /* add flex-direction property with a value of row */
   align-items: center; /* add align-items property with a value of center */
   width: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #select_cantons {
@@ -175,4 +177,9 @@ footer {
 
 select:active {
   outline: none;
+}
+
+#circle-packing-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
