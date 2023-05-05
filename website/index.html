@@ -6,25 +6,48 @@
     <title>My Beautiful Choo Choo Website 🚂</title>
   </head>
   <body>
-    <!--<div class="banner"></div>
+    <div class="banner"></div>
     <div class="navbar">
       <a href="./index.html">Home</a>
       <a href="./src/map/map.html">Map</a>
       <a href="./src/network/network.html">Network</a>
     </div>
 
-    <div id="app"></div>
+    <div id="app">
+      <div class="container">
+        <div id="hierarchy">
+          <select id="select_cantons" size="26" multiple></select>
+
+        </div>
+        <div id="circle_packing"></div>
+      </div>
+  
+    </div>
 
     <footer>
       <p>© 2023 My Beautiful Choo Choo Website 🚂</p>
-    </footer>-->
-    <div class="container">
-      <div id="hierarchy"></div>
-      <div id="circle_packing"></div>
-    </div>
-
-    <select id="select_cantons" size="26" multiple></select>
+      <div id="maintainers">
+        Website published on <span id="current_date" itemprop="date"></span> and maintained by
+        <a class="github-link" href="https://github.com/dvculha" target="_blank">Dafne Culha</a>, 
+        <a class="github-link" href="https://github.com/ozan-guven" target="_blank">Ozan Güven</a> and 
+        <a class="github-link" href="https://github.com/ArnaudPoletto" target="_blank">Arnaud Poletto</a>
+        <br>
+        <br>
+        <a class="github-link no-decoration" href="https://github.com/com-480-data-visualization/project-2023-choo-choo-data-darlings/tree/master" target="_blank">Take a look at the project's <i class="bi bi-github"></i> GitHub repository!</a>
+      </div>
+    </footer>
+    
 
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      // Get the current day as a String dd mm yyyy
+      let today = new Date().toLocaleString();
+      
+      // Get only the day month and year in the string 
+      today = today.split(" ")[0];
+
+      // Put the day in the current_date id
+      document.getElementById("current_date").innerHTML = today;
+    </script>
   </body>
 </html>
