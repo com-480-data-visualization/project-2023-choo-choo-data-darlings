@@ -131,7 +131,7 @@ footer {
 
 #hierarchy {
   border: 1px solid black;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   overflow: hidden;
 }
 
@@ -142,8 +142,37 @@ footer {
   overflow: hidden;
 }
 
+.container {
+  display: flex; /* add display property with a value of flex */
+  align-items: center; /* add align-items property with a value of center */
+}
+
+#hierarchy-container {
+  display: flex; /* add display property with a value of flex */
+  flex-direction: row; /* add flex-direction property with a value of row */
+  align-items: center; /* add align-items property with a value of center */
+  width: auto;
+}
+
 #select_cantons {
   top: 10px;
   right: 10px;
-  z-index: 9999;
+  float: right;
+  /* Hide scrollbar */
+  overflow: hidden;
+  border-width: 0;
+}
+
+#select_cantons > option {
+  font-family: "Segoe UI",Roboto;
+  font-size: 1.5vh;
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  outline: none;
+}
+
+select:active {
+  outline: none;
 }

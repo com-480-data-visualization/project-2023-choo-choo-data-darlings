@@ -134,8 +134,11 @@ export class HierarchicalEdgeBundling {
                         cantonsSelection.addEventListener("change", () => {
                             const cantons = (cantonsSelection as HTMLSelectElement).selectedOptions;
                             const cantonsList = Array.from(cantons).map(canton => canton.value);
-                            
                             this.filterByCantons(cantonsList, true);
+                            
+                            // Change the color of the selected option
+                            const selectedOption = cantonsSelection.options[cantonsSelection.selectedIndex];
+                            selectedOption.style.backgroundColor = CANTON_COLORS[selectedOption.value];
                         });
                     }
 
