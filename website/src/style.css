@@ -3,10 +3,10 @@
   position: relative;
   top: 0;
   left: 0;
-  height: 100px; /* Set the height of the container based on the size of your SVGs */
-  width: 100%; /* Set the width to 100% to cover the entire page */
-  overflow: hidden; /* Hide any overflowing content */
-  font-size: 0; /* Remove any gaps between the SVGs */
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+  font-size: 0;
 }
 
 .banner svg {
@@ -32,9 +32,10 @@
   line-height: 1.5;
   font-weight: 400;
 
+  /* 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: white/*#242424*/;
+  background-color: white */ /*#242424*/;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -46,6 +47,7 @@
 body {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   margin: 0;
   min-height: 100vh;
@@ -53,8 +55,17 @@ body {
 
 /* CSS for navigation bar */
 .navbar {
-  background-color: #333;
+  background-color: black;
   overflow: hidden;
+  position: fixed; /* Maybe later */
+  top: 0;
+  width:100%;
+  z-index: 9999;
+  transition: background-color 0.5s ease; /* add a transition for the background-color property */
+}
+
+.navbar-scroll {
+  background-color: #EB0000; /* new background color after scrolling */
 }
 
 .navbar a {
@@ -66,8 +77,33 @@ body {
 }
 
 .navbar a:hover {
-  background-color: #ddd;
+  background-color: #A20013;
   color: black;
+}
+
+#welcome {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  top: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI",Roboto;
+  font-size: 10vh;
+  
+  color: aliceblue;
+  text-align: center;
+  /* Align children vertically */;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#title {
+  font-weight: 600;
+  background: -webkit-linear-gradient(0deg,#be22ff 20%,#ff279c 50%,#ff981f 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* CSS for footer */
@@ -75,10 +111,13 @@ footer {
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 20px;
-  position: absolute;
-  bottom: 0;
   width: 100%;
+  height: 20vh;
+  margin-top: auto;
+  /* Align children vertically */;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .container {
@@ -90,9 +129,57 @@ footer {
   position: relative;
 }
 
+#hierarchy {
+  border: 1px solid black;
+  /* border-radius: 50%; */
+  overflow: hidden;
+}
+
+#circle_packing {
+  border: 1px solid black;
+  width: 800px; /* TODO: remove this */
+  height: 800px; /* TODO: remove this */
+  overflow: hidden;
+}
+
+.container {
+  display: flex; /* add display property with a value of flex */
+  align-items: center; /* add align-items property with a value of center */
+}
+
+#hierarchy-container {
+  display: flex; /* add display property with a value of flex */
+  flex-direction: row; /* add flex-direction property with a value of row */
+  align-items: center; /* add align-items property with a value of center */
+  width: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 #select_cantons {
-  position: fixed;
   top: 10px;
   right: 10px;
-  z-index: 9999;
+  float: right;
+  /* Hide scrollbar */
+  overflow: hidden;
+  border-width: 0;
+}
+
+#select_cantons > option {
+  font-family: "Segoe UI",Roboto;
+  font-size: 1.5vh;
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  outline: none;
+}
+
+select:active {
+  outline: none;
+}
+
+#circle-packing-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
