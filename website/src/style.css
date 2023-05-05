@@ -55,11 +55,17 @@ body {
 
 /* CSS for navigation bar */
 .navbar {
-  background-color: #EB0000;
+  background-color: black;
   overflow: hidden;
-  /* position: fixed; */ /* Maybe later */
+  position: fixed; /* Maybe later */
   top: 0;
   width:100%;
+  z-index: 9999;
+  transition: background-color 0.5s ease; /* add a transition for the background-color property */
+}
+
+.navbar-scroll {
+  background-color: #EB0000; /* new background color after scrolling */
 }
 
 .navbar a {
