@@ -9,3 +9,10 @@ spark/dv_project/target/scala-2.11/classes/*
 
 # python
 **/__pycache__/*
+
+# npm
+**/node_modules/*
+package-lock.json
+package.json
+**/public/*
+tsconfig.json
