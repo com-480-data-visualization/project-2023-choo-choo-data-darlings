@@ -18,6 +18,9 @@ const BUNDLING_HEIGHT = 800;
 const MIN_WEIGHT_SCALE = 1;
 const MAX_WEIGHT_SCALE = 10;
 
+const MIN_ZOOM_SCALE = 0.1;
+const MAX_ZOOM_SCALE = 10;
+
 const CANTON_COLORS: { [x: string]: string } = {
     "ZH": "#c94be1",
     "BE": "#b2e431",
@@ -65,6 +68,8 @@ class HierarchicalEdgeBundling {
     private margin: number = BUNDLING_MARGIN;
 
     private weightScale!: any;
+
+    private defaultZoomState: any = d3.zoomIdentity;
 
     constructor() {
         this.loadData().then(() => {
@@ -150,6 +155,10 @@ class HierarchicalEdgeBundling {
         const translateX = (this.width / 2);
         const translateY = (this.height / 2);
 
+        this.defaultZoomState = d3.zoomIdentity
+            .translate(translateX, translateY)
+            .scale(scaleFactor);
+
         // Create a hierarchy of the stations
         const root: 
             { 
@@ -161,9 +170,10 @@ class HierarchicalEdgeBundling {
                         children: { 
                             name: string; 
                             canton: string; 
-                            city: string; }[] 
+                            city: string;
                         }[] 
                     }[] 
+                }[] 
             } = { name: "Network", children: [] };
 
         // Group nodes by canton
@@ -248,15 +258,18 @@ class HierarchicalEdgeBundling {
         cluster(rootNodes);
         bilink(rootNodes);
 
-        const zoomBehavior = zoom<SVGSVGElement, unknown>().on("zoom", (event) => this.zoomed(event));
+        const zoomBehavior = zoom<SVGSVGElement, unknown>()
+            .scaleExtent([MIN_ZOOM_SCALE, MAX_ZOOM_SCALE])
+            .on("zoom", (event) => this.zoomed(event));
 
         // Create an SVG element in the #network div
         const svg = d3.select("#hierarchy").append("svg")
             .attr("width", this.width)
             .attr("height", this.height)
             .call(zoomBehavior)
-            .append("g")
-            .attr("transform", `translate(${translateX},${translateY})scale(${scaleFactor})`);
+
+        const g = svg.append("g")
+            .attr("transform", this.defaultZoomState.toString());
 
         // Use d3's Line radial generator to create curved links between the stations
         const line = d3.lineRadial()
@@ -264,7 +277,7 @@ class HierarchicalEdgeBundling {
             .radius((d: any) => d.y)
             .angle((d: any) => d.x * Math.PI / 180);
 
-        const link = svg.append("g")
+        const link = g.append("g")
             .attr("stroke", "black")
             .attr("fill", "none")
             .selectAll("path")
@@ -278,22 +291,22 @@ class HierarchicalEdgeBundling {
             });
 
         // Use d3's Circle generator to create circles for each station
-        const node = svg.selectAll(".node")
+        const node = g.selectAll(".node")
             .data(rootNodes.descendants())
-            .enter().append("g")
+            .enter()
+            .append("g")
+            .filter(d => d.children === undefined)
             .attr("class", "node")
             .attr("transform", function (d: any) {
                 return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
-            });
+            })
 
         node
-            .filter(d => d.children === undefined)
             .append("circle")
             .attr("r", 4.5)
             .attr("fill", function (d) { return CANTON_COLORS[d.data.canton]; });
 
         node
-            .filter(d => d.children === undefined)
             .append("text")
             .attr("dy", ".31em")
             .attr("x", function (d: any) { return d.x < 180 ? 8 : -8; })
@@ -326,15 +339,15 @@ class HierarchicalEdgeBundling {
             link.style("mix-blend-mode", "multiply");
             const fontSize = parseFloat(d3.select(this).style("font-size"));
             d3.select(this).attr("font-weight", null).attr("font-size", fontSize / 1.5);
-            d3.selectAll(d.incoming.map((d: any) => d.nodes[0].text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
-            d3.selectAll(d.outgoing.map((d: any) => d.nodes[1].text)).attr("fill", CANTON_COLORS[d.data.canton]).attr("font-weight", null);
+            d3.selectAll(d.incoming.map((d: any) => d.nodes[0].text)).attr("fill", function (d) { return CANTON_COLORS[d.data.canton]; }).attr("font-weight", null);
+            d3.selectAll(d.outgoing.map((d: any) => d.nodes[1].text)).attr("fill", function (d) { return CANTON_COLORS[d.data.canton]; }).attr("font-weight", null);
             d3.selectAll(d.incoming.map((d: any) => d.path)).each(function() {
                 const strokeWidth = parseFloat(d3.select(this).style("stroke-width"));
-                d3.select(this).attr("stroke", BUNDLE_DEFAULT_EDGE_COLOR).attr("stroke-width", strokeWidth - BUNDLE_INCREASE_EDGE_WIDTH);
+                d3.select(this).attr("stroke", "black").attr("stroke-width", strokeWidth - BUNDLE_INCREASE_EDGE_WIDTH);
             });
             d3.selectAll(d.outgoing.map((d: any) => d.path)).each(function() {
                 const strokeWidth = parseFloat(d3.select(this).style("stroke-width"));
-                d3.select(this).attr("stroke", BUNDLE_DEFAULT_EDGE_COLOR).attr("stroke-width", strokeWidth - BUNDLE_INCREASE_EDGE_WIDTH);
+                d3.select(this).attr("stroke", "black").attr("stroke-width", strokeWidth - BUNDLE_INCREASE_EDGE_WIDTH);
             });
         }
     }
@@ -354,10 +367,15 @@ class HierarchicalEdgeBundling {
         this.initBundle();
     }
 
-    zoomed(event) {
-        const { transform } = event;
-        d3.select("#hierarchy svg g").attr("transform", transform);
-    }
+    zoomed(event: any) {
+        const newTransform: any = d3.zoomIdentity
+            .translate(event.transform.x, event.transform.y)
+            .scale(event.transform.k)
+            .translate(this.defaultZoomState.x, this.defaultZoomState.y)
+            .scale(this.defaultZoomState.k);
+      
+        d3.select("#hierarchy svg g").attr("transform", newTransform);
+      }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

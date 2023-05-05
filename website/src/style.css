@@ -90,6 +90,19 @@ footer {
   position: relative;
 }
 
+#hierarchy {
+  border: 1px solid black;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+#circle_packing {
+  border: 1px solid black;
+  width: 800px; /* TODO: remove this */
+  height: 800px; /* TODO: remove this */
+  overflow: hidden;
+}
+
 #select_cantons {
   position: fixed;
   top: 10px;
