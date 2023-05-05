@@ -3,10 +3,10 @@
   position: relative;
   top: 0;
   left: 0;
-  height: 100px; /* Set the height of the container based on the size of your SVGs */
-  width: 100%; /* Set the width to 100% to cover the entire page */
-  overflow: hidden; /* Hide any overflowing content */
-  font-size: 0; /* Remove any gaps between the SVGs */
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+  font-size: 0;
 }
 
 .banner svg {
@@ -104,7 +104,6 @@ footer {
 }
 
 #select_cantons {
-  position: fixed;
   top: 10px;
   right: 10px;
   z-index: 9999;
