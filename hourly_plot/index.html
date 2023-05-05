@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hourly Bar Plot</title>
+  </head>
+  <body>
+    <div id="chart"></div>
+
+    <script>
+    // Define an array of cities
+    var transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
+  
+    // create button for each type of transport
+    for (var i = 0; i < transportTypes.length; i++) {
+      var transportMethod = transportTypes[i];
+      var button = document.createElement("button");
+      button.innerHTML = city;
+      button.onclick = function() {
+        update(city);
+      };
+      
+    }
+
+    // function to update selected variable
+    function update(selectedVar) {
+
+    }
+</script>
+    <script src="./script.js"></script>
+  </body>
+
+</html>
