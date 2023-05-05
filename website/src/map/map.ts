@@ -16,7 +16,6 @@ const SLIDER_SIMULATION_SPEED_ID = 'slider_simulation_speed';
 const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider_simulation_speed_label';
 
 const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
-const TRAINS_PATH = 'data/train_trips_bins.json';
 const TRAINS_FOLDER_PATH = 'data/train_trips_bins/';
 const HEATMAP_PATH = 'data/density_heatmap.png';
 const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
@@ -404,7 +403,7 @@ class Map {
     for (let i = 0; i < 60 * 24; i += TRAIN_FILES_BIN_SIZE) {
       binFilePromises.push(
         d3.json(TRAINS_FOLDER_PATH + i + '.json').then((trainData) => {
-          if (!trainData) throw new Error('Invalid train data at path: ' + TRAINS_PATH + i + '.json');
+          if (!trainData) throw new Error('Invalid train data at path: ' + TRAINS_FOLDER_PATH + i + '.json');
           data.bins[i] = trainData;
         })
       );
