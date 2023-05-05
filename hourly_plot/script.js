@@ -5,6 +5,13 @@ const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
+// Parse the time for each data point
+const parseTime = d3.timeParse("%H:%M:%S");
+data.forEach(d => {
+  d.departure_time = parseTime(d.departure_time);
+  d.departure_time.setYear(1970);
+});
+
 // svg container
 const svg = d3
   .select("#chart")
@@ -17,8 +24,9 @@ const svg = d3
 // the scales
 const xScale = d3
   .scaleTime()
-  .domain(d3.extent(data, (d) => new Date(`${d.departure_time}`)))
+  .domain(d3.extent(data, (d) => d.departure_time))
   .range([0, width]);
+
 const yScale = d3
   .scaleLinear()
   .domain([0, d3.max(data, (d) => d.count)])
@@ -28,11 +36,12 @@ const yScale = d3
 // Create the line generator function
 const line = d3
   .line()
-  .x((d) => xScale(new Date(`${d.departure_time}`)))
+  .x((d) => xScale(d.departure_time))
   .y((d) => yScale(d.count));
 
 // add the data to the svg .append(path)
 svg
+  .append("path")
   .datum(data)
   .attr("fill", "none")
   .attr("stroke", "steelblue")

@@ -6,28 +6,34 @@
   </head>
   <body>
     <div id="chart"></div>
+    <div id="buttons"></div>
 
-    <script>
-    // Define an array of cities
-    var transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
-  
-    // create button for each type of transport
-    for (var i = 0; i < transportTypes.length; i++) {
-      var transportMethod = transportTypes[i];
-      var button = document.createElement("button");
-      button.innerHTML = city;
-      button.onclick = function() {
-        update(city);
-      };
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Define an array of cities
+      const transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
       
-    }
+      console.log(transportTypes);
+      // create button for each type of transport
+      for (let i = 0; i < transportTypes.length; i++) {
+        const transportMethod = transportTypes[i];
+        const button = document.createElement("button");
+        button.setAttribute("type", "button");
+        button.innerHTML = transportMethod;
+        button.onclick = function() {
+          update(transportMethod);
+        };
 
-    // function to update selected variable
-    function update(selectedVar) {
+        document.getElementById("buttons").appendChild(button);
+      }
 
-    }
+      // function to update selected variable
+      function update(selectedVar) {
+        console.log(selectedVar);
+      }
+    });
 </script>
-    <script src="./script.js"></script>
+    <script type="module" src="./script.js"></script>
   </body>
 
 </html>
