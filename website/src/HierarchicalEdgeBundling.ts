@@ -49,8 +49,6 @@ const CANTON_COLORS: { [x: string]: string } = {
     "JU": "#d53e8d"
 }
 
-const DEFAULT_SELECTED_CANTONS =['VD']
-
 const BUNDLE_SELECTED_EDGE_COLOR = "#EB0000";
 const BUNDLE_INCREASE_EDGE_WIDTH = 5;
 
@@ -118,43 +116,49 @@ export class HierarchicalEdgeBundling {
 
                     // Add selections to the cantons selection
                     const cantonsSelection = document.getElementById(CANTONS_SELECTION_ID);
-                    if (cantonsSelection) {
-                        // Fill the cantons selection with the cantons
-                        Object.keys(CANTON_COLORS).forEach(canton => {
-                            const option = document.createElement("option");
-                            if (DEFAULT_SELECTED_CANTONS.includes(canton)) {
-                                option.selected = true;
+                    if (cantonsSelection !== null) {
+                        // Generate custom options
+                        const cantonOptions = Object.keys(CANTON_COLORS).map((canton) => {
+                            const option = document.createElement('div');
+                            option.classList.add('custom-option');
+                            option.dataset.value = canton;
+                            option.textContent = canton;
+                            return option;
+                        });
+                        
+                        // Append custom options to the custom select
+                        const customSelect = document.getElementById('select_cantons');
+                        for (const option of cantonOptions) {
+                            customSelect.appendChild(option);
+                        }
+                        
+                        // Add click event listener for custom options
+                        customSelect.addEventListener('click', (event) => {
+                            const target = event.target;
+                            if (target.classList.contains('custom-option')) {
+                            // Toggle the "selected" class
+                            target.classList.toggle('selected');
+
+                            if (target.classList.contains('selected')) {
+                                target.style.backgroundColor = CANTON_COLORS[target.dataset.value];
+                            } else {
+                                target.style.backgroundColor = '';
                             }
-                            option.value = canton;
-                            option.text = canton;
-                            cantonsSelection.appendChild(option);
+                        
+                            // Get the selected options
+                            const selectedOptions = customSelect.querySelectorAll('.custom-option.selected');
+                            const selectedValues = Array.from(selectedOptions).map((option) => option.dataset.value);
+                        
+                            // Call your filter function
+                            this.filterByCantons(selectedValues, true);
+                            }
                         });
 
-                        // Set event listener for cantons selection
-                        cantonsSelection.addEventListener("change", () => {
-                            const cantons = (cantonsSelection as HTMLSelectElement).selectedOptions;
-                            const cantonsList = Array.from(cantons).map(canton => canton.value);
-                            this.filterByCantons(cantonsList, true);
-                            
-                            // Change the color of the selected option
-                            const selectedOption = cantonsSelection.options[cantonsSelection.selectedIndex];
-                            selectedOption.style.backgroundColor = CANTON_COLORS[selectedOption.value];
-                        });
                     }
 
                     this.nodes = nodes;
                     this.edges = edges;
-
-                    // Filter the selected edges and nodes by selected cantons
-                    if (cantonsSelection) {
-                        const cantons = (cantonsSelection as HTMLSelectElement).selectedOptions;
-                        const cantonsList = Array.from(cantons).map(canton => canton.value);
-
-                        this.filterByCantons(cantonsList, false)
-                    } else {
-                        this.selectedEdges = edges;
-                        this.selectedNodes = nodes;
-                    }
+                    this.filterByCantons([], false)
 
                     resolve();
                 });

@@ -129,12 +129,6 @@ footer {
   position: relative;
 }
 
-#hierarchy {
-  border: 1px solid black;
-  /* border-radius: 50%; */
-  overflow: hidden;
-}
-
 #circle_packing {
   border: 1px solid black;
   width: 800px; /* TODO: remove this */
@@ -147,6 +141,7 @@ footer {
   align-items: center; /* add align-items property with a value of center */
 }
 
+/* HIERARCHY */
 #hierarchy-container {
   display: flex; /* add display property with a value of flex */
   flex-direction: row; /* add flex-direction property with a value of row */
@@ -154,6 +149,12 @@ footer {
   width: auto;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+#hierarchy {
+  border: 1px solid black;
+  /* border-radius: 50%; */
+  overflow: hidden;
 }
 
 #select_cantons {
@@ -175,10 +176,25 @@ footer {
   outline: none;
 }
 
-select:active {
-  outline: none;
+.custom-select {
+  display: block;
+  position: relative;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 
+.custom-option {
+  display: block;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.custom-option.selected {
+  /* Add your selected styling here */
+}
+
+/* CIRCLE PACKING */
 #circle-packing-container {
   margin-top: 20px;
   margin-bottom: 20px;
