@@ -8,31 +8,6 @@
     <div id="chart"></div>
     <div id="buttons"></div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Define an array of cities
-      const transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
-      
-      console.log(transportTypes);
-      // create button for each type of transport
-      for (let i = 0; i < transportTypes.length; i++) {
-        const transportMethod = transportTypes[i];
-        const button = document.createElement("button");
-        button.setAttribute("type", "button");
-        button.innerHTML = transportMethod;
-        button.onclick = function() {
-          update(transportMethod);
-        };
-
-        document.getElementById("buttons").appendChild(button);
-      }
-
-      // function to update selected variable
-      function update(selectedVar) {
-        console.log(selectedVar);
-      }
-    });
-</script>
     <script type="module" src="./script.js"></script>
   </body>
 
