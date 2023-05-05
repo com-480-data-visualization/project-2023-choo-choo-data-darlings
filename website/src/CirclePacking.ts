@@ -78,13 +78,9 @@ export class CirclePacking {
             .style("fill-opacity", d => d.parent === root ? 1 : 0)
             .style("display", d => d.parent === root ? "inline" : "none")
             .text((d: any) => d.data.name);
-
         
-        console.log(root)
-
         const zoomTo = (v: any) => {
             const k = this.width / v[2];
-            console.log(v);
         
             view = v;
         

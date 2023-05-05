@@ -49,8 +49,10 @@ const CANTON_COLORS: { [x: string]: string } = {
     "JU": "#d53e8d"
 }
 
+const DEFAULT_SELECTED_CANTONS =['VD']
+
 const BUNDLE_SELECTED_EDGE_COLOR = "#EB0000";
-const BUNDLE_INCREASE_EDGE_WIDTH = 5;   
+const BUNDLE_INCREASE_EDGE_WIDTH = 5;
 
 export class HierarchicalEdgeBundling {
     private root!: any;
@@ -120,6 +122,9 @@ export class HierarchicalEdgeBundling {
                         // Fill the cantons selection with the cantons
                         Object.keys(CANTON_COLORS).forEach(canton => {
                             const option = document.createElement("option");
+                            if (DEFAULT_SELECTED_CANTONS.includes(canton)) {
+                                option.selected = true;
+                            }
                             option.value = canton;
                             option.text = canton;
                             cantonsSelection.appendChild(option);
@@ -130,14 +135,23 @@ export class HierarchicalEdgeBundling {
                             const cantons = (cantonsSelection as HTMLSelectElement).selectedOptions;
                             const cantonsList = Array.from(cantons).map(canton => canton.value);
                             
-                            this.filterByCantons(cantonsList);
+                            this.filterByCantons(cantonsList, true);
                         });
                     }
 
                     this.nodes = nodes;
                     this.edges = edges;
-                    this.selectedEdges = edges;
-                    this.selectedNodes = nodes;
+
+                    // Filter the selected edges and nodes by selected cantons
+                    if (cantonsSelection) {
+                        const cantons = (cantonsSelection as HTMLSelectElement).selectedOptions;
+                        const cantonsList = Array.from(cantons).map(canton => canton.value);
+
+                        this.filterByCantons(cantonsList, false)
+                    } else {
+                        this.selectedEdges = edges;
+                        this.selectedNodes = nodes;
+                    }
 
                     resolve();
                 });
@@ -350,7 +364,7 @@ export class HierarchicalEdgeBundling {
         }
     }
 
-    filterByCantons(cantons: string[]) {
+    filterByCantons(cantons: string[], initBundle = false) {
         // Filter nodes based on selected cantons
         this.selectedNodes = this.nodes.filter((node: any) => cantons.includes(node.canton));
     
@@ -362,7 +376,10 @@ export class HierarchicalEdgeBundling {
     
         // Remove the old bundle and create a new one
         d3.select("#hierarchy svg").remove();
-        this.initBundle();
+
+        if (initBundle) {
+            this.initBundle();
+        }
     }
 
     zoomed(event: any) {

@@ -85,10 +85,9 @@ body {
   width: 100%;
   height: 100%;
   background-color: black;
-  position: relative;
   top: 0;
   min-height: 100vh;
-  font-family: SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: "Segoe UI",Roboto;
   font-size: 10vh;
   
   color: aliceblue;
@@ -100,6 +99,7 @@ body {
 }
 
 #title {
+  font-weight: 600;
   background: -webkit-linear-gradient(0deg,#be22ff 20%,#ff279c 50%,#ff981f 80%);
   -webkit-background-clip: text;
   background-clip: text;
