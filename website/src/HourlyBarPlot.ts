@@ -4,23 +4,33 @@ import './style.css';
 
 const BAR_WIDTH = 15
 const SHIFTED_MINUTES = 20
-const MINUTES_INTERVAL = 30
+// const MINUTES_INTERVAL = 30
 const DATA_FOLDER = "../data/hourly_plot";
 
 const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
+const COLOR_MAP = {
+    "Train": "#00A59B",
+    "Bus": "#6F2282",
+    "Boat": "#E84E10",
+    "Metro": "#FCBB00",
+    "Tram": "#143A85",
+    "Rack Railway": "#00973B"
+};
+
 export class HourlyBarPlot {
-    private svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
+    private svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
     private data: any[] = data;
     private parseTime = d3.timeParse("%H:%M:%S");
-    private xScale: d3.ScaleTime<number, number>;
-    private yScale: d3.ScaleLinear<number, number>;
-    private startTime: Date;
-    private endTime: Date;
-    private line: d3.Line<any>;
-    private bars: d3.Selection<SVGRectElement, unknown, HTMLElement, any>;
+    private xScale!: d3.ScaleTime<number, number>;
+    private yScale!: d3.ScaleLinear<number, number>;
+    private startTime!: Date;
+    private endTime!: Date;
+    //private line!: d3.Line<any>;
+    private bars!: d3.Selection<(SVGRectElement|d3.BaseType), { departure_time: string; count: number; }, SVGGElement, unknown> | 
+                   d3.Selection<d3.BaseType, { departure_time: string; count: number; }, SVGGElement, unknown>;
     
     constructor() {
         // svg container
@@ -36,23 +46,7 @@ export class HourlyBarPlot {
         this.createLine();
         this.createBars();
         this.createAxes();
-        
-        // Define an array of cities
-        const transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
-
-        // create button for each type of transport
-        for (let i = 0; i < transportTypes.length; i++) {
-            const transportMethod = transportTypes[i];
-            const button = document.createElement("button");
-            button.setAttribute("type", "button");
-            button.setAttribute('id', transportMethod);
-            button.innerHTML = transportMethod;
-            button.onclick = function () {
-                this.updatePlot(transportMethod);
-            };
-
-            document.getElementById("buttons").appendChild(button);
-        }
+        this.addButtons();
     }
 
     private initializeData(): void {
@@ -62,31 +56,31 @@ export class HourlyBarPlot {
             d.departure_time.setYear(1970);
         });
         // Shift the start time to the next minute
-        const timeExtent = d3.extent(data, (d) => d.departure_time);
-        const startTime = new Date(timeExtent[0]);
-        startTime.setMinutes(startTime.getMinutes() - SHIFTED_MINUTES);
+        const timeExtent = d3.extent(data, (d) => d.departure_time) as string[];
+        this.startTime = new Date(timeExtent[0]);
+        this.startTime.setMinutes(this.startTime.getMinutes() - SHIFTED_MINUTES);
 
-        const endTime = new Date(timeExtent[1]);
-        endTime.setMinutes(endTime.getMinutes() + SHIFTED_MINUTES);
+        this.endTime = new Date(timeExtent[1]);
+        this.endTime.setMinutes(this.endTime.getMinutes() + SHIFTED_MINUTES);
         
         // the scales
         this.xScale = d3
             .scaleTime()
-            .domain([startTime, endTime])
+            .domain([this.startTime, this.endTime])
             .range([0, width]);
         
             this.yScale = d3
             .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.count)])
+            .domain([0, d3.max(data, (d) => d.count) as number])
             .nice()
             .range([height, 0]);
     }
 
     private createLine(): void {
         // Create the line generator function
-        this.line = d3
+        d3
             .line()
-            .x((d) => this.xScale(d.departure_time))
+            .x((d: { departure_time: number }) => this.xScale(d.departure_time))
             .y((d) => this.yScale(d.count));
     }
 
@@ -102,7 +96,7 @@ export class HourlyBarPlot {
             .attr("y", (d) => this.yScale(d.count))
             .attr("width", BAR_WIDTH)
             .attr("height", (d) => height - this.yScale(d.count))
-            .attr("fill", "steelblue");
+            .attr("fill", "#00A59B");
     }
 
     private createAxes(): void {
@@ -128,14 +122,14 @@ export class HourlyBarPlot {
             });
     
             // Update the xScale and yScale domain
-            const timeExtent = d3.extent(data, (d: any) => d.departure_time);
-            const startTime = new Date(timeExtent[0]);
-            startTime.setMinutes(startTime.getMinutes() - SHIFTED_MINUTES);
+            const timeExtent = d3.extent(data, (d: any) => d.departure_time) as string[];
+            this.startTime = new Date(timeExtent[0]);
+            this.startTime.setMinutes(this.startTime.getMinutes() - SHIFTED_MINUTES);
     
-            const endTime = new Date(timeExtent[1]);
-            endTime.setMinutes(endTime.getMinutes() + SHIFTED_MINUTES);
+            this.endTime = new Date(timeExtent[1]);
+            this.endTime.setMinutes(this.endTime.getMinutes() + SHIFTED_MINUTES);
     
-            this.xScale.domain([startTime, endTime]);
+            this.xScale.domain([this.startTime, this.endTime]);
             this.yScale.domain([0, d3.max(data, (d) => d.count)]).nice();
     
             // Update the bars
@@ -150,6 +144,7 @@ export class HourlyBarPlot {
                     .attr("width", BAR_WIDTH)
                     .attr("height", 0) // start with a height of 0
                     .attr("fill", "steelblue"),
+
                 update => update
                     .transition() // Start a transition
                     .duration(1000) // Make it last 1 second
@@ -157,7 +152,7 @@ export class HourlyBarPlot {
                     .attr("y", (d) => this.yScale(d.count))
                     .attr("width", BAR_WIDTH)
                     .attr("height", (d) => height - this.yScale(d.count))
-                    .attr("fill", transportMethod == "Train" ? "steelblue" : "red"),
+                    .attr("fill", COLOR_MAP[transportMethod]),
                 exit => exit
                     .transition() // Start a transition
                     .duration(1000) // Make it last 1 second
@@ -177,5 +172,24 @@ export class HourlyBarPlot {
                 .duration(1000)
                 .call(d3.axisLeft(this.yScale));
         });
+    }
+
+    private addButtons(): void {
+        // Define an array of cities
+        const transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
+
+        // create button for each type of transport
+        for (let i = 0; i < transportTypes.length; i++) {
+            const transportMethod = transportTypes[i];
+            const button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.setAttribute('id', transportMethod);
+            button.innerHTML = transportMethod;
+            button.onclick = () => {
+                this.updatePlot(transportMethod);
+            };
+
+            document.getElementById("buttons")!.appendChild(button);
+        }
     }
 }
