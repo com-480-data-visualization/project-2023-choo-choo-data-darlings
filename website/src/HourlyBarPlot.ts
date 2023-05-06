@@ -152,7 +152,13 @@ export class HourlyBarPlot {
                     .attr("y", (d) => this.yScale(d.count))
                     .attr("width", BAR_WIDTH)
                     .attr("height", (d) => height - this.yScale(d.count))
-                    .attr("fill", COLOR_MAP[transportMethod]),
+                    .attr("fill", COLOR_MAP[transportMethod])
+                    // Change the color of the button elements to be the color of the bars
+                    .each(function (d) {
+                        for (let button of document.getElementById("buttons")!.children) {
+                            button.setAttribute("style", `background-color: ${COLOR_MAP[transportMethod]}`);
+                        }
+                    }),
                 exit => exit
                     .transition() // Start a transition
                     .duration(1000) // Make it last 1 second
