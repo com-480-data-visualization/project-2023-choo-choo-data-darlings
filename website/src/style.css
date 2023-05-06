@@ -55,7 +55,9 @@ body {
 
 /* CSS for navigation bar */
 .navbar {
-  background-color: black;
+  background-color: #000000c7;
+  /* add blur */
+  backdrop-filter: blur(10px);
   overflow: hidden;
   position: fixed; /* Maybe later */
   top: 0;
@@ -65,7 +67,9 @@ body {
 }
 
 .navbar-scroll {
-  background-color: #EB0000; /* new background color after scrolling */
+  background-color: #eb0000c7; /* new background color after scrolling */
+    /* add blur */
+    backdrop-filter: blur(10px);
 }
 
 .navbar a {
@@ -139,6 +143,13 @@ footer {
 .container {
   display: flex; /* add display property with a value of flex */
   align-items: center; /* add align-items property with a value of center */
+}
+
+#bar-container {
+  /* Center element horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* HIERARCHY */
