@@ -1,7 +1,5 @@
 import * as d3 from "d3";
 import data from "../data/hourly_plot/df_train.json";
-import { CirclePacking } from './CirclePacking.ts';
-import { HierarchicalEdgeBundling } from './HierarchicalEdgeBundling.ts';
 import './style.css';
 
 const BAR_WIDTH = 15
@@ -13,7 +11,7 @@ const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
-class HourlyBarPlot {
+export class HourlyBarPlot {
     private svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
     private data: any[] = data;
     private parseTime = d3.timeParse("%H:%M:%S");
@@ -26,7 +24,7 @@ class HourlyBarPlot {
     
     constructor() {
         // svg container
-        const svg = d3
+        this.svg = d3
             .select("#chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -38,6 +36,23 @@ class HourlyBarPlot {
         this.createLine();
         this.createBars();
         this.createAxes();
+        
+        // Define an array of cities
+        const transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
+
+        // create button for each type of transport
+        for (let i = 0; i < transportTypes.length; i++) {
+            const transportMethod = transportTypes[i];
+            const button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.setAttribute('id', transportMethod);
+            button.innerHTML = transportMethod;
+            button.onclick = function () {
+                this.updatePlot(transportMethod);
+            };
+
+            document.getElementById("buttons").appendChild(button);
+        }
     }
 
     private initializeData(): void {
@@ -55,12 +70,12 @@ class HourlyBarPlot {
         endTime.setMinutes(endTime.getMinutes() + SHIFTED_MINUTES);
         
         // the scales
-        const xScale = d3
+        this.xScale = d3
             .scaleTime()
             .domain([startTime, endTime])
             .range([0, width]);
         
-        const yScale = d3
+            this.yScale = d3
             .scaleLinear()
             .domain([0, d3.max(data, (d) => d.count)])
             .nice()
@@ -69,7 +84,7 @@ class HourlyBarPlot {
 
     private createLine(): void {
         // Create the line generator function
-        const line = d3
+        this.line = d3
             .line()
             .x((d) => this.xScale(d.departure_time))
             .y((d) => this.yScale(d.count));
@@ -163,28 +178,4 @@ class HourlyBarPlot {
                 .call(d3.axisLeft(this.yScale));
         });
     }
-
-    private addButtons(): void {
-        // Define an array of cities
-        const transportTypes = ["Train", "Bus", "Boat", "Metro", "Tram", "Rack Railway"];
-
-        // create button for each type of transport
-        for (let i = 0; i < transportTypes.length; i++) {
-            const transportMethod = transportTypes[i];
-            const button = document.createElement("button");
-            button.setAttribute("type", "button");
-            button.setAttribute('id', transportMethod);
-            button.innerHTML = transportMethod;
-            button.onclick = function () {
-                this.updatePlot(transportMethod);
-            };
-
-            document.getElementById("buttons").appendChild(button);
-        }
-    }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    new HierarchicalEdgeBundling();
-    new CirclePacking();
-});
