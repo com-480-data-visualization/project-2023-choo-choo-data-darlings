@@ -164,9 +164,14 @@ footer {
   /* Hide scrollbar */
   overflow: hidden;
   border-width: 0;
+  
+  display: block;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 
-#select_cantons > option {
+#select_cantons > div {
   font-family: "Segoe UI",Roboto;
   font-size: 1.5vh;
   height: 30px;
@@ -174,14 +179,14 @@ footer {
   padding-right: 10px;
   text-align: center;
   outline: none;
+  border-radius: 15%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 600;
 }
 
-.custom-select {
-  display: block;
-  position: relative;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  padding: 5px;
+#select_cantons > div:hover {
+  background-color: #f1f1f1;
 }
 
 .custom-option {
