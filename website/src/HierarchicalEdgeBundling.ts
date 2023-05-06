@@ -403,8 +403,8 @@ export class HierarchicalEdgeBundling {
                     // This block handles the exit selection
                     return exit.transition()
                     .duration(TRANSITION_DURATION)
-                    .attr('transform', function (d: any) {
-                        const distance = 2000;
+                    .attr('transform', (d: any) => {
+                        const distance = this.radius + 1000;
                         return 'rotate(' + (d.x - 90) + ')translate(' + distance + ')';
                     })
                     .remove(); // Remove nodes after the transition
