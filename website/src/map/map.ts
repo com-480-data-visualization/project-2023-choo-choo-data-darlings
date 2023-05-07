@@ -15,10 +15,10 @@ const SELECT_TRAIN_COLOR_MODE_ID = 'select_train_color_mode';
 const SLIDER_SIMULATION_SPEED_ID = 'slider_simulation_speed';
 const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider_simulation_speed_label';
 
-const MAP_PATH = 'data/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
-const TRAINS_FOLDER_PATH = 'data/train_trips_bins/';
-const HEATMAP_PATH = 'data/density_heatmap.png';
-const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = 'data/density_heatmap_';
+const MAP_PATH = '../../data/map/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
+const TRAINS_FOLDER_PATH = '../../data/map/train_trips_bins/';
+const HEATMAP_PATH = '../../data/map/density_heatmap.png';
+const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = '../../data/map/density_heatmap_';
 const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder_line';

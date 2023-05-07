@@ -2,7 +2,7 @@
 import * as d3 from 'd3';
 import { zoom } from 'd3';
 
-const NETWORK_PATH = 'src/network/data/networks/transports/web_data/';
+const NETWORK_PATH = 'data/network/networks/transports/web_data/';
 const EDGES_PATH = NETWORK_PATH + 'network_edges.csv';
 const NODES_PATH = NETWORK_PATH + 'network_nodes.csv';
 
