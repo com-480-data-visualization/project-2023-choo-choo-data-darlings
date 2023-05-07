@@ -113,16 +113,27 @@ body {
 
 /* CSS for footer */
 footer {
-  background-color: #333;
+  background-color: #000000;
   color: white;
+  font-size: 1rem;
+  line-height: 2.5;
   text-align: center;
   width: 100%;
-  height: 20vh;
+  height: 50vh;
   margin-top: auto;
   /* Align children vertically */;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.github-link {
+  color: white;
+}
+
+.github-link:hover {
+  color: #EB0000;
+  transition: all 0.2s ease-in-out;
 }
 
 .container {
@@ -145,17 +156,17 @@ footer {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  width: 75%;
+  width: 85%;
 }
 
 .text-container-reverse {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 75%;
+  width: 85%;
 }
 
-@media screen and (max-width: 2000px) {
+@media screen and (max-width: 1900px) {
   .text-container, .text-container-reverse {
     flex-direction: column;
     margin-top: 10vh;
