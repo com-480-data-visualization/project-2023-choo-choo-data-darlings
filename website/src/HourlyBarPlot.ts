@@ -1,6 +1,6 @@
 //@ts-nocheck
 import * as d3 from "d3";
-import data from "../data/hourly_plot/df_train.json";
+import data from "/data/hourly_plot/df_train.json";
 import './style.css';
 
 const BAR_WIDTH = 15
