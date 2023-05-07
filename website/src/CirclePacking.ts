@@ -1,7 +1,7 @@
 //@ts-nocheck
 import * as d3 from 'd3';
 
-const PACKING_DATA_PATH = '../data/circle_packing_data.json';
+const PACKING_DATA_PATH = 'data/circle_packing_data.json';
 
 const PACKING_ELEMENT_ID = "circle_packing";
 
