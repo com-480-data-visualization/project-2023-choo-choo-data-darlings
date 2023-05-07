@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Beautiful Choo Choo Website 🚂</title>
+    <script type="module" crossorigin src="/assets/main-845b1e88.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-3cfb730f.js">
+    <link rel="modulepreload" crossorigin href="/assets/transform-21680f05.js">
+    <link rel="modulepreload" crossorigin href="/assets/csv-26976831.js">
+    <link rel="stylesheet" href="/assets/index-e7d0fd35.css">
+  </head>
+  <body>
+    <!--<div class="banner"></div>-->
+    <div class="navbar">
+      <a href="./index.html">Home</a>
+      <a href="./src/map/map.html">Map</a>
+      <a href="./src/network/network.html">Network</a>
+    </div>
+
+    <div id="welcome">
+      <span id="title">The Swiss Transportation System</span>
+    </div>
+
+    <div class="container">
+      <div id="bar-container">
+        <div id="bar-description">The plot below shows the number of each transport type for each 30 mintues periode.</div>
+        <div id="buttons"></div>
+        <div id="chart"></div>      
+      </div>
+      
+      <div id="hierarchy-container">
+        <div id="hierarchy">
+        </div>
+        <div class="custom-select" id="select_cantons"></div>
+      </div>
+      
+      <div id="circle-packing-container">
+        <div id="circle_packing"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2023 My Beautiful Choo Choo Website 🚂</p>
+      <div id="maintainers">
+        Website published on the <span id="current_date" itemprop="date">6th of May 2023</span> and maintained by
+        <a class="github-link" href="https://github.com/dvculha" target="_blank">Dafne Culha</a>, 
+        <a class="github-link" href="https://github.com/ozan-guven" target="_blank">Ozan Güven</a> and 
+        <a class="github-link" href="https://github.com/ArnaudPoletto" target="_blank">Arnaud Poletto</a>
+        <br>
+        <br>
+        <a class="github-link no-decoration" href="https://github.com/com-480-data-visualization/project-2023-choo-choo-data-darlings/tree/master" target="_blank">Take a look at the project's <i class="bi bi-github"></i> GitHub repository!</a>
+      </div>
+    </footer>
+    
+
+    
+    <script>
+      window.addEventListener('scroll', function() {
+        var navbar = document.querySelector('.navbar');
+        var scrollPosition = window.scrollY;
+        
+        // Get the height of the welcome div
+        var welcomeHeight = document.getElementById("welcome").offsetHeight;
+
+        if (scrollPosition > welcomeHeight) {
+          navbar.classList.add('navbar-scroll');
+        } else {
+          navbar.classList.remove('navbar-scroll');
+        }
+      });
+    </script>
+  </body>
+</html>
