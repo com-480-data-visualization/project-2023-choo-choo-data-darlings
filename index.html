@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Beautiful Choo Choo Website 🚂</title>
-    <script type="module" crossorigin src="./assets/main-7dd7b691.js"></script>
+    <script type="module" crossorigin src="./assets/main-d43f1656.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-3cfb730f.js">
     <link rel="modulepreload" crossorigin href="./assets/transform-21680f05.js">
     <link rel="modulepreload" crossorigin href="./assets/csv-26976831.js">
-    <link rel="stylesheet" href="./assets/index-e7d0fd35.css">
+    <link rel="stylesheet" href="./assets/index-35719fe7.css">
   </head>
   <body>
     <!--<div class="banner"></div>-->
@@ -23,27 +23,41 @@
     </div>
 
     <div class="container">
-      <div id="bar-container">
-        <div id="bar-description">The plot below shows the number of each transport type for each 30 mintues periode.</div>
-        <div id="buttons"></div>
-        <div id="chart"></div>      
-      </div>
-      
-      <div id="hierarchy-container">
-        <div id="hierarchy">
+      <div id="bar-container" class="text-container">
+        <div id="bar-description" class="description">
+          This histogram shows the distribution of different transport types used throughout the day, divided into 30-minute intervals. Users can interact with the graph by selecting the transport type they want to visualize using the buttons provided. The available transport types include Train, Bus, Boat, Metro, Tram, and Rack Railway. The height of each bar represents the frequency of that transport type during the specified time interval. This visualization allows you to compare the usage patterns of different transport types and identify peak usage times.
         </div>
-        <div class="custom-select" id="select_cantons"></div>
+        <div id="bar-container-plot">
+          <div id="buttons"></div>
+          <div id="chart"></div>   
+        </div>
+   
       </div>
       
-      <div id="circle-packing-container">
-        <div id="circle_packing"></div>
+      <div id="hierarchy-container" class="text-container">
+        <div id="hierarchy-desciption" class="description">
+          This visualization displays a Hierarchical Edge Bundling of all the train stops in Switzerland, organized by canton. Users can select one or multiple cantons to display on the graph, allowing for easy comparison of train stop connections between different regions. The thickness of each edge represents the number of passengers traveling between the two stops, while the color indicates the average travel time between stops. This interactive visualization provides a comprehensive overview of Switzerland's train transportation network and highlights the connections between different regions.
+        </div>
+        <div id="hierarchy-container-plot">
+          <div id="hierarchy"></div>
+          <div class="custom-select" id="select_cantons"></div>
+        </div>
+      </div>
+      
+      <div id="circle-packing-container" class="text-container">
+        <div id="circle-packing-description" class="description">
+          This Circle Packing plot displays the different transport types that exist in Switzerland and the lines that belong to each type. The size of each circle represents the number of entries on that line. Users can interact with the graph by clicking on one of the circles to focus on it and see the individual stops and connections for that line. This visualization provides an intuitive and informative overview of Switzerland's transportation system, allowing users to easily explore and understand the different transport types and lines available.
+        </div>
+        <div id="circle-packing-plot">
+          <div id="circle_packing"></div>
+        </div>
       </div>
     </div>
 
     <footer>
       <p>© 2023 My Beautiful Choo Choo Website 🚂</p>
       <div id="maintainers">
-        Website published on the <span id="current_date" itemprop="date">6th of May 2023</span> and maintained by
+        Website published on the <span id="current_date" itemprop="date">7th of May 2023</span> and maintained by
         <a class="github-link" href="https://github.com/dvculha" target="_blank">Dafne Culha</a>, 
         <a class="github-link" href="https://github.com/ozan-guven" target="_blank">Ozan Güven</a> and 
         <a class="github-link" href="https://github.com/ArnaudPoletto" target="_blank">Arnaud Poletto</a>
