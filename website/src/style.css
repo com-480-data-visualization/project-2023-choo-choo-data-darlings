@@ -64,6 +64,7 @@ body {
   width:100%;
   z-index: 9999;
   transition: background-color 0.5s ease; /* add a transition for the background-color property */
+  font-size: 2vh;
 }
 
 .navbar-scroll {
@@ -147,6 +148,20 @@ footer {
   width: 75%;
 }
 
+.text-container-reverse {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 75%;
+}
+
+@media screen and (max-width: 2000px) {
+  .text-container, .text-container-reverse {
+    flex-direction: column;
+    margin-top: 10vh;
+  }
+}
+
 .description {
   /* Make the text bigger */
   font-size: 2vh;
@@ -168,10 +183,6 @@ footer {
 }
 
 /* HIERARCHY */
-#hierarchy-container {
-  flex-direction: row;
-}
-
 #hierarchy-container-plot {
   display: flex; /* add display property with a value of flex */
   flex-direction: row; /* add flex-direction property with a value of row */
