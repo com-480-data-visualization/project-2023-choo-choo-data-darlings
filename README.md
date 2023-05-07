@@ -171,6 +171,8 @@ Defne uses the same dataset in the COM-490: Large Scale Data Science course. We 
 
 The milestone document can be found [here](./docs/milestone2.pdf).
 
+The current version of the website can be found [here](https://com-480-data-visualization.github.io/project-2023-choo-choo-data-darlings/).
+
 ## **Milestone 3**
 
 **(4th June, 5pm) | 80% of the final grade**
