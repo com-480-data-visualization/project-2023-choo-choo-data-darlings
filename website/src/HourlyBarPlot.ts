@@ -1,12 +1,11 @@
 //@ts-nocheck
 import * as d3 from "d3";
-import data from "/data/hourly_plot/df_train.json";
 import './style.css';
 
 const BAR_WIDTH = 15
 const SHIFTED_MINUTES = 20
 // const MINUTES_INTERVAL = 30
-const DATA_FOLDER = "../data/hourly_plot";
+const DATA_FOLDER = "data/hourly_plot";
 
 const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 960 - margin.left - margin.right;
@@ -21,9 +20,11 @@ const COLOR_MAP = {
     "Rack Railway": "#00973B"
 };
 
+const DEFAULT_TRANSPORT_METHOD = "Train";
+
 export class HourlyBarPlot {
     private svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
-    private data: any[] = data;
+    private data!: any[];
     private parseTime = d3.timeParse("%H:%M:%S");
     private xScale!: d3.ScaleTime<number, number>;
     private yScale!: d3.ScaleLinear<number, number>;
@@ -34,7 +35,11 @@ export class HourlyBarPlot {
                    d3.Selection<d3.BaseType, { departure_time: string; count: number; }, SVGGElement, unknown>;
     
     constructor() {
-        // svg container
+        this.initStaticElements();
+        this.initPlot()
+    }
+
+    private initStaticElements(): void {
         this.svg = d3
             .select("#chart")
             .append("svg")
@@ -42,22 +47,26 @@ export class HourlyBarPlot {
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
-        this.data = data;
-        this.initializeData();
-        this.createLine();
-        this.createBars();
-        this.createAxes();
-        this.addButtons();
     }
 
-    private initializeData(): void {
+    private async loadData(transportMethod: string): Promise<void> {
+        const data_path = `${DATA_FOLDER}/df_${transportMethod.toLowerCase().replace(' ', '_')}.json`;
+
+        return new Promise((resolve, reject) => {
+            d3.json(data_path).then((data: any) => {
+                resolve(data);
+            });
+        });
+    }
+
+    private initData(): void {
         // Parse the time for each data point
         this.data.forEach(d => {
             d.departure_time = this.parseTime(d.departure_time);
             d.departure_time.setYear(1970);
         });
         // Shift the start time to the next minute
-        const timeExtent = d3.extent(data, (d) => d.departure_time) as string[];
+        const timeExtent = d3.extent(this.data, (d) => d.departure_time) as string[];
         this.startTime = new Date(timeExtent[0]);
         this.startTime.setMinutes(this.startTime.getMinutes() - SHIFTED_MINUTES);
 
@@ -70,9 +79,9 @@ export class HourlyBarPlot {
             .domain([this.startTime, this.endTime])
             .range([0, width]);
         
-            this.yScale = d3
+        this.yScale = d3
             .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.count) as number])
+            .domain([0, d3.max(this.data, (d) => d.count) as number])
             .nice()
             .range([height, 0]);
     }
@@ -89,7 +98,7 @@ export class HourlyBarPlot {
         // Create the bar generator function
         this.bars = this.svg
             .selectAll(".bar")
-            .data(data)
+            .data(this.data)
             .enter()
             .append("rect")
             .attr("class", "bar")
@@ -112,72 +121,73 @@ export class HourlyBarPlot {
             .attr("class", "y axis")
             .call(d3.axisLeft(this.yScale));
     }
-    
-    private updatePlot(transportMethod: string): void {
-        const data_path = `${DATA_FOLDER}/df_${transportMethod.toLowerCase().replace(' ', '_')}.json`;
-        d3.json(data_path).then((data: any) => {
-            // Parse the time for each data point
-            data.forEach((d: any) => {
-                d.departure_time = this.parseTime(d.departure_time);
-                d.departure_time.setYear(1970);
-            });
-    
-            // Update the xScale and yScale domain
-            const timeExtent = d3.extent(data, (d: any) => d.departure_time) as string[];
-            this.startTime = new Date(timeExtent[0]);
-            this.startTime.setMinutes(this.startTime.getMinutes() - SHIFTED_MINUTES);
-    
-            this.endTime = new Date(timeExtent[1]);
-            this.endTime.setMinutes(this.endTime.getMinutes() + SHIFTED_MINUTES);
-    
-            this.xScale.domain([this.startTime, this.endTime]);
-            this.yScale.domain([0, d3.max(data, (d) => d.count)]).nice();
-    
-            // Update the bars
-            this.bars = this.svg.selectAll(".bar")
-                .data(data);
-    
-            this.bars.join(
-                enter => enter.append("rect")
-                    .attr("class", "bar")
-                    .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
-                    .attr("y", this.yScale(0)) // start from the bottom of the chart
-                    .attr("width", BAR_WIDTH)
-                    .attr("height", 0) // start with a height of 0
-                    .attr("fill", "steelblue"),
 
-                update => update
-                    .transition() // Start a transition
-                    .duration(1000) // Make it last 1 second
-                    .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
-                    .attr("y", (d) => this.yScale(d.count))
-                    .attr("width", BAR_WIDTH)
-                    .attr("height", (d) => height - this.yScale(d.count))
-                    .attr("fill", COLOR_MAP[transportMethod])
-                    // Change the color of the button elements to be the color of the bars
-                    .each(function (d) {
-                        for (let button of document.getElementById("buttons")!.children) {
-                            button.setAttribute("style", `background-color: ${COLOR_MAP[transportMethod]}`);
-                        }
-                    }),
-                exit => exit
-                    .transition() // Start a transition
-                    .duration(1000) // Make it last 1 second
-                    .attr("y", this.yScale(0)) // Move to the bottom of the chart
-                    .attr("height", 0) // End with a height of 0
-                    .remove() // After the transition, remove the bar
-            );
+    private initPlot(): void {
+        this.loadData(DEFAULT_TRANSPORT_METHOD).then((data: any) => {
+            this.data = data;
+
+            this.initData();
+            this.createLine();
+            this.createBars();
+            this.createAxes();
+            this.addButtons();
+        });
+    }
     
-            // Update the axes
-            this.svg.select(".x.axis")
-                .transition()
-                .duration(1000)
-                .call(d3.axisBottom(this.xScale).tickFormat(d3.timeFormat("%H:%M")));
-    
-                this.svg.select(".y.axis")
-                .transition()
-                .duration(1000)
-                .call(d3.axisLeft(this.yScale));
+    private async updatePlot(transportMethod: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.loadData(transportMethod).then((data: any) => {
+                this.data = data
+
+                // Parse data and update scales
+                this.initData()
+        
+                // Update the bars
+                this.bars = this.svg.selectAll(".bar")
+                    .data(this.data);
+        
+                this.bars.join(
+                    enter => enter.append("rect")
+                        .attr("class", "bar")
+                        .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
+                        .attr("y", this.yScale(0)) // start from the bottom of the chart
+                        .attr("width", BAR_WIDTH)
+                        .attr("height", 0) // start with a height of 0
+                        .attr("fill", "steelblue"),
+
+                    update => update
+                        .transition() // Start a transition
+                        .duration(1000) // Make it last 1 second
+                        .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
+                        .attr("y", (d) => this.yScale(d.count))
+                        .attr("width", BAR_WIDTH)
+                        .attr("height", (d) => height - this.yScale(d.count))
+                        .attr("fill", COLOR_MAP[transportMethod])
+                        // Change the color of the button elements to be the color of the bars
+                        .each(function (d) {
+                            for (let button of document.getElementById("buttons")!.children) {
+                                button.setAttribute("style", `background-color: ${COLOR_MAP[transportMethod]}`);
+                            }
+                        }),
+                    exit => exit
+                        .transition() // Start a transition
+                        .duration(1000) // Make it last 1 second
+                        .attr("y", this.yScale(0)) // Move to the bottom of the chart
+                        .attr("height", 0) // End with a height of 0
+                        .remove() // After the transition, remove the bar
+                );
+        
+                // Update the axes
+                this.svg.select(".x.axis")
+                    .transition()
+                    .duration(1000)
+                    .call(d3.axisBottom(this.xScale).tickFormat(d3.timeFormat("%H:%M")));
+        
+                    this.svg.select(".y.axis")
+                    .transition()
+                    .duration(1000)
+                    .call(d3.axisLeft(this.yScale));
+            });
         });
     }
 
