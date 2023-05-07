@@ -140,7 +140,27 @@ footer {
   overflow: hidden;
 }
 
-#bar-container {
+.text-container {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 75%;
+}
+
+.description {
+  /* Make the text bigger */
+  font-size: 2vh;
+  /* Justify */
+  text-align: justify;
+  padding: 5vh;
+  border: black 1px solid;
+  border-radius: 6px;
+  background-color: #F6F6F6;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+#bar-container-plot {
   /* Center element horizontally */
   display: flex;
   flex-direction: column;
@@ -149,6 +169,10 @@ footer {
 
 /* HIERARCHY */
 #hierarchy-container {
+  flex-direction: row;
+}
+
+#hierarchy-container-plot {
   display: flex; /* add display property with a value of flex */
   flex-direction: row; /* add flex-direction property with a value of row */
   align-items: center; /* add align-items property with a value of center */
@@ -201,12 +225,8 @@ footer {
   cursor: pointer;
 }
 
-.custom-option.selected {
-  /* Add your selected styling here */
-}
-
 /* CIRCLE PACKING */
-#circle-packing-container {
+#circle-packing-plot {
   margin-top: 20px;
   margin-bottom: 20px;
 }
