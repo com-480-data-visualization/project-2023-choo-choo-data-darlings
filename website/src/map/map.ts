@@ -312,7 +312,7 @@ class Map {
 
       // Rename slider label
       const sliderSimulationFpsLabel = document.getElementById(SLIDER_SIMULATION_SPEED_LABEL_ID) as HTMLElement;
-      sliderSimulationFpsLabel.innerHTML = `simulation FPS`;
+      sliderSimulationFpsLabel.innerHTML = `speed`;
     });
   }
 
