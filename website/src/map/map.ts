@@ -928,5 +928,5 @@ render(): void {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const map = new Map();
+  new Map();
 });

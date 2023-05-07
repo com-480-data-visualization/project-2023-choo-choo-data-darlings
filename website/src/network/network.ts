@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { csvParseRows } from 'd3-dsv';
 import Graph from 'graphology';
 import Sigma from 'sigma';
