@@ -1,0 +1,3014 @@
+{
+    "trips": [
+        {
+            "trip_id": "85:11:10147:002_1",
+            "segments": [
+                {
+                    "line_text": "IC5",
+                    "start_time": 179,
+                    "start_longitude": 6.935704611937108,
+                    "start_latitude": 46.99672269454795,
+                    "start_departure_delay": 118.55555555555556,
+                    "end_time": 198,
+                    "end_longitude": 7.242907887690253,
+                    "end_latitude": 47.1329015361192,
+                    "end_arrival_delay": 193.40740740740742
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:1547:001_2",
+            "segments": [
+                {
+                    "line_text": "IC5",
+                    "start_time": 179,
+                    "start_longitude": 6.935704611937108,
+                    "start_latitude": 46.99672269454795,
+                    "start_departure_delay": 202.86516853932585,
+                    "end_time": 198,
+                    "end_longitude": 7.242907887690253,
+                    "end_latitude": 47.1329015361192,
+                    "end_arrival_delay": 252.61797752808988
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:1547:002_1",
+            "segments": [
+                {
+                    "line_text": "IC5",
+                    "start_time": 176,
+                    "start_longitude": 6.935704611937108,
+                    "start_latitude": 46.99672269454795,
+                    "start_departure_delay": 181.125,
+                    "end_time": 195,
+                    "end_longitude": 7.242907887690253,
+                    "end_latitude": 47.1329015361192,
+                    "end_arrival_delay": 226.29166666666666
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:17295:001_1",
+            "segments": [
+                {
+                    "line_text": "S1",
+                    "start_time": 190,
+                    "start_longitude": 7.833867008549063,
+                    "start_latitude": 47.56185919768527,
+                    "start_departure_delay": 92.78571428571429,
+                    "end_time": 195,
+                    "end_longitude": 7.909625845556597,
+                    "end_latitude": 47.54762701890874,
+                    "end_arrival_delay": 91.71428571428571
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 195,
+                    "start_longitude": 7.909625845556597,
+                    "start_latitude": 47.54762701890874,
+                    "start_departure_delay": 116.03571428571429,
+                    "end_time": 198,
+                    "end_longitude": 7.948848843048043,
+                    "end_latitude": 47.54160610221364,
+                    "end_arrival_delay": 121.89285714285714
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:17390:001_2",
+            "segments": [
+                {
+                    "line_text": "S3",
+                    "start_time": 187,
+                    "start_longitude": 7.50262978493657,
+                    "start_latitude": 47.419347809126464,
+                    "start_departure_delay": 105.33673469387755,
+                    "end_time": 202,
+                    "end_longitude": 7.350066531153902,
+                    "end_latitude": 47.36201014820157,
+                    "end_arrival_delay": -0.7920792079207921
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:17394:001_2",
+            "segments": [
+                {
+                    "line_text": "S3",
+                    "start_time": 193,
+                    "start_longitude": 7.719104354838887,
+                    "start_latitude": 47.50146649836559,
+                    "start_departure_delay": 180.828125,
+                    "end_time": 197,
+                    "end_longitude": 7.690815225546511,
+                    "end_latitude": 47.52266706229526,
+                    "end_arrival_delay": 121.921875
+                },
+                {
+                    "line_text": "S3",
+                    "start_time": 197,
+                    "start_longitude": 7.690815225546511,
+                    "start_latitude": 47.52266706229526,
+                    "start_departure_delay": 148.5625,
+                    "end_time": 200,
+                    "end_longitude": 7.647891924872419,
+                    "end_latitude": 47.53358984933807,
+                    "end_arrival_delay": 152.0546875
+                },
+                {
+                    "line_text": "S3",
+                    "start_time": 200,
+                    "start_longitude": 7.647891924872419,
+                    "start_latitude": 47.53358984933807,
+                    "start_departure_delay": 171.0703125,
+                    "end_time": 207,
+                    "end_longitude": 7.589564242496508,
+                    "end_latitude": 47.54741361808408,
+                    "end_arrival_delay": 87.109375
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:1743:001_2",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 188,
+                    "start_longitude": 7.002048561122457,
+                    "start_latitude": 46.21637302023192,
+                    "start_departure_delay": 141.88372093023256,
+                    "end_time": 199,
+                    "end_longitude": 7.079121952521753,
+                    "end_latitude": 46.10582779087419,
+                    "end_arrival_delay": 131.91472868217053
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 199,
+                    "start_longitude": 7.079121952521753,
+                    "start_latitude": 46.10582779087419,
+                    "start_departure_delay": 151.96899224806202,
+                    "end_time": 214,
+                    "end_longitude": 7.359191316135047,
+                    "end_latitude": 46.227554847517474,
+                    "end_arrival_delay": 64.36434108527132
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:1841:010_2",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 0,
+                    "start_longitude": 7.895547715768579,
+                    "start_latitude": 46.31513580761721,
+                    "start_departure_delay": null,
+                    "end_time": 212,
+                    "end_longitude": 6.111984969160354,
+                    "end_latitude": 46.23253882419198,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 191,
+                    "start_longitude": 7.644932690823741,
+                    "start_latitude": 46.311577988412836,
+                    "start_departure_delay": 80.4322033898305,
+                    "end_time": 202,
+                    "end_longitude": 7.881470622592632,
+                    "end_latitude": 46.294025301081675,
+                    "end_arrival_delay": 52.46610169491525
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 202,
+                    "start_longitude": 7.881470622592632,
+                    "start_latitude": 46.294025301081675,
+                    "start_departure_delay": 69.97457627118644,
+                    "end_time": 212,
+                    "end_longitude": 7.988091065828439,
+                    "end_latitude": 46.319421500153425,
+                    "end_arrival_delay": 23.466101694915253
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:18444:002_1",
+            "segments": [
+                {
+                    "line_text": "RE",
+                    "start_time": 194,
+                    "start_longitude": 6.336407466690338,
+                    "start_latitude": 46.46274514089697,
+                    "start_departure_delay": 61.107142857142854,
+                    "end_time": 200,
+                    "end_longitude": 6.269137293199062,
+                    "end_latitude": 46.41998483461488,
+                    "end_arrival_delay": 38.607142857142854
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 200,
+                    "start_longitude": 6.269137293199062,
+                    "start_latitude": 46.41998483461488,
+                    "start_departure_delay": 33.857142857142854,
+                    "end_time": 204,
+                    "end_longitude": 6.235960568180539,
+                    "end_latitude": 46.384415372733,
+                    "end_arrival_delay": 67.75
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 204,
+                    "start_longitude": 6.235960568180539,
+                    "start_latitude": 46.384415372733,
+                    "start_departure_delay": 61.214285714285715,
+                    "end_time": 210,
+                    "end_longitude": 6.187832030432901,
+                    "end_latitude": 46.317389582631435,
+                    "end_arrival_delay": 65.39285714285714
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:18447:001_1",
+            "segments": [
+                {
+                    "line_text": "RE",
+                    "start_time": 190,
+                    "start_longitude": 6.111984969160354,
+                    "start_latitude": 46.23253882419198,
+                    "start_departure_delay": 25.3,
+                    "end_time": 197,
+                    "end_longitude": 6.142452283532262,
+                    "end_latitude": 46.21021174607366,
+                    "end_arrival_delay": -34.166666666666664
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 197,
+                    "start_longitude": 6.142452283532262,
+                    "start_latitude": 46.21021174607366,
+                    "start_departure_delay": 41.86666666666667,
+                    "end_time": 209,
+                    "end_longitude": 6.187832030432901,
+                    "end_latitude": 46.317389582631435,
+                    "end_arrival_delay": 31.733333333333334
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 209,
+                    "start_longitude": 6.187832030432901,
+                    "start_latitude": 46.317389582631435,
+                    "start_departure_delay": 37.06666666666667,
+                    "end_time": 215,
+                    "end_longitude": 6.235960568180539,
+                    "end_latitude": 46.384415372733,
+                    "end_arrival_delay": 58.5
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:18594:001_2",
+            "segments": [
+                {
+                    "line_text": "S5",
+                    "start_time": 191,
+                    "start_longitude": 8.457378068554553,
+                    "start_latitude": 47.24407231576586,
+                    "start_departure_delay": 86.90163934426229,
+                    "end_time": 195,
+                    "end_longitude": 8.46673463438161,
+                    "end_latitude": 47.22026837169559,
+                    "end_arrival_delay": 7.147540983606557
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 195,
+                    "start_longitude": 8.46673463438161,
+                    "start_latitude": 47.22026837169559,
+                    "start_departure_delay": 40.18852459016394,
+                    "end_time": 198,
+                    "end_longitude": 8.478435017354917,
+                    "end_latitude": 47.194580234749864,
+                    "end_arrival_delay": 25.942622950819672
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 198,
+                    "start_longitude": 8.478435017354917,
+                    "start_latitude": 47.194580234749864,
+                    "start_departure_delay": 46.19827586206897,
+                    "end_time": 199,
+                    "end_longitude": 8.479703252053488,
+                    "end_latitude": 47.18786712218312,
+                    "end_arrival_delay": 55.810344827586206
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 199,
+                    "start_longitude": 8.479703252053488,
+                    "start_latitude": 47.18786712218312,
+                    "start_departure_delay": 95.13793103448276,
+                    "end_time": 204,
+                    "end_longitude": 8.515046198408028,
+                    "end_latitude": 47.173706836164214,
+                    "end_arrival_delay": 38.310344827586206
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:18893:001_2",
+            "segments": [
+                {
+                    "line_text": "S8",
+                    "start_time": 192,
+                    "start_longitude": 8.938775803332522,
+                    "start_latitude": 47.176393172191986,
+                    "start_departure_delay": 116.96946564885496,
+                    "end_time": 195,
+                    "end_longitude": 8.982327889832003,
+                    "end_latitude": 47.17269525035803,
+                    "end_arrival_delay": 96.76335877862596
+                },
+                {
+                    "line_text": "S8",
+                    "start_time": 195,
+                    "start_longitude": 8.982327889832003,
+                    "start_latitude": 47.17269525035803,
+                    "start_departure_delay": 113.45801526717557,
+                    "end_time": 198,
+                    "end_longitude": 9.029912680985486,
+                    "end_latitude": 47.15219130391733,
+                    "end_arrival_delay": 125.61068702290076
+                },
+                {
+                    "line_text": "S8",
+                    "start_time": 198,
+                    "start_longitude": 9.029912680985486,
+                    "start_latitude": 47.15219130391733,
+                    "start_departure_delay": 148.0229007633588,
+                    "end_time": 204,
+                    "end_longitude": 9.060049849789618,
+                    "end_latitude": 47.13615196969602,
+                    "end_arrival_delay": -7.343511450381679
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:1995:001_2",
+            "segments": [
+                {
+                    "line_text": "IR36",
+                    "start_time": 187,
+                    "start_longitude": 8.307705500455548,
+                    "start_latitude": 47.47642061770726,
+                    "start_departure_delay": 125.55555555555556,
+                    "end_time": 204,
+                    "end_longitude": 8.54021816561537,
+                    "end_latitude": 47.378176816650104,
+                    "end_arrival_delay": 97.0
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:21188:001_2",
+            "segments": [
+                {
+                    "line_text": "S1",
+                    "start_time": 193,
+                    "start_longitude": 8.450100100954188,
+                    "start_latitude": 47.17360334169353,
+                    "start_departure_delay": 82.45535714285714,
+                    "end_time": 195,
+                    "end_longitude": 8.457509937967767,
+                    "end_latitude": 47.17824262620502,
+                    "end_arrival_delay": 32.5
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 195,
+                    "start_longitude": 8.457509937967767,
+                    "start_latitude": 47.17824262620502,
+                    "start_departure_delay": 49.294642857142854,
+                    "end_time": 196,
+                    "end_longitude": 8.471467036768136,
+                    "end_latitude": 47.18228314383375,
+                    "end_arrival_delay": 76.58035714285714
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 196,
+                    "start_longitude": 8.471467036768136,
+                    "start_latitude": 47.18228314383375,
+                    "start_departure_delay": 88.96428571428571,
+                    "end_time": 198,
+                    "end_longitude": 8.48663978251602,
+                    "end_latitude": 47.180238936051445,
+                    "end_arrival_delay": 54.00892857142857
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 198,
+                    "start_longitude": 8.48663978251602,
+                    "start_latitude": 47.180238936051445,
+                    "start_departure_delay": 67.84821428571429,
+                    "end_time": 200,
+                    "end_longitude": 8.507236881004177,
+                    "end_latitude": 47.17372564584601,
+                    "end_arrival_delay": 51.107142857142854
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 200,
+                    "start_longitude": 8.507236881004177,
+                    "start_latitude": 47.17372564584601,
+                    "start_departure_delay": 69.07142857142857,
+                    "end_time": 202,
+                    "end_longitude": 8.515046198408028,
+                    "end_latitude": 47.173706836164214,
+                    "end_arrival_delay": 41.357142857142854
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:21190:001_2",
+            "segments": [
+                {
+                    "line_text": "S1",
+                    "start_time": 192,
+                    "start_longitude": 8.114235398719833,
+                    "start_latitude": 47.15524098103328,
+                    "start_departure_delay": 205.9609375,
+                    "end_time": 195,
+                    "end_longitude": 8.138600831785524,
+                    "end_latitude": 47.13881412360329,
+                    "end_arrival_delay": 165.0859375
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 195,
+                    "start_longitude": 8.138600831785524,
+                    "start_latitude": 47.13881412360329,
+                    "start_departure_delay": 181.2109375,
+                    "end_time": 199,
+                    "end_longitude": 8.195980049527932,
+                    "end_latitude": 47.1160524944514,
+                    "end_arrival_delay": 166.25
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 199,
+                    "start_longitude": 8.195980049527932,
+                    "start_latitude": 47.1160524944514,
+                    "start_departure_delay": 213.48387096774192,
+                    "end_time": 203,
+                    "end_longitude": 8.247558719613387,
+                    "end_latitude": 47.08918283915539,
+                    "end_arrival_delay": 210.91129032258064
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 203,
+                    "start_longitude": 8.247558719613387,
+                    "start_latitude": 47.08918283915539,
+                    "start_departure_delay": 228.88709677419354,
+                    "end_time": 206,
+                    "end_longitude": 8.273189433565188,
+                    "end_latitude": 47.090906604906934,
+                    "end_arrival_delay": 201.48387096774192
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 206,
+                    "start_longitude": 8.273189433565188,
+                    "start_latitude": 47.090906604906934,
+                    "start_departure_delay": 226.83064516129033,
+                    "end_time": 209,
+                    "end_longitude": 8.276825336186782,
+                    "end_latitude": 47.07831350122971,
+                    "end_arrival_delay": 186.7741935483871
+                },
+                {
+                    "line_text": "S1",
+                    "start_time": 209,
+                    "start_longitude": 8.276825336186782,
+                    "start_latitude": 47.07831350122971,
+                    "start_departure_delay": 217.01612903225808,
+                    "end_time": 211,
+                    "end_longitude": 8.282563699067973,
+                    "end_latitude": 47.07059835451232,
+                    "end_arrival_delay": 183.80645161290323
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:21394:001_2",
+            "segments": [
+                {
+                    "line_text": "S3",
+                    "start_time": 193,
+                    "start_longitude": 8.607448085649661,
+                    "start_latitude": 47.0476726549938,
+                    "start_departure_delay": 128.86486486486487,
+                    "end_time": 199,
+                    "end_longitude": 8.549448929550472,
+                    "end_latitude": 47.04904916701635,
+                    "end_arrival_delay": 61.445945945945944
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:21395:001_2",
+            "segments": [
+                {
+                    "line_text": "S3",
+                    "start_time": 189,
+                    "start_longitude": 8.549448929550472,
+                    "start_latitude": 47.04904916701635,
+                    "start_departure_delay": 69.30555555555556,
+                    "end_time": 195,
+                    "end_longitude": 8.607448085649661,
+                    "end_latitude": 47.0476726549938,
+                    "end_arrival_delay": 50.66216216216216
+                },
+                {
+                    "line_text": "S3",
+                    "start_time": 195,
+                    "start_longitude": 8.607448085649661,
+                    "start_latitude": 47.0476726549938,
+                    "start_departure_delay": 77.26351351351352,
+                    "end_time": 198,
+                    "end_longitude": 8.632152099171101,
+                    "end_latitude": 47.026394650082175,
+                    "end_arrival_delay": 92.23611111111111
+                },
+                {
+                    "line_text": "S3",
+                    "start_time": 198,
+                    "start_longitude": 8.632152099171101,
+                    "start_latitude": 47.026394650082175,
+                    "start_departure_delay": 87.23611111111111,
+                    "end_time": 201,
+                    "end_longitude": 8.610073938534796,
+                    "end_latitude": 46.99917515488892,
+                    "end_arrival_delay": 146.07638888888889
+                },
+                {
+                    "line_text": "S3",
+                    "start_time": 201,
+                    "start_longitude": 8.610073938534796,
+                    "start_latitude": 46.99917515488892,
+                    "start_departure_delay": 113.13194444444444,
+                    "end_time": 206,
+                    "end_longitude": 8.620743300881829,
+                    "end_latitude": 46.94925396260413,
+                    "end_arrival_delay": 147.60416666666666
+                },
+                {
+                    "line_text": "S3",
+                    "start_time": 206,
+                    "start_longitude": 8.620743300881829,
+                    "start_latitude": 46.94925396260413,
+                    "start_departure_delay": 163.19444444444446,
+                    "end_time": 211,
+                    "end_longitude": 8.624305645874317,
+                    "end_latitude": 46.90172600517025,
+                    "end_arrival_delay": 127.38194444444444
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:2292:001_1",
+            "segments": [
+                {
+                    "line_text": "IR37",
+                    "start_time": 188,
+                    "start_longitude": 8.54021816561537,
+                    "start_latitude": 47.378176816650104,
+                    "start_departure_delay": 305.8421052631579,
+                    "end_time": 208,
+                    "end_longitude": 8.170391726104635,
+                    "end_latitude": 47.39120282096891,
+                    "end_arrival_delay": 303.7894736842105
+                },
+                {
+                    "line_text": "IR37",
+                    "start_time": 208,
+                    "start_longitude": 8.170391726104635,
+                    "start_latitude": 47.39120282096891,
+                    "start_departure_delay": 335.6842105263158,
+                    "end_time": 215,
+                    "end_longitude": 8.05127950260217,
+                    "end_latitude": 47.391355687851835,
+                    "end_arrival_delay": 323.63157894736844
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:23193:001_2",
+            "segments": [
+                {
+                    "line_text": "SL4",
+                    "start_time": 193,
+                    "start_longitude": 6.161306876049483,
+                    "start_latitude": 46.26376883955579,
+                    "start_departure_delay": 17.1231884057971,
+                    "end_time": 196,
+                    "end_longitude": 6.1657455841189,
+                    "end_latitude": 46.27972531246831,
+                    "end_arrival_delay": 14.057971014492754
+                },
+                {
+                    "line_text": "SL4",
+                    "start_time": 193,
+                    "start_longitude": 6.161306876049483,
+                    "start_latitude": 46.26376883955579,
+                    "start_departure_delay": 17.1231884057971,
+                    "end_time": 196,
+                    "end_longitude": 6.1657455841189,
+                    "end_latitude": 46.27972531246831,
+                    "end_arrival_delay": 14.057971014492754
+                },
+                {
+                    "line_text": "SL4",
+                    "start_time": 196,
+                    "start_longitude": 6.1657455841189,
+                    "start_latitude": 46.27972531246831,
+                    "start_departure_delay": 45.76086956521739,
+                    "end_time": 197,
+                    "end_longitude": 6.162776260731567,
+                    "end_latitude": 46.28681730051132,
+                    "end_arrival_delay": 61.92028985507246
+                },
+                {
+                    "line_text": "SL4",
+                    "start_time": 196,
+                    "start_longitude": 6.1657455841189,
+                    "start_latitude": 46.27972531246831,
+                    "start_departure_delay": 45.76086956521739,
+                    "end_time": 197,
+                    "end_longitude": 6.162776260731567,
+                    "end_latitude": 46.28681730051132,
+                    "end_arrival_delay": 61.92028985507246
+                },
+                {
+                    "line_text": "SL4",
+                    "start_time": 197,
+                    "start_longitude": 6.162776260731567,
+                    "start_latitude": 46.28681730051132,
+                    "start_departure_delay": 94.05072463768116,
+                    "end_time": 201,
+                    "end_longitude": 6.1676551414343335,
+                    "end_latitude": 46.29848716898609,
+                    "end_arrival_delay": -47.80434782608695
+                },
+                {
+                    "line_text": "SL4",
+                    "start_time": 201,
+                    "start_longitude": 6.1676551414343335,
+                    "start_latitude": 46.29848716898609,
+                    "start_departure_delay": 10.833333333333334,
+                    "end_time": 203,
+                    "end_longitude": 6.181124071242204,
+                    "end_latitude": 46.30764362067793,
+                    "end_arrival_delay": 48.210144927536234
+                },
+                {
+                    "line_text": "SL4",
+                    "start_time": 203,
+                    "start_longitude": 6.181124071242204,
+                    "start_latitude": 46.30764362067793,
+                    "start_departure_delay": 76.83333333333333,
+                    "end_time": 206,
+                    "end_longitude": 6.187832030432901,
+                    "end_latitude": 46.317389582631435,
+                    "end_arrival_delay": -13.31159420289855
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:23194:001_2",
+            "segments": [
+                {
+                    "line_text": "SL4",
+                    "start_time": 193,
+                    "start_longitude": 6.1535045690321715,
+                    "start_latitude": 46.19219160253754,
+                    "start_departure_delay": 69.40579710144928,
+                    "end_time": 196,
+                    "end_longitude": 6.1665668515632905,
+                    "end_latitude": 46.2014444130072,
+                    "end_arrival_delay": -9.630434782608695
+                },
+                {
+                    "line_text": "SL4",
+                    "start_time": 196,
+                    "start_longitude": 6.1665668515632905,
+                    "start_latitude": 46.2014444130072,
+                    "start_departure_delay": 26.39669421487603,
+                    "end_time": 199,
+                    "end_longitude": 6.197333558738808,
+                    "end_latitude": 46.19659602255452,
+                    "end_arrival_delay": 57.752066115702476
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:2344:001_1",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 185,
+                    "start_longitude": 8.09789072616364,
+                    "start_latitude": 47.17079832411152,
+                    "start_departure_delay": 186.38095238095238,
+                    "end_time": 199,
+                    "end_longitude": 7.94312334691482,
+                    "end_latitude": 47.28805412964396,
+                    "end_arrival_delay": 245.47619047619048
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 199,
+                    "start_longitude": 7.94312334691482,
+                    "start_latitude": 47.28805412964396,
+                    "start_departure_delay": 298.1904761904762,
+                    "end_time": 208,
+                    "end_longitude": 7.907700889253149,
+                    "end_latitude": 47.351938963651975,
+                    "end_arrival_delay": 186.47368421052633
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 208,
+                    "start_longitude": 7.907700889253149,
+                    "start_latitude": 47.351938963651975,
+                    "start_departure_delay": 181.73684210526315,
+                    "end_time": 233,
+                    "end_longitude": 7.731367472881549,
+                    "end_latitude": 47.484464580882864,
+                    "end_arrival_delay": 207.89473684210526
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:2349:001_1",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 189,
+                    "start_longitude": 7.731367472881549,
+                    "start_latitude": 47.484464580882864,
+                    "start_departure_delay": 142.7,
+                    "end_time": 195,
+                    "end_longitude": 7.8120311184582585,
+                    "end_latitude": 47.46275509478395,
+                    "end_arrival_delay": 163.2
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 195,
+                    "start_longitude": 7.8120311184582585,
+                    "start_latitude": 47.46275509478395,
+                    "start_departure_delay": 165.35,
+                    "end_time": 208,
+                    "end_longitude": 7.907700889253149,
+                    "end_latitude": 47.351938963651975,
+                    "end_arrival_delay": 125.61111111111111
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 208,
+                    "start_longitude": 7.907700889253149,
+                    "start_latitude": 47.351938963651975,
+                    "start_departure_delay": 231.27777777777777,
+                    "end_time": 223,
+                    "end_longitude": 7.94312334691482,
+                    "end_latitude": 47.28805412964396,
+                    "end_arrival_delay": 248.38888888888889
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:24004:002_1",
+            "segments": [
+                {
+                    "line_text": "SN",
+                    "start_time": 192,
+                    "start_longitude": 6.837877056163423,
+                    "start_latitude": 46.54276185780841,
+                    "start_departure_delay": 203.76190476190476,
+                    "end_time": 196,
+                    "end_longitude": 6.785647490032651,
+                    "end_latitude": 46.50839676115052,
+                    "end_arrival_delay": 239.14285714285714
+                },
+                {
+                    "line_text": "SN",
+                    "start_time": 196,
+                    "start_longitude": 6.785647490032651,
+                    "start_latitude": 46.50839676115052,
+                    "start_departure_delay": 254.42857142857142,
+                    "end_time": 199,
+                    "end_longitude": 6.765685607736667,
+                    "end_latitude": 46.49384156543216,
+                    "end_arrival_delay": 211.33333333333334
+                },
+                {
+                    "line_text": "SN",
+                    "start_time": 199,
+                    "start_longitude": 6.765685607736667,
+                    "start_latitude": 46.49384156543216,
+                    "start_departure_delay": 228.95238095238096,
+                    "end_time": 202,
+                    "end_longitude": 6.722646574991454,
+                    "end_latitude": 46.49695140224059,
+                    "end_arrival_delay": 240.9047619047619
+                },
+                {
+                    "line_text": "SN",
+                    "start_time": 202,
+                    "start_longitude": 6.722646574991454,
+                    "start_latitude": 46.49695140224059,
+                    "start_departure_delay": 263.85714285714283,
+                    "end_time": 205,
+                    "end_longitude": 6.699323529467779,
+                    "end_latitude": 46.50974696958683,
+                    "end_arrival_delay": 228.1904761904762
+                },
+                {
+                    "line_text": "SN",
+                    "start_time": 205,
+                    "start_longitude": 6.699323529467779,
+                    "start_latitude": 46.50974696958683,
+                    "start_departure_delay": 241.52380952380952,
+                    "end_time": 207,
+                    "end_longitude": 6.678325019744914,
+                    "end_latitude": 46.51308060275005,
+                    "end_arrival_delay": 231.38095238095238
+                },
+                {
+                    "line_text": "SN",
+                    "start_time": 207,
+                    "start_longitude": 6.678325019744914,
+                    "start_latitude": 46.51308060275005,
+                    "start_departure_delay": 253.66666666666666,
+                    "end_time": 210,
+                    "end_longitude": 6.657987464321825,
+                    "end_latitude": 46.51467868372711,
+                    "end_arrival_delay": 172.04761904761904
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:24197:001_2",
+            "segments": [
+                {
+                    "line_text": "S1",
+                    "start_time": 190,
+                    "start_longitude": 6.602628885254736,
+                    "start_latitude": 46.52668982155703,
+                    "start_departure_delay": 146.4625850340136,
+                    "end_time": 195,
+                    "end_longitude": 6.6290924759666545,
+                    "end_latitude": 46.516788130312484,
+                    "end_arrival_delay": 42.5578231292517
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:24298:001_2",
+            "segments": [
+                {
+                    "line_text": "S2",
+                    "start_time": 190,
+                    "start_longitude": 6.3990210018770295,
+                    "start_latitude": 46.720029547026755,
+                    "start_departure_delay": 194.0097087378641,
+                    "end_time": 195,
+                    "end_longitude": 6.370563942680324,
+                    "end_latitude": 46.71240726203435,
+                    "end_arrival_delay": 115.59223300970874
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:24298:002_1",
+            "segments": [
+                {
+                    "line_text": "S2",
+                    "start_time": 188,
+                    "start_longitude": 6.474730720193588,
+                    "start_latitude": 46.71505489200857,
+                    "start_departure_delay": 185.8125,
+                    "end_time": 196,
+                    "end_longitude": 6.3990210018770295,
+                    "end_latitude": 46.720029547026755,
+                    "end_arrival_delay": 85.46875
+                },
+                {
+                    "line_text": "S2",
+                    "start_time": 196,
+                    "start_longitude": 6.3990210018770295,
+                    "start_latitude": 46.720029547026755,
+                    "start_departure_delay": 126.90625,
+                    "end_time": 201,
+                    "end_longitude": 6.370563942680324,
+                    "end_latitude": 46.71240726203435,
+                    "end_arrival_delay": 49.3125
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:24403:001_2",
+            "segments": [
+                {
+                    "line_text": "S4",
+                    "start_time": 188,
+                    "start_longitude": 6.578938168575626,
+                    "start_latitude": 46.53703826915346,
+                    "start_departure_delay": 53.1554054054054,
+                    "end_time": 198,
+                    "end_longitude": 6.6290924759666545,
+                    "end_latitude": 46.516788130312484,
+                    "end_arrival_delay": -30.425675675675677
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:24595:001_1",
+            "segments": [
+                {
+                    "line_text": "S5",
+                    "start_time": 190,
+                    "start_longitude": 6.927049120678952,
+                    "start_latitude": 46.35869507787621,
+                    "start_departure_delay": 207.92592592592592,
+                    "end_time": 196,
+                    "end_longitude": 6.963679488658281,
+                    "end_latitude": 46.31685360378053,
+                    "end_arrival_delay": 66.29629629629629
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 196,
+                    "start_longitude": 6.963679488658281,
+                    "start_latitude": 46.31685360378053,
+                    "start_departure_delay": 130.11111111111111,
+                    "end_time": 201,
+                    "end_longitude": 7.000663992250179,
+                    "end_latitude": 46.25146903021923,
+                    "end_arrival_delay": 119.44444444444444
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 201,
+                    "start_longitude": 7.000663992250179,
+                    "start_latitude": 46.25146903021923,
+                    "start_departure_delay": 148.03703703703704,
+                    "end_time": 205,
+                    "end_longitude": 7.002048561122457,
+                    "end_latitude": 46.21637302023192,
+                    "end_arrival_delay": 147.33333333333334
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:24595:003_2",
+            "segments": [
+                {
+                    "line_text": "S5",
+                    "start_time": 194,
+                    "start_longitude": 6.877128064403065,
+                    "start_latitude": 46.44788593018615,
+                    "start_departure_delay": 292.3137254901961,
+                    "end_time": 197,
+                    "end_longitude": 6.8957773689173765,
+                    "end_latitude": 46.44274130030077,
+                    "end_arrival_delay": 203.2549019607843
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 197,
+                    "start_longitude": 6.8957773689173765,
+                    "start_latitude": 46.44274130030077,
+                    "start_departure_delay": 225.97058823529412,
+                    "end_time": 200,
+                    "end_longitude": 6.910445148106244,
+                    "end_latitude": 46.43588389679344,
+                    "end_arrival_delay": 149.18627450980392
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 200,
+                    "start_longitude": 6.910445148106244,
+                    "start_latitude": 46.43588389679344,
+                    "start_departure_delay": 184.3921568627451,
+                    "end_time": 201,
+                    "end_longitude": 6.922701600395166,
+                    "end_latitude": 46.42637787085177,
+                    "end_arrival_delay": 226.80392156862746
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 201,
+                    "start_longitude": 6.922701600395166,
+                    "start_latitude": 46.42637787085177,
+                    "start_departure_delay": 249.5392156862745,
+                    "end_time": 203,
+                    "end_longitude": 6.927857867285898,
+                    "end_latitude": 46.41762134463365,
+                    "end_arrival_delay": 214.37254901960785
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 203,
+                    "start_longitude": 6.927857867285898,
+                    "start_latitude": 46.41762134463365,
+                    "start_departure_delay": 233.2549019607843,
+                    "end_time": 206,
+                    "end_longitude": 6.926999235399795,
+                    "end_latitude": 46.39837541107741,
+                    "end_arrival_delay": 186.7156862745098
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 206,
+                    "start_longitude": 6.926999235399795,
+                    "start_latitude": 46.39837541107741,
+                    "start_departure_delay": 199.37234042553192,
+                    "end_time": 209,
+                    "end_longitude": 6.927049120678952,
+                    "end_latitude": 46.35869507787621,
+                    "end_arrival_delay": 233.2659574468085
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 209,
+                    "start_longitude": 6.927049120678952,
+                    "start_latitude": 46.35869507787621,
+                    "start_departure_delay": 251.96808510638297,
+                    "end_time": 215,
+                    "end_longitude": 6.963679488658281,
+                    "end_latitude": 46.31685360378053,
+                    "end_arrival_delay": 108.64893617021276
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:2502:003_1",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 185,
+                    "start_longitude": 6.837877056163423,
+                    "start_latitude": 46.54276185780841,
+                    "start_departure_delay": 135.03571428571428,
+                    "end_time": 202,
+                    "end_longitude": 6.6290924759666545,
+                    "end_latitude": 46.516788130312484,
+                    "end_arrival_delay": 92.32142857142857
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25149:001_2",
+            "segments": [
+                {
+                    "line_text": "S10",
+                    "start_time": 189,
+                    "start_longitude": 8.928584095579582,
+                    "start_latitude": 46.0942725870879,
+                    "start_departure_delay": 284.5586206896552,
+                    "end_time": 197,
+                    "end_longitude": 8.93032415671136,
+                    "end_latitude": 46.056686450183626,
+                    "end_arrival_delay": 82.23448275862069
+                },
+                {
+                    "line_text": "S10",
+                    "start_time": 197,
+                    "start_longitude": 8.93032415671136,
+                    "start_latitude": 46.056686450183626,
+                    "start_departure_delay": 152.91034482758621,
+                    "end_time": 199,
+                    "end_longitude": 8.932121730086601,
+                    "end_latitude": 46.03972102498262,
+                    "end_arrival_delay": 145.49655172413793
+                },
+                {
+                    "line_text": "S10",
+                    "start_time": 199,
+                    "start_longitude": 8.932121730086601,
+                    "start_latitude": 46.03972102498262,
+                    "start_departure_delay": 175.50344827586207,
+                    "end_time": 205,
+                    "end_longitude": 8.946990064034518,
+                    "end_latitude": 46.00550466890416,
+                    "end_arrival_delay": 75.17241379310344
+                },
+                {
+                    "line_text": "S10",
+                    "start_time": 205,
+                    "start_longitude": 8.946990064034518,
+                    "start_latitude": 46.00550466890416,
+                    "start_departure_delay": 107.9448275862069,
+                    "end_time": 209,
+                    "end_longitude": 8.946893546711667,
+                    "end_latitude": 45.98937411932314,
+                    "end_arrival_delay": 82.52413793103449
+                },
+                {
+                    "line_text": "S10",
+                    "start_time": 209,
+                    "start_longitude": 8.946893546711667,
+                    "start_latitude": 45.98937411932314,
+                    "start_departure_delay": 109.02758620689656,
+                    "end_time": 213,
+                    "end_longitude": 8.948364839279902,
+                    "end_latitude": 45.95571422700591,
+                    "end_arrival_delay": 101.86896551724138
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25540:001_2",
+            "segments": [
+                {
+                    "line_text": "RE80",
+                    "start_time": 185,
+                    "start_longitude": 8.946990064034518,
+                    "start_latitude": 46.00550466890416,
+                    "start_departure_delay": 45.8780487804878,
+                    "end_time": 197,
+                    "end_longitude": 8.969521327611012,
+                    "end_latitude": 46.15905339852975,
+                    "end_arrival_delay": 37.52439024390244
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 197,
+                    "start_longitude": 8.969521327611012,
+                    "start_latitude": 46.15905339852975,
+                    "start_departure_delay": 47.13414634146341,
+                    "end_time": 200,
+                    "end_longitude": 8.941700690269439,
+                    "end_latitude": 46.152616374997656,
+                    "end_arrival_delay": 2.8181818181818183
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 200,
+                    "start_longitude": 8.941700690269439,
+                    "start_latitude": 46.152616374997656,
+                    "start_departure_delay": 52.03125,
+                    "end_time": 204,
+                    "end_longitude": 8.886403523082814,
+                    "end_latitude": 46.17533718699452,
+                    "end_arrival_delay": 42.18518518518518
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 204,
+                    "start_longitude": 8.886403523082814,
+                    "start_latitude": 46.17533718699452,
+                    "start_departure_delay": 71.35802469135803,
+                    "end_time": 206,
+                    "end_longitude": 8.86577845335717,
+                    "end_latitude": 46.17903663529563,
+                    "end_arrival_delay": 53.96296296296296
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 206,
+                    "start_longitude": 8.86577845335717,
+                    "start_latitude": 46.17903663529563,
+                    "start_departure_delay": 85.74074074074075,
+                    "end_time": 209,
+                    "end_longitude": 8.85022128416874,
+                    "end_latitude": 46.1774687525479,
+                    "end_arrival_delay": 11.88888888888889
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 209,
+                    "start_longitude": 8.85022128416874,
+                    "start_latitude": 46.1774687525479,
+                    "start_departure_delay": 24.271604938271604,
+                    "end_time": 215,
+                    "end_longitude": 8.80135821219125,
+                    "end_latitude": 46.17241889931451,
+                    "end_arrival_delay": 15.506172839506172
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25540:002_1",
+            "segments": [
+                {
+                    "line_text": "RE80",
+                    "start_time": 140,
+                    "start_longitude": 8.941700690269439,
+                    "start_latitude": 46.152616374997656,
+                    "start_departure_delay": null,
+                    "end_time": 204,
+                    "end_longitude": 8.886403523082814,
+                    "end_latitude": 46.17533718699452,
+                    "end_arrival_delay": 111.92592592592592
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 204,
+                    "start_longitude": 8.886403523082814,
+                    "start_latitude": 46.17533718699452,
+                    "start_departure_delay": 133.5185185185185,
+                    "end_time": 206,
+                    "end_longitude": 8.86577845335717,
+                    "end_latitude": 46.17903663529563,
+                    "end_arrival_delay": 118.55555555555556
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 206,
+                    "start_longitude": 8.86577845335717,
+                    "start_latitude": 46.17903663529563,
+                    "start_departure_delay": 154.96296296296296,
+                    "end_time": 209,
+                    "end_longitude": 8.85022128416874,
+                    "end_latitude": 46.1774687525479,
+                    "end_arrival_delay": 93.96296296296296
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25540:002_2",
+            "segments": [
+                {
+                    "line_text": "RE80",
+                    "start_time": 185,
+                    "start_longitude": 8.946990064034518,
+                    "start_latitude": 46.00550466890416,
+                    "start_departure_delay": 68.58461538461539,
+                    "end_time": 197,
+                    "end_longitude": 8.969521327611012,
+                    "end_latitude": 46.15905339852975,
+                    "end_arrival_delay": 62.76923076923077
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 197,
+                    "start_longitude": 8.969521327611012,
+                    "start_latitude": 46.15905339852975,
+                    "start_departure_delay": 76.70769230769231,
+                    "end_time": 200,
+                    "end_longitude": 8.941700690269439,
+                    "end_latitude": 46.152616374997656,
+                    "end_arrival_delay": 83.16216216216216
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25545:002_2",
+            "segments": [
+                {
+                    "line_text": "RE80",
+                    "start_time": 193,
+                    "start_longitude": 8.983092872146596,
+                    "start_latitude": 45.87721963937963,
+                    "start_departure_delay": 131.23170731707316,
+                    "end_time": 196,
+                    "end_longitude": 8.978614204175924,
+                    "end_latitude": 45.86911182890554,
+                    "end_arrival_delay": 42.36585365853659
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 196,
+                    "start_longitude": 8.978614204175924,
+                    "start_latitude": 45.86911182890554,
+                    "start_departure_delay": 86.79729729729729,
+                    "end_time": 200,
+                    "end_longitude": 9.005034006849174,
+                    "end_latitude": 45.84674844406138,
+                    "end_arrival_delay": 122.82432432432432
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 200,
+                    "start_longitude": 9.005034006849174,
+                    "start_latitude": 45.84674844406138,
+                    "start_departure_delay": 142.71621621621622,
+                    "end_time": 205,
+                    "end_longitude": 9.031452673583285,
+                    "end_latitude": 45.832170123509705,
+                    "end_arrival_delay": 41.027027027027025
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25545:003_2",
+            "segments": [
+                {
+                    "line_text": "RE80",
+                    "start_time": 193,
+                    "start_longitude": 8.983092872146596,
+                    "start_latitude": 45.87721963937963,
+                    "start_departure_delay": 117.12307692307692,
+                    "end_time": 196,
+                    "end_longitude": 8.978614204175924,
+                    "end_latitude": 45.86911182890554,
+                    "end_arrival_delay": 27.892307692307693
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 196,
+                    "start_longitude": 8.978614204175924,
+                    "start_latitude": 45.86911182890554,
+                    "start_departure_delay": 76.09836065573771,
+                    "end_time": 200,
+                    "end_longitude": 9.005034006849174,
+                    "end_latitude": 45.84674844406138,
+                    "end_arrival_delay": 105.90163934426229
+                },
+                {
+                    "line_text": "RE80",
+                    "start_time": 200,
+                    "start_longitude": 9.005034006849174,
+                    "start_latitude": 45.84674844406138,
+                    "start_departure_delay": 121.42622950819673,
+                    "end_time": 205,
+                    "end_longitude": 9.031452673583285,
+                    "end_latitude": 45.832170123509705,
+                    "end_arrival_delay": 10.655737704918034
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25697:001_2",
+            "segments": [
+                {
+                    "line_text": "S20",
+                    "start_time": 190,
+                    "start_longitude": 8.85022128416874,
+                    "start_latitude": 46.1774687525479,
+                    "start_departure_delay": 184.8181818181818,
+                    "end_time": 195,
+                    "end_longitude": 8.80135821219125,
+                    "end_latitude": 46.17241889931451,
+                    "end_arrival_delay": 172.3939393939394
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25697:003_1",
+            "segments": [
+                {
+                    "line_text": "S20",
+                    "start_time": 190,
+                    "start_longitude": 8.85022128416874,
+                    "start_latitude": 46.1774687525479,
+                    "start_departure_delay": 280.9583333333333,
+                    "end_time": 195,
+                    "end_longitude": 8.80135821219125,
+                    "end_latitude": 46.17241889931451,
+                    "end_arrival_delay": 278.6041666666667
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25698:002_1",
+            "segments": [
+                {
+                    "line_text": "S20",
+                    "start_time": 191,
+                    "start_longitude": 9.02952116527376,
+                    "start_latitude": 46.19542813786041,
+                    "start_departure_delay": null,
+                    "end_time": 230,
+                    "end_longitude": 8.85022128416874,
+                    "end_latitude": 46.1774687525479,
+                    "end_arrival_delay": null
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:25792:001_2",
+            "segments": [
+                {
+                    "line_text": "S10",
+                    "start_time": 190,
+                    "start_longitude": 8.925280968709645,
+                    "start_latitude": 46.12397986101876,
+                    "start_departure_delay": 232.28571428571428,
+                    "end_time": 202,
+                    "end_longitude": 9.00359609011685,
+                    "end_latitude": 46.17380968286655,
+                    "end_arrival_delay": 100.91596638655462
+                },
+                {
+                    "line_text": "S10",
+                    "start_time": 202,
+                    "start_longitude": 9.00359609011685,
+                    "start_latitude": 46.17380968286655,
+                    "start_departure_delay": 171.00840336134453,
+                    "end_time": 206,
+                    "end_longitude": 9.02952116527376,
+                    "end_latitude": 46.19542813786041,
+                    "end_arrival_delay": 150.78151260504202
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:30299:001_1",
+            "segments": [
+                {
+                    "line_text": "RE",
+                    "start_time": 195,
+                    "start_longitude": 7.209309181628528,
+                    "start_latitude": 47.335209746636956,
+                    "start_departure_delay": 85.46428571428571,
+                    "end_time": 198,
+                    "end_longitude": 7.246839709943813,
+                    "end_latitude": 47.33669069751842,
+                    "end_arrival_delay": 33.25
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 198,
+                    "start_longitude": 7.246839709943813,
+                    "start_latitude": 47.33669069751842,
+                    "start_departure_delay": 59.32142857142857,
+                    "end_time": 200,
+                    "end_longitude": 7.291168665706287,
+                    "end_latitude": 47.33508330896988,
+                    "end_arrival_delay": 104.89285714285714
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 200,
+                    "start_longitude": 7.291168665706287,
+                    "start_latitude": 47.33508330896988,
+                    "start_departure_delay": 135.39285714285714,
+                    "end_time": 204,
+                    "end_longitude": 7.3179433043498445,
+                    "end_latitude": 47.34283182439331,
+                    "end_arrival_delay": 20.214285714285715
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 204,
+                    "start_longitude": 7.3179433043498445,
+                    "start_latitude": 47.34283182439331,
+                    "start_departure_delay": 47.92857142857143,
+                    "end_time": 208,
+                    "end_longitude": 7.350066531153902,
+                    "end_latitude": 47.36201014820157,
+                    "end_arrival_delay": 10.107142857142858
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:3190:002_1",
+            "segments": [
+                {
+                    "line_text": "IR37",
+                    "start_time": 181,
+                    "start_longitude": 7.731367472881549,
+                    "start_latitude": 47.484464580882864,
+                    "start_departure_delay": 207.64102564102564,
+                    "end_time": 198,
+                    "end_longitude": 7.589564242496508,
+                    "end_latitude": 47.54741361808408,
+                    "end_arrival_delay": 9.076923076923077
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:3293:001_2",
+            "segments": [
+                {
+                    "line_text": "IR13",
+                    "start_time": 190,
+                    "start_longitude": 9.130997692150611,
+                    "start_latitude": 47.436442302792734,
+                    "start_departure_delay": 204.89430894308944,
+                    "end_time": 195,
+                    "end_longitude": 9.189792143058654,
+                    "end_latitude": 47.41518991420115,
+                    "end_arrival_delay": 167.260162601626
+                },
+                {
+                    "line_text": "IR13",
+                    "start_time": 195,
+                    "start_longitude": 9.189792143058654,
+                    "start_latitude": 47.41518991420115,
+                    "start_departure_delay": 220.6991869918699,
+                    "end_time": 200,
+                    "end_longitude": 9.253045362790289,
+                    "end_latitude": 47.41182994391352,
+                    "end_arrival_delay": 159.1382113821138
+                },
+                {
+                    "line_text": "IR13",
+                    "start_time": 200,
+                    "start_longitude": 9.253045362790289,
+                    "start_latitude": 47.41182994391352,
+                    "start_departure_delay": 211.609756097561,
+                    "end_time": 208,
+                    "end_longitude": 9.369903098414591,
+                    "end_latitude": 47.42317912125387,
+                    "end_arrival_delay": 141.15447154471545
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:3590:001_1",
+            "segments": [
+                {
+                    "line_text": "RE",
+                    "start_time": 187,
+                    "start_longitude": 6.843449481428688,
+                    "start_latitude": 46.46299791785406,
+                    "start_departure_delay": 168.29166666666666,
+                    "end_time": 203,
+                    "end_longitude": 6.6290924759666545,
+                    "end_latitude": 46.516788130312484,
+                    "end_arrival_delay": 160.5185185185185
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:4148:001_1",
+            "segments": [
+                {
+                    "line_text": "RE",
+                    "start_time": 201,
+                    "start_longitude": 7.242907887690253,
+                    "start_latitude": 47.1329015361192,
+                    "start_departure_delay": 159.8,
+                    "end_time": 209,
+                    "end_longitude": 7.389620934549874,
+                    "end_latitude": 47.191695984390705,
+                    "end_arrival_delay": 219.93333333333334
+                },
+                {
+                    "line_text": "RE",
+                    "start_time": 209,
+                    "start_longitude": 7.389620934549874,
+                    "start_latitude": 47.191695984390705,
+                    "start_departure_delay": 199.66666666666666,
+                    "end_time": 217,
+                    "end_longitude": 7.381038900192213,
+                    "end_latitude": 47.28067564482378,
+                    "end_arrival_delay": 186.43333333333334
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:542:003_1",
+            "segments": [
+                {
+                    "line_text": "IC5",
+                    "start_time": 181,
+                    "start_longitude": 6.640940657110765,
+                    "start_latitude": 46.78154287863061,
+                    "start_departure_delay": 246.4,
+                    "end_time": 205,
+                    "end_longitude": 6.6290924759666545,
+                    "end_latitude": 46.516788130312484,
+                    "end_arrival_delay": 216.36666666666667
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:7246:001_1",
+            "segments": [
+                {
+                    "line_text": "R",
+                    "start_time": 191,
+                    "start_longitude": 6.925383041715728,
+                    "start_latitude": 47.12572158537891,
+                    "start_departure_delay": 156.93103448275863,
+                    "end_time": 200,
+                    "end_longitude": 6.8259818191810115,
+                    "end_latitude": 47.098374085303305,
+                    "end_arrival_delay": 136.6206896551724
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:7695:001_2",
+            "segments": [
+                {
+                    "line_text": "S20",
+                    "start_time": 196,
+                    "start_longitude": 7.84382248518044,
+                    "start_latitude": 47.33026994930734,
+                    "start_departure_delay": 266.07042253521126,
+                    "end_time": 199,
+                    "end_longitude": 7.868360573561666,
+                    "end_latitude": 47.34139746187194,
+                    "end_arrival_delay": 215.66197183098592
+                },
+                {
+                    "line_text": "S20",
+                    "start_time": 199,
+                    "start_longitude": 7.868360573561666,
+                    "start_latitude": 47.34139746187194,
+                    "start_departure_delay": 243.16901408450704,
+                    "end_time": 201,
+                    "end_longitude": 7.897718916965203,
+                    "end_latitude": 47.34855213893286,
+                    "end_arrival_delay": 258.86619718309856
+                },
+                {
+                    "line_text": "S20",
+                    "start_time": 201,
+                    "start_longitude": 7.897718916965203,
+                    "start_latitude": 47.34855213893286,
+                    "start_departure_delay": 290.5492957746479,
+                    "end_time": 206,
+                    "end_longitude": 7.907700889253149,
+                    "end_latitude": 47.351938963651975,
+                    "end_arrival_delay": 128.8732394366197
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:844:001_1",
+            "segments": [
+                {
+                    "line_text": "IC8",
+                    "start_time": 182,
+                    "start_longitude": 8.54021816561537,
+                    "start_latitude": 47.378176816650104,
+                    "start_departure_delay": 80.13793103448276,
+                    "end_time": 212,
+                    "end_longitude": 7.907700889253149,
+                    "end_latitude": 47.351938963651975,
+                    "end_arrival_delay": 200.31034482758622
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:8696:001_1",
+            "segments": [
+                {
+                    "line_text": "S26",
+                    "start_time": 193,
+                    "start_longitude": 7.978766070079336,
+                    "start_latitude": 47.35638682018387,
+                    "start_departure_delay": 124.4,
+                    "end_time": 196,
+                    "end_longitude": 7.946502251292022,
+                    "end_latitude": 47.35427546758717,
+                    "end_arrival_delay": 79.63333333333334
+                },
+                {
+                    "line_text": "S26",
+                    "start_time": 196,
+                    "start_longitude": 7.946502251292022,
+                    "start_latitude": 47.35427546758717,
+                    "start_departure_delay": 95.1,
+                    "end_time": 201,
+                    "end_longitude": 7.907700889253149,
+                    "end_latitude": 47.351938963651975,
+                    "end_arrival_delay": 54.733333333333334
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:8999:001_2",
+            "segments": [
+                {
+                    "line_text": "S29",
+                    "start_time": 193,
+                    "start_longitude": 7.9570350078801955,
+                    "start_latitude": 47.26266338383673,
+                    "start_departure_delay": 123.65934065934066,
+                    "end_time": 196,
+                    "end_longitude": 7.94312334691482,
+                    "end_latitude": 47.28805412964396,
+                    "end_arrival_delay": 91.14285714285714
+                },
+                {
+                    "line_text": "S29",
+                    "start_time": 196,
+                    "start_longitude": 7.94312334691482,
+                    "start_latitude": 47.28805412964396,
+                    "start_departure_delay": 129.51020408163265,
+                    "end_time": 199,
+                    "end_longitude": 7.908216431229716,
+                    "end_latitude": 47.32026715440584,
+                    "end_arrival_delay": 143.3469387755102
+                },
+                {
+                    "line_text": "S29",
+                    "start_time": 199,
+                    "start_longitude": 7.908216431229716,
+                    "start_latitude": 47.32026715440584,
+                    "start_departure_delay": 170.42857142857142,
+                    "end_time": 204,
+                    "end_longitude": 7.907700889253149,
+                    "end_latitude": 47.351938963651975,
+                    "end_arrival_delay": 83.12244897959184
+                }
+            ]
+        },
+        {
+            "trip_id": "85:11:993:001_1",
+            "segments": [
+                {
+                    "line_text": "IC61",
+                    "start_time": 194,
+                    "start_longitude": 7.4815000514031915,
+                    "start_latitude": 46.956805025256955,
+                    "start_departure_delay": 260.7307692307692,
+                    "end_time": 198,
+                    "end_longitude": 7.5055009771225105,
+                    "end_latitude": 46.93432375600694,
+                    "end_arrival_delay": 202.73076923076923
+                },
+                {
+                    "line_text": "IC61",
+                    "start_time": 198,
+                    "start_longitude": 7.5055009771225105,
+                    "start_latitude": 46.93432375600694,
+                    "start_departure_delay": 199.8846153846154,
+                    "end_time": 205,
+                    "end_longitude": 7.559442608082692,
+                    "end_latitude": 46.87335513019925,
+                    "end_arrival_delay": 149.19230769230768
+                },
+                {
+                    "line_text": "IC61",
+                    "start_time": 205,
+                    "start_longitude": 7.559442608082692,
+                    "start_latitude": 46.87335513019925,
+                    "start_departure_delay": 162.42307692307693,
+                    "end_time": 215,
+                    "end_longitude": 7.629607206583285,
+                    "end_latitude": 46.75485376277477,
+                    "end_arrival_delay": 133.34615384615384
+                }
+            ]
+        },
+        {
+            "trip_id": "85:157:306:000_1",
+            "segments": [
+                {
+                    "line_text": "R",
+                    "start_time": 198,
+                    "start_longitude": 7.9210029172909,
+                    "start_latitude": 46.60490198161852,
+                    "start_departure_delay": 23.0,
+                    "end_time": 200,
+                    "end_longitude": 7.913626864767585,
+                    "end_latitude": 46.60918793351064,
+                    "end_arrival_delay": 30.666666666666668
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 200,
+                    "start_longitude": 7.913626864767585,
+                    "start_latitude": 46.60918793351064,
+                    "start_departure_delay": 121.66666666666667,
+                    "end_time": 211,
+                    "end_longitude": 7.90809041529649,
+                    "end_latitude": 46.5984340011305,
+                    "end_arrival_delay": -1.6666666666666667
+                }
+            ]
+        },
+        {
+            "trip_id": "85:23:393:000_1",
+            "segments": [
+                {
+                    "line_text": "R25",
+                    "start_time": 192,
+                    "start_longitude": 7.00086877593408,
+                    "start_latitude": 46.3273580357068,
+                    "start_departure_delay": null,
+                    "end_time": 200,
+                    "end_longitude": 6.986517429915006,
+                    "end_latitude": 46.31986198645839,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "R25",
+                    "start_time": 200,
+                    "start_longitude": 6.986517429915006,
+                    "start_latitude": 46.31986198645839,
+                    "start_departure_delay": null,
+                    "end_time": 202,
+                    "end_longitude": 6.982297763359916,
+                    "end_latitude": 46.31831573046196,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "R25",
+                    "start_time": 202,
+                    "start_longitude": 6.982297763359916,
+                    "start_latitude": 46.31831573046196,
+                    "start_departure_delay": null,
+                    "end_time": 205,
+                    "end_longitude": 6.975364907299256,
+                    "end_latitude": 46.31828749980787,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "R25",
+                    "start_time": 205,
+                    "start_longitude": 6.975364907299256,
+                    "start_latitude": 46.31828749980787,
+                    "start_departure_delay": null,
+                    "end_time": 207,
+                    "end_longitude": 6.970336414350481,
+                    "end_latitude": 46.317241238559085,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "R25",
+                    "start_time": 207,
+                    "start_longitude": 6.970336414350481,
+                    "start_latitude": 46.317241238559085,
+                    "start_departure_delay": null,
+                    "end_time": 212,
+                    "end_longitude": 6.963679488658281,
+                    "end_latitude": 46.31685360378053,
+                    "end_arrival_delay": null
+                }
+            ]
+        },
+        {
+            "trip_id": "85:29:178:000_1",
+            "segments": [
+                {
+                    "line_text": "R",
+                    "start_time": 196,
+                    "start_longitude": 6.493963583383769,
+                    "start_latitude": 46.51110128353438,
+                    "start_departure_delay": 46.523809523809526,
+                    "end_time": 197,
+                    "end_longitude": 6.484453579697988,
+                    "end_latitude": 46.506550543327556,
+                    "end_arrival_delay": 44.857142857142854
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 197,
+                    "start_longitude": 6.484453579697988,
+                    "start_latitude": 46.506550543327556,
+                    "start_departure_delay": 46.95238095238095,
+                    "end_time": 198,
+                    "end_longitude": 6.480271647168357,
+                    "end_latitude": 46.5094660674987,
+                    "end_arrival_delay": 56.095238095238095
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 198,
+                    "start_longitude": 6.480271647168357,
+                    "start_latitude": 46.5094660674987,
+                    "start_departure_delay": 58.285714285714285,
+                    "end_time": 199,
+                    "end_longitude": 6.4722453623668,
+                    "end_latitude": 46.51601924327641,
+                    "end_arrival_delay": 45.0
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 199,
+                    "start_longitude": 6.4722453623668,
+                    "start_latitude": 46.51601924327641,
+                    "start_departure_delay": 45.42857142857143,
+                    "end_time": 201,
+                    "end_longitude": 6.473183087351212,
+                    "end_latitude": 46.52480760000419,
+                    "end_arrival_delay": 45.714285714285715
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 201,
+                    "start_longitude": 6.473183087351212,
+                    "start_latitude": 46.52480760000419,
+                    "start_departure_delay": 52.904761904761905,
+                    "end_time": 202,
+                    "end_longitude": 6.46259079865504,
+                    "end_latitude": 46.527469850129535,
+                    "end_arrival_delay": 59.095238095238095
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 202,
+                    "start_longitude": 6.46259079865504,
+                    "start_latitude": 46.527469850129535,
+                    "start_departure_delay": 65.28571428571429,
+                    "end_time": 203,
+                    "end_longitude": 6.4465060453060365,
+                    "end_latitude": 46.52678158796631,
+                    "end_arrival_delay": 117.66666666666667
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 203,
+                    "start_longitude": 6.4465060453060365,
+                    "start_latitude": 46.52678158796631,
+                    "start_departure_delay": 74.27777777777777,
+                    "end_time": 206,
+                    "end_longitude": 6.427316912317696,
+                    "end_latitude": 46.51996389594407,
+                    "end_arrival_delay": 96.55555555555556
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 206,
+                    "start_longitude": 6.427316912317696,
+                    "start_latitude": 46.51996389594407,
+                    "start_departure_delay": 57.5,
+                    "end_time": 209,
+                    "end_longitude": 6.432555452027259,
+                    "end_latitude": 46.53470148925717,
+                    "end_arrival_delay": 89.04761904761905
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 209,
+                    "start_longitude": 6.432555452027259,
+                    "start_latitude": 46.53470148925717,
+                    "start_departure_delay": 92.47619047619048,
+                    "end_time": 210,
+                    "end_longitude": 6.430975633462641,
+                    "end_latitude": 46.540427137641174,
+                    "end_arrival_delay": 71.9047619047619
+                }
+            ]
+        },
+        {
+            "trip_id": "85:29:481:000_1",
+            "segments": [
+                {
+                    "line_text": "R",
+                    "start_time": 193,
+                    "start_longitude": 6.4023584320583975,
+                    "start_latitude": 46.61045805629631,
+                    "start_departure_delay": 24.25,
+                    "end_time": 195,
+                    "end_longitude": 6.393050130150224,
+                    "end_latitude": 46.59632949202284,
+                    "end_arrival_delay": 40.0
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 195,
+                    "start_longitude": 6.393050130150224,
+                    "start_latitude": 46.59632949202284,
+                    "start_departure_delay": 0.0,
+                    "end_time": 198,
+                    "end_longitude": 6.414220662682015,
+                    "end_latitude": 46.59279784229804,
+                    "end_arrival_delay": 15.0
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 198,
+                    "start_longitude": 6.414220662682015,
+                    "start_latitude": 46.59279784229804,
+                    "start_departure_delay": 15.25,
+                    "end_time": 200,
+                    "end_longitude": 6.429714817575362,
+                    "end_latitude": 46.58492076798141,
+                    "end_arrival_delay": -10.25
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 200,
+                    "start_longitude": 6.429714817575362,
+                    "start_latitude": 46.58492076798141,
+                    "start_departure_delay": -10.25,
+                    "end_time": 201,
+                    "end_longitude": 6.432172331482755,
+                    "end_latitude": 46.5769808293373,
+                    "end_arrival_delay": 40.0
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 201,
+                    "start_longitude": 6.432172331482755,
+                    "start_latitude": 46.5769808293373,
+                    "start_departure_delay": 0.0,
+                    "end_time": 204,
+                    "end_longitude": 6.4321659003383544,
+                    "end_latitude": 46.559123075662356,
+                    "end_arrival_delay": 17.25
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 204,
+                    "start_longitude": 6.4321659003383544,
+                    "start_latitude": 46.559123075662356,
+                    "start_departure_delay": 17.25,
+                    "end_time": 206,
+                    "end_longitude": 6.423582659159019,
+                    "end_latitude": 46.550877994256126,
+                    "end_arrival_delay": 20.0
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:15494:001_2",
+            "segments": [
+                {
+                    "line_text": "S4",
+                    "start_time": 193,
+                    "start_longitude": 7.619537275759787,
+                    "start_latitude": 47.051200878503415,
+                    "start_departure_delay": 297.07936507936506,
+                    "end_time": 197,
+                    "end_longitude": 7.621688446978849,
+                    "end_latitude": 47.060705215469696,
+                    "end_arrival_delay": 254.15873015873015
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:15494:001_3",
+            "segments": [
+                {
+                    "line_text": "S4",
+                    "start_time": 192,
+                    "start_longitude": 7.6822758142406125,
+                    "start_latitude": 47.0050214692515,
+                    "start_departure_delay": 87.93103448275862,
+                    "end_time": 195,
+                    "end_longitude": 7.6553253496686136,
+                    "end_latitude": 47.01626528174992,
+                    "end_arrival_delay": 79.74137931034483
+                },
+                {
+                    "line_text": "S4",
+                    "start_time": 195,
+                    "start_longitude": 7.6553253496686136,
+                    "start_latitude": 47.01626528174992,
+                    "start_departure_delay": 125.44444444444444,
+                    "end_time": 198,
+                    "end_longitude": 7.629340429188525,
+                    "end_latitude": 47.0396084678693,
+                    "end_arrival_delay": 129.23809523809524
+                },
+                {
+                    "line_text": "S4",
+                    "start_time": 198,
+                    "start_longitude": 7.629340429188525,
+                    "start_latitude": 47.0396084678693,
+                    "start_departure_delay": 161.5079365079365,
+                    "end_time": 200,
+                    "end_longitude": 7.619537275759787,
+                    "end_latitude": 47.051200878503415,
+                    "end_arrival_delay": 138.53968253968253
+                },
+                {
+                    "line_text": "S4",
+                    "start_time": 200,
+                    "start_longitude": 7.619537275759787,
+                    "start_latitude": 47.051200878503415,
+                    "start_departure_delay": 187.82539682539684,
+                    "end_time": 204,
+                    "end_longitude": 7.621688446978849,
+                    "end_latitude": 47.060705215469696,
+                    "end_arrival_delay": 124.26984126984127
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:22692:001_2",
+            "segments": [
+                {
+                    "line_text": "S6",
+                    "start_time": 191,
+                    "start_longitude": 7.846143803817735,
+                    "start_latitude": 46.921701868035775,
+                    "start_departure_delay": 81.99038461538461,
+                    "end_time": 198,
+                    "end_longitude": 7.7841951158718246,
+                    "end_latitude": 46.93923911936191,
+                    "end_arrival_delay": 9.39423076923077
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:22692:001_3",
+            "segments": [
+                {
+                    "line_text": "S6",
+                    "start_time": 193,
+                    "start_longitude": 7.936374219893769,
+                    "start_latitude": 46.915345782878425,
+                    "start_departure_delay": 157.14634146341464,
+                    "end_time": 200,
+                    "end_longitude": 7.846143803817735,
+                    "end_latitude": 46.921701868035775,
+                    "end_arrival_delay": 147.86206896551724
+                },
+                {
+                    "line_text": "S6",
+                    "start_time": 200,
+                    "start_longitude": 7.846143803817735,
+                    "start_latitude": 46.921701868035775,
+                    "start_departure_delay": 184.10344827586206,
+                    "end_time": 208,
+                    "end_longitude": 7.7841951158718246,
+                    "end_latitude": 46.93923911936191,
+                    "end_arrival_delay": 59.21951219512195
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:2846:001_1",
+            "segments": [
+                {
+                    "line_text": "IR17",
+                    "start_time": 188,
+                    "start_longitude": 7.621688446978849,
+                    "start_latitude": 47.060705215469696,
+                    "start_departure_delay": 188.82758620689654,
+                    "end_time": 206,
+                    "end_longitude": 7.439131612366045,
+                    "end_latitude": 46.94883398159425,
+                    "end_arrival_delay": 173.10344827586206
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:2849:002_1",
+            "segments": [
+                {
+                    "line_text": "IR17",
+                    "start_time": 189,
+                    "start_longitude": 7.439131612366045,
+                    "start_latitude": 46.94883398159425,
+                    "start_departure_delay": 104.4,
+                    "end_time": 204,
+                    "end_longitude": 7.621688446978849,
+                    "end_latitude": 47.060705215469696,
+                    "end_arrival_delay": 140.46666666666667
+                },
+                {
+                    "line_text": "IR17",
+                    "start_time": 204,
+                    "start_longitude": 7.621688446978849,
+                    "start_latitude": 47.060705215469696,
+                    "start_departure_delay": 167.5,
+                    "end_time": 210,
+                    "end_longitude": 7.663509008809073,
+                    "end_latitude": 47.10517434146698,
+                    "end_arrival_delay": 177.96666666666667
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:3397:001_1",
+            "segments": [
+                {
+                    "line_text": "IR65",
+                    "start_time": 192,
+                    "start_longitude": 7.439131612366045,
+                    "start_latitude": 46.94883398159425,
+                    "start_departure_delay": 116.34615384615384,
+                    "end_time": 199,
+                    "end_longitude": 7.462916887401801,
+                    "end_latitude": 47.001821931462004,
+                    "end_arrival_delay": 91.0
+                },
+                {
+                    "line_text": "IR65",
+                    "start_time": 199,
+                    "start_longitude": 7.462916887401801,
+                    "start_latitude": 47.001821931462004,
+                    "start_departure_delay": 73.34615384615384,
+                    "end_time": 202,
+                    "end_longitude": 7.451942356484463,
+                    "end_latitude": 47.02137892545729,
+                    "end_arrival_delay": 98.38461538461539
+                },
+                {
+                    "line_text": "IR65",
+                    "start_time": 205,
+                    "start_longitude": 7.385997330291665,
+                    "start_latitude": 47.041857764294896,
+                    "start_departure_delay": 213.26923076923077,
+                    "end_time": 210,
+                    "end_longitude": 7.339003328685162,
+                    "end_latitude": 47.05878177172479,
+                    "end_arrival_delay": 104.65384615384616
+                }
+            ]
+        },
+        {
+            "trip_id": "85:33:4293:001_2",
+            "segments": [
+                {
+                    "line_text": "RE",
+                    "start_time": 190,
+                    "start_longitude": 7.88102730341021,
+                    "start_latitude": 46.30654913492885,
+                    "start_departure_delay": 128.12878787878788,
+                    "end_time": 203,
+                    "end_longitude": 7.988091065828439,
+                    "end_latitude": 46.319421500153425,
+                    "end_arrival_delay": -136.78030303030303
+                }
+            ]
+        },
+        {
+            "trip_id": "85:46:907:000_1",
+            "segments": [
+                {
+                    "line_text": "SN18",
+                    "start_time": 194,
+                    "start_longitude": 8.582978957432323,
+                    "start_latitude": 47.35102727603772,
+                    "start_departure_delay": null,
+                    "end_time": 196,
+                    "end_longitude": 8.593023934553942,
+                    "end_latitude": 47.34546712981799,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 196,
+                    "start_longitude": 8.593023934553942,
+                    "start_latitude": 47.34546712981799,
+                    "start_departure_delay": null,
+                    "end_time": 197,
+                    "end_longitude": 8.596796147073817,
+                    "end_latitude": 47.34730936696574,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 197,
+                    "start_longitude": 8.596796147073817,
+                    "start_latitude": 47.34730936696574,
+                    "start_departure_delay": null,
+                    "end_time": 198,
+                    "end_longitude": 8.60339941808286,
+                    "end_latitude": 47.346046555521646,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 198,
+                    "start_longitude": 8.60339941808286,
+                    "start_latitude": 47.346046555521646,
+                    "start_departure_delay": null,
+                    "end_time": 200,
+                    "end_longitude": 8.617025327830202,
+                    "end_latitude": 47.33678697697127,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 200,
+                    "start_longitude": 8.617025327830202,
+                    "start_latitude": 47.33678697697127,
+                    "start_departure_delay": null,
+                    "end_time": 201,
+                    "end_longitude": 8.623806274008071,
+                    "end_latitude": 47.33168912478513,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 201,
+                    "start_longitude": 8.623806274008071,
+                    "start_latitude": 47.33168912478513,
+                    "start_departure_delay": null,
+                    "end_time": 202,
+                    "end_longitude": 8.63107102551966,
+                    "end_latitude": 47.328169048645165,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 202,
+                    "start_longitude": 8.63107102551966,
+                    "start_latitude": 47.328169048645165,
+                    "start_departure_delay": null,
+                    "end_time": 203,
+                    "end_longitude": 8.637845058192045,
+                    "end_latitude": 47.32581401360419,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 203,
+                    "start_longitude": 8.637845058192045,
+                    "start_latitude": 47.32581401360419,
+                    "start_departure_delay": null,
+                    "end_time": 205,
+                    "end_longitude": 8.647968488747333,
+                    "end_latitude": 47.32533955050087,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 205,
+                    "start_longitude": 8.647968488747333,
+                    "start_latitude": 47.32533955050087,
+                    "start_departure_delay": null,
+                    "end_time": 207,
+                    "end_longitude": 8.659548117325157,
+                    "end_latitude": 47.32259992860312,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 207,
+                    "start_longitude": 8.659548117325157,
+                    "start_latitude": 47.32259992860312,
+                    "start_departure_delay": null,
+                    "end_time": 209,
+                    "end_longitude": 8.674031776937976,
+                    "end_latitude": 47.312784575820956,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 209,
+                    "start_longitude": 8.674031776937976,
+                    "start_latitude": 47.312784575820956,
+                    "start_departure_delay": null,
+                    "end_time": 210,
+                    "end_longitude": 8.684342742961627,
+                    "end_latitude": 47.305729123778754,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "SN18",
+                    "start_time": 209,
+                    "start_longitude": 8.674031776937976,
+                    "start_latitude": 47.312784575820956,
+                    "start_departure_delay": null,
+                    "end_time": 210,
+                    "end_longitude": 8.684342742961627,
+                    "end_latitude": 47.305729123778754,
+                    "end_arrival_delay": null
+                }
+            ]
+        },
+        {
+            "trip_id": "85:47:233:000_1",
+            "segments": [
+                {
+                    "line_text": "S60",
+                    "start_time": 209,
+                    "start_longitude": 8.947594669044175,
+                    "start_latitude": 46.00448888623135,
+                    "start_departure_delay": 129.80769230769232,
+                    "end_time": 211,
+                    "end_longitude": 8.934829638698506,
+                    "end_latitude": 46.000385671127844,
+                    "end_arrival_delay": 101.15384615384616
+                }
+            ]
+        },
+        {
+            "trip_id": "85:49:343:000_4",
+            "segments": [
+                {
+                    "line_text": "R",
+                    "start_time": 190,
+                    "start_longitude": 8.753307962825007,
+                    "start_latitude": 46.185638142347656,
+                    "start_departure_delay": null,
+                    "end_time": 195,
+                    "end_longitude": 8.770370876300197,
+                    "end_latitude": 46.17199689066599,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 195,
+                    "start_longitude": 8.770370876300197,
+                    "start_latitude": 46.17199689066599,
+                    "start_departure_delay": null,
+                    "end_time": 198,
+                    "end_longitude": 8.786300046508408,
+                    "end_latitude": 46.16887490195486,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 198,
+                    "start_longitude": 8.786300046508408,
+                    "start_latitude": 46.16887490195486,
+                    "start_departure_delay": null,
+                    "end_time": 203,
+                    "end_longitude": 8.80197501793392,
+                    "end_latitude": 46.17274434073661,
+                    "end_arrival_delay": null
+                }
+            ]
+        },
+        {
+            "trip_id": "85:51:7008:000_1",
+            "segments": [
+                {
+                    "line_text": "S15",
+                    "start_time": 192,
+                    "start_longitude": 8.999211695880916,
+                    "start_latitude": 47.47690626764349,
+                    "start_departure_delay": null,
+                    "end_time": 199,
+                    "end_longitude": 9.040996016737529,
+                    "end_latitude": 47.46240954932711,
+                    "end_arrival_delay": null
+                }
+            ]
+        },
+        {
+            "trip_id": "85:51:7013:000_1",
+            "segments": [
+                {
+                    "line_text": "S15",
+                    "start_time": 203,
+                    "start_longitude": 9.040996016737529,
+                    "start_latitude": 47.46240954932711,
+                    "start_departure_delay": null,
+                    "end_time": 207,
+                    "end_longitude": 8.999211695880916,
+                    "end_latitude": 47.47690626764349,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "S15",
+                    "start_time": 207,
+                    "start_longitude": 8.999211695880916,
+                    "start_latitude": 47.47690626764349,
+                    "start_departure_delay": null,
+                    "end_time": 209,
+                    "end_longitude": 8.99194175482831,
+                    "end_latitude": 47.48149295481005,
+                    "end_arrival_delay": null
+                },
+                {
+                    "line_text": "S15",
+                    "start_time": 209,
+                    "start_longitude": 8.99194175482831,
+                    "start_latitude": 47.48149295481005,
+                    "start_departure_delay": null,
+                    "end_time": 211,
+                    "end_longitude": 8.975150485826077,
+                    "end_latitude": 47.49234100021329,
+                    "end_arrival_delay": null
+                }
+            ]
+        },
+        {
+            "trip_id": "85:53:14691:001_1",
+            "segments": [
+                {
+                    "line_text": "S21",
+                    "start_time": 194,
+                    "start_longitude": 7.129958683626403,
+                    "start_latitude": 46.816759502513385,
+                    "start_departure_delay": 104.55555555555556,
+                    "end_time": 199,
+                    "end_longitude": 7.151049542321109,
+                    "end_latitude": 46.80315067962656,
+                    "end_arrival_delay": 44.666666666666664
+                }
+            ]
+        },
+        {
+            "trip_id": "85:65:12003:001_2",
+            "segments": [
+                {
+                    "line_text": "S10",
+                    "start_time": 204,
+                    "start_longitude": 9.106372329426236,
+                    "start_latitude": 47.566224276085904,
+                    "start_departure_delay": 52.28455284552845,
+                    "end_time": 207,
+                    "end_longitude": 9.1498814829082,
+                    "end_latitude": 47.54910061436576,
+                    "end_arrival_delay": 53.50406504065041
+                },
+                {
+                    "line_text": "S10",
+                    "start_time": 207,
+                    "start_longitude": 9.1498814829082,
+                    "start_latitude": 47.54910061436576,
+                    "start_departure_delay": 73.10569105691057,
+                    "end_time": 210,
+                    "end_longitude": 9.183691333113568,
+                    "end_latitude": 47.538799664276794,
+                    "end_arrival_delay": 69.08943089430895
+                }
+            ]
+        },
+        {
+            "trip_id": "85:65:23808:002_2",
+            "segments": [
+                {
+                    "line_text": "S14",
+                    "start_time": 194,
+                    "start_longitude": 9.174523556588724,
+                    "start_latitude": 47.58225262159934,
+                    "start_departure_delay": 74.86131386861314,
+                    "end_time": 197,
+                    "end_longitude": 9.168264863314514,
+                    "end_latitude": 47.61091668208842,
+                    "end_arrival_delay": 83.83211678832117
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 197,
+                    "start_longitude": 9.168264863314514,
+                    "start_latitude": 47.61091668208842,
+                    "start_departure_delay": 95.74452554744525,
+                    "end_time": 201,
+                    "end_longitude": 9.19028708727608,
+                    "end_latitude": 47.62560007095228,
+                    "end_arrival_delay": 33.737226277372265
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 201,
+                    "start_longitude": 9.19028708727608,
+                    "start_latitude": 47.62560007095228,
+                    "start_departure_delay": 59.29197080291971,
+                    "end_time": 204,
+                    "end_longitude": 9.163199975787798,
+                    "end_latitude": 47.64211700633022,
+                    "end_arrival_delay": 58.44525547445255
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 204,
+                    "start_longitude": 9.163199975787798,
+                    "start_latitude": 47.64211700633022,
+                    "start_departure_delay": 74.82481751824818,
+                    "end_time": 206,
+                    "end_longitude": 9.139560017159269,
+                    "end_latitude": 47.6537192532292,
+                    "end_arrival_delay": 103.56204379562044
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 206,
+                    "start_longitude": 9.139560017159269,
+                    "start_latitude": 47.6537192532292,
+                    "start_departure_delay": 142.33576642335765,
+                    "end_time": 210,
+                    "end_longitude": 9.169077926949585,
+                    "end_latitude": 47.652554341918105,
+                    "end_arrival_delay": 32.693430656934304
+                }
+            ]
+        },
+        {
+            "trip_id": "85:65:3547:001_2",
+            "segments": [
+                {
+                    "line_text": "RE",
+                    "start_time": 191,
+                    "start_longitude": 9.302230349866031,
+                    "start_latitude": 47.55044743949015,
+                    "start_departure_delay": 90.60544217687075,
+                    "end_time": 197,
+                    "end_longitude": 9.37937536083759,
+                    "end_latitude": 47.56552725894693,
+                    "end_arrival_delay": 38.843537414965986
+                }
+            ]
+        },
+        {
+            "trip_id": "85:65:8093:001_2",
+            "segments": [
+                {
+                    "line_text": "S30",
+                    "start_time": 193,
+                    "start_longitude": 9.01552744652632,
+                    "start_latitude": 47.5881674687382,
+                    "start_departure_delay": 174.9268292682927,
+                    "end_time": 196,
+                    "end_longitude": 9.062194524707875,
+                    "end_latitude": 47.58281871599661,
+                    "end_arrival_delay": 150.6829268292683
+                },
+                {
+                    "line_text": "S30",
+                    "start_time": 196,
+                    "start_longitude": 9.062194524707875,
+                    "start_latitude": 47.58281871599661,
+                    "start_departure_delay": 175.78861788617886,
+                    "end_time": 202,
+                    "end_longitude": 9.106372329426236,
+                    "end_latitude": 47.566224276085904,
+                    "end_arrival_delay": -7.7073170731707314
+                }
+            ]
+        },
+        {
+            "trip_id": "85:65:8193:001_2",
+            "segments": [
+                {
+                    "line_text": "S35",
+                    "start_time": 194,
+                    "start_longitude": 9.00047235231096,
+                    "start_latitude": 47.46200127688206,
+                    "start_departure_delay": 107.1470588235294,
+                    "end_time": 199,
+                    "end_longitude": 9.040996016737529,
+                    "end_latitude": 47.46240954932711,
+                    "end_arrival_delay": 51.57843137254902
+                }
+            ]
+        },
+        {
+            "trip_id": "85:66:298:000_1",
+            "segments": [
+                {
+                    "line_text": "R",
+                    "start_time": 192,
+                    "start_longitude": 6.206420265600545,
+                    "start_latitude": 46.41372394730091,
+                    "start_departure_delay": 69.45833333333333,
+                    "end_time": 196,
+                    "end_longitude": 6.205217374445945,
+                    "end_latitude": 46.4288523778468,
+                    "end_arrival_delay": 20.333333333333332
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 196,
+                    "start_longitude": 6.205217374445945,
+                    "start_latitude": 46.4288523778468,
+                    "start_departure_delay": 33.208333333333336,
+                    "end_time": 198,
+                    "end_longitude": 6.214574385941094,
+                    "end_latitude": 46.43625020907378,
+                    "end_arrival_delay": 26.583333333333332
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 198,
+                    "start_longitude": 6.214574385941094,
+                    "start_latitude": 46.43625020907378,
+                    "start_departure_delay": 54.375,
+                    "end_time": 200,
+                    "end_longitude": 6.205856864830788,
+                    "end_latitude": 46.438485853370594,
+                    "end_arrival_delay": 63.708333333333336
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 200,
+                    "start_longitude": 6.205856864830788,
+                    "start_latitude": 46.438485853370594,
+                    "start_departure_delay": 75.83333333333333,
+                    "end_time": 202,
+                    "end_longitude": 6.2167539178767255,
+                    "end_latitude": 46.44635006242664,
+                    "end_arrival_delay": 74.95833333333333
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 202,
+                    "start_longitude": 6.2167539178767255,
+                    "start_latitude": 46.44635006242664,
+                    "start_departure_delay": 76.79166666666667,
+                    "end_time": 204,
+                    "end_longitude": 6.2154290266054275,
+                    "end_latitude": 46.454297869075866,
+                    "end_arrival_delay": 76.16666666666667
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 204,
+                    "start_longitude": 6.2154290266054275,
+                    "start_latitude": 46.454297869075866,
+                    "start_departure_delay": 90.0,
+                    "end_time": 205,
+                    "end_longitude": 6.222304413546591,
+                    "end_latitude": 46.46057059176692,
+                    "end_arrival_delay": 117.70833333333333
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 205,
+                    "start_longitude": 6.222304413546591,
+                    "start_latitude": 46.46057059176692,
+                    "start_departure_delay": 118.70833333333333,
+                    "end_time": 208,
+                    "end_longitude": 6.211646765739503,
+                    "end_latitude": 46.45863839425071,
+                    "end_arrival_delay": 125.25
+                },
+                {
+                    "line_text": "R",
+                    "start_time": 208,
+                    "start_longitude": 6.211646765739503,
+                    "start_latitude": 46.45863839425071,
+                    "start_departure_delay": 142.70833333333334,
+                    "end_time": 212,
+                    "end_longitude": 6.183515267718724,
+                    "end_latitude": 46.44847892239074,
+                    "end_arrival_delay": 174.95833333333334
+                }
+            ]
+        },
+        {
+            "trip_id": "85:72:2590:000_1",
+            "segments": [
+                {
+                    "line_text": "EXT",
+                    "start_time": 189,
+                    "start_longitude": 9.453164237094873,
+                    "start_latitude": 46.83314137284748,
+                    "start_departure_delay": 56.457142857142856,
+                    "end_time": 196,
+                    "end_longitude": 9.52893821461012,
+                    "end_latitude": 46.85308001464208,
+                    "end_arrival_delay": 39.77142857142857
+                }
+            ]
+        },
+        {
+            "trip_id": "85:82:11402:001_2",
+            "segments": [
+                {
+                    "line_text": "S4",
+                    "start_time": 190,
+                    "start_longitude": 9.41438558304899,
+                    "start_latitude": 47.47477104461162,
+                    "start_departure_delay": 156.69655172413792,
+                    "end_time": 195,
+                    "end_longitude": 9.393440107209074,
+                    "end_latitude": 47.43454230731246,
+                    "end_arrival_delay": 137.37241379310345
+                },
+                {
+                    "line_text": "S4",
+                    "start_time": 195,
+                    "start_longitude": 9.393440107209074,
+                    "start_latitude": 47.43454230731246,
+                    "start_departure_delay": 161.68965517241378,
+                    "end_time": 200,
+                    "end_longitude": 9.369903098414591,
+                    "end_latitude": 47.42317912125387,
+                    "end_arrival_delay": 48.43055555555556
+                },
+                {
+                    "line_text": "S4",
+                    "start_time": 200,
+                    "start_longitude": 9.369903098414591,
+                    "start_latitude": 47.42317912125387,
+                    "start_departure_delay": 120.28571428571429,
+                    "end_time": 214,
+                    "end_longitude": 9.338146633366382,
+                    "end_latitude": 47.407754186245796,
+                    "end_arrival_delay": 119.99047619047619
+                }
+            ]
+        },
+        {
+            "trip_id": "85:82:2347:001_2",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 175,
+                    "start_longitude": 8.09789072616364,
+                    "start_latitude": 47.17079832411152,
+                    "start_departure_delay": 79.92156862745098,
+                    "end_time": 196,
+                    "end_longitude": 8.31018370231566,
+                    "end_latitude": 47.05017915566836,
+                    "end_arrival_delay": -19.432098765432098
+                }
+            ]
+        },
+        {
+            "trip_id": "85:82:2395:001_1",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 179,
+                    "start_longitude": 9.060049849789618,
+                    "start_latitude": 47.13615196969602,
+                    "start_departure_delay": 97.66666666666667,
+                    "end_time": 200,
+                    "end_longitude": 9.446256961436957,
+                    "end_latitude": 47.04482706709401,
+                    "end_arrival_delay": 43.925925925925924
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 200,
+                    "start_longitude": 9.446256961436957,
+                    "start_latitude": 47.04482706709401,
+                    "start_departure_delay": 96.48148148148148,
+                    "end_time": 204,
+                    "end_longitude": 9.505228429514165,
+                    "end_latitude": 47.01030686940875,
+                    "end_arrival_delay": 86.07407407407408
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 204,
+                    "start_longitude": 9.505228429514165,
+                    "start_latitude": 47.01030686940875,
+                    "start_departure_delay": 123.33333333333333,
+                    "end_time": 207,
+                    "end_longitude": 9.529221646560128,
+                    "end_latitude": 47.00384307048209,
+                    "end_arrival_delay": 58.48148148148148
+                },
+                {
+                    "line_text": "IR",
+                    "start_time": 207,
+                    "start_longitude": 9.529221646560128,
+                    "start_latitude": 47.00384307048209,
+                    "start_departure_delay": 87.62962962962963,
+                    "end_time": 211,
+                    "end_longitude": 9.554041214151823,
+                    "end_latitude": 46.96743923279447,
+                    "end_arrival_delay": 38.925925925925924
+                }
+            ]
+        },
+        {
+            "trip_id": "85:82:30347:011_1",
+            "segments": [
+                {
+                    "line_text": "IR",
+                    "start_time": 175,
+                    "start_longitude": 8.09789072616364,
+                    "start_latitude": 47.17079832411152,
+                    "start_departure_delay": 85.96296296296296,
+                    "end_time": 196,
+                    "end_longitude": 8.31018370231566,
+                    "end_latitude": 47.05017915566836,
+                    "end_arrival_delay": -82.37037037037037
+                }
+            ]
+        },
+        {
+            "trip_id": "85:850065:23808_2",
+            "segments": [
+                {
+                    "line_text": "S14",
+                    "start_time": 194,
+                    "start_longitude": 9.174523556588724,
+                    "start_latitude": 47.58225262159934,
+                    "start_departure_delay": 52.608695652173914,
+                    "end_time": 197,
+                    "end_longitude": 9.168264863314514,
+                    "end_latitude": 47.61091668208842,
+                    "end_arrival_delay": 36.95652173913044
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 197,
+                    "start_longitude": 9.168264863314514,
+                    "start_latitude": 47.61091668208842,
+                    "start_departure_delay": 53.47826086956522,
+                    "end_time": 201,
+                    "end_longitude": 9.19028708727608,
+                    "end_latitude": 47.62560007095228,
+                    "end_arrival_delay": 25.217391304347824
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 201,
+                    "start_longitude": 9.19028708727608,
+                    "start_latitude": 47.62560007095228,
+                    "start_departure_delay": 28.26086956521739,
+                    "end_time": 204,
+                    "end_longitude": 9.163199975787798,
+                    "end_latitude": 47.64211700633022,
+                    "end_arrival_delay": 26.52173913043478
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 204,
+                    "start_longitude": 9.163199975787798,
+                    "start_latitude": 47.64211700633022,
+                    "start_departure_delay": 28.695652173913043,
+                    "end_time": 206,
+                    "end_longitude": 9.139560017159269,
+                    "end_latitude": 47.6537192532292,
+                    "end_arrival_delay": 47.82608695652174
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 206,
+                    "start_longitude": 9.139560017159269,
+                    "start_latitude": 47.6537192532292,
+                    "start_departure_delay": 53.04347826086956,
+                    "end_time": 210,
+                    "end_longitude": 9.169077926949585,
+                    "end_latitude": 47.652554341918105,
+                    "end_arrival_delay": 23.91304347826087
+                }
+            ]
+        },
+        {
+            "trip_id": "85:86:21496:001_2",
+            "segments": [
+                {
+                    "line_text": "S4",
+                    "start_time": 192,
+                    "start_longitude": 8.312599431531972,
+                    "start_latitude": 46.9940731633798,
+                    "start_departure_delay": 10.430555555555555,
+                    "end_time": 195,
+                    "end_longitude": 8.31017851920542,
+                    "end_latitude": 46.98262210790798,
+                    "end_arrival_delay": 12.319444444444445
+                },
+                {
+                    "line_text": "S4",
+                    "start_time": 195,
+                    "start_longitude": 8.31017851920542,
+                    "start_latitude": 46.98262210790798,
+                    "start_departure_delay": 62.56944444444444,
+                    "end_time": 199,
+                    "end_longitude": 8.336637778127823,
+                    "end_latitude": 46.976273903751846,
+                    "end_arrival_delay": -6.729166666666667
+                },
+                {
+                    "line_text": "S4",
+                    "start_time": 199,
+                    "start_longitude": 8.336637778127823,
+                    "start_latitude": 46.976273903751846,
+                    "start_departure_delay": 36.263888888888886,
+                    "end_time": 203,
+                    "end_longitude": 8.366584508162397,
+                    "end_latitude": 46.95839475069339,
+                    "end_arrival_delay": -9.055555555555555
+                }
+            ]
+        },
+        {
+            "trip_id": "85:86:21594:001_2",
+            "segments": [
+                {
+                    "line_text": "S5",
+                    "start_time": 193,
+                    "start_longitude": 8.238311038936608,
+                    "start_latitude": 46.87096064597278,
+                    "start_departure_delay": 49.451388888888886,
+                    "end_time": 195,
+                    "end_longitude": 8.218591332606982,
+                    "end_latitude": 46.86068864777523,
+                    "end_arrival_delay": 79.02083333333333
+                },
+                {
+                    "line_text": "S5",
+                    "start_time": 195,
+                    "start_longitude": 8.218591332606982,
+                    "start_latitude": 46.86068864777523,
+                    "start_departure_delay": 129.08333333333334,
+                    "end_time": 201,
+                    "end_longitude": 8.186321731879467,
+                    "end_latitude": 46.836534598574126,
+                    "end_arrival_delay": -43.0
+                }
+            ]
+        },
+        {
+            "trip_id": "85:96:177:000_1",
+            "segments": [
+                {
+                    "line_text": "S14",
+                    "start_time": 194,
+                    "start_longitude": 8.183396195170026,
+                    "start_latitude": 47.25450676415633,
+                    "start_departure_delay": 143.875,
+                    "end_time": 195,
+                    "end_longitude": 8.18453644041701,
+                    "end_latitude": 47.25006486878519,
+                    "end_arrival_delay": 114.08333333333333
+                },
+                {
+                    "line_text": "S14",
+                    "start_time": 195,
+                    "start_longitude": 8.18453644041701,
+                    "start_latitude": 47.25006486878519,
+                    "start_departure_delay": 152.16666666666666,
+                    "end_time": 198,
+                    "end_longitude": 8.189322259698463,
+                    "end_latitude": 47.24092187068773,
+                    "end_arrival_delay": 60.791666666666664
+                }
+            ]
+        }
+    ]
+}
