@@ -1,0 +1,212 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Bungee', cursive;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.light-bg {
+  background-image: url('../assets/backgrounds/light-bg.png');
+}
+
+.pink-bg {
+  background-image: url('../assets/backgrounds/pink-bg.png');
+}
+
+
+
+/* TITLE CONTAINER */
+#title-container {
+  display: flex;
+  justify-content: center;
+}
+
+#title {
+  position: absolute;
+  color: #FAF4DD;
+  font-family: 'Bungee', cursive;
+  font-size: min(4vw, 70px);
+  margin-top: 30vh;
+  z-index: 5;
+}
+
+#bridge {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20vh; /* Set a relative height using vh units */
+  background-image: url('../assets/title/bridge.png');
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+  z-index: 2;
+}
+
+#mountain_left {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 37vh;
+  background-image: url('../assets/title/mountain_left.png');
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: contain;
+  z-index: 4;
+}
+
+#mountain_right {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 37vh;
+  background-image: url('../assets/title/mountain_right.png');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: contain;
+  z-index: 4;
+}
+
+#sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/title/sky.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  z-index: 1;
+}
+
+.cloud {
+  position: absolute;
+  z-index: 2;
+}
+
+.cloud img {
+  height: 100%;
+  width: auto;
+}
+
+#cloud1 {
+  top: 10%;
+  left: 30%;
+  height: 5vh;
+  animation: moveCloud1 300s linear infinite;
+}
+
+@keyframes moveCloud1 {
+  0% {
+    left: 30%;
+  }
+  50% {
+    left: calc(100% - 436px)
+  }
+}
+
+#cloud2 {
+  top: 20%;
+  left: 0%;
+  height: 5vh;
+  animation: moveCloud2 240s linear infinite;
+}
+
+@keyframes moveCloud2 {
+  0% {
+    left: 0%;
+  }
+  50% {
+    left: calc(70% - 359px)
+  }
+}
+
+#cloud3 {
+  top: 40%;
+  left: 80%;
+  height: 5vh;
+  animation: moveCloud3 360s linear infinite;
+}
+
+@keyframes moveCloud3 {
+  0% {
+    left: 80%;
+  }
+  50% {
+    left: 0%;
+  }
+}
+
+#train {
+  position: absolute;
+  bottom: 19.7vh;
+  height: 7vh;
+  animation: moveTrain 10s linear infinite;
+  z-index: 2;
+}
+
+#train img {
+  height: 100%;
+  width: auto;
+}
+
+@keyframes moveTrain {
+  0% {
+    transform: translateX(-200%);
+  }
+  50%, 100% {
+    transform: translateX(200%);
+  }
+}
+
+#particle-container {
+  position: absolute;
+  left: 0;
+  bottom: 0vh;
+  height: 100%;
+  z-index: 3;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  bottom: 19.5vh;
+  background-color: #0f1d18; /* You can change the color of the particles */
+  border-radius: 50%;
+  opacity: 1;
+}
+
+/* TITLE TO P1 CONTAINER */
+#title-to-p1-container {
+  background-image: url('../assets/backgrounds/title-to-p1-bg.png');
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+}
+
+/* P1 CONTAINER */
+#circle-packing-plot {
+  width: 100%;
+  height: 100%;
+}
+
+#circle_packing {
+  width: 100%;
+  height: 100%;
+}

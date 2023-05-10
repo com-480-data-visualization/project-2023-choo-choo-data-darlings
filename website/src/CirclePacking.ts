@@ -30,7 +30,18 @@ export class CirclePacking {
         });
     }
 
+    updateDimensions(): void {
+        const parentElement = document.getElementById(PACKING_ELEMENT_ID);
+        if (parentElement) {
+            const dimensions = Math.min(parentElement.clientWidth, parentElement.clientHeight);
+            this.width = dimensions;
+            this.height = dimensions;
+        }
+    }
+
     initPacking(): void {
+        this.updateDimensions();
+
         const pack = (data: any) => d3.pack()
             .size([this.width, this.height])
             .padding(3)(
@@ -43,15 +54,19 @@ export class CirclePacking {
 
         const color = d3.scaleLinear()
             .domain([0, 2])
-            .range(["#F6F6F6", "#2D327D"])
+            .range(["#f4efda", "#2e5d52"])
             .interpolate(d3.interpolateHcl)
 
         const root = pack(this.data);
         let focus = root;
         let view;
 
+        console.log(this.width, this.height);
+
         const svg = d3.select(`#${PACKING_ELEMENT_ID}`).append("svg")
-            .attr("viewBox", `-${this.width / 2} -${this.height / 2} ${this.width} ${this.height}`)
+            .attr("width", this.width)
+            .attr("height", this.height)
+            .attr("viewBox", `-${this.width / 2 + 5} -${this.height / 2} ${this.width + 10} ${this.height}`)
             .style("display", "block")
             .style("margin", "0 -14px")
             .style("background", color(0))
@@ -62,7 +77,7 @@ export class CirclePacking {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-            .attr("fill", d => d.children ? color(d.depth) : "#FFFFFF")
+            .attr("fill", d => d.children ? color(d.depth) : "#f4efda")
             .attr("pointer-events", d => !d.children ? "none" : null)
             .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
             .on("mouseout", function() { d3.select(this).attr("stroke", null); })

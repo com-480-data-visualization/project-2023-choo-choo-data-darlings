@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🚂</title>
+    <link rel="stylesheet" href="./src/style2.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div id="title-container" class="container">
+        <h1 id="title">The Swiss Transportation System</h1>
+        <div id="sky"></div>
+        <div id="bridge"></div>
+        <div id="mountain_left"></div>
+        <div id="mountain_right"></div>
+        <div id="cloud1" class="cloud">
+          <img src="../assets/title/cloud1.png" alt="Cloud 1" />
+        </div>        
+        <div id="cloud2" class="cloud">
+          <img src="../assets/title/cloud2.png" alt="Cloud 2" />
+        </div>
+        <div id="cloud3" class="cloud">
+          <img src="../assets/title/cloud3.png" alt="Cloud 3" />
+        </div>   
+        <div id="train">
+          <img src="../assets/title/train.png" alt="Train" />
+        </div>
+        <div id="particle-container"></div>
+      </div>
+
+      <div id="title-to-p1-container" class="container"></div>
+
+      <div id="p1-container" class="container light-bg">
+        <div class="col" style="width: 30%;">
+          Switzerland's transportation system is known for its efficiency, punctuality, and extensive coverage, characteristics that are embodied in the Swiss ethos of precision and reliability. This comprehensive network, comprising of buses, trams, trains, boats, and even cable cars, ensures that virtually no location in Switzerland is unreachable.
+
+        In order to visualize this multifaceted transport system, we can employ a technique known as 'circle packing'. This method, often used in data visualization, enables us to represent hierarchical structures through nesting of circles. In our case, each circle symbolizes a specific type of transportation in the Swiss system, and the size of each circle corresponds to the number of trips made with that particular mode of transport.
+
+        Upon interpreting the circle packing visualization, one would notice that the buses occupy a significant portion, suggesting a high frequency of bus trips. This is indicative of the crucial role that buses play in connecting towns and cities across the country, as well as providing vital links to rural and alpine regions.
+
+        Interestingly, trains, another cornerstone of the Swiss transport system, are further divided into multiple categories, representing different types of train services, including local, regional, intercity, and international.
+
+        The prominence of the M1 (Lausanne Metro) and trams in the visualization highlights their importance in providing efficient urban transit. The M1, for instance, is an essential part of Lausanne's public transport system, enabling quick and easy travel within the city.
+
+        In essence, the circle packing visualization serves as a compelling representation of the diversity and intricacy of the Swiss transportation system, allowing us to appreciate the nuances of each transport mode's contribution to the overall network.
+        </div>
+        <div class="col" style="width: 70%;">
+          <div id="circle-packing-plot">
+            <div id="circle_packing"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="module" src="/src/main2.ts"></script>
+  <script>
+    // PARTICLES
+    const particleContainer = document.getElementById("particle-container");
+    const train = document.getElementById("train");
+
+    function createParticle(left_shift=0) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      particle.style.left = train.getBoundingClientRect().left + left_shift + (0.5 - Math.random()) * 5 + "px";
+      particleContainer.appendChild(particle);
+
+      setTimeout(() => {
+        const randomY = (0.8 - Math.random()) * 20;
+        const randomX = (0.5 - Math.random()) * 20 + 20;
+        particle.style.opacity = 1;
+        particle.style.transform = `translateY(${randomY}vh) translateX(${randomX}vw)`;
+        particle.style.transition = `transform 5s ease-out, opacity 2s linear`;
+      }, 0);
+
+      setTimeout(() => {
+        particle.style.opacity = 0;
+      }, 3000);
+
+      setTimeout(() => {
+        particleContainer.removeChild(particle);
+      }, 5000);
+    }
+
+    setInterval(() => {
+      const trainRect = train.getBoundingClientRect();
+      const bridgeRect = document.getElementById("bridge").getBoundingClientRect();
+
+      if (trainRect.left <= bridgeRect.right && trainRect.right >= bridgeRect.left) {
+        createParticle(train.getBoundingClientRect().width);
+        createParticle(train.getBoundingClientRect().width / 2);
+        createParticle(0);
+      }
+    }, 100);
+
+    // SCROLLING
+    function isElementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+    }
+
+    function scrollToElement(element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+
+    function smoothScrollTo(element, duration) {
+      const start = window.pageYOffset;
+      const target = element.getBoundingClientRect().top;
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        window.scrollTo({
+          top: start + target * easeInOutQuad(progress),
+        });
+
+        if (elapsed < duration) {
+          window.requestAnimationFrame(step);
+        }
+      }
+
+      window.requestAnimationFrame(step);
+    }
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    function getScrollDirection(event) {
+      return event.deltaY > 0 ? "down" : "up";
+    }
+
+    function scrollDown(event) {
+      const titleContainer = document.getElementById("title-container");
+
+      if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
+        event.preventDefault();
+        const p1Container = document.getElementById("p1-container");
+        smoothScrollTo(p1Container, 3000);
+      }
+    }
+
+    document.addEventListener("wheel", scrollDown);
+    document.addEventListener("touchmove", scrollDown);
+  </script>
+</html>
