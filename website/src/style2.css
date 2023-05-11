@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;800&display=swap');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Bungee', cursive;
+  font-family: 'Nunito', sans-serif;
 }
 
 .container {
@@ -35,7 +37,7 @@ body {
 #title {
   position: absolute;
   color: #FAF4DD;
-  font-family: 'Bungee', cursive;
+  font-family: 'Nunito', sans-serif;
   font-size: min(4vw, 70px);
   margin-top: 30vh;
   z-index: 5;
@@ -184,8 +186,8 @@ body {
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
+  width: 0.3vh;
+  height: 0.3vh;
   bottom: 19.5vh;
   background-color: #0f1d18; /* You can change the color of the particles */
   border-radius: 50%;

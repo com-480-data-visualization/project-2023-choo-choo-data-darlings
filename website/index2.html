@@ -56,101 +56,104 @@
 
   <script type="module" src="/src/main2.ts"></script>
   <script>
-    // PARTICLES
-    const particleContainer = document.getElementById("particle-container");
-    const train = document.getElementById("train");
+    document.addEventListener("DOMContentLoaded", () => {
+      // PARTICLES
+      const particleContainer = document.getElementById("particle-container");
+      const train = document.getElementById("train");
 
-    function createParticle(left_shift=0) {
-      const particle = document.createElement("div");
-      particle.classList.add("particle");
-      particle.style.left = train.getBoundingClientRect().left + left_shift + (0.5 - Math.random()) * 5 + "px";
-      particleContainer.appendChild(particle);
+      function createParticle(left_shift=0) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        particle.style.left = train.getBoundingClientRect().left + left_shift + (0.5 - Math.random()) * 5 + "px";
+        particleContainer.appendChild(particle);
 
-      setTimeout(() => {
-        const randomY = (0.8 - Math.random()) * 20;
-        const randomX = (0.5 - Math.random()) * 20 + 20;
-        particle.style.opacity = 1;
-        particle.style.transform = `translateY(${randomY}vh) translateX(${randomX}vw)`;
-        particle.style.transition = `transform 5s ease-out, opacity 2s linear`;
-      }, 0);
+        setTimeout(() => {
+          const randomY = (0.8 - Math.random()) * 20;
+          const randomX = (0.5 - Math.random()) * 20 + 20;
+          particle.style.opacity = 1;
+          particle.style.transform = `translateY(${randomY}vh) translateX(${randomX}vw)`;
+          particle.style.transition = `transform 5s ease-out, opacity 2s linear`;
+        }, 0);
 
-      setTimeout(() => {
-        particle.style.opacity = 0;
-      }, 3000);
+        setTimeout(() => {
+          particle.style.opacity = 0;
+        }, 3000);
 
-      setTimeout(() => {
-        particleContainer.removeChild(particle);
-      }, 5000);
-    }
-
-    setInterval(() => {
-      const trainRect = train.getBoundingClientRect();
-      const bridgeRect = document.getElementById("bridge").getBoundingClientRect();
-
-      if (trainRect.left <= bridgeRect.right && trainRect.right >= bridgeRect.left) {
-        createParticle(train.getBoundingClientRect().width);
-        createParticle(train.getBoundingClientRect().width / 2);
-        createParticle(0);
+        setTimeout(() => {
+          particleContainer.removeChild(particle);
+        }, 5000);
       }
-    }, 100);
 
-    // SCROLLING
-    function isElementInViewport(el) {
-      const rect = el.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      );
-    }
+      setInterval(() => {
+        const trainRect = train.getBoundingClientRect();
+        const bridgeRect = document.getElementById("bridge").getBoundingClientRect();
 
-    function scrollToElement(element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
+        if (trainRect.left <= bridgeRect.right && trainRect.right >= bridgeRect.left) {
+          createParticle(train.getBoundingClientRect().width);
+          createParticle(train.getBoundingClientRect().width / 2);
+          createParticle(0);
+        }
+      }, 100);
 
-    function smoothScrollTo(element, duration) {
-      const start = window.pageYOffset;
-      const target = element.getBoundingClientRect().top;
-      const startTime = performance.now();
+      // SCROLLING
+      function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
 
-      function step(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        window.scrollTo({
-          top: start + target * easeInOutQuad(progress),
+      function scrollToElement(element) {
+        element.scrollIntoView({
+          behavior: "smooth",
         });
+      }
 
-        if (elapsed < duration) {
-          window.requestAnimationFrame(step);
+      function smoothScrollTo(element, duration) {
+        const start = window.pageYOffset;
+        const target = element.getBoundingClientRect().top;
+        const startTime = performance.now();
+
+        function step(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          window.scrollTo({
+            top: start + target * easeInOutQuad(progress),
+          });
+
+          if (elapsed < duration) {
+            window.requestAnimationFrame(step);
+          }
+        }
+
+        window.requestAnimationFrame(step);
+      }
+
+      function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      }
+
+      function getScrollDirection(event) {
+        return event.deltaY > 0 ? "down" : "up";
+      }
+
+      function scrollDown(event) {
+        console.log("scroll down")
+        const titleContainer = document.getElementById("title-container");
+
+        if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
+          event.preventDefault();
+          const p1Container = document.getElementById("p1-container");
+          smoothScrollTo(p1Container, 3000);
         }
       }
 
-      window.requestAnimationFrame(step);
-    }
-
-    function easeInOutQuad(t) {
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-    }
-
-    function getScrollDirection(event) {
-      return event.deltaY > 0 ? "down" : "up";
-    }
-
-    function scrollDown(event) {
-      const titleContainer = document.getElementById("title-container");
-
-      if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
-        event.preventDefault();
-        const p1Container = document.getElementById("p1-container");
-        smoothScrollTo(p1Container, 3000);
-      }
-    }
-
-    document.addEventListener("wheel", scrollDown);
-    document.addEventListener("touchmove", scrollDown);
+      document.addEventListener("wheel", scrollDown);
+      document.addEventListener("touchmove", scrollDown);
+    });
   </script>
 </html>
