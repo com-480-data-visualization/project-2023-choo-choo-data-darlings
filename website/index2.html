@@ -10,10 +10,11 @@
     <div class="app">
       <div id="title-container" class="container">
         <h1 id="title">The Swiss Transportation System</h1>
-        <div id="sky"></div>
+        <div id="day-sky"></div>
+        <div id="sun"></div>
         <div id="bridge"></div>
-        <div id="mountain_left"></div>
-        <div id="mountain_right"></div>
+        <div id="mountain-left"></div>
+        <div id="mountain-right"></div>
         <div id="cloud1" class="cloud">
           <img src="../assets/title/cloud1.png" alt="Cloud 1" />
         </div>        
@@ -50,6 +51,16 @@
             <div id="circle_packing"></div>
           </div>
         </div>
+      </div>
+
+      <div id="p1-to-final-container" class="container"></div>
+
+      <div id="final-container" class="container">
+        <div id="night-sky"></div>
+        <div id="moon"></div>
+        <div id="night-bridge"></div>
+        <div id="night-mountain-left"></div>
+        <div id="night-mountain-right"></div>
       </div>
     </div>
   </body>
@@ -98,12 +109,15 @@
       // SCROLLING
       function isElementInViewport(el) {
         const rect = el.getBoundingClientRect();
+        const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+        const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
         return (
           rect.top >= 0 &&
           rect.left >= 0 &&
-          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
+          rect.bottom <= (windowHeight + 1) &&  // Allow for rounding errors in Chrome
+          rect.right <= (windowWidth + 1)  // Allow for rounding errors in Chrome
+      );
       }
 
       function scrollToElement(element) {
@@ -142,18 +156,39 @@
       }
 
       function scrollDown(event) {
-        console.log("scroll down")
-        const titleContainer = document.getElementById("title-container");
+        event.preventDefault(); // Disable default scrolling globally
 
+        const titleContainer = document.getElementById("title-container");
+        const p1Container = document.getElementById("p1-container");
+        const finalContainer = document.getElementById("final-container");
         if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
           event.preventDefault();
           const p1Container = document.getElementById("p1-container");
           smoothScrollTo(p1Container, 3000);
         }
+
+        if (isElementInViewport(p1Container) && getScrollDirection(event) === "down") {
+          const finalContainer = document.getElementById("final-container");
+          smoothScrollTo(finalContainer, 3000);
+        }
+
+        if (isElementInViewport(finalContainer) && getScrollDirection(event) === "up") {
+          const p1Container = document.getElementById("p1-container");
+          smoothScrollTo(p1Container, 3000);
+        }
+
+        if (isElementInViewport(p1Container) && getScrollDirection(event) === "up") {
+          const titleContainer = document.getElementById("title-container");
+          smoothScrollTo(titleContainer, 3000);
+        }
       }
 
-      document.addEventListener("wheel", scrollDown);
-      document.addEventListener("touchmove", scrollDown);
+      document.addEventListener("wheel", scrollDown, { passive: false });
+      document.addEventListener("touchmove", scrollDown, { passive: false });
+
+      // Scroll to title on page load
+      const titleContainer = document.getElementById("title-container");
+      smoothScrollTo(titleContainer, 0);
     });
   </script>
 </html>
