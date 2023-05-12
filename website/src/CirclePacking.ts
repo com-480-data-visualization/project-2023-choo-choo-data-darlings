@@ -1,4 +1,3 @@
-//@ts-nocheck
 import * as d3 from 'd3';
 
 const PACKING_DATA_PATH = 'data/circle_packing_data.json';
@@ -7,6 +6,15 @@ const PACKING_ELEMENT_ID = "circle_packing";
 
 const PACKING_WIDTH = 800;
 const PACKING_HEIGHT = 800;
+
+const OFF_WHITE_COLOR = '#f4efda';
+const GREEN_COLOR = '#2e5d52';
+const BLACK_COLOR = '#000000';
+
+const CIRCLE_PADDING = 3;
+
+const MIN_FONT_SIZE = 5;
+const MAX_FONT_SIZE = 100;
 
 export class CirclePacking {
 
@@ -22,7 +30,7 @@ export class CirclePacking {
     }
 
     async loadData(): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             d3.json(PACKING_DATA_PATH).then((data) => {
                 this.data = data;
                 resolve();
@@ -44,32 +52,30 @@ export class CirclePacking {
 
         const pack = (data: any) => d3.pack()
             .size([this.width, this.height])
-            .padding(3)(
+            .padding(CIRCLE_PADDING)(
                 d3.hierarchy(data)
                 .sum(d => d.value)
                 .sort((a: any, b: any) => b.value - a.value)
             )
 
-        const format = d3.format(",d")
-
-        const color = d3.scaleLinear()
-            .domain([0, 2])
-            .range(["#f4efda", "#2e5d52"])
-            .interpolate(d3.interpolateHcl)
-
         const root = pack(this.data);
         let focus = root;
-        let view;
 
-        console.log(this.width, this.height);
+        const colorScale = d3.scaleLinear()
+            .domain([0, 2])
+            .range([OFF_WHITE_COLOR, GREEN_COLOR] as Iterable<number>)
 
-        const svg = d3.select(`#${PACKING_ELEMENT_ID}`).append("svg")
+        const fontSizeScale = d3.scaleSqrt()
+            .domain([d3.min(root.descendants(), d => d.r), d3.max(root.descendants(), d => d.r)])
+            .range([MIN_FONT_SIZE, MAX_FONT_SIZE]);
+
+        const svg = d3.select(`#${PACKING_ELEMENT_ID}`)
+            .append("svg")
             .attr("width", this.width)
             .attr("height", this.height)
-            .attr("viewBox", `-${this.width / 2 + 5} -${this.height / 2} ${this.width + 10} ${this.height}`)
+            .attr("viewBox", `-${this.width / 2} -${this.height / 2} ${this.width} ${this.height}`)
             .style("display", "block")
-            .style("margin", "0 -14px")
-            .style("background", color(0))
+            .style("background", colorScale(0))
             .style("cursor", "pointer")
             .on("click", (event) => zoom(event, root));
 
@@ -77,23 +83,26 @@ export class CirclePacking {
             .selectAll("circle")
             .data(root.descendants().slice(1))
             .join("circle")
-            .attr("fill", d => d.children ? color(d.depth) : "#f4efda")
+            .attr("fill", d => d.children ? colorScale(d.depth) : OFF_WHITE_COLOR)
             .attr("pointer-events", d => !d.children ? "none" : null)
-            .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
+            .on("mouseover", function() { d3.select(this).attr("stroke", BLACK_COLOR); })
             .on("mouseout", function() { d3.select(this).attr("stroke", null); })
             .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
         const label = svg.append("g")
-            .style("font", "10px sans-serif")
+            .style("font-family", "var(--default-font-family)")
             .attr("pointer-events", "none")
             .attr("text-anchor", "middle")
             .selectAll("text")
             .data(root.descendants())
             .join("text")
+            .attr("dy", "0.3em")
+            .style("font-size", (d: any) => `${fontSizeScale(d.r)}px`)
             .style("fill-opacity", d => d.parent === root ? 1 : 0)
             .style("display", d => d.parent === root ? "inline" : "none")
             .text((d: any) => d.data.name);
         
+        let view: any;
         const zoomTo = (v: any) => {
             const k = this.width / v[2];
         
@@ -106,24 +115,22 @@ export class CirclePacking {
 
         zoomTo([root.x, root.y, root.r * 2]);
         
-          function zoom(event, d) {
-            const focus0 = focus;
-        
+          function zoom(event: any, d: any) {
             focus = d;
-        
+
             const transition = svg.transition()
                 .duration(event.altKey ? 7500 : 750)
-                .tween("zoom", d => {
+                .tween("zoom", () => {
                   const i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
-                  return t => zoomTo(i(t));
+                  return (t: any) => zoomTo(i(t));
                 });
         
             label
-              .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+              .filter(function(d) { return d.parent === focus || (this as SVGElement).style.display === "inline"; })
               .transition(transition)
                 .style("fill-opacity", d => d.parent === focus ? 1 : 0)
-                .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-                .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+                .on("start", function(d) { if (d.parent === focus) (this as SVGElement).style.display = "inline"; })
+                .on("end", function(d) { if (d.parent !== focus) (this as SVGElement).style.display = "none"; });
           }
     }
 }
