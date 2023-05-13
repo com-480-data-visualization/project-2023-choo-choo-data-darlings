@@ -17,6 +17,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--default-font-family);
+  overflow: hidden;
 }
 
 .container {
@@ -53,6 +54,7 @@ body {
 
 .flex-center {
   align-items: center;
+  justify-content: center;
 }
 
 .flex-100 {
@@ -122,12 +124,30 @@ body {
   background-size: cover;
 }
 
+.black-bg {
+  background-color: var(--black);
+}
+
 .off-white-bg {
   background-image: url('../assets/backgrounds/off-white-bg.png');
 }
 
 .ow-to-ow-bg {
   background-image: url('../assets/backgrounds/ow-to-ow-bg.png');
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+}
+
+.ow-to-bk-bg {
+  background-image: url('../assets/backgrounds/ow-to-bk-bg.png');
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+}
+
+.bk-to-ow-bg {
+  background-image: url('../assets/backgrounds/bk-to-ow-bg.png');
   background-repeat: repeat-x;
   background-position: bottom center;
   background-size: auto 100%;
@@ -150,6 +170,10 @@ p {
 
 .light-text {
   color: var(--off-white);
+}
+
+.pink-text {
+  color: var(--pink);
 }
 
 .small-text {
@@ -189,6 +213,7 @@ p {
   color: var(--off-white);
   font-family: var(--default-font-family);
   font-size: min(4vw, var(--large-font-size));
+  font-weight: 800;
   margin-top: 30vh;
   z-index: 5;
 }
