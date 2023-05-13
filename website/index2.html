@@ -170,8 +170,29 @@
         </div>
       </div>
 
+      <div id="p2-to-p3-container" class="container"></div>
 
-      <div id="p3-to-final-container" class="container"></div>
+      <div id="p3-container" class="container container-padding off-white-bg">
+        <div class="flex-row flex-100 flex-center">
+          <div class="flex-col flex-50 overflow-auto">
+            <div class="flex-row flex-center">
+              <div class="flex-col text-padding">
+                <p class="medium-text">
+                  Feast your eyes on our second visualization - yaaas. Click any canton to see.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex-col flex-50">
+            <div class="flex-row flex-100 flex-center">
+              <div id="hierarchy"></div>
+              <div class="custom-select" id="select_cantons"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--div id="p2-to-final-container" class="container"></div-->
 
       <div id="final-container" class="container">
         <div id="maintainers">
@@ -321,7 +342,7 @@
         if (isElementInViewport(p2Container) && getScrollDirection(event) === "up") {
           smoothScrollTo(p1Container, SCROLL_DURATION);
         }
-
+        
         if (isElementInViewport(p1Container) && getScrollDirection(event) === "up") {
           smoothScrollTo(titleContainer, SCROLL_DURATION);
         }
