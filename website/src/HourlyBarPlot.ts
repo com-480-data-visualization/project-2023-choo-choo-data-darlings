@@ -1,6 +1,6 @@
 //@ts-nocheck
 import * as d3 from "d3";
-import './style.css';
+//import './style.css';
 
 const BAR_WIDTH = 15
 const SHIFTED_MINUTES = 20

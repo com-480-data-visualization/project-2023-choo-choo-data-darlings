@@ -121,7 +121,7 @@
         </div>
       </div>
 
-      <div id="p2-to-p3-container" class="container"></div>
+      <div id="p2-to-p3-container" class="container ow-to-ow-bg"></div>
 
       <div id="p3-container" class="container off-white-bg">
         <div class="flex-row flex-100 flex-center">
@@ -170,29 +170,29 @@
         </div>
       </div>
 
-      <div id="p2-to-p3-container" class="container"></div>
+      <div id="p3-to-p4-container" class="container ow-to-ow-bg"></div>
 
-      <div id="p3-container" class="container container-padding off-white-bg">
+      <div id="p4-container" class="container container-padding off-white-bg">
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col flex-50 overflow-auto">
             <div class="flex-row flex-center">
               <div class="flex-col text-padding">
                 <p class="medium-text">
-                  Feast your eyes on our second visualization - yaaas. Click any canton to see.
+                  Yaaaaas slay queen.
                 </p>
               </div>
             </div>
           </div>
           <div class="flex-col flex-50">
-            <div class="flex-row flex-100 flex-center">
-              <div id="hierarchy"></div>
-              <div class="custom-select" id="select_cantons"></div>
+            <div id="bar-container-plot">
+              <div id="buttons"></div>
+              <div id="chart"></div>   
             </div>
           </div>
         </div>
       </div>
 
-      <!--div id="p2-to-final-container" class="container"></div-->
+      <div id="p-to-final-container" class="container"></div>
 
       <div id="final-container" class="container">
         <div id="maintainers">
@@ -313,6 +313,7 @@
         const p1Container = document.getElementById("p1-container");
         const p2Container = document.getElementById("p2-container");
         const p3Container = document.getElementById("p3-container");
+        const p4Container = document.getElementById("p4-container");
         const finalContainer = document.getElementById("final-container");
         if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
           event.preventDefault();
@@ -328,10 +329,18 @@
         }
 
         if (isElementInViewport(p3Container) && getScrollDirection(event) === "down") {
+          smoothScrollTo(p4Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p4Container) && getScrollDirection(event) === "down") {
           smoothScrollTo(finalContainer, SCROLL_DURATION);
         }
 
         if (isElementInViewport(finalContainer) && getScrollDirection(event) === "up") {
+          smoothScrollTo(p4Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p4Container) && getScrollDirection(event) === "up") {
           smoothScrollTo(p3Container, SCROLL_DURATION);
         }
 
