@@ -127,6 +127,13 @@ body {
   background-image: url('../assets/backgrounds/off-white-bg.png');
 }
 
+.ow-to-ow-bg {
+  background-image: url('../assets/backgrounds/ow-to-ow-bg.png');
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+}
+
 /* TEXT */
 p {
   margin: 0;
@@ -390,8 +397,8 @@ p {
 }
 
 /* P3 TO FINAL CONTAINER */
-#p3-to-final-container {
-  background-image: url('../assets/backgrounds/p3-to-final-bg.png');
+#p-to-final-container {
+  background-image: url('../assets/backgrounds/p-to-final-bg.png');
   background-repeat: repeat-x;
   background-position: bottom center;
   background-size: auto 100%;
