@@ -50,86 +50,115 @@ export class HomePageTable {
     }
 
     private initStaticElements(): void {
-        this.svg = d3
-            .select("#chart")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+        this.table
+          .select("#chart")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
     }
 
     private loadData(): void {
         // just one JSON file this time.
     }
 
+    private sortTable(column, ascending=true) {
+      // get the rows to sort
+      var rows = this.table.selectAll("tr");
+      // sort the rows based on the specified column
+      rows.sort(function(a, b) {
+        var aValue = a[column];
+        var bValue = b[column];
+        if (ascending) {
+          return d3.ascending(aValue, bValue);
+        } else {
+          return d3.descending(aValue, bValue);
+        }
+      })
+      // put back the sorted rows to the table
+    }
+    
+
     private createTable(): void {
         // headers (cols)
         const headerRow = this.table.append("thead").append("tr");
         headerRow
-          .append("th")
-          .text("Stop ID")
-          .attr("class", "stop-id-header");
+            .append("th")
+            .text("Stop Name")
+            .attr("class", "stop-name-header")
+            .on("click", () => this.sortTable("stop_name"));
         headerRow
-          .append("th")
-          .text("Stop Name")
-          .attr("class", "stop-name-header");
+            .append("th")
+            .text("City")
+            .attr("class", "city-header")
+            .on("click", () => this.sortTable("city"));
         headerRow
-          .append("th")
-          .text("City")
-          .attr("class", "city-header");
+            .append("th")
+            .text("Canton")
+            .attr("class", "canton-header")
+            .on("click", () => this.sortTable("canton"));
         headerRow
-          .append("th")
-          .text("Canton")
-          .attr("class", "canton-header");
+            .append("th")
+            .text("Mean Arrival Delay (s)")
+            .attr("class", "mean-arrival-delay-header")
+            .on("click", () => this.sortTable("mean_arrival_delay"));
         headerRow
-          .append("th")
-          .text("Mean Arrival Delay (s)")
-          .attr("class", "mean-arrival-delay-header");
+            .append("th")
+            .text("Mean Departure Delay (s)")
+            .attr("class", "mean-departure-delay-header")
+            .on("click", () => this.sortTable("mean_departure_delay"));
         headerRow
-          .append("th")
-          .text("Mean Departure Delay (s)")
-          .attr("class", "mean-departure-delay-header");
+            .append("th")
+            .text("Median Arrival Delay (s)")
+            .attr("class", "median-arrival-delay-header")
+            .on("click", () => this.sortTable("median_arrival_delay"));
         headerRow
-          .append("th")
-          .text("Median Arrival Delay (s)")
-          .attr("class", "median-arrival-delay-header");
+            .append("th")
+            .text("Median Departure Delay (s)")
+            .attr("class", "median-departure-delay-header")
+            .on("click", () => this.sortTable("median_departure_delay"));
         headerRow
-          .append("th")
-          .text("Median Departure Delay (s)")
-          .attr("class", "median-departure-delay-header");
+            .append("th")
+            .text("Std Arrival Delay (s)")
+            .attr("class", "std-arrival-delay-header")
+            .on("click", () => this.sortTable("std_arrival_delay"));
         headerRow
-          .append("th")
-          .text("Std Arrival Delay (s)")
-          .attr("class", "std-arrival-delay-header");
+            .append("th")
+            .text("Std Departure Delay (s)")
+            .attr("class", "std-departure-delay-header")
+            .on("click", () => this.sortTable("std_departure_delay"));
         headerRow
-          .append("th")
-          .text("Std Departure Delay (s)")
-          .attr("class", "std-departure-delay-header");
+            .append("th")
+            .text("N Arrival Delay")
+            .attr("class", "n-arrival-delay-header")
+            .on("click", () => this.sortTable("n_arrival_delay"));
         headerRow
-          .append("th")
-          .text("N Arrival Delay")
-          .attr("class", "n-arrival-delay-header");
+            .append("th")
+            .text("N Departure Delay")
+            .attr("class", "n-departure-delay-header")
+            .on("click", () => this.sortTable("n_departure_delay"));
         headerRow
-          .append("th")
-          .text("N Departure Delay")
-          .attr("class", "n-departure-delay-header");
+            .append("th")
+            .text("N Cancelled")
+            .attr("class", "n-cancelled-header")
+            .on("click", () => this.sortTable("n_cancelled"));
         headerRow
-          .append("th")
-          .text("N Cancelled")
-          .attr("class", "n-cancelled-header");
+            .append("th")
+            .text("Through Trips")
+            .attr("class", "n-through-trip-header")
+            .on("click", () => this.sortTable("n_through_trip"));
         headerRow
-          .append("th")
-          .text("Through Trips")
-          .attr("class", "n-through-trip-header");
+            .append("th")
+            .text("Additional Trips")
+            .attr("class", "n-additional-trip-header");
+            .on("click", () => this.sortTable("n_additional_trip"));
         headerRow
-          .append("th")
-          .text("Additional Trips")
-          .attr("class", "n-additional-trip-header");
-        headerRow
-          .append("th")
-          .text("Entries")
-          .attr("class", "n-entries-header");
+            .append("th")
+            .text("Entries")
+            .attr("class", "n-entries-header");
+            .on("click", () => this.sortTable("n_entries"));
+        
 
 
         // rows 
@@ -148,10 +177,6 @@ export class HomePageTable {
 
         // add the data to cells
         
-        rows
-        .append("td")
-        .text((d) => d.stop_id)
-        .attr("class", "stop-id-cell");
         rows
         .append("td")
         .text((d) => d.stop_name)
