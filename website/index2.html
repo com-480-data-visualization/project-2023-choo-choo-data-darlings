@@ -130,6 +130,26 @@
         </div>
       </div>
 
+      <div id="p3-container" class="container container-padding off-white-bg">
+        <div class="flex-row flex-100 flex-center">
+          <div class="flex-col flex-50 overflow-auto">
+            <div class="flex-row flex-center">
+              <div class="flex-col text-padding">
+                <p class="medium-text">
+                  Yaaaaas slay queen.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex-col flex-50">
+            <div id="bar-container-plot">
+              <div id="buttons"></div>
+              <div id="chart"></div>   
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!--div id="p2-to-final-container" class="container"></div-->
 
       <div id="final-container" class="container">
@@ -251,6 +271,7 @@
         const p1Container = document.getElementById("p1-container");
         const p2Container = document.getElementById("p2-container");
         const p3Container = document.getElementById("p3-container");
+        const p4Container = document.getElementById("p4-container");
         const finalContainer = document.getElementById("final-container");
         if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
           event.preventDefault();
@@ -269,11 +290,21 @@
         }
 
         if (isElementInViewport(p3Container) && getScrollDirection(event) === "down") {
+          const p4Container = document.getElementById("p4-container");
+          smoothScrollTo(p4Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p4Container) && getScrollDirection(event) === "down") {
           const finalContainer = document.getElementById("final-container");
           smoothScrollTo(finalContainer, SCROLL_DURATION);
         }
 
         if (isElementInViewport(finalContainer) && getScrollDirection(event) === "up") {
+          const p4Container = document.getElementById("p4-container");
+          smoothScrollTo(p4Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p4Container) && getScrollDirection(event) === "up") {
           const p3Container = document.getElementById("p3-container");
           smoothScrollTo(p3Container, SCROLL_DURATION);
         }
