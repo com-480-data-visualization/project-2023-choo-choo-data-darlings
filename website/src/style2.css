@@ -3,6 +3,10 @@
 :root {
   --default-font-family: 'Nunito', sans-serif;
   --off-white: #FAF4DD;
+  --pink: #FB9E82;
+  --green: #2E5D52;
+  --dark-green: #0F1D18;
+  --black: #000000;
   --small-font-size: 0.8rem;
   --medium-font-size: 1.8rem;
   --large-font-size: 4.0rem;
@@ -35,21 +39,17 @@ body {
   padding-right: 5vw;
 }
 
-.text-padding {
-  padding-left: 20%;
-  padding-right: 20%;
+.flex-row, .flex-col {
+  display: flex;
+  max-height: 100%;
 }
 
 .flex-row {
-  display: flex;
   flex-direction: row;
-  max-height: 100%;
 }
 
 .flex-col {
-  display: flex;
   flex-direction: column;
-  max-height: 100%;
 }
 
 .flex-center {
@@ -60,6 +60,14 @@ body {
   flex: 0 0 100%;
 }
 
+.flex-80 {
+  flex: 0 0 80%;
+}
+
+.flex-70 {
+  flex: 0 0 70%;
+}
+
 .flex-50 {
   flex: 0 0 50%;
 }
@@ -68,8 +76,36 @@ body {
   flex: 0 0 30%;
 }
 
-.flex-70 {
-  flex: 0 0 70%;
+.flex-20 {
+  flex: 0 0 20%;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.height-80 {
+  height: 80%;
+}
+
+.height-70 {
+  height: 70%;
+}
+
+.height-50 {
+  height: 50%;
+}
+
+.height-30 {
+  height: 30%;
+}
+
+.height-20 {
+  height: 20%;
 }
 
 .overflow-auto {
@@ -93,8 +129,19 @@ body {
 
 /* TEXT */
 p {
+  margin: 0;
+  margin-bottom: 2rem;
   text-align: justify;
 }
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-center {
+  text-align: center;
+}
+
 .light-text {
   color: var(--off-white);
 }
@@ -109,6 +156,16 @@ p {
 
 .large-text {
   font-size: var(--large-font-size);
+}
+
+.text-padding-10 {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.text-padding-20 {
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 /* TITLE CONTAINER */
@@ -283,7 +340,7 @@ p {
   width: 0.3vh;
   height: 0.3vh;
   bottom: 19.5vh;
-  background-color: #0f1d18; /* You can change the color of the particles */
+  background-color: #0f1d18;
   border-radius: 25%;
   opacity: 1;
 }
@@ -296,20 +353,6 @@ p {
   background-size: auto 100%;
 }
 
-/* P2 CONTAINER */
-#circle-packing-plot {
-  width: 100%;
-  height: 100vh;
-}
-
-#circle_packing {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 /* P1 TO P2 CONTAINER */
 #p1-to-p2-container {
   background-image: url('../assets/backgrounds/p1-to-p2-bg.png');
@@ -318,9 +361,37 @@ p {
   background-size: auto 100%;
 }
 
-/* P2 TO FINAL CONTAINER */
-#p2-to-final-container {
-  background-image: url('../assets/backgrounds/p2-to-final-bg.png');
+/* P2 CONTAINER */
+#circle-packing-plot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*P2 TO P3 CONTAINER */
+
+/* P3 CONTAINER */
+#hierarchy-plot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hierarchy-minimap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* P3 TO FINAL CONTAINER */
+#p3-to-final-container {
+  background-image: url('../assets/backgrounds/p3-to-final-bg.png');
   background-repeat: repeat-x;
   background-position: bottom center;
   background-size: auto 100%;

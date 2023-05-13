@@ -36,7 +36,7 @@
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col flex-100 overflow-auto">
             <div class="flex-row flex-100 flex-center">
-              <div class="flex-col text-padding">
+              <div class="flex-col text-padding-20">
                 <p class="light-text medium-text">
                   Welcome aboard! You're about to embark on a fascinating journey through the intricate web of Swiss transportation, a system so well-oiled, it's like the inner workings of a Swiss watch - and just as precise. Picture this: nestled in the heart of Europe, surrounded by majestic mountains and serene lakes, lies a land where trains run like clockwork, buses reach the most remote alpine villages, and even the boats are punctual. Welcome to Switzerland, where getting from A to B is never a hassle, but an experience.
                 </p>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="flex-row flex-100 flex-center">
-              <div class="flex-col text-padding">
+              <div class="flex-col text-padding-20">
                 <p class="light-text medium-text">
                   Imagine a country where the public transit system is as diverse as its landscapes. The Swiss Federal Railways, with their unrivaled punctuality, are the lifeblood of the system, threading through bustling cities, quaint towns, and pastoral countryside alike. Then there are the iconic yellow PostBuses, bravely navigating through winding mountainous roads, reaching corners of Switzerland that even the Swiss might not know existed. Cities each have their own transportation networks, complete with trams and buses, while boats glide seamlessly across shimmering lakes. And let's not forget the cable cars and funiculars, whisking you up to dizzying heights where the air is crisp, and the views, breathtaking.
                 </p>
@@ -52,7 +52,7 @@
             </div>
 
             <div class="flex-row flex-100 flex-center">
-              <div class="flex-col text-padding">
+              <div class="flex-col text-padding-20">
                 <p class="light-text medium-text">
                   But the <i>pièce de résistance</i>? It's the integrated ticketing system, a marvel of Swiss efficiency. With just one ticket, you can hop from a train to a bus, onto a boat, and then ascend a mountain in a cable car. It's like having an all-access pass to an amusement park, only this park is an entire country. And overseeing this magical ride is the Swiss Federal Office of Transport, the unsung heroes ensuring your journey is as smooth as Swiss chocolate. So buckle up, it's time to explore the Swiss transportation system, where every journey is a story in itself.
                 </p>
@@ -68,7 +68,15 @@
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col flex-50 overflow-auto">
             <div class="flex-row flex-center">
-              <div class="flex-col text-padding">
+              <div class="flex-col text-padding-20">
+                <p class="large-text">
+                  Mobility Mosaic
+                </p>
+              </div>
+            </div>
+
+            <div class="flex-row flex-center">
+              <div class="flex-col text-padding-20">
                 <p class="medium-text">
                   Feast your eyes on our first visualization - a circle packing chart, beautifully unravels the Swiss transportation tapestry, showcasing not just the various modes of transport but also their distinctive types.
                 </p>
@@ -76,7 +84,7 @@
             </div>
 
             <div class="flex-row flex-center">
-              <div class="flex-col text-padding">
+              <div class="flex-col text-padding-20">
                 <p class="medium-text">
                   Picture a universe of circles where each major mode - buses, trains, trams, metros, rack railways, boats - is a solar system in itself, each hosting its own set of planets representing different types within the category.
                 </p>
@@ -84,7 +92,7 @@
             </div>
 
             <div class="flex-row flex-center">
-              <div class="flex-col text-padding">
+              <div class="flex-col text-padding-20">
                 <p class="medium-text">
                   The train system, for instance, isn't just a single circle, but a constellation of circles representing intercity trains, regional trains, and more.
                 </p>
@@ -92,23 +100,78 @@
             </div>
 
             <div class="flex-row flex-center">
-              <div class="flex-col text-padding">
+              <div class="flex-col text-padding-20">
                 <p class="medium-text">
                   Through this visualization, we delve deeper into the Swiss transportation universe, revealing the layers and complexities of each mode. It's not just about buses or trains; it's about the intricate network within each mode that together makes Swiss transportation so efficient and comprehensive. This is the beauty of Swiss precision - and our circle packing chart captures it perfectly.
                 </p>
               </div>
             </div>
           </div>
-          <div class="flex-col flex-50">
-            <div id="circle-packing-plot">
-              <div id="circle_packing"></div>
+
+          <div class="flex-col flex-50 height-100 overflow-auto">
+            <div class="flex-row flex-80">
+              <div id="circle-packing-plot"></div>
+            </div>
+            <div id="circle-packing-text" class="flex-row flex-20 flex-center">
+              <p class="medium-text text-padding-10 text-center text-italic width-100">
+                Click on each circle to zoom in and explore the different types of transportation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="p2-to-p3-container" class="container"></div>
+
+      <div id="p3-container" class="container off-white-bg">
+        <div class="flex-row flex-100 flex-center">
+          <div class="flex-col flex-50 overflow-auto">
+            <div class="flex-row flex-center">
+              <div class="flex-col text-padding-20">
+                <p class="large-text">
+                  Swiss Nexus
+                </p>
+              </div>
+            </div>
+
+            <div class="flex-row flex-center">
+              <div class="flex-col text-padding-20">
+                <p class="medium-text">
+                  Behold our second visualization - a mesmerizing hierarchical edge bundling that uncovers the hidden connections between Switzerland's diverse cantons. Picture a miniature map of the country, where each canton is but a click away. With a simple selection, watch as a vibrant, circular layout springs to life, unveiling the transport stops that stitch together the tapestry of Swiss mobility.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex-row flex-center">
+              <div class="flex-col text-padding-20">
+                <p class="medium-text">
+                  This captivating visualization highlights the intricate web of connections that unite different corners of Switzerland, fostering a sense of unity and cohesion. The myriad lines weaving through the circle, much like the threads of an artisan's loom, reveal the true extent of the country's interconnectedness, showcasing the vital role transportation plays in bridging the gaps between its urban hubs and remote hideaways.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex-row flex-center">
+              <div class="flex-col text-padding-20">
+                <p class="medium-text">
+                  Step into the shoes of a modern-day explorer, charting the unseen connections that bring the Swiss landscape to life. Through this visual masterpiece, discover the harmony that exists within the Swiss transportation system, and experience the joy of uncovering the ties that bind this small yet mighty nation together.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-col flex-50 height-100 overflow-auto">
+            <div class="flex-row flex-80">
+              <div id="hierarchy-plot"></div>
+            </div>
+            <div class="flex-row flex-20">
+              <div id="hierarchy-minimap"></div>
             </div>
           </div>
         </div>
       </div>
 
 
-      <div id="p2-to-final-container" class="container"></div>
+      <div id="p3-to-final-container" class="container"></div>
 
       <div id="final-container" class="container">
         <div id="maintainers">
@@ -228,35 +291,38 @@
         const titleContainer = document.getElementById("title-container");
         const p1Container = document.getElementById("p1-container");
         const p2Container = document.getElementById("p2-container");
+        const p3Container = document.getElementById("p3-container");
         const finalContainer = document.getElementById("final-container");
         if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
           event.preventDefault();
-          const p1Container = document.getElementById("p1-container");
           smoothScrollTo(p1Container, SCROLL_DURATION);
         }
 
         if (isElementInViewport(p1Container) && getScrollDirection(event) === "down") {
-          const p2Container = document.getElementById("p2-container");
           smoothScrollTo(p2Container, SCROLL_DURATION);
         }
 
         if (isElementInViewport(p2Container) && getScrollDirection(event) === "down") {
-          const finalContainer = document.getElementById("final-container");
+          smoothScrollTo(p3Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p3Container) && getScrollDirection(event) === "down") {
           smoothScrollTo(finalContainer, SCROLL_DURATION);
         }
 
         if (isElementInViewport(finalContainer) && getScrollDirection(event) === "up") {
-          const p1Container = document.getElementById("p2-container");
-          smoothScrollTo(p1Container, SCROLL_DURATION);
+          smoothScrollTo(p3Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p3Container) && getScrollDirection(event) === "up") {
+          smoothScrollTo(p2Container, SCROLL_DURATION);
         }
 
         if (isElementInViewport(p2Container) && getScrollDirection(event) === "up") {
-          const p1Container = document.getElementById("p1-container");
           smoothScrollTo(p1Container, SCROLL_DURATION);
         }
 
         if (isElementInViewport(p1Container) && getScrollDirection(event) === "up") {
-          const titleContainer = document.getElementById("title-container");
           smoothScrollTo(titleContainer, SCROLL_DURATION);
         }
       }
