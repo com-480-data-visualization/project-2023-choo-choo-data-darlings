@@ -2,7 +2,6 @@
 import * as d3 from "d3";
 //import './style.css';
 
-const BAR_WIDTH = 15
 const SHIFTED_MINUTES = 20
 // const MINUTES_INTERVAL = 30
 const DATA_FOLDER = "data/hourly_plot";
@@ -169,26 +168,20 @@ export class HourlyBarPlot {
                 this.bars.join(
                     enter => enter.append("rect")
                         .attr("class", "bar")
-                        .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
+                        .attr("x", (d) => this.xScale(d.departure_time) - this.width * BAR_WIDTH_FACTOR / 2)
                         .attr("y", this.yScale(0)) // start from the bottom of the chart
-                        .attr("width", BAR_WIDTH)
+                        .attr("width", this.width * BAR_WIDTH_FACTOR)
                         .attr("height", 0) // start with a height of 0
                         .attr("fill", "steelblue"),
 
                     update => update
                         .transition() // Start a transition
                         .duration(1000) // Make it last 1 second
-                        .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
+                        .attr("x", (d) => this.xScale(d.departure_time) - this.width * BAR_WIDTH_FACTOR / 2)
                         .attr("y", (d) => this.yScale(d.count))
-                        .attr("width", BAR_WIDTH)
+                        .attr("width", this.width * BAR_WIDTH_FACTOR)
                         .attr("height", (d) => this.height - this.yScale(d.count))
-                        .attr("fill", COLOR_MAP[transportMethod])
-                        // Change the color of the button elements to be the color of the bars
-                        .each(function (d) {
-                            for (let button of document.getElementById(BAR_BUTTONS_ELEMENT_ID)!.children) {
-                                button.setAttribute("style", `background-color: ${COLOR_MAP[transportMethod]}`);
-                            }
-                        }),
+                        .attr("fill", COLOR_MAP[transportMethod]),
                     exit => exit
                         .transition() // Start a transition
                         .duration(1000) // Make it last 1 second
