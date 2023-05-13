@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap');
 
 :root {
   --default-font-family: 'Nunito', sans-serif;
@@ -8,7 +8,7 @@
   --dark-green: #0F1D18;
   --black: #000000;
   --small-font-size: 0.8rem;
-  --medium-font-size: 1.8rem;
+  --medium-font-size: 1.4rem;
   --large-font-size: 4.0rem;
 }
 
@@ -163,6 +163,10 @@ p {
 
 .large-text {
   font-size: var(--large-font-size);
+}
+
+.large-font-weight {
+  font-weight: 800;
 }
 
 .text-padding-10 {
