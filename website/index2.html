@@ -108,7 +108,23 @@
       </div>
 
 
-      <div id="p2-to-final-container" class="container"></div>
+      <div id="p2-to-p3-container" class="container"></div>
+
+      <div id="p3-container" class="container container-padding off-white-bg">
+        <div class="flex-row flex-100 flex-center">
+          <div class="flex-col flex-50 overflow-auto">
+
+          </div>
+          <div class="flex-col flex-50">
+            <div id="hierarchy-plot">
+              <div id="hierarchy"></div>
+              <!--<div class="custom-select" id="select_cantons"></div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--div id="p2-to-final-container" class="container"></div-->
 
       <div id="final-container" class="container">
         <div id="maintainers">
@@ -228,6 +244,7 @@
         const titleContainer = document.getElementById("title-container");
         const p1Container = document.getElementById("p1-container");
         const p2Container = document.getElementById("p2-container");
+        const p3Container = document.getElementById("p3-container");
         const finalContainer = document.getElementById("final-container");
         if (isElementInViewport(titleContainer) && getScrollDirection(event) === "down") {
           event.preventDefault();
@@ -241,20 +258,30 @@
         }
 
         if (isElementInViewport(p2Container) && getScrollDirection(event) === "down") {
+          const p3Container = document.getElementById("p3-container");
+          smoothScrollTo(p3Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p3Container) && getScrollDirection(event) === "down") {
           const finalContainer = document.getElementById("final-container");
           smoothScrollTo(finalContainer, SCROLL_DURATION);
         }
 
         if (isElementInViewport(finalContainer) && getScrollDirection(event) === "up") {
-          const p1Container = document.getElementById("p2-container");
-          smoothScrollTo(p1Container, SCROLL_DURATION);
+          const p3Container = document.getElementById("p3-container");
+          smoothScrollTo(p3Container, SCROLL_DURATION);
+        }
+
+        if (isElementInViewport(p3Container) && getScrollDirection(event) === "up") {
+          const p2Container = document.getElementById("p2-container");
+          smoothScrollTo(p2Container, SCROLL_DURATION);
         }
 
         if (isElementInViewport(p2Container) && getScrollDirection(event) === "up") {
           const p1Container = document.getElementById("p1-container");
           smoothScrollTo(p1Container, SCROLL_DURATION);
         }
-
+        
         if (isElementInViewport(p1Container) && getScrollDirection(event) === "up") {
           const titleContainer = document.getElementById("title-container");
           smoothScrollTo(titleContainer, SCROLL_DURATION);
