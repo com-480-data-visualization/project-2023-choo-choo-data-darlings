@@ -1,25 +1,21 @@
 import * as d3 from 'd3';
 import * as THREE from 'three';
 
-/*
- * TODO:
- * Add a slider for the choice of MAX_TRAIN_DELAY
- * Be able to highlight train types (e.g. IC, IR, RE, etc.)
- * Add a legend for the heatmap (maybe)
- */
-
 // MAP
 const DIV_CONTAINER_ID = 'container';
-const SELECT_HEATMAP_ID = 'select_heatmap';
-const SELECT_TRAIN_COLOR_MODE_ID = 'select_train_color_mode';
-const SLIDER_SIMULATION_SPEED_ID = 'slider_simulation_speed';
-const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider_simulation_speed_label';
+const SELECT_HEATMAP_ID = 'select-heatmap';
+const SELECT_TRAIN_COLOR_MODE_ID = 'select-train-color-mode';
+const SLIDER_SIMULATION_SPEED_ID = 'slider-simulation-speed';
+const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider-simulation-speed-label';
+const SELECT_ISO_ID = 'select-iso';
 
-const MAP_PATH = '../../data/map/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.geojson';
+const MAP_PATH = '../../data/map/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.json';
 const TRAINS_FOLDER_PATH = '../../data/map/train_trips_bins/';
 const HEATMAP_PATH = '../../data/map/density_heatmap.png';
 const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = '../../data/map/density_heatmap_';
 const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
+const ISO_FILE_PREFIX = '../../data/map/isochronic_map_';
+const ISO_FILE_SUFFIX = '.json';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder_line';
 const SWISS_BORDER_GROUP_NAME = 'swissborder_group';
@@ -42,6 +38,30 @@ const EARLY_TRAIN_COLOR = '#00ff00';
 const LATE_TRAIN_COLOR = '#ff0000';
 const SLOW_TRAIN_COLOR = '#0000ff';
 const FAST_TRAIN_COLOR = '#ffff00';
+
+const ISO_STOPS = {
+    'None': '',
+    'Zürich': '8503000',
+    'Bern': '8507000',
+    'Basel': '8500010',
+    'Lausanne': '8501120',
+    'Genève': '8587057',
+    'St. Gallen': '8506302',
+    'Lugano': '8505300',
+}
+
+const CITIES = {
+  'Zürich': [47.3781768166501, 8.54021816561537],
+  'Bern': [46.94883398159425, 7.439131612366045],
+  'Basel': [47.54741361808408, 7.589564242496508],
+  'Lausanne': [46.51678813031248, 6.629092475966655],
+  'Genève': [46.20973474671916, 6.142437734120765],
+  'St. Gallen': [47.54741361808408, 7.589564242496508],
+  'Lugano': [46.00550466890416, 8.946990064034518],
+  //'A': [45.92668790533614, 5.99505243972829],
+  //'B': [46.009637124516935, 10.480645720544768],
+  //'C': [47.803126739815056, 10.134966972298361],
+}
 
 const DEFAULT_HEATMAP_SCALE_FACTOR_INC = 0.02;
 const DEFAULT_HEATMAP_X_OFFSET = 10;
@@ -188,6 +208,8 @@ class Clock {
   }
 }
 
+
+
 class Map {
   // Loaded data
   private swissBorderData!: any;
@@ -201,7 +223,21 @@ class Map {
   private scene!: THREE.Scene;
   private camera!: THREE.OrthographicCamera;
   private renderer!: THREE.WebGLRenderer;
-  private projection!: (coordinates: [number, number], cached: boolean) => [number, number] | null;
+  private projection!: (coordinates: [number, number], cached: boolean, useIso: boolean) => [number, number] | null;
+
+  private isoProjection!: (coordinates: [number, number]) => [number, number] | null;
+  private isoCenter!: [number, number];
+  private isoData!: any;
+  private isoScreenToDataScaleX!: any;
+  private isoScreenToDataScaleY!: any;
+
+  private oldIsoProjectionParameters!: any;                                               // For transition
+  private oldIsoProjection!: (coordinates: [number, number]) => [number, number] | null;  // For transition
+  private newIsoProjection!: (coordinates: [number, number]) => [number, number] | null;  // For transition
+  private isoTransitionProgress: number = 0;                                              // For transition
+
+  private scale: number = 1;
+  private translation: [number, number] = [0, 0];
 
   // Clock
   private clock!: Clock;
@@ -227,7 +263,10 @@ class Map {
       this.initScene();
       this.initEvents();
 
-      this.drawSwissBorder();
+      this.initIsochroneProjection();
+      this.initSwissBorder();
+      this.initCities();
+
       this.drawHeatMap(DEFAULT_HEATMAP_MODE);
 
       this.clock = new Clock(
@@ -314,6 +353,27 @@ class Map {
       const sliderSimulationFpsLabel = document.getElementById(SLIDER_SIMULATION_SPEED_LABEL_ID) as HTMLElement;
       sliderSimulationFpsLabel.innerHTML = `speed`;
     });
+
+    // Isochronic map
+    // Fill select with stops
+    const selectIsoMapOptions = document.getElementById(SELECT_ISO_ID) as HTMLSelectElement;
+    for (const stopId in ISO_STOPS) {
+      const stopName = ISO_STOPS[stopId as keyof typeof ISO_STOPS];
+      const option = document.createElement('option');
+      option.text = stopId;
+      option.value = stopName;
+      selectIsoMapOptions.appendChild(option);
+    }
+
+    // Add event listener
+    const selectIsoMap = document.getElementById(SELECT_ISO_ID) as HTMLSelectElement;
+    selectIsoMap.addEventListener('change', (event) => {
+      if (!event || !event.target) return;
+
+      const target = event.target as HTMLSelectElement;
+      const stopId = target.value;
+      this.updateIsochroneProjection(stopId);
+    });
   }
 
   /**
@@ -325,7 +385,12 @@ class Map {
    * @returns {void}
    * @throws {Error} if the screen coordinates are invalid
    */
-  private initProjection(minLon: number, maxLon: number, minLat: number, maxLat: number): void {
+  private initProjection(
+    minLon: number, 
+    maxLon: number, 
+    minLat: number, 
+    maxLat: number
+  ): void {
     // Project the coordinates to the 2D plane
     const geoMercatorProjection = d3.geoMercator();
     const bottomLeft = geoMercatorProjection([minLon, minLat]);
@@ -352,12 +417,13 @@ class Map {
     const translateX = this.width / 2 - centerX * scaleFactor;
     const translateY = this.height / 2 - centerY * scaleFactor;
 
-    this.projection = (coordinates: [number, number], cache: boolean): [number, number] | null => {
+    // Initialize the projection function, and use the isochrone projection
+    this.projection = (coordinates: [number, number], cache: boolean, useIso: boolean): [number, number] | null => {
       const cacheKey = `${coordinates[0]}-${coordinates[1]}`;
 
       // Check if the result is already cached
       if (this.projectionCache[cacheKey]) {
-        return this.projectionCache[cacheKey];
+        return useIso ? this.isoProjection(this.projectionCache[cacheKey]) : this.projectionCache[cacheKey];
       }
 
       // If not cached, calculate and store the result
@@ -372,8 +438,169 @@ class Map {
       if (cache) {
         this.projectionCache[cacheKey] = result;
       }
-      return result;
+      return useIso ? this.isoProjection(result) : result;
     };
+  }
+
+  initIsochroneProjection(): void {
+    this.isoProjection = (coordinates: [number, number]): [number, number] | null => {
+      return coordinates; // Default: no isochrone projection
+    }
+  }
+
+  setOldIsoProjection() {
+    // In that case, it is the neutral projection
+    if (this.isoData === undefined) {
+      this.oldIsoProjection = this.isoProjection;
+      return;
+    }
+
+    // Define a 'deep copy' of old projection to avoid looping reference
+    this.oldIsoProjectionParameters = {
+      isoData: JSON.parse(JSON.stringify(this.isoData)),
+      isoCenter: JSON.parse(JSON.stringify(this.isoCenter)),
+      isoScreenToDataScaleX: this.isoScreenToDataScaleX,
+      isoScreenToDataScaleY: this.isoScreenToDataScaleY,
+      scale: JSON.parse(JSON.stringify(this.scale)),
+      translation: JSON.parse(JSON.stringify(this.translation)),
+    };
+
+    this.oldIsoProjection = (screenCoordinates: [number, number]): [number, number] => {
+      // Get parameters and use them instead of this
+      const parameters = this.oldIsoProjectionParameters;
+      // Convert screen coordinates to isochrone data coordinates
+      let isoDataX = Math.floor(parameters.isoScreenToDataScaleX(screenCoordinates[0]));
+      let isoDataY = Math.floor(parameters.isoScreenToDataScaleY(screenCoordinates[1]));
+      // Clamp the coordinates to the isochrone data range
+      isoDataX = Math.max(0, Math.min(parameters.isoData[0].length - 1, isoDataX));
+      isoDataY = Math.max(0, Math.min(parameters.isoData.length - 1, isoDataY));
+
+      // Get the isochrone data value for the given coordinates
+      const isoDataValue = parameters.isoData[isoDataY][isoDataX];
+
+      // Convert the screen coordinates to polar coordinates (with the origin at the isochrone center)
+      const isoCenterCoordinates: any = this.projection(parameters.isoCenter, false, false);
+      const dx = screenCoordinates[0] - isoCenterCoordinates[0];
+      const dy = screenCoordinates[1] - isoCenterCoordinates[1];
+      //const r = Math.sqrt(dx * dx + dy * dy);
+      const theta = Math.atan2(dy, dx);
+
+      // Adjust the radius based on the isochrone data value
+      // Here we assume that the isochrone data value gives the new radius
+      const newR = isoDataValue;
+
+      // Convert back to Cartesian coordinates
+      const transformedScreenCoordinates: [number, number] = [
+        isoCenterCoordinates[0] + newR * Math.cos(theta),
+        isoCenterCoordinates[1] + newR * Math.sin(theta)
+      ];
+
+      // Return the transformed coordinates
+      return [
+        transformedScreenCoordinates[0] * parameters.scale + parameters.translation[0],
+        transformedScreenCoordinates[1] * parameters.scale + parameters.translation[1]
+      ]
+    }
+  }
+
+  updateIsochroneProjection(nodeId: string): void {
+    // Store the old projection for transition
+    this.isoTransitionProgress = 0;
+
+    this.setOldIsoProjection();
+
+    // Load the new isochrone data and create the new projection
+    const filePath = ISO_FILE_PREFIX + nodeId + ISO_FILE_SUFFIX;
+    d3.json(filePath).then((data: any) => {
+      this.isoCenter = [data.iso_center[1], data.iso_center[0]];
+      this.isoData = data.map;
+      this.isoScreenToDataScaleX = d3.scaleLinear()
+        .domain([0, this.width])
+        .range([0, this.isoData[0].length - 1]);
+      this.isoScreenToDataScaleY = d3.scaleLinear()
+        .domain([0, this.height])
+        .range([this.isoData.length - 1, 0]);
+
+      // Create the new isochrone projection
+      this.newIsoProjection = (screenCoordinates: [number, number]): [number, number] => {
+        // Convert screen coordinates to isochrone data coordinates
+        let isoDataX = Math.floor(this.isoScreenToDataScaleX(screenCoordinates[0]));
+        let isoDataY = Math.floor(this.isoScreenToDataScaleY(screenCoordinates[1]));
+        // Clamp the coordinates to the isochrone data range
+        isoDataX = Math.max(0, Math.min(this.isoData[0].length - 1, isoDataX));
+        isoDataY = Math.max(0, Math.min(this.isoData.length - 1, isoDataY));
+
+        // Get the isochrone data value for the given coordinates
+        const isoDataValue = this.isoData[isoDataY][isoDataX];
+
+        // Convert the screen coordinates to polar coordinates (with the origin at the isochrone center)
+        const isoCenterCoordinates: any = this.projection(this.isoCenter, false, false);
+        const dx = screenCoordinates[0] - isoCenterCoordinates[0];
+        const dy = screenCoordinates[1] - isoCenterCoordinates[1];
+        //const r = Math.sqrt(dx * dx + dy * dy);
+        const theta = Math.atan2(dy, dx);
+
+        // Adjust the radius based on the isochrone data value
+        // Here we assume that the isochrone data value gives the new radius
+        const newR = isoDataValue;
+
+        // Convert back to Cartesian coordinates
+        const transformedScreenCoordinates: [number, number] = [
+          isoCenterCoordinates[0] + newR * Math.cos(theta),
+          isoCenterCoordinates[1] + newR * Math.sin(theta)
+        ];
+
+        return [
+          transformedScreenCoordinates[0] * this.scale + this.translation[0],
+          transformedScreenCoordinates[1] * this.scale + this.translation[1]
+        ];
+      };
+
+      // Calculate the bounding box in new isochrone projection coordinates
+      let minX = Infinity;
+      let maxX = -Infinity;
+      let minY = Infinity;
+      let maxY = -Infinity;
+      for (const feature of this.swissBorderData.features) {
+        for (const point of feature.geometry.coordinates[0]) {
+          let projectedPoint = this.newIsoProjection(this.projection(point, false, false) ?? [0, 0]);
+          // Inverse transformations to avoid stacking transformations
+          projectedPoint = [
+            ((projectedPoint as [number, number])[0] - this.translation[0]) / this.scale,
+            ((projectedPoint as [number, number])[1] - this.translation[1]) / this.scale
+          ];
+          minX = Math.min(minX, projectedPoint![0]);
+          maxX = Math.max(maxX, projectedPoint![0]);
+          minY = Math.min(minY, projectedPoint![1]);
+          maxY = Math.max(maxY, projectedPoint![1]);
+        }
+      }
+    
+      // Calculate the scale and translation to make the bounding box fit within the screen
+      const screenAspectRatio = this.width / this.height;
+      const boundingBoxAspectRatio = (maxX - minX) / (maxY - minY);
+      if (boundingBoxAspectRatio > screenAspectRatio) {
+        this.scale = this.width / (maxX - minX);
+      } else {
+        this.scale = this.height / (maxY - minY);
+      }
+      this.translation = [
+        this.width / 2 - this.scale * (minX + maxX) / 2,
+        this.height / 2 - this.scale * (minY + maxY) / 2
+      ];
+
+      // Define actual isochrone projection as the interpolation between the old and new isochrone projections
+      this.isoProjection = (screenCoordinates: [number, number]): [number, number] => {
+        const oldCoordinates = this.oldIsoProjection(screenCoordinates);
+        const newCoordinates = this.newIsoProjection(screenCoordinates);
+        if (!oldCoordinates || !newCoordinates) return screenCoordinates;
+      
+        return [
+          newCoordinates[0] * this.isoTransitionProgress + oldCoordinates[0] * (1 - this.isoTransitionProgress),
+          newCoordinates[1] * this.isoTransitionProgress + oldCoordinates[1] * (1 - this.isoTransitionProgress)
+        ];
+      };
+    });
   }
 
   /**
@@ -426,10 +653,10 @@ class Map {
   }
 
   /**
-   * Draw the swiss border
+   * Initializes the swiss border
    * @returns {void}
    */
-  private drawSwissBorder(): void {
+  private initSwissBorder(): void {
       // Define the projection
       function getMinMax(data: any, coordinateIndex: number, compareFunc: (a: number, b: number) => boolean, initialValue: number): number {
         return data.features.map((feature: any) => {
@@ -445,33 +672,79 @@ class Map {
       this.initProjection(minLon, maxLon, minLat, maxLat);
 
       // Draw the swiss borders
-      const drawFeature = (feature: any) => {
-        const coordinates = feature.geometry.coordinates[0];
-        const points = coordinates.map((coordinate: [number, number]) => {
-          const x = this.projection(coordinate, false)![0];
-          const y = this.projection(coordinate, false)![1];
-          return new THREE.Vector3(x, y, 0);
-        });
-
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.LineBasicMaterial({
-          color: new THREE.Color(DEFAULT_MAP_BORDER_COLOR),
-        });
-
-        const line = new THREE.Line(geometry, material);
-        line.name = SWISS_BORDER_LINE_NAME;
-        this.swissBorderObjects.add(line);
-      }
-
-      this.swissBorderObjects = new THREE.Group();
-      this.swissBorderObjects.name = SWISS_BORDER_GROUP_NAME;
-
-      this.swissBorderData.features.forEach((feature: any) => {
-        drawFeature(feature);
-      });
-
-      this.scene.add(this.swissBorderObjects);
+      this.updateSwissBorder();
   }
+
+  /**
+   * Draw the swiss border
+   * @returns {void}
+   */
+  private updateSwissBorder(): void {
+    // Draw the Swiss borders
+    const drawFeature = (feature: any) => {
+      const coordinates = feature.geometry.coordinates[0];
+      const points = coordinates.map((coordinate: [number, number]) => {
+        const x = this.projection(coordinate, false, true)![0]; // Use the updated scale and translation
+        const y = this.projection(coordinate, false, true)![1];
+        return new THREE.Vector3(x, y, 0);
+      });
+  
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({
+        color: new THREE.Color(DEFAULT_MAP_BORDER_COLOR),
+      });
+  
+      const line = new THREE.Line(geometry, material);
+      line.name = SWISS_BORDER_LINE_NAME;
+      this.swissBorderObjects.add(line);
+    }
+  
+    this.swissBorderObjects = new THREE.Group();
+    this.swissBorderObjects.name = SWISS_BORDER_GROUP_NAME;
+  
+    this.swissBorderData.features.forEach((feature: any) => {
+      drawFeature(feature);
+    });
+  
+    // Check if the swiss border has already been added to the scene, and remove it if so
+    const swissBorderGroup = this.scene.getObjectByName(SWISS_BORDER_GROUP_NAME);
+    if (swissBorderGroup) {
+      this.scene.remove(swissBorderGroup);
+    }
+  
+    this.scene.add(this.swissBorderObjects);
+  }  
+
+  private initCities(): void {
+    for (const city in CITIES) {
+      // Draw the city point
+      const coordinates = [CITIES[city][1], CITIES[city][0]];
+      const point = this.projection(coordinates, false, true);
+      if (!point) continue;
+
+      const geometry = new THREE.CircleGeometry(10, 32);
+      const material = new THREE.MeshBasicMaterial({ color: new THREE.Color('white') });
+      const circle = new THREE.Mesh(geometry, material);
+      circle.position.set(point[0], point[1], 0);
+      circle.name = city;
+      this.scene.add(circle);
+    }
+  }
+
+  private updateCities(): void {
+    for (const city in CITIES) {
+      // Draw the city point
+      const coordinates = [CITIES[city][1], CITIES[city][0]];
+      const point = this.projection(coordinates, false, true);
+      if (!point) continue;
+
+      const cityPoint = this.scene.getObjectByName(city);
+      if (!cityPoint) continue;
+
+      cityPoint.position.set(point[0], point[1], 0);
+    }
+  }
+
 
   /**
     * Remove the heatmap
@@ -704,8 +977,8 @@ class Map {
       const dTime = segment.end_time - segment.start_time;
 
       // Get train speed by computing the distance between the start and end coordinates
-      const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true);
-      const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true);
+      const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true, true);
+      const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true, true);
       if (!startCoordinates || !endCoordinates) return DEFAULT_TRAIN_COLOR;
 
       const dX = endCoordinates[0] - startCoordinates[0];
@@ -750,8 +1023,8 @@ class Map {
       return this.angleCache[cacheKey];
     }
 
-    const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true);
-    const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true);
+    const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true, true);
+    const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true, true);
     if (!startCoordinates || !endCoordinates) return 0;
 
     const dX = endCoordinates[0] - startCoordinates[0];
@@ -805,7 +1078,7 @@ class Map {
    */
   drawTrain(tripId: string, trainCoordinates: [number, number], trainColor: string, trainAngle: number): void {
     // Check that train position is valid first
-    const trainPosition = this.projection(trainCoordinates, true);
+    const trainPosition = this.projection(trainCoordinates, true, true);
     if (!trainPosition) return;
 
     // Get existing train or get it from the pool
@@ -907,6 +1180,13 @@ render(): void {
     // Update clock
     this.clock.setTime(t);
     this.clock.draw();
+
+    // Update iso transition
+    this.isoTransitionProgress = Math.min(this.isoTransitionProgress + 0.01, 1);
+    if (this.isoTransitionProgress < 1) {
+      this.updateSwissBorder();
+      this.updateCities();
+    }
 
     // Render the scene
     this.renderer.render(this.scene, this.camera);
