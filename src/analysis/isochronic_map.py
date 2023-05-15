@@ -167,8 +167,83 @@ class IsochronicMap:
         interpolated_map = interpolated_map + time_map
 
         return interpolated_map
+    
+    def get_linear_isochronic_map_for_node_id(self, node_id):
+        """
+        Get the linear isochronic map for a node id.
 
-    def show_isochronic_map_for_node_id(self, node_id, with_steps=False):
+        Args:
+            node_id (int): The node id to get the isochronic map for.
+
+        Returns:
+            isochronic_map (np.array): The isochronic map for the node id.
+        """
+        shortest_path_scores = self.get_shortest_path_scores_from_node_id(node_id)
+        nodes_scores = self.nodes.join(shortest_path_scores, on='id', how='inner')
+
+        # ### 1 ### Get nn interpolated map, then apply a Gaussian filter to it
+        nn_isochronic_map = np.zeros((
+            self.width + self.left_margin + self.right_margin + 1, 
+            self.height + self.top_margin + self.bottom_margin + 1
+        ))
+
+        for _, row in nodes_scores.iterrows():
+            nn_isochronic_map[int(row['x_dis'] + self.left_margin), int(row['y_dis'] + self.bottom_margin)] = row['score']
+
+        # Make a binary version of the map where stops are 1 and everywhere else is 0
+        binary_map = np.where(nn_isochronic_map > 0, 1, 0)
+
+        # Compute the Euclidean distance transform of the binary map
+        # and also get the indices of the nearest non-zero points
+        distance_map, indices = distance_transform_edt(1 - binary_map, return_indices=True)
+
+        # Map the indices of the nearest non-zero points onto the original isochronic map to get the scores
+        nn_interpolated_map = map_coordinates(nn_isochronic_map, indices, order=0)
+
+        # Apply a Gaussian filter to the interpolated map
+        sigma = 10
+        nn_interpolated_map = gaussian_filter(nn_interpolated_map, sigma=sigma)
+
+        # ### 2 ### Get time map
+        # Convert distance to time
+        switzerland_width = 348                             # km
+        walking_speed = 6                                   # km/h
+        map_width = distance_map.shape[0]                   # px
+        scale = switzerland_width / map_width               # km/px
+        distance_map = distance_map * scale                 # Real distance in km
+        time_map = distance_map / walking_speed * 60 * 60   # Time in seconds
+        
+        # ### 3 ### Get interpolated map, with nans where you can't interpolate
+        lin_isochronic_map = np.zeros((
+            self.width + self.left_margin + self.right_margin + 1, 
+            self.height + self.top_margin + self.bottom_margin + 1
+        ))
+
+        # Array to hold the coordinates and values of the stops
+        coords = []
+        values = []
+
+        for _, row in nodes_scores.iterrows():
+            coords.append([int(row['x_dis'] + self.left_margin), int(row['y_dis'] + self.bottom_margin)])
+            values.append(row['score'])
+
+        # Convert the coordinates and values to numpy arrays
+        coords = np.array(coords)
+        values = np.array(values)
+
+        # Make a grid of points where we want to interpolate
+        grid_y, grid_x = np.mgrid[0:lin_isochronic_map.shape[0], 0:lin_isochronic_map.shape[1]]
+
+        # Perform the interpolation
+        lin_interpolated_map = griddata(coords, values, (grid_y, grid_x), method='linear')
+
+        # ### 4 ### Merge them together
+        interpolated_map = np.where(np.isnan(lin_interpolated_map), nn_interpolated_map, lin_interpolated_map)
+        interpolated_map += time_map
+
+        return interpolated_map
+
+    def show_isochronic_map_for_node_id(self, node_id, with_steps=False, type='nn'):
         """
         Show the isochronic map for a node id.
         
@@ -176,7 +251,12 @@ class IsochronicMap:
             node_id (int): The node id to show the isochronic map for.
         """
         # Get the isochronic map
-        isochronic_map = self.get_nn_isochronic_map_for_node_id(node_id)
+        if type == 'nn':
+            isochronic_map = self.get_nn_isochronic_map_for_node_id(node_id)
+        elif type == 'linear':
+            isochronic_map = self.get_linear_isochronic_map_for_node_id(node_id)
+        else:
+            raise ValueError(f'Unknown type: {type}')
         isochronic_map = np.rot90(isochronic_map)
 
         max_time = isochronic_map.max()

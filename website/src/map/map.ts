@@ -1,9 +1,10 @@
 import * as d3 from 'd3';
 import * as THREE from 'three';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 // MAP
 const DIV_CONTAINER_ID = 'container';
-const SELECT_HEATMAP_ID = 'select-heatmap';
 const SELECT_TRAIN_COLOR_MODE_ID = 'select-train-color-mode';
 const SLIDER_SIMULATION_SPEED_ID = 'slider-simulation-speed';
 const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider-simulation-speed-label';
@@ -11,15 +12,11 @@ const SELECT_ISO_ID = 'select-iso';
 
 const MAP_PATH = '../../data/map/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.json';
 const TRAINS_FOLDER_PATH = '../../data/map/train_trips_bins/';
-const HEATMAP_PATH = '../../data/map/density_heatmap.png';
-const HEATMAP_TRANSPORT_TYPE_PATH_PREFIX = '../../data/map/density_heatmap_';
-const HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX = '.png';
 const ISO_FILE_PREFIX = '../../data/map/isochronic_map_';
 const ISO_FILE_SUFFIX = '.json';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder_line';
 const SWISS_BORDER_GROUP_NAME = 'swissborder_group';
-const HEATMAP_SCENE_NAME = 'heatmap';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
 
 const TRAIN_FILES_BIN_SIZE = 15;
@@ -29,43 +26,42 @@ const DEFAULT_SIMULATION_SPEED = 60;
 const MAX_TRAIN_DELAY = 3 * 60;
 const MAX_TRAIN_SPEED = 7;
 
-const DEFAULT_HEATMAP_MODE = null;
 const DEFAULT_TRAIN_COLOR_MODE = 'uniform';
 
-const DEFAULT_MAP_BORDER_COLOR = '#aaaaaa';
+const DEFAULT_MAP_BORDER_COLOR = '#2e5d52';
+const DEFAULT_CITY_COLOR = '#fb9e82';
 const DEFAULT_TRAIN_COLOR = '#eeeeee';
 const EARLY_TRAIN_COLOR = '#00ff00';
 const LATE_TRAIN_COLOR = '#ff0000';
 const SLOW_TRAIN_COLOR = '#0000ff';
 const FAST_TRAIN_COLOR = '#ffff00';
 
+const DEFAULT_CITY_FONT_PATH = '../../data/map/Nunito_Regular.json'
+const DEFAULT_CITY_FONT_SIZE = 20;
+const DEFAULT_CITY_FONT_HEIGHT = 0.1;
+
 const ISO_STOPS = {
     'None': '',
-    'Zürich': '8503000',
+    'Zurich': '8503000',
     'Bern': '8507000',
     'Basel': '8500010',
     'Lausanne': '8501120',
-    'Genève': '8587057',
+    'Geneva': '8587057',
     'St. Gallen': '8506302',
     'Lugano': '8505300',
 }
 
 const CITIES = {
-  'Zürich': [47.3781768166501, 8.54021816561537],
-  'Bern': [46.94883398159425, 7.439131612366045],
-  'Basel': [47.54741361808408, 7.589564242496508],
-  'Lausanne': [46.51678813031248, 6.629092475966655],
-  'Genève': [46.20973474671916, 6.142437734120765],
-  'St. Gallen': [47.54741361808408, 7.589564242496508],
-  'Lugano': [46.00550466890416, 8.946990064034518],
-  //'A': [45.92668790533614, 5.99505243972829],
-  //'B': [46.009637124516935, 10.480645720544768],
-  //'C': [47.803126739815056, 10.134966972298361],
+  'Zurich': [8.54021816561537, 47.3781768166501],
+  'Bern': [7.439131612366045, 46.94883398159425],
+  'Basel': [7.589564242496508, 47.54741361808408],
+  'Lausanne': [6.629092475966655, 46.51678813031248],
+  'Geneva': [6.142437734120765, 46.20973474671916],
+  'St. Gallen': [9.373166004018978, 47.425384247935014],
+  'Lugano': [8.946990064034518, 46.00550466890416],
 }
 
-const DEFAULT_HEATMAP_SCALE_FACTOR_INC = 0.02;
-const DEFAULT_HEATMAP_X_OFFSET = 10;
-const DEFAULT_HEATMAP_Y_OFFSET = 5;
+const DEBUG_MODE = true;
 
 // CLOCK
 const CLOCK_RADIUS = 100;
@@ -115,15 +111,28 @@ class Clock {
       this.init();
   }
 
-  setTime(time: number) {
+  /**
+   * Set the time of the clock
+   * @param time Time in seconds
+   * @returns {void}
+   */
+  public setTime(time: number): void {
       this.time = time;
   }
 
-  getTime() {
+  /**
+   * Get the time of the clock
+   * @returns {number} Time in seconds
+   */
+  public getTime(): number {
       return this.time;
   }
 
-  init() {
+  /**
+   * Initialize the clock
+   * @returns void
+   */
+  private init(): void {
       // Draw the clock background
       this.clock = new THREE.Object3D();
       const clockGeometry = new THREE.CircleGeometry(this.radius, 64);
@@ -191,10 +200,13 @@ class Clock {
       // Scale and translate the clock
       this.clock.scale.set(this.scaleFactor, this.scaleFactor, 1);
       this.clock.position.set(this.x, this.y, 0);
-
   }
 
-  draw() {
+  /**
+   * Draw the clock
+   * @returns void
+   */
+  public draw(): void {
     // update rotation of hour hand
     this.hourHandPivot.rotation.z = -this.time * Math.PI / 360;
 
@@ -203,7 +215,11 @@ class Clock {
 
   }
 
-  addToScene() {
+  /**
+   * Add the clock to the scene
+   * @returns void
+   */
+  public addToScene(): void {
     this.scene.add(this.clock);
   }
 }
@@ -225,26 +241,23 @@ class Map {
   private renderer!: THREE.WebGLRenderer;
   private projection!: (coordinates: [number, number], cached: boolean, useIso: boolean) => [number, number] | null;
 
-  private isoProjection!: (coordinates: [number, number]) => [number, number] | null;
+  private isoProjection!: (coordinates: [number, number], cache: boolean) => [number, number] | null;
+  private isIdIsoProjection!: boolean;
   private isoCenter!: [number, number];
   private isoData!: any;
   private isoScreenToDataScaleX!: any;
   private isoScreenToDataScaleY!: any;
 
-  private oldIsoProjectionParameters!: any;                                               // For transition
-  private oldIsoProjection!: (coordinates: [number, number]) => [number, number] | null;  // For transition
-  private newIsoProjection!: (coordinates: [number, number]) => [number, number] | null;  // For transition
-  private isoTransitionProgress: number = 0;                                              // For transition
+  private oldIsoProjectionParameters!: any;                                                               // For transition
+  private oldIsoProjection!: (coordinates: [number, number]) => [number, number] | null;                  // For transition
+  private newIsoProjection!: (coordinates: [number, number], cache: boolean) => [number, number] | null;  // For transition
+  private isoTransitionProgress: number = 0;                                                              // For transition
 
   private scale: number = 1;
   private translation: [number, number] = [0, 0];
 
   // Clock
   private clock!: Clock;
-
-  // Heatmap
-  private heatmapMode: string | null = DEFAULT_HEATMAP_MODE;
-  private heatmapObject!: THREE.Mesh;
 
   // Train
   private trainColorMode: string = DEFAULT_TRAIN_COLOR_MODE;
@@ -254,6 +267,7 @@ class Map {
 
   // Cache
   private projectionCache: { [key: string]: [number, number] } = {};
+  private isoProjectionCache: { [key: string]: [number, number] } = {};
   private angleCache: { [key: string]: number } = {};
 
   private simulationSpeed: number = DEFAULT_SIMULATION_SPEED;
@@ -266,8 +280,6 @@ class Map {
       this.initIsochroneProjection();
       this.initSwissBorder();
       this.initCities();
-
-      this.drawHeatMap(DEFAULT_HEATMAP_MODE);
 
       this.clock = new Clock(
         this.scene,
@@ -317,21 +329,6 @@ class Map {
    * @returns {void}
    */
   private initEvents(): void {
-    // Heatmap
-    const selectHeatmap = document.getElementById(SELECT_HEATMAP_ID) as HTMLSelectElement;
-    selectHeatmap.addEventListener('change', (event: Event) => {
-      if (!event || !event.target) return;
-
-      const target = event.target as HTMLSelectElement;
-      const heatmapMode = target.value;
-      if (heatmapMode === '') {
-        this.drawHeatMap(null);
-        return;
-      }
-
-      this.drawHeatMap(heatmapMode);
-    });
-
     // Train color mode
     const selectTrainColor = document.getElementById(SELECT_TRAIN_COLOR_MODE_ID) as HTMLSelectElement;
     selectTrainColor.addEventListener('change', (event) => {
@@ -423,7 +420,7 @@ class Map {
 
       // Check if the result is already cached
       if (this.projectionCache[cacheKey]) {
-        return useIso ? this.isoProjection(this.projectionCache[cacheKey]) : this.projectionCache[cacheKey];
+        return useIso ? this.isoProjection(this.projectionCache[cacheKey], cache) : this.projectionCache[cacheKey];
       }
 
       // If not cached, calculate and store the result
@@ -438,20 +435,31 @@ class Map {
       if (cache) {
         this.projectionCache[cacheKey] = result;
       }
-      return useIso ? this.isoProjection(result) : result;
+      return useIso ? this.isoProjection(result, cache) : result;
     };
   }
 
-  initIsochroneProjection(): void {
-    this.isoProjection = (coordinates: [number, number]): [number, number] | null => {
+  /**
+   * Initialize the isochrone projection
+   * @returns {void}
+   */
+  private initIsochroneProjection(): void {
+    this.isoProjection = (coordinates: [number, number], _:boolean): [number, number] | null => {
       return coordinates; // Default: no isochrone projection
     }
+    this.isIdIsoProjection = true;
   }
 
-  setOldIsoProjection() {
-    // In that case, it is the neutral projection
-    if (this.isoData === undefined) {
-      this.oldIsoProjection = this.isoProjection;
+  /**
+   * Set the old isochrone projection, for transition
+   * @returns {void}
+   */
+  private setOldIsoProjection(): void {
+    // If neutral, just use the identity projection
+    if(this.isIdIsoProjection) {
+      this.oldIsoProjection = (coordinates: [number, number]): [number, number] | null => {
+        return coordinates; // Default: no isochrone projection
+      }
       return;
     }
 
@@ -503,15 +511,44 @@ class Map {
     }
   }
 
-  updateIsochroneProjection(nodeId: string): void {
+  /**
+   * Update the isochrone projection
+   * @param nodeId The node id to project to
+   * @returns {void}
+   */
+  private updateIsochroneProjection(nodeId: string): void {
     // Store the old projection for transition
     this.isoTransitionProgress = 0;
 
     this.setOldIsoProjection();
 
+    // If the node is empty, set new projection to neutral
+    if(nodeId === '') {
+      this.isIdIsoProjection = true;
+
+      this.newIsoProjection = (coordinates: [number, number], _: boolean): [number, number] | null => {
+        return coordinates; // Default: no isochrone projection
+      }
+      this.isoProjection = (screenCoordinates: [number, number], cache: boolean): [number, number] => {
+        const oldCoordinates = this.oldIsoProjection(screenCoordinates);
+        const newCoordinates = this.newIsoProjection(screenCoordinates, cache);
+        if (!oldCoordinates || !newCoordinates) return screenCoordinates;
+      
+        return [
+          newCoordinates[0] * this.isoTransitionProgress + oldCoordinates[0] * (1 - this.isoTransitionProgress),
+          newCoordinates[1] * this.isoTransitionProgress + oldCoordinates[1] * (1 - this.isoTransitionProgress)
+        ];
+      };
+      return;
+    }
+
+    // Otherwise, we want to load the new isochrone data and create the new projection
+    this.isIdIsoProjection = false;
+
     // Load the new isochrone data and create the new projection
     const filePath = ISO_FILE_PREFIX + nodeId + ISO_FILE_SUFFIX;
     d3.json(filePath).then((data: any) => {
+      // Define the data and scales used for the isochrone projection
       this.isoCenter = [data.iso_center[1], data.iso_center[0]];
       this.isoData = data.map;
       this.isoScreenToDataScaleX = d3.scaleLinear()
@@ -522,7 +559,14 @@ class Map {
         .range([this.isoData.length - 1, 0]);
 
       // Create the new isochrone projection
-      this.newIsoProjection = (screenCoordinates: [number, number]): [number, number] => {
+      this.newIsoProjection = (screenCoordinates: [number, number], cache: boolean): [number, number] => {
+        const cacheKey = `${screenCoordinates[0]}-${screenCoordinates[1]}`;
+
+        // Check if the result is already cached
+        if (this.isoProjectionCache[cacheKey]) {
+          return this.isoProjectionCache[cacheKey];
+        }
+
         // Convert screen coordinates to isochrone data coordinates
         let isoDataX = Math.floor(this.isoScreenToDataScaleX(screenCoordinates[0]));
         let isoDataY = Math.floor(this.isoScreenToDataScaleY(screenCoordinates[1]));
@@ -537,7 +581,7 @@ class Map {
         const isoCenterCoordinates: any = this.projection(this.isoCenter, false, false);
         const dx = screenCoordinates[0] - isoCenterCoordinates[0];
         const dy = screenCoordinates[1] - isoCenterCoordinates[1];
-        //const r = Math.sqrt(dx * dx + dy * dy);
+        //const r = Math.sqrt(dx * dx + dy * dy); // Not needed!
         const theta = Math.atan2(dy, dx);
 
         // Adjust the radius based on the isochrone data value
@@ -550,10 +594,15 @@ class Map {
           isoCenterCoordinates[1] + newR * Math.sin(theta)
         ];
 
-        return [
+        const result: [number, number] = [
           transformedScreenCoordinates[0] * this.scale + this.translation[0],
           transformedScreenCoordinates[1] * this.scale + this.translation[1]
         ];
+
+        if (cache) {
+          this.isoProjectionCache[cacheKey] = result;
+        }
+        return result;
       };
 
       // Calculate the bounding box in new isochrone projection coordinates
@@ -563,7 +612,7 @@ class Map {
       let maxY = -Infinity;
       for (const feature of this.swissBorderData.features) {
         for (const point of feature.geometry.coordinates[0]) {
-          let projectedPoint = this.newIsoProjection(this.projection(point, false, false) ?? [0, 0]);
+          let projectedPoint = this.newIsoProjection(this.projection(point, false, false) ?? [0, 0], false);
           // Inverse transformations to avoid stacking transformations
           projectedPoint = [
             ((projectedPoint as [number, number])[0] - this.translation[0]) / this.scale,
@@ -590,9 +639,9 @@ class Map {
       ];
 
       // Define actual isochrone projection as the interpolation between the old and new isochrone projections
-      this.isoProjection = (screenCoordinates: [number, number]): [number, number] => {
+      this.isoProjection = (screenCoordinates: [number, number], cache: boolean): [number, number] => {
         const oldCoordinates = this.oldIsoProjection(screenCoordinates);
-        const newCoordinates = this.newIsoProjection(screenCoordinates);
+        const newCoordinates = this.newIsoProjection(screenCoordinates, cache);
         if (!oldCoordinates || !newCoordinates) return screenCoordinates;
       
         return [
@@ -608,7 +657,7 @@ class Map {
    * @returns {Promise<void>}
    * @throws {Error} if the data could not be loaded
    */
-  async loadSwissBorder(): Promise<void> {
+  private async loadSwissBorder(): Promise<void> {
     const data = await d3.json(MAP_PATH);
     if (!data) throw new Error('Invalid Swiss border data at path: ' + MAP_PATH);
     this.swissBorderData = data;
@@ -619,7 +668,7 @@ class Map {
    * @returns {Promise<void>}
    * @throws {Error} if the data could not be loaded
    */
-  async loadTrains(): Promise<void> {
+  private async loadTrains(): Promise<void> {
     const data: {
       bins: { [index: number]: any };
       bin_size: number;
@@ -647,7 +696,7 @@ class Map {
    * Load all data
    * @returns {Promise<void>}
    */
-  async loadData(): Promise<void> {
+  private async loadData(): Promise<void> {
     await this.loadSwissBorder();
     await this.loadTrains();
   }
@@ -715,26 +764,51 @@ class Map {
     this.scene.add(this.swissBorderObjects);
   }  
 
+  /**
+   * Initialize the cities
+   * @returns {void}
+   */
   private initCities(): void {
-    for (const city in CITIES) {
-      // Draw the city point
-      const coordinates = [CITIES[city][1], CITIES[city][0]];
-      const point = this.projection(coordinates, false, true);
-      if (!point) continue;
+    const loader = new FontLoader();
 
-      const geometry = new THREE.CircleGeometry(10, 32);
-      const material = new THREE.MeshBasicMaterial({ color: new THREE.Color('white') });
-      const circle = new THREE.Mesh(geometry, material);
-      circle.position.set(point[0], point[1], 0);
-      circle.name = city;
-      this.scene.add(circle);
-    }
+    loader.load(DEFAULT_CITY_FONT_PATH, (font) => {
+        for (const city in CITIES) {
+            // Draw the city point
+            const coordinates = (CITIES as any)[city as any];
+            const point = this.projection(coordinates, false, true);
+            if (!point) continue;
+
+            const geometry = new THREE.CircleGeometry(10, 32);
+            const material = new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_CITY_COLOR) });
+            const circle = new THREE.Mesh(geometry, material);
+            circle.position.set(point[0], point[1], 0);
+            circle.name = city;
+            this.scene.add(circle);
+
+            // Draw the city name
+            const textGeometry = new TextGeometry(city, {
+                font: font,
+                size: DEFAULT_CITY_FONT_SIZE,
+                height: DEFAULT_CITY_FONT_HEIGHT,
+            });
+
+            const textMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_CITY_COLOR) });
+            const text = new THREE.Mesh(textGeometry, textMaterial);
+            text.position.set(point[0] + 10, point[1] + 10, 0);
+            text.name = city + '-text';
+            this.scene.add(text);
+        }
+    });
   }
 
+  /**
+   * Update the cities
+   * @returns {void}
+   */
   private updateCities(): void {
     for (const city in CITIES) {
       // Draw the city point
-      const coordinates = [CITIES[city][1], CITIES[city][0]];
+      const coordinates = (CITIES as any)[city as any]
       const point = this.projection(coordinates, false, true);
       if (!point) continue;
 
@@ -742,93 +816,13 @@ class Map {
       if (!cityPoint) continue;
 
       cityPoint.position.set(point[0], point[1], 0);
+
+      // Draw the city name
+      const cityText = this.scene.getObjectByName(city + '-text');
+      if (!cityText) continue;
+
+      cityText.position.set(point[0] + 10, point[1] + 10, 0);
     }
-  }
-
-
-  /**
-    * Remove the heatmap
-    * @returns {void}
-    */
-  private removeHeatMap(): void {
-    const heatmapScene = this.scene.getObjectByName(HEATMAP_SCENE_NAME);
-    if (heatmapScene) {
-      heatmapScene.traverse((child: THREE.Object3D) => {
-        if (child instanceof THREE.Mesh) {
-          child.geometry.dispose();
-          child.material.dispose();
-          if (child.material.map) {
-            child.material.map.dispose();
-          }
-        }
-      });
-      this.scene.remove(heatmapScene);
-    }
-  }
-
-  /**
-   * Draw the heatmap
-   * @param {string} heatmapMode the heatmap mode of the new heatmap
-   * @returns {void}
-   */
-  public drawHeatMap(heatmapMode: string | null): void {
-    if (this.heatmapMode === heatmapMode) { return; }
-
-    this.heatmapMode = heatmapMode;
-    this.removeHeatMap();
-
-    if (!heatmapMode) return;
-
-    let heatmapPath: string | null = null;
-    if (this.heatmapMode === 'all') {
-      heatmapPath = HEATMAP_PATH;
-    } else {
-      heatmapPath = `${HEATMAP_TRANSPORT_TYPE_PATH_PREFIX}${this.heatmapMode}${HEATMAP_TRANSPORT_TYPE_PATH_SUFFIX}`;
-    }
-
-    // Load the heatmap texture
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.load(heatmapPath, (texture: THREE.Texture) => {
-      const heatmapMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          heatmapTexture: { value: texture },
-        },
-        vertexShader: `
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
-        fragmentShader: `
-          uniform sampler2D heatmapTexture;
-          varying vec2 vUv;
-          void main() {
-            vec4 heatmapColor = texture2D(heatmapTexture, vUv);
-            float intensity = heatmapColor.r + heatmapColor.g + heatmapColor.b;
-            vec3 lowColor = vec3(0.0, 0.0, 0.2);
-            vec3 highColor = vec3(0.2, 0.0, 0.1);
-            vec3 color = mix(lowColor, highColor, intensity);
-            gl_FragColor = vec4(color.rgb, intensity);
-          }
-        `,
-        transparent: true,
-      });
-      const textureWidth = texture.image.width;
-      const textureHeight = texture.image.height;
-      const scaleFactor = Math.min(this.width / textureWidth, this.height / textureHeight) + DEFAULT_HEATMAP_SCALE_FACTOR_INC;
-
-      const geometry = new THREE.PlaneGeometry(textureWidth * scaleFactor, textureHeight * scaleFactor);
-      this.heatmapObject = new THREE.Mesh(geometry, heatmapMaterial);
-
-      // Position the heatmap to match the Swiss border
-      this.heatmapObject.position.set(
-        this.width / 2 + DEFAULT_HEATMAP_X_OFFSET,
-        this.height / 2 + DEFAULT_HEATMAP_Y_OFFSET, -1
-      ); // Set a small z-offset to avoid z-fighting
-      this.heatmapObject.name = HEATMAP_SCENE_NAME;
-      this.scene.add(this.heatmapObject);
-    });
   }
 
   /**
@@ -947,7 +941,7 @@ class Map {
    * @param trainColorMode the train color mode to set
    * @returns {void}
    */
-  public setTrainColorMode(trainColorMode: string): void {
+  private setTrainColorMode(trainColorMode: string): void {
     this.trainColorMode = trainColorMode;
   }
 
@@ -1019,12 +1013,12 @@ class Map {
   ): number {
     const cacheKey = `${segment.start_longitude}-${segment.start_latitude}-${segment.end_longitude}-${segment.end_latitude}`;
 
-    if (this.angleCache[cacheKey]) {
+    if (this.angleCache[cacheKey] && this.isIdIsoProjection) {
       return this.angleCache[cacheKey];
     }
 
-    const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true, true);
-    const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true, true);
+    const startCoordinates = this.projection([segment.start_longitude, segment.start_latitude], true, false);
+    const endCoordinates = this.projection([segment.end_longitude, segment.end_latitude], true, false);
     if (!startCoordinates || !endCoordinates) return 0;
 
     const dX = endCoordinates[0] - startCoordinates[0];
@@ -1059,7 +1053,7 @@ class Map {
    * @param {string} tripId the trip id
    * @returns {void}
    */
-  removeTrainfromTripId(tripId: string): void {
+  private removeTrainfromTripId(tripId: string): void {
     const trainSceneName = TRAIN_SCENE_NAME_PREFIX + tripId
     if (trainSceneName in this.trainObjects) {
       this.trainPool.push(this.trainObjects[trainSceneName]);
@@ -1076,7 +1070,7 @@ class Map {
    * @param {number} trainAngle the train angle
    * @returns {void}
    */
-  drawTrain(tripId: string, trainCoordinates: [number, number], trainColor: string, trainAngle: number): void {
+  private drawTrain(tripId: string, trainCoordinates: [number, number], trainColor: string, trainAngle: number): void {
     // Check that train position is valid first
     const trainPosition = this.projection(trainCoordinates, true, true);
     if (!trainPosition) return;
@@ -1111,7 +1105,7 @@ class Map {
    * @param {number} time 
    * @returns {void}
    */
-  drawTrains(time: number): void {
+  private drawTrains(time: number): void {
     if (!this.trips) return;
 
     // Find bin
@@ -1143,66 +1137,61 @@ class Map {
   }
 
   /**
-   * Convert a timestamp to a time string
-   * @param {number} timestamp 
-   * @returns {string} the time string
+   * Render the scene
+   * @returns {void}
    */
-  timestampToTimeStr(timestamp: number): string {
-    const hours = Math.floor(timestamp / 60);
-    const minutes = timestamp % 60;
-    return `${hours}:${minutes}`;
-  }
+  private render(): void {
+    let t: number = 0;
+    let previousTimestamp: number | null = null;
 
-  /**
- * Render the scene
- * @returns {void}
- */
-render(): void {
-  let t: number = 0;
-  let previousTimestamp: number | null = null;
+    // RENDER AND SIMULATION
+    const animate = (timestamp: number) => {
+      requestAnimationFrame(animate);
 
-  // RENDER AND SIMULATION
-  const animate = (timestamp: number) => {
-    requestAnimationFrame(animate);
+      const t1 = performance.now();
+      if (!previousTimestamp) {
+        previousTimestamp = timestamp;
+      }
 
-    if (!previousTimestamp) {
+      const elapsed = timestamp - previousTimestamp;
+      const dt = Math.min(this.simulationSpeed * elapsed / 1000, 1);
+
+      // Update simulation
+      t += dt;
+      t = t % 1440;
+      this.drawTrains(t);
+
+      // Update clock
+      this.clock.setTime(t);
+      this.clock.draw();
+
+      // Update iso transition
+      this.isoTransitionProgress = Math.min(this.isoTransitionProgress + 0.01, 1);
+      if (this.isoTransitionProgress < 1) {
+        this.updateSwissBorder();
+        this.updateCities();
+        this.isoProjectionCache = {}; // Clear cache
+      }
+
+      // Render the scene
+      this.renderer.render(this.scene, this.camera);
+
       previousTimestamp = timestamp;
-    }
+      const t2 = performance.now();
+      if (DEBUG_MODE && t % 60 < 1) {
+        console.log(`FPS: ${Math.round(1000 / (t2 - t1))} (ms: ${Math.round(t2 - t1)})`);
+      }
+    };
 
-    const elapsed = timestamp - previousTimestamp;
-    const dt = Math.min(this.simulationSpeed * elapsed / 1000, 1);
-
-    // Update simulation
-    t += dt;
-    t = t % 1440;
-    this.drawTrains(t);
-
-    // Update clock
-    this.clock.setTime(t);
-    this.clock.draw();
-
-    // Update iso transition
-    this.isoTransitionProgress = Math.min(this.isoTransitionProgress + 0.01, 1);
-    if (this.isoTransitionProgress < 1) {
-      this.updateSwissBorder();
-      this.updateCities();
-    }
-
-    // Render the scene
-    this.renderer.render(this.scene, this.camera);
-
-    previousTimestamp = timestamp;
-  };
-
-  animate(performance.now());
-}
+    animate(performance.now());
+  }
 
   /**
    * Set the simulation fps
    * @param {number} value
    * @returns {void}
    */
-  setSimulationFps(value: number): void {
+  private setSimulationFps(value: number): void {
     this.simulationSpeed = value;
   }
 }
