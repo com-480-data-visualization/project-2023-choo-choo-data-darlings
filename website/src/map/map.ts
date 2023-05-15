@@ -590,12 +590,6 @@ class Map {
           return this.isoProjectionCache[cacheKey];
         }
 
-        //TODO: DELETE
-        const GenevaCoordinates = this.projection(CITIES['Geneva'], false, false);
-        if (Math.abs(screenCoordinates[0] - GenevaCoordinates[0]) < 1 && Math.abs(screenCoordinates[1] - GenevaCoordinates[1]) < 1) {
-          console.log('Geneva coordinates', GenevaCoordinates);
-        }
-
         // Convert screen coordinates to isochrone data coordinates
         let isoDataX = Math.floor(this.isoScreenToDataScaleX(screenCoordinates[0]));
         let isoDataY = Math.floor(this.isoScreenToDataScaleY(screenCoordinates[1]));
@@ -605,10 +599,6 @@ class Map {
 
         // Get the isochrone data value for the given coordinates
         const isoDataValue = this.isoData[isoDataY][isoDataX];
-
-        if (Math.abs(screenCoordinates[0] - GenevaCoordinates[0]) < 1 && Math.abs(screenCoordinates[1] - GenevaCoordinates[1]) < 1) {
-          console.log(isoDataValue, isoDataX, isoDataY);
-        }
 
         // Convert the screen coordinates to polar coordinates (with the origin at the isochrone center)
         const isoCenterCoordinates: any = this.projection(this.isoCenter, false, false);
