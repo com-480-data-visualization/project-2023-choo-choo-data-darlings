@@ -4,7 +4,7 @@ import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 // MAP
-const DIV_CONTAINER_ID = 'container';
+const DIV_CONTAINER_ID = 'map';
 const SELECT_TRAIN_COLOR_MODE_ID = 'select-train-color-mode';
 const SLIDER_SIMULATION_SPEED_ID = 'slider-simulation-speed';
 const SLIDER_SIMULATION_SPEED_LABEL_ID = 'slider-simulation-speed-label';
@@ -18,6 +18,7 @@ const ISO_FILE_SUFFIX = '.json';
 const SWISS_BORDER_LINE_NAME = 'swissborder_line';
 const SWISS_BORDER_GROUP_NAME = 'swissborder_group';
 const TRAIN_SCENE_NAME_PREFIX = 'train_';
+const ISO_CENTER_NAME = 'iso_center';
 
 const TRAIN_FILES_BIN_SIZE = 15;
 
@@ -35,10 +36,14 @@ const EARLY_TRAIN_COLOR = '#00ff00';
 const LATE_TRAIN_COLOR = '#ff0000';
 const SLOW_TRAIN_COLOR = '#0000ff';
 const FAST_TRAIN_COLOR = '#ffff00';
+const DEFAULT_ISO_COLOR = '#2c1e53';
 
 const DEFAULT_CITY_FONT_PATH = '../../data/map/Nunito_Regular.json'
 const DEFAULT_CITY_FONT_SIZE = 20;
 const DEFAULT_CITY_FONT_HEIGHT = 0.1;
+
+const MAX_ISO_HOUR = 12;
+const ISO_HOUR_STEP = 1;
 
 const ISO_STOPS = {
     'None': '',
@@ -57,11 +62,23 @@ const CITIES = {
   'Basel': [7.589564242496508, 47.54741361808408],
   'Lausanne': [6.629092475966655, 46.51678813031248],
   'Geneva': [6.142437734120765, 46.20973474671916],
-  'St. Gallen': [9.373166004018978, 47.425384247935014],
+  'St. Gallen': [9.369903098414593, 47.42317912125387],
   'Lugano': [8.946990064034518, 46.00550466890416],
+  'Chur': [9.529550381279392, 46.85346552066135],
+  'Sion': [7.359035574991079, 46.22750935443004],
+  'Brig': [7.988032639694566, 46.31954031184326],
+  'Lucerne': [8.31040434100704, 47.04947411811181],
+  'Schaffhausen': [8.63272780717279, 47.69831009611684],
+  'St. Moritz': [9.845659523760567, 46.49805711182697],
+  'Winterthur': [8.723759765486799, 47.50036580892898],
+  'Zug': [8.515293769181659, 47.173556423907286],
+  'Fribourg': [7.151098996153593, 46.80321267113013],
+  'Neuchatel': [6.934358628867637, 46.996799932889424],
+  'Thun': [7.629740555676791, 46.754938724947266],
+  'Aarau': [8.05127546918844, 47.39133701804118],
 }
 
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
 // CLOCK
 const CLOCK_RADIUS = 100;
@@ -247,11 +264,11 @@ class Map {
   private isoData!: any;
   private isoScreenToDataScaleX!: any;
   private isoScreenToDataScaleY!: any;
-
-  private oldIsoProjectionParameters!: any;                                                               // For transition
-  private oldIsoProjection!: (coordinates: [number, number]) => [number, number] | null;                  // For transition
-  private newIsoProjection!: (coordinates: [number, number], cache: boolean) => [number, number] | null;  // For transition
-  private isoTransitionProgress: number = 0;                                                              // For transition
+  // For transition
+  private oldIsoProjectionParameters!: any;
+  private oldIsoProjection!: (coordinates: [number, number]) => [number, number] | null;
+  private newIsoProjection!: (coordinates: [number, number], cache: boolean) => [number, number] | null;
+  private isoTransitionProgress: number = 1;
 
   private scale: number = 1;
   private translation: [number, number] = [0, 0];
@@ -264,6 +281,8 @@ class Map {
   private trainObjects: { [key: string]: THREE.Mesh } = {};
   private trainPool: THREE.Mesh[] = [];
   private swissBorderObjects!: THREE.Group;
+  private isoCenterObject!: THREE.Mesh;
+  private isoLineObjects: { [key: string]: THREE.Line } = {};
 
   // Cache
   private projectionCache: { [key: string]: [number, number] } = {};
@@ -444,8 +463,8 @@ class Map {
    * @returns {void}
    */
   private initIsochroneProjection(): void {
-    this.isoProjection = (coordinates: [number, number], _:boolean): [number, number] | null => {
-      return coordinates; // Default: no isochrone projection
+    this.isoProjection = (screenCoordinates: [number, number], _:boolean): [number, number] | null => {
+      return screenCoordinates; // Default: no isochrone projection
     }
     this.isIdIsoProjection = true;
   }
@@ -457,8 +476,8 @@ class Map {
   private setOldIsoProjection(): void {
     // If neutral, just use the identity projection
     if(this.isIdIsoProjection) {
-      this.oldIsoProjection = (coordinates: [number, number]): [number, number] | null => {
-        return coordinates; // Default: no isochrone projection
+      this.oldIsoProjection = (screenCoordinates: [number, number]): [number, number] | null => {
+        return screenCoordinates; // Default: no isochrone projection
       }
       return;
     }
@@ -518,21 +537,19 @@ class Map {
    */
   private updateIsochroneProjection(nodeId: string): void {
     // Store the old projection for transition
-    this.isoTransitionProgress = 0;
-
     this.setOldIsoProjection();
 
     // If the node is empty, set new projection to neutral
     if(nodeId === '') {
       this.isIdIsoProjection = true;
 
-      this.newIsoProjection = (coordinates: [number, number], _: boolean): [number, number] | null => {
-        return coordinates; // Default: no isochrone projection
+      this.newIsoProjection = (screenCoordinates: [number, number], _: boolean): [number, number] | null => {
+        return screenCoordinates; // Default: no isochrone projection
       }
-      this.isoProjection = (screenCoordinates: [number, number], cache: boolean): [number, number] => {
+      this.isoProjection = (screenCoordinates: [number, number], cache: boolean): [number, number] | null => {
         const oldCoordinates = this.oldIsoProjection(screenCoordinates);
         const newCoordinates = this.newIsoProjection(screenCoordinates, cache);
-        if (!oldCoordinates || !newCoordinates) return screenCoordinates;
+        if (!oldCoordinates || !newCoordinates) return null;
       
         return [
           newCoordinates[0] * this.isoTransitionProgress + oldCoordinates[0] * (1 - this.isoTransitionProgress),
@@ -548,6 +565,9 @@ class Map {
     // Load the new isochrone data and create the new projection
     const filePath = ISO_FILE_PREFIX + nodeId + ISO_FILE_SUFFIX;
     d3.json(filePath).then((data: any) => {
+      // Reset the transition progress
+      this.isoTransitionProgress = 0;
+
       // Define the data and scales used for the isochrone projection
       this.isoCenter = [data.iso_center[1], data.iso_center[0]];
       this.isoData = data.map;
@@ -558,6 +578,9 @@ class Map {
         .domain([0, this.height])
         .range([this.isoData.length - 1, 0]);
 
+      console.log('SCREEN', this.width, this.height);
+      console.log('DATA', this.isoData[0].length, this.isoData.length);
+
       // Create the new isochrone projection
       this.newIsoProjection = (screenCoordinates: [number, number], cache: boolean): [number, number] => {
         const cacheKey = `${screenCoordinates[0]}-${screenCoordinates[1]}`;
@@ -565,6 +588,12 @@ class Map {
         // Check if the result is already cached
         if (this.isoProjectionCache[cacheKey]) {
           return this.isoProjectionCache[cacheKey];
+        }
+
+        //TODO: DELETE
+        const GenevaCoordinates = this.projection(CITIES['Geneva'], false, false);
+        if (Math.abs(screenCoordinates[0] - GenevaCoordinates[0]) < 1 && Math.abs(screenCoordinates[1] - GenevaCoordinates[1]) < 1) {
+          console.log('Geneva coordinates', GenevaCoordinates);
         }
 
         // Convert screen coordinates to isochrone data coordinates
@@ -576,6 +605,10 @@ class Map {
 
         // Get the isochrone data value for the given coordinates
         const isoDataValue = this.isoData[isoDataY][isoDataX];
+
+        if (Math.abs(screenCoordinates[0] - GenevaCoordinates[0]) < 1 && Math.abs(screenCoordinates[1] - GenevaCoordinates[1]) < 1) {
+          console.log(isoDataValue, isoDataX, isoDataY);
+        }
 
         // Convert the screen coordinates to polar coordinates (with the origin at the isochrone center)
         const isoCenterCoordinates: any = this.projection(this.isoCenter, false, false);
@@ -823,6 +856,111 @@ class Map {
 
       cityText.position.set(point[0] + 10, point[1] + 10, 0);
     }
+  }
+
+  /**
+   * Update the isochronic center and lines
+   */
+  private updateIsoCenterAndLines(): void {
+    // Check if the isochronic center has already been added to the scene, add it if not
+    if (!this.isoCenterObject) {
+      const geometry = new THREE.CircleGeometry(10, 32);
+      const material = new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_ISO_COLOR) });
+      this.isoCenterObject = new THREE.Mesh(geometry, material);
+      this.isoCenterObject.name = ISO_CENTER_NAME;
+      this.scene.add(this.isoCenterObject);
+    }
+
+    // Update the isochronic center position
+    const isoCenterPosition = this.projection(this.isoCenter, false, true) ?? [0, 0];
+    this.isoCenterObject.position.set(isoCenterPosition[0], isoCenterPosition[1], 0);
+
+    // Check if the isochronic lines have already been added to the scene, add them if not
+    if (Object.keys(this.isoLineObjects).length === 0) {
+      for (let hour = 0; hour <= MAX_ISO_HOUR; hour += ISO_HOUR_STEP) {
+        const isoLinesCurve = new THREE.EllipseCurve(
+          0,  0,            // ax, aY
+          0, 0,             // xRadius, yRadius
+          0,  2 * Math.PI,  // aStartAngle, aEndAngle
+          false,            // aClockwise
+          0                 // aRotation 
+        );
+        const isoLinesPoints = isoLinesCurve.getPoints(32);
+        const isoLinesGeometry = new THREE.BufferGeometry().setFromPoints( isoLinesPoints );
+        const isoLinesMaterial = new THREE.LineBasicMaterial({ color: new THREE.Color(DEFAULT_ISO_COLOR) });
+        const isoLineObject = new THREE.Line(isoLinesGeometry, isoLinesMaterial);
+        isoLineObject.name = hour.toString(); // Name is the hour
+
+        // Add the line to the dictionnary
+        this.isoLineObjects[isoLineObject.name] = isoLineObject;
+        this.scene.add(isoLineObject);
+      }
+    }
+
+    // Compute neutral radius
+    const isCloseTo = (coordinates1: [number, number], coordinates2: [number, number]): boolean => {
+      return Math.abs(coordinates1[0] - coordinates2[0]) < 0.0001 && Math.abs(coordinates1[1] - coordinates2[1]) < 0.0001;
+    }
+
+    let targetedCoordinates: [number, number] = [0, 0];
+    if (isCloseTo(this.isoCenter, CITIES['Lausanne'] as [number, number])) {
+      targetedCoordinates = CITIES['Bern'] as [number, number];
+    } else {
+      targetedCoordinates = CITIES['Lausanne'] as [number, number];
+    }
+
+    // Get the radius value of target city
+    const screenCoordinates = this.projection(targetedCoordinates, false, false) ?? [0, 0];
+    let isoDataX = Math.floor(this.isoScreenToDataScaleX(screenCoordinates[0]));
+    let isoDataY = Math.floor(this.isoScreenToDataScaleY(screenCoordinates[1]));
+    const screenCenter = this.projection(this.isoCenter, false, false) ?? [0, 0];
+    let isoDataCenterX = Math.floor(this.isoScreenToDataScaleX(screenCenter[0]));
+    let isoDataCenterY = Math.floor(this.isoScreenToDataScaleY(screenCenter[1]));
+    // Clamp the coordinates to the isochrone data range
+    isoDataX = Math.max(0, Math.min(this.isoData[0].length - 1, isoDataX));
+    isoDataY = Math.max(0, Math.min(this.isoData.length - 1, isoDataY));
+    isoDataCenterX = Math.max(0, Math.min(this.isoData[0].length - 1, isoDataCenterX));
+    isoDataCenterY = Math.max(0, Math.min(this.isoData.length - 1, isoDataCenterY));
+
+    // Get the isochrone data value for the given coordinates
+    const isoDataValue = this.isoData[isoDataY][isoDataX];
+    const isoDataCenterValue = this.isoData[isoDataCenterY][isoDataCenterX];
+
+    // Find actual distance from iso projected cities
+    const isoProjectedCenter = this.projection(this.isoCenter, false, true) ?? [0, 0];
+    const isoProjectedCoordinates = this.projection(targetedCoordinates, false, true) ?? [0, 0];
+
+    // Get the distance between the two points
+    const distance = Math.sqrt(Math.pow(isoProjectedCenter[0] - isoProjectedCoordinates[0], 2) + Math.pow(isoProjectedCenter[1] - isoProjectedCoordinates[1], 2));
+
+    // Compute the radius
+    const radius = distance / ((isoDataValue - isoDataCenterValue) / 3600);
+
+    console.log('distance', distance, 'isoDataValue', isoDataValue, isoDataCenterValue, 'radius', radius);
+
+    // Update the isochronic lines
+    for (const isoLineName in this.isoLineObjects) {
+      // Name is the hour
+      const hour = parseInt(isoLineName);
+
+      // Change position
+      const isoLine = this.isoLineObjects[isoLineName];
+      isoLine.position.set(isoCenterPosition[0], isoCenterPosition[1], 0);
+
+      // Change radius of ellipse curve
+      isoLine.geometry.dispose();
+      const isoLinesCurve = new THREE.EllipseCurve(
+        0,  0,            // ax, aY
+        hour * radius, hour * radius,   // xRadius, yRadius
+        0,  2 * Math.PI,  // aStartAngle, aEndAngle
+        false,            // aClockwise
+        0                 // aRotation
+      );
+      const isoLinesPoints = isoLinesCurve.getPoints(32);
+      const isoLinesGeometry = new THREE.BufferGeometry().setFromPoints( isoLinesPoints );
+      isoLine.geometry = isoLinesGeometry;
+    }
+
   }
 
   /**
@@ -1170,6 +1308,7 @@ class Map {
       if (this.isoTransitionProgress < 1) {
         this.updateSwissBorder();
         this.updateCities();
+        this.updateIsoCenterAndLines();
         this.isoProjectionCache = {}; // Clear cache
       }
 
