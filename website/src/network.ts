@@ -41,8 +41,8 @@ const DEFAULT_EDGE_COLOR = 'rgba(46, 93, 82, ' + DEFAULT_EDGE_OPACITY + ')';
 const SEARCH_ZOOM_RATIO = 0.05;
 
 const NETWORK_SOURCE = 'transports';
-const NODES_FILE_PATH = `../../data/network/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
-const EDGES_FILE_PATH = `../../data/network/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
+const NODES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
+const EDGES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
 
 export class GraphManager {
   constructor() {
@@ -106,21 +106,38 @@ export class GraphManager {
         const xGeo = parseFloat(row[4]);
         const yGeo = parseFloat(row[5]);
 
-        const inDegree = parseInt(row[6]);
-        const outDegree = parseInt(row[7]);
-        const degree = parseInt(row[8]);
-        const betweenessCentrality = parseFloat(row[9]);
+        const betweenessCentrality = parseFloat(row[6]);
 
-        // 10: transportType
-        const city = row[11];
-        // 12: canton
-
-        // 13: isBusStop
-        // 14: isTramStop
-        // 15: isTrainStop
-        // 16: isMetroStop
-        // 17: isRackRailwayStop
-        // 18: isBoatStop
+        // 7: transportType
+        const city = row[7];
+        // 8: canton
+        const canton = row[8];
+        
+        // 9: isBusStop
+        // 10: isTramStop
+        // 11: isTrainStop
+        // 12: isMetroStop
+        // 13: isRackRailwayStop
+        // 14: isBoatStop
+        
+        const pageRank = parseFloat(row[15]);
+        // const modularityClass = parseInt(row[16]);
+        const inDegree = parseInt(row[17]);
+        const outDegree = parseInt(row[18]);
+        const degree = parseInt(row[19]);
+        const weightedInDegree = parseInt(row[20]);
+        const weightedOutDegree = parseInt(row[21]);
+        const weightedDegree = parseInt(row[22]);
+        const eccentricity = parseInt(row[23]);
+        const closenessCentrality = parseFloat(row[24]);
+        const harmonicClosenessCentrality = parseFloat(row[25]);
+        // const authority = parseFloat(row[26]);
+        // const hub = parseFloat(row[27]);
+        // const componentNumber = parseInt(row[28]);
+        // const strongComponentNumber = parseInt(row[29]);
+        // const statInfClass = parseInt(row[30]);
+        // const clustering = parseFloat(row[31]);
+        const eigenCentrality = parseFloat(row[32]);
 
         graph.addNode(id, {
           label: label, 
@@ -135,10 +152,18 @@ export class GraphManager {
           yGeo: yGeo,
           size: DEFAULT_NODE_SIZE,
           sizeFix: DEFAULT_NODE_SIZE,
+          sizeBce: betweenessCentrality,
           sizeIde: inDegree,
           sizeOde: outDegree,
           sizeDeg: degree,
-          sizeBce: betweenessCentrality,
+          sizeWide: weightedInDegree,
+          sizeWode: weightedOutDegree,
+          sizeWdeg: weightedDegree,
+          sizePgr: pageRank,
+          sizeEcc: eccentricity,
+          sizeCcl: closenessCentrality,
+          sizeHcl: harmonicClosenessCentrality,
+          sizeEgn: eigenCentrality,
           city: city,
         });
       }
@@ -159,7 +184,7 @@ export class GraphManager {
     });
 
     // Fix missing values in node sizes
-    const sizeFielsToFix = ['Ide', 'Ode', 'Deg', 'Bce'];
+    const sizeFielsToFix = ['Ide', 'Ode', 'Deg', 'Bce', 'Wide', 'Wode', 'Wdeg', 'Pgr', 'Ecc', 'Ccl', 'Hcl', 'Egn'];
     sizeFielsToFix.forEach(field => {
       graph.forEachNode((node, attributes) => {
         if (isNaN(attributes[`size${field}`])) {
@@ -169,7 +194,7 @@ export class GraphManager {
     });
 
     // Normalize nodes size
-    const sizeFieldsToNormalize = ['Fix', 'Ide', 'Ode', 'Deg', 'Bce'];
+    const sizeFieldsToNormalize = ['Fix', 'Ide', 'Ode', 'Deg', 'Bce', 'Wide', 'Wode', 'Wdeg', 'Pgr', 'Ecc', 'Ccl', 'Hcl', 'Egn'];
     sizeFieldsToNormalize.forEach(field => {
       const min = Math.min(...graph.nodes().map(node => graph.getNodeAttribute(node, `size${field}`)));
       const max = Math.max(...graph.nodes().map(node => graph.getNodeAttribute(node, `size${field}`)));
@@ -442,6 +467,14 @@ class NodeSizeManager {
       'ode': 'out_degree',
       'deg': 'degree',
       'bce': 'betweeness_centrality',
+      'wide': 'weighted_in_degree',
+      'wode': 'weighted_out_degree',
+      'wdeg': 'weighted_degree',
+      'pgr': 'page_rank',
+      'ecc': 'eccentricity',
+      'ccl': 'closeness_centrality',
+      'hcl': 'harmonic_closeness_centrality',
+      'egn': 'eigen_centrality',
     };
     const newSizeArgMap = {
       'fix': 'Fix',
@@ -449,6 +482,14 @@ class NodeSizeManager {
       'ode': 'Ode',
       'deg': 'Deg',
       'bce': 'Bce',
+      'wide': 'Wide',
+      'wode': 'Wode',
+      'wdeg': 'Wdeg',
+      'pgr': 'Pgr',
+      'ecc': 'Ecc',
+      'ccl': 'Ccl',
+      'hcl': 'Hcl',
+      'egn': 'Egn',
     };
 
     const newSizeArg = `size${newSizeArgMap[selectedOption]}`;
@@ -810,6 +851,14 @@ class ColorManager {
       ode: 'out_degree',
       deg: 'degree',
       bce: 'betweeness_centrality',
+      wide: 'weighted_in_degree',
+      wode: 'weighted_out_degree',
+      wdeg: 'weighted_degree',
+      pgr: 'page_rank',
+      ecc: 'eccentricity',
+      ccl: 'closeness_centrality',
+      hcl: 'harmonic_closeness_centrality',
+      egn: 'eigen_centrality',
     };
 
     const colorMap = {
@@ -818,6 +867,14 @@ class ColorManager {
       ode: DEGREE_NODE_COLOR,
       deg: DEGREE_NODE_COLOR,
       bce: BETWEENESS_CENTRALITY_NODE_COLOR,
+      wide: DEGREE_NODE_COLOR,
+      wode: DEGREE_NODE_COLOR,
+      wdeg: DEGREE_NODE_COLOR,
+      pgr: DEGREE_NODE_COLOR,
+      ecc: DEGREE_NODE_COLOR,
+      ccl: DEGREE_NODE_COLOR,
+      hcl: DEGREE_NODE_COLOR,
+      egn: DEGREE_NODE_COLOR,
     };
 
     const colorScaleArgMap = {
@@ -825,6 +882,14 @@ class ColorManager {
       ode: 'Ode',
       deg: 'Deg',
       bce: 'Bce',
+      wide: 'Wide',
+      wode: 'Wode',
+      wdeg: 'Wdeg',
+      pgr: 'Pgr',
+      ecc: 'Ecc',
+      ccl: 'Ccl',
+      hcl: 'Hcl',
+      egn: 'Egn',
     };
 
     const mode = modeMap[selectedOption];
@@ -851,6 +916,14 @@ class ColorManager {
       out_degree: 'Ode',
       degree: 'Deg',
       betweeness_centrality: 'Bce',
+      weighted_in_degree: 'Wide',
+      weighted_out_degree: 'Wode',
+      weighted_degree: 'Wdeg',
+      page_rank: 'Pgr',
+      eccentricity: 'Ecc',
+      closeness_centrality: 'Ccl',
+      harmonic_closeness_centrality: 'Hcl',
+      eigen_centrality: 'Egn',
     };
   
     const colorMap = {
@@ -858,6 +931,14 @@ class ColorManager {
       out_degree: DEGREE_NODE_COLOR,
       degree: DEGREE_NODE_COLOR,
       betweeness_centrality: BETWEENESS_CENTRALITY_NODE_COLOR,
+      weighted_in_degree: DEGREE_NODE_COLOR,
+      weighted_out_degree: DEGREE_NODE_COLOR,
+      weighted_degree: DEGREE_NODE_COLOR,
+      page_rank: DEGREE_NODE_COLOR,
+      eccentricity: DEGREE_NODE_COLOR,
+      closeness_centrality: DEGREE_NODE_COLOR,
+      harmonic_closeness_centrality: DEGREE_NODE_COLOR,
+      eigen_centrality: DEGREE_NODE_COLOR,
     };
   
     const colorScaleArg = `size${colorScaleArgMap[this.nodeColorMode]}`;
