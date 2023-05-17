@@ -23,10 +23,16 @@ body {
   background: #000;
 }
 
-#select-heatmap {
+#map {
   position: absolute;
-  right: 10px;
+}
+
+#show-trains {
+  position: absolute;
   top: 35px;
+  right: 10px;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   z-index: 9999;
 }
 
