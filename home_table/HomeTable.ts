@@ -5,6 +5,9 @@ import './style.css';
 
 const DATA_FOLDER = "data/home_table";
 
+const TABLE_ELEMENT_ID = "table-container";
+const BAR_ELEMENT_ID = "table-bar-plot";
+
 const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
@@ -28,7 +31,6 @@ interface StopData {
     n_through_trip: number;
     n_additional_trip: number;
     n_entries: number;
-
 }
 
 //EPFL Stop ID
@@ -40,7 +42,7 @@ export class TablePlot {
     private barChart: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
   
     constructor() {
-      this.barChart = d3.select('#bar-plot')
+      this.barChart = d3.select(`#${BAR_ELEMENT_ID}`)
         .append('svg')
         .attr('class', 'bar-chart');
     }
@@ -73,142 +75,146 @@ export class TablePlot {
         .attr('dy', '0.35em')
         .text((d) => d.value);
     }
-
 }
 
 
 export class HomePageTable {
-    private data: StopData[];
-    private table: d3.Selection<HTMLTableElement, unknown, HTMLElement, any>;
-    private plot: TablePlot;
+  private data: StopData[];
+  private table: d3.Selection<HTMLTableElement, unknown, HTMLElement, any>;
+  private plot: TablePlot;
 
-    constructor() {
-        this.loadData().then(() => {
-    
-            this.initTable();
-            this.sortedTable; //sort values depending on attribute
-            this.updateTable(); //hover and click behaviours
-            this.plot = new TablePlot(); // link bar plot
-        });
-    }
+  private rows: any;
 
-    private async loadData(): Promise<void> {
-        try {
-          const data = await d3.json('table_df.json');
-          this.data = data;
-          console.log(this.data); 
-        } catch (error) {
-          console.error('Error loading data:', error);
-        }
-    }
+  constructor() {
+      this.loadData().then(() => {
+          this.initTable();
+          this.sortedTable(); //sort values depending on attribute
+          this.updateTable(); //hover and click behaviours
+          this.plot = new TablePlot(); // link bar plot
+      });
+  }
 
-    private initTable(): void {
-        // container element where the table will be appended
-        const container = d3.select('#table-container'); 
-      
-        // width of the table to 90% of the screen width
-        const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        const tableWidth = 0.9 * screenWidth;
-
-        const table = container.append('table')
-          .attr('class', 'choo-choo-table-class')
-          .style('width', `${tableWidth}px`); 
-      
-        //header
-        const thead = table.append('thead'); 
-        // body
-        const tbody = table.append('tbody');
-      
-        // table header row
-        const headerRow = thead.append('tr');
-      
-        // attributes from the first entry in table_df.json
-        const attributes = Object.keys(this.data[0]);
-      
-        // table cols based on this attributes
-        headerRow.selectAll('th')
-          .data(attributes)
-          .enter()
-          .append('th')
-          .text((d) => d); 
-      
-        // table body rows
-        const rows = tbody.selectAll('tr')
-          .data(this.data)
-          .enter()
-          .append('tr');
-      
-        // create table cells and fill them up with the data
-        rows.selectAll('td')
-          .data((d) => Object.values(d))
-          .enter()
-          .append('td')
-          .text((d) => d); 
+  private async loadData(): Promise<void> {
+      try {
+        const data = await d3.json('table_df.json');
+        this.data = data;
+        console.log(this.data); 
+      } catch (error) {
+        console.error('Error loading data:', error);
       }
+  }
 
-      // sort the table rows when attribute is clicked
-      private sortedTable(): void {
-        // get table element by it class
-        const table = d3.select('.choo-choo-table-class'); 
-        const headerRow = table.select('thead tr');
-        const tbody = table.select('tbody');
-      
-        // sorter function
-        const sortTable = (attribute: string, ascending: boolean) => {
-          const sortedData = this.data.slice().sort((a, b) => {
+  private initTable(): void {
+    // container element where the table will be appended
+    const container = d3.select(`#${TABLE_ELEMENT_ID}`); 
+  
+    // width of the table to 90% of the screen width
+    const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const tableWidth = 0.9 * screenWidth;
+
+    this.table = container.append('table')
+      .attr('class', 'choo-choo-table-class')
+      .style('width', `${tableWidth}px`); 
+  
+    //header
+    const thead = this.table.append('thead'); 
+    // body
+    const tbody = this.table.append('tbody');
+  
+    // table header row
+    const headerRow = thead.append('tr');
+  
+    // attributes from the first entry in table_df.json
+    const attributes = Object.keys(this.data[0]);
+  
+    // table cols based on this attributes
+    headerRow.selectAll('th')
+      .data(attributes)
+      .enter()
+      .append('th')
+      .text((d) => d); 
+  
+    // table body rows
+    this.rows = tbody.selectAll('tr')
+      .data(this.data)
+      .enter()
+      .append('tr');
+  
+    // create table cells and fill them up with the data
+    this.rows.selectAll('td')
+      .data((d) => Object.values(d))
+      .enter()
+      .append('td')
+      .text((d) => d); 
+  }
+
+  private sortedTable(): void {
+    // get table element by its class
+    const table = d3.select('.choo-choo-table-class'); 
+    const headerRow = table.select('thead tr');
+    const tbody = table.select('tbody');
+  
+    // sorter function
+    const sortTable = (attribute: string, ascending: boolean) => {
+        const sortedData = this.data.slice().sort((a, b) => {
             if (ascending) {
-              return d3.ascending(a[attribute], b[attribute]);
+                return d3.ascending(a[attribute], b[attribute]);
             } else {
-              return d3.descending(a[attribute], b[attribute]);
+                return d3.descending(a[attribute], b[attribute]);
             }
-          });
-      
-          // group cells in same row - bind
-          const rows = tbody.selectAll('tr')
-            .data(sortedData, (d) => d.stop_id); 
-      
-          rows.enter()
-            .append('tr')
-            .merge(rows)
-            .html((d) => {
-              return Object.values(d).map((value) => `<td>${value}</td>`).join('');
-            });
-      
-          rows.exit().remove();
-        };
-      
-        // respond to clicks on header
-        headerRow.selectAll('th')
-          .on('click', function (d) {
+        });
+
+        // Remove the old rows
+        tbody.selectAll('tr').remove();
+
+        // Add new sorted rows
+        this.rows = tbody.selectAll('tr')
+            .data(sortedData)
+            .enter()
+            .append('tr');
+
+        // Add data to the rows
+        this.rows.selectAll('td')
+            .data((d: any) => Object.values(d))
+            .enter()
+            .append('td')
+            .text((d: any) => d);
+
+        this.updateTable();
+    };
+  
+    // respond to clicks on header
+    headerRow.selectAll('th')
+        .on('click', function(d) {
             const currentSortOrder = d3.select(this).classed('sorted-ascending');
             headerRow.selectAll('th').classed('sorted-ascending', false);
             headerRow.selectAll('th').classed('sorted-descending', false);
             d3.select(this).classed('sorted-ascending', !currentSortOrder);
             d3.select(this).classed('sorted-descending', currentSortOrder);
+
             // Sort the table based on the clicked attribute
-            sortTable(d, !currentSortOrder);
-          });
-    }
+            sortTable(d.target.innerHTML, !currentSortOrder);
+        });
+  }  
 
     private updateTable(): void {
         // hover 
-        rows.on('mouseover', function () {
+        this.rows.on('mouseover', function () {
           d3.select(this).classed('hovered', true);
         }).on('mouseout', function () {
           d3.select(this).classed('hovered', false);
         });
       
         // clicked on a cell in a row
-        rows.on('click', function (d) {
+        this.rows.on('click', (event: any, d: any) => {
             // delete previous plot
             // d3.select('#bar-plot').html('');
             d3.selectAll('.selected-row').classed('selected-row', false);
-            d3.select(this).classed('selected-row', true);
-            
+            d3.select(event.target).classed('selected-row', true);
 
             const attributes = ['mean_arrival_delay', 'mean_departure_delay', 'n_cancelled', 'n_entries'];
             const barData = attributes.map((attribute) => ({ attribute, value: d[attribute] }));
-            
+
              /// LINK THIS LIKE ARNAUD TOLD ME
             this.plot.updatePlot(attributes, barData);
       

@@ -1,0 +1,15 @@
+.selected-row {
+    background-color: #ff0000;
+}
+
+.hovered {
+    background-color: #7300ff;
+}
+
+.sorted-ascending {
+    background-color: #00ff00;
+}
+
+.sorted-descending {
+    background-color: #ff00ff;
+}
