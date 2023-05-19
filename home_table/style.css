@@ -13,3 +13,13 @@
 .sorted-descending {
     background-color: #ff00ff;
 }
+
+
+.clicked {
+    background-color: purple;
+}
+  
+.highlighted {
+    fill: orange;
+}
+  
