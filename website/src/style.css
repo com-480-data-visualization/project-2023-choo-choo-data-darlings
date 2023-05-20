@@ -617,7 +617,6 @@ p {
   top: 10px;
   right: 10px;
   z-index: 9999;
-  font-family: var(--default-font-family);
 }
 
 #select_node_size {
@@ -625,7 +624,11 @@ p {
   top: 30px;
   right: 10px;
   z-index: 9999;
+}
+
+select {
   font-family: var(--default-font-family);
+  font-weight: 600;
 }
 
 #edges_opacity {
@@ -652,4 +655,35 @@ p {
   z-index: 9999;
   color: var(--off-white);
   accent-color: var(--green);
+}
+
+.dotstyle {
+  position: fixed;
+  z-index: 9999;
+  /* position it to the right center of the screen */
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.dotstyle ul {
+	position: relative;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	cursor: default;
+}
+
+.dotstyle li {
+	position: relative;
+	display: block;
+	margin: 0 16px;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+  background-color: black;
+  border-radius: 50%;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }

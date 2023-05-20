@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
+    <div class="dotstyle dotstyle-fillup">
+      <ul>
+        <li class="current"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
     <div class="app">
       <div id="title-container" class="container">
         <h1 id="title">The Swiss Transportation System</h1>
@@ -218,60 +228,66 @@
           <input type="checkbox" name="search_by_city">
           <label for="search_by_city">Search by city</label>
         </div>
-    
-        <select id="select_layout" class="network-control">
-          <option value="rdm" selected>
-            Random
-          </option>
-          <option value="fa2">
-            ForceAtlas2
-          </option>
-          <option value="geo">
-            Geographical
-          </option>
-        </select>
-    
-        <select id="select_node_size" class="network-control">
-          <option value="fix" selected>
-            Fixed
-          </option>
-          <!--<option value="ide">
-            In degree
-          </option>-->
-          <!--<option value="ode">
-            Out degree
-          </option>-->
-          <option value="deg">
-            Degree
-          </option>
-          <!--<option value="wide">
-            Weighted in degree
-          </option>-->
-          <!--<option value="wode">
-            Weighted out degree
-          </option>-->
-          <option value="wdeg">
-            Weighted degree
-          </option>
-          <option value="bce">
-            Betweeness centrality
-          </option>
-          <option value="pgr">
-            Page rank
-          </option>
-          <!--<option value="ecc">
-            Eccentricity
-          </option>-->
-          <!--<option value="ccl">
-            Closeness centrality
-          </option>-->
-          <!--<option value="hcl">
-            Harmonic closeness centrality
-          </option>-->
-          <option value="egn">
-            Eigenvector centrality
-          </option>
-        </select>
+        
+        <div id="select_layout" class="light-text">
+          Layout: 
+          <select class="network-control">
+            <option value="rdm" selected>
+              Random
+            </option>
+            <option value="fa2">
+              ForceAtlas2
+            </option>
+            <option value="geo">
+              Geographical
+            </option>
+          </select>
+        </div>
+
+        <div id="select_node_size" class="light-text">
+          Metric:
+          <select class="network-control">
+            <option value="fix" selected>
+              Fixed
+            </option>
+            <!--<option value="ide">
+              In degree
+            </option>-->
+            <!--<option value="ode">
+              Out degree
+            </option>-->
+            <option value="deg">
+              Degree
+            </option>
+            <!--<option value="wide">
+              Weighted in degree
+            </option>-->
+            <!--<option value="wode">
+              Weighted out degree
+            </option>-->
+            <option value="wdeg">
+              Weighted degree
+            </option>
+            <option value="bce">
+              Betweeness centrality
+            </option>
+            <option value="pgr">
+              Page rank
+            </option>
+            <!--<option value="ecc">
+              Eccentricity
+            </option>-->
+            <!--<option value="ccl">
+              Closeness centrality
+            </option>-->
+            <!--<option value="hcl">
+              Harmonic closeness centrality
+            </option>-->
+            <option value="egn">
+              Eigenvector centrality
+            </option>
+          </select>
+        </div>
     
         <div id="edges_opacity" class="network-control">
           <input type="checkbox" name="edges_opacity" checked>
@@ -308,7 +324,7 @@
             <div id="graph-container" class="height-100 width-100"></div>
           </div>
           <div class="flex-row flex-15">
-            <div class="small-text white-text jus">
+            <div class="small-text light-text">
               <p id="graph-description">Choose between the different layouts of the graph: random, geographical or force atlas 2.</p>
             </div>
           </div>
