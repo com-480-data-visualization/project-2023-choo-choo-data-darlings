@@ -209,17 +209,17 @@
       </div>
 
       <div id="p6-container" class="container container-padding black-bg">
-        <div id="search">
+        <div id="search" class="network-control">
           <input type="search" id="search_input" list="search_suggestions" placeholder="Search stop" />
           <datalist id="search_suggestions"></datalist>
         </div>
     
-        <div id="search_by_city">
+        <div id="search_by_city" class="network-control">
           <input type="checkbox" name="search_by_city">
           <label for="search_by_city">Search by city</label>
         </div>
     
-        <select id="select_layout">
+        <select id="select_layout" class="network-control">
           <option value="rdm" selected>
             Random
           </option>
@@ -231,7 +231,7 @@
           </option>
         </select>
     
-        <select id="select_node_size">
+        <select id="select_node_size" class="network-control">
           <option value="fix" selected>
             Fixed
           </option>
@@ -273,12 +273,12 @@
           </option>
         </select>
     
-        <div id="edges_opacity">
+        <div id="edges_opacity" class="network-control">
           <input type="checkbox" name="edges_opacity" checked>
           <label for="edges_opacity">Transparent edges</label>
         </div>
     
-        <div id="w_slider">
+        <div id="w_slider" class="network-control">
           <label id="w_slider_label" for="w_scale">W (1.00)</label>
           <input
             type="range"
@@ -291,7 +291,7 @@
           >
         </div>
     
-        <div id="b_slider">
+        <div id="b_slider" class="network-control">
           <label id="b_slider_label" for="b_scale">B (0.50)</label>
           <input
             type="range"
