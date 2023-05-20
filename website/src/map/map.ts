@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import * as THREE from 'three';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { FontLoader, Font } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 // MAP
@@ -34,14 +34,15 @@ const DEFAULT_TRAIN_COLOR_MODE = 'uniform';
 
 const DEFAULT_MAP_BORDER_COLOR = '#2e5d52';
 const DEFAULT_CITY_COLOR = '#fb9e82';
-const DEFAULT_TRAIN_COLOR = '#eeeeee';
+const DEFAULT_TRAIN_COLOR = '#FAF4DD';
 const EARLY_TRAIN_COLOR = '#00ff00';
 const LATE_TRAIN_COLOR = '#ff0000';
 const SLOW_TRAIN_COLOR = '#0000ff';
 const FAST_TRAIN_COLOR = '#ffff00';
 const DEFAULT_ISO_COLOR = '#2c1e53';
+const DEFAULT_TIME_COLOR = '#FAF4DD';
 
-const DEFAULT_CITY_FONT_PATH = '../../data/map/Nunito_Regular.json';
+const DEFAULT_FONT_PATH = '../../data/map/Nunito_Regular.json';
 const DEFAULT_CITY_FONT_SIZE = 15;
 const DEFAULT_CITY_FONT_HEIGHT = 0.1;
 
@@ -91,6 +92,8 @@ const CLOCK_RADIUS = 100;
 const CLOCK_SCALE_FACTOR = 0.8;
 const CLOCK_MARGIN = CLOCK_RADIUS * CLOCK_SCALE_FACTOR + 20;
 
+const CLOCK_RENDER_ORDER = 999;
+
 class Clock {
   private scene: THREE.Scene;
   private clock!: THREE.Object3D;
@@ -108,6 +111,9 @@ class Clock {
   private markerColor: THREE.Color;
   private clockHandColor: THREE.Color;
 
+  private font!: Font;
+  private timeText!: THREE.Mesh;
+
   private time: number;
 
   constructor(
@@ -119,6 +125,7 @@ class Clock {
       backgroundColor: THREE.Color,
       markerColor: THREE.Color,
       clockHandColor: THREE.Color,
+      font: Font,
   ) {
       this.scene = scene;
       this.x = x;
@@ -128,6 +135,7 @@ class Clock {
       this.backgroundColor = backgroundColor;
       this.markerColor = markerColor;
       this.clockHandColor = clockHandColor;
+      this.font = font;
 
       this.time = 0;
 
@@ -164,6 +172,7 @@ class Clock {
           side: THREE.DoubleSide,
       });
       const clockMesh = new THREE.Mesh(clockGeometry, clockMaterial);
+      clockMesh.renderOrder = CLOCK_RENDER_ORDER;
       this.clock.add(clockMesh);
 
       // Draw the first 12 markers
@@ -174,6 +183,7 @@ class Clock {
       });
       for (let i = 0; i < 12; i++) {
           const markerMesh = new THREE.Mesh(markerGeometry, markerMaterial);
+          markerMesh.renderOrder = CLOCK_RENDER_ORDER + 1;
           markerMesh.position.set(
               0.8 * this.radius * Math.cos(i * Math.PI / 6),
               0.8 * this.radius * Math.sin(i * Math.PI / 6),
@@ -187,6 +197,7 @@ class Clock {
       const markerGeometry2 = new THREE.PlaneGeometry(2.5, 8);
       for (let i = 0; i < 60; i++) {
           const markerMesh = new THREE.Mesh(markerGeometry2, markerMaterial);
+          markerMesh.renderOrder = CLOCK_RENDER_ORDER + 1;
           markerMesh.position.set(
               0.87 * this.radius * Math.cos(i * Math.PI / 30),
               0.87 * this.radius * Math.sin(i * Math.PI / 30),
@@ -203,6 +214,7 @@ class Clock {
           side: THREE.DoubleSide,
       });
       this.hourHandMesh = new THREE.Mesh(hourHandGeometry, hourHandMaterial);
+      this.hourHandMesh.renderOrder = CLOCK_RENDER_ORDER + 1;
       this.hourHandMesh.position.set(0, 15, 0); // Offset the mesh by half its length
       this.hourHandPivot.add(this.hourHandMesh);
       this.hourHandPivot.position.set(0, 0, 0);
@@ -215,6 +227,7 @@ class Clock {
           side: THREE.DoubleSide,
       });
       this.minuteHandMesh = new THREE.Mesh(minuteHandGeometry, minuteHandMaterial);
+      this.minuteHandMesh.renderOrder = CLOCK_RENDER_ORDER + 1;
       this.minuteHandMesh.position.set(0, 30, 0); // Offset the mesh by half its length
       this.minuteHandPivot.add(this.minuteHandMesh);
       this.minuteHandPivot.position.set(0, 0, 0);
@@ -223,6 +236,32 @@ class Clock {
       // Scale and translate the clock
       this.clock.scale.set(this.scaleFactor, this.scaleFactor, 1);
       this.clock.position.set(this.x, this.y, 0);
+
+      // Create time text
+      this.createTimeText();
+  }
+
+  private getTimeString(): string {
+    const date = new Date(0, 0, 0, 0, this.time, 0);
+    // return without seconds
+    return date.toLocaleTimeString().slice(0, -3);
+  }
+
+  private createTimeText(): void {
+    if (!this.font) return;
+
+    const timeString = this.getTimeString();
+    const textGeometry = new TextGeometry(timeString, {
+      font: this.font,
+      size: DEFAULT_CITY_FONT_SIZE,
+      height: DEFAULT_CITY_FONT_HEIGHT,
+    });
+
+    const textMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_TIME_COLOR) });
+    this.timeText = new THREE.Mesh(textGeometry, textMaterial);
+    this.timeText.position.set(this.x - 27, this.y - this.radius, 0);
+    this.timeText.name = 'timeText';
+    this.scene.add(this.timeText);
   }
 
   /**
@@ -236,6 +275,12 @@ class Clock {
     // update rotation of minute hand
     this.minuteHandPivot.rotation.z = -this.time * Math.PI / 30;
 
+    // update time text
+    if (this.timeText && this.font) {
+      this.scene.remove(this.timeText);
+
+      this.createTimeText();
+    }
   }
 
   /**
@@ -266,7 +311,7 @@ class Map {
 
   private isoProjection!: (coordinates: [number, number], cache: boolean) => [number, number] | null;
   private isIdIsoProjection!: boolean;
-  private isoCenter!: [number, number];
+  private isoCenter!: [number, number] | null;
   private isoData!: any;
   private isoScreenToDataScaleX!: any;
   private isoScreenToDataScaleY!: any;
@@ -280,6 +325,8 @@ class Map {
   private translation: [number, number] = [0, 0];
 
   // Clock
+  private fontLoader: FontLoader = new FontLoader();
+  private font!: Font;
   private clock!: Clock;
 
   // Train
@@ -287,8 +334,9 @@ class Map {
   private trainObjects: { [key: string]: THREE.Mesh } = {};
   private trainPool: THREE.Mesh[] = [];
   private swissBorderObjects!: THREE.Group;
-  private isoCenterObject!: THREE.Mesh;
+  private isoCenterObject!: THREE.Mesh | null;
   private isoLineObjects: { [key: string]: THREE.Line } = {};
+  private isoTextObjects: { [key: string]: THREE.Mesh } = {};
 
   private showTrains: boolean = DEFAULT_SHOW_TRAINS;
 
@@ -301,25 +349,29 @@ class Map {
 
   constructor() {
     this.loadData().then(() => {
-      this.initScene();
-      this.initEvents();
+      this.fontLoader.load(DEFAULT_FONT_PATH, (font: any) => {
+        this.font = font;
+        this.initScene();
+        this.initEvents();
 
-      this.initIsochroneProjection();
-      this.initSwissBorder();
-      this.initCities();
+        this.initIsochroneProjection();
+        this.initSwissBorder();
+        this.initCities();
 
-      this.clock = new Clock(
-        this.scene,
-        CLOCK_MARGIN,
-        this.height - CLOCK_MARGIN,
-        CLOCK_SCALE_FACTOR,
-        new THREE.Color(0xdddddd),
-        new THREE.Color(0x000000),
-        new THREE.Color(0x000000)
-      );
-      this.clock.addToScene();
+        this.clock = new Clock(
+          this.scene,
+          CLOCK_MARGIN,
+          this.height - CLOCK_MARGIN,
+          CLOCK_SCALE_FACTOR,
+          new THREE.Color(0xFAF4DD),
+          new THREE.Color(0x000000),
+          new THREE.Color(0x000000),
+          this.font,
+        );
+        this.clock.addToScene();
 
-      this.render();
+        this.render();
+      });
     });
   }
 
@@ -540,18 +592,18 @@ class Map {
       // Convert screen coordinates to isochrone data coordinates
       let isoDataX = Math.floor(parameters.isoScreenToDataScaleX(screenCoordinates[0]));
       let isoDataY = Math.floor(parameters.isoScreenToDataScaleY(screenCoordinates[1]));
-      const screenCenter = this.projection(this.isoCenter, false, false) ?? [0, 0];
+      const screenCenter = this.projection(parameters.isoCenter, false, false) ?? [0, 0];
       let isoDataCenterX = Math.floor(this.isoScreenToDataScaleX(screenCenter[0]));
       let isoDataCenterY = Math.floor(this.isoScreenToDataScaleY(screenCenter[1]));
       // Clamp the coordinates to the isochrone data range
       isoDataX = Math.max(0, Math.min(parameters.isoData[0].length - 1, isoDataX));
       isoDataY = Math.max(0, Math.min(parameters.isoData.length - 1, isoDataY));
-      isoDataCenterX = Math.max(0, Math.min(this.isoData[0].length - 1, isoDataCenterX));
-      isoDataCenterY = Math.max(0, Math.min(this.isoData.length - 1, isoDataCenterY));
+      isoDataCenterX = Math.max(0, Math.min(parameters.isoData[0].length - 1, isoDataCenterX));
+      isoDataCenterY = Math.max(0, Math.min(parameters.isoData.length - 1, isoDataCenterY));
 
       // Get the isochrone data value for the given coordinates
       const isoDataValue = parameters.isoData[isoDataY][isoDataX];
-      const isoDataCenterValue = this.isoData[isoDataCenterY][isoDataCenterX];
+      const isoDataCenterValue = parameters.isoData[isoDataCenterY][isoDataCenterX];
 
       // Convert the screen coordinates to polar coordinates (with the origin at the isochrone center)
       const isoCenterCoordinates: any = this.projection(parameters.isoCenter, false, false);
@@ -589,6 +641,7 @@ class Map {
 
     // If the node is empty, set new projection to neutral
     if(nodeId === '') {
+      // Transition back to normal
       this.isoTransitionProgress = 0;
       this.isIdIsoProjection = true;
 
@@ -605,6 +658,8 @@ class Map {
           newCoordinates[1] * this.isoTransitionProgress + oldCoordinates[1] * (1 - this.isoTransitionProgress)
         ];
       };
+
+      this.isoCenter = null;
       return;
     }
 
@@ -639,7 +694,7 @@ class Map {
         // Convert screen coordinates to isochrone data coordinates
         let isoDataX = Math.floor(this.isoScreenToDataScaleX(screenCoordinates[0]));
         let isoDataY = Math.floor(this.isoScreenToDataScaleY(screenCoordinates[1]));
-        const screenCenter = this.projection(this.isoCenter, false, false) ?? [0, 0];
+        const screenCenter = this.projection(this.isoCenter as [number, number], false, false) as [number, number];
         let isoDataCenterX = Math.floor(this.isoScreenToDataScaleX(screenCenter[0]));
         let isoDataCenterY = Math.floor(this.isoScreenToDataScaleY(screenCenter[1]));
         // Clamp the coordinates to the isochrone data range
@@ -653,7 +708,7 @@ class Map {
         const isoDataCenterValue = this.isoData[isoDataCenterY][isoDataCenterX];
 
         // Convert the screen coordinates to polar coordinates (with the origin at the isochrone center)
-        const isoCenterCoordinates: any = this.projection(this.isoCenter, false, false);
+        const isoCenterCoordinates: any = this.projection(this.isoCenter as [number, number], false, false);
         const dx = screenCoordinates[0] - isoCenterCoordinates[0];
         const dy = screenCoordinates[1] - isoCenterCoordinates[1];
         //const r = Math.sqrt(dx * dx + dy * dy); // Not needed!
@@ -846,7 +901,7 @@ class Map {
   private initCities(): void {
     const loader = new FontLoader();
 
-    loader.load(DEFAULT_CITY_FONT_PATH, (font) => {
+    loader.load(DEFAULT_FONT_PATH, (font) => {
         for (const city in CITIES) {
             // Draw the city point
             const coordinates = (CITIES as any)[city as any];
@@ -904,6 +959,11 @@ class Map {
    * Update the isochronic center and lines
    */
   private updateIsoCenterAndLines(): void {
+    if (!this.isoCenter) {
+      this.removeIsoCenterAndLines();
+      return;
+    }
+
     // Check if the isochronic center has already been added to the scene, add it if not
     if (!this.isoCenterObject) {
       const geometry = new THREE.CircleGeometry(10, 32);
@@ -919,7 +979,7 @@ class Map {
 
     // Check if the isochronic lines have already been added to the scene, add them if not
     if (Object.keys(this.isoLineObjects).length === 0) {
-      for (let hour = 0; hour <= MAX_ISO_HOUR; hour += ISO_HOUR_STEP) {
+      for (let hour = 1; hour <= MAX_ISO_HOUR; hour += ISO_HOUR_STEP) {
         const isoLinesCurve = new THREE.EllipseCurve(
           0,  0,            // ax, aY
           0, 0,             // xRadius, yRadius
@@ -997,10 +1057,83 @@ class Map {
         0                 // aRotation
       );
       const isoLinesPoints = isoLinesCurve.getPoints(ISO_CIRCLE_NUM_POINTS);
-      const isoLinesGeometry = new THREE.BufferGeometry().setFromPoints( isoLinesPoints );
+      const isoLinesGeometry = new THREE.BufferGeometry().setFromPoints(isoLinesPoints);
       isoLine.geometry = isoLinesGeometry;
     }
 
+    // Add legends on each circle
+    const positions = [
+      {loc: 'top', angle: Math.PI / 2, xOff: -10, yOff: 7},          // Top
+      {loc: 'bottom', angle: 3 * Math.PI / 2, xOff: -10, yOff: -15}, // Bottom
+      {loc: 'left', angle: Math.PI, xOff: -20, yOff: -5},            // Left
+      {lov: 'right', angle: 0, xOff: 5, yOff: 0}                     // Right
+    ];
+    if (Object.keys(this.isoTextObjects).length === 0) {
+      for (const isoLineName in this.isoLineObjects) {
+        // Name is the hour
+        const hour = parseInt(isoLineName);
+        positions.forEach(position => {
+          // Compute the position
+            const x = isoCenterPosition[0] + hour * radius * Math.cos(position.angle) + position.xOff;
+            const y = isoCenterPosition[1] + hour * radius * Math.sin(position.angle) + position.yOff;
+        
+            // Create text geometry and material
+            const textGeometry = new TextGeometry(hour.toString() + 'h', {
+                font: this.font,
+                size: 10,
+                height: 0.1,
+            });
+            const textMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(DEFAULT_ISO_COLOR) });
+
+            // Create text mesh and set its position
+            const text = new THREE.Mesh(textGeometry, textMaterial);
+            text.position.set(x, y, 0);
+            text.name = isoLineName + '-' + position.loc;
+        
+            // Add the text to the scene
+            this.scene.add(text);
+
+            // Save the text object
+            this.isoTextObjects[isoLineName + '-' + position.loc] = text;
+            console.log(this.isoTextObjects);
+        });
+      }
+    } else {
+      // Update position of the existing text objects
+      for (const isoLineName in this.isoLineObjects) {
+        // Name is the hour
+        const hour = parseInt(isoLineName);
+        positions.forEach(position => {
+            // Compute the new position
+            const x = isoCenterPosition[0] + hour * radius * Math.cos(position.angle) + position.xOff;
+            const y = isoCenterPosition[1] + hour * radius * Math.sin(position.angle) + position.yOff;
+
+            // Update the position of the corresponding text object
+            const text = this.isoTextObjects[isoLineName + '-' + position.loc];
+            text.position.set(x, y, 0);
+        });
+      }
+    }
+  }
+
+  private removeIsoCenterAndLines(): void {
+    // Remove the isochronic lines
+    for (const isoLineName in this.isoLineObjects) {
+      const isoLine = this.isoLineObjects[isoLineName];
+      this.scene.remove(isoLine);
+    }
+    this.isoLineObjects = {};
+
+    // Remove the isochronic texts
+    for (const isoTextName in this.isoTextObjects) {
+      const isoText = this.isoTextObjects[isoTextName];
+      this.scene.remove(isoText);
+    }
+
+    // Remove the isochronic center
+    if (!this.isoCenterObject) return;
+    this.scene.remove(this.isoCenterObject);
+    this.isoCenterObject = null;
   }
 
   /**
@@ -1342,8 +1475,10 @@ class Map {
       }
 
       // Update clock
-      this.clock.setTime(t);
-      this.clock.draw();
+      if (this.clock) {
+        this.clock.setTime(t);
+        this.clock.draw();
+      }
 
       // Update iso transition
       this.isoTransitionProgress = Math.min(this.isoTransitionProgress + 0.01, 1);
