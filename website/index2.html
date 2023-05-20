@@ -209,17 +209,17 @@
       </div>
 
       <div id="p6-container" class="container container-padding black-bg">
-        <div id="search">
+        <div id="search" class="network-control">
           <input type="search" id="search_input" list="search_suggestions" placeholder="Search stop" />
           <datalist id="search_suggestions"></datalist>
         </div>
     
-        <div id="search_by_city">
+        <div id="search_by_city" class="network-control">
           <input type="checkbox" name="search_by_city">
           <label for="search_by_city">Search by city</label>
         </div>
     
-        <select id="select_layout">
+        <select id="select_layout" class="network-control">
           <option value="rdm" selected>
             Random
           </option>
@@ -231,25 +231,25 @@
           </option>
         </select>
     
-        <select id="select_node_size">
+        <select id="select_node_size" class="network-control">
           <option value="fix" selected>
             Fixed
           </option>
-          <option value="ide">
+          <!--<option value="ide">
             In degree
-          </option>
-          <option value="ode">
+          </option>-->
+          <!--<option value="ode">
             Out degree
-          </option>
+          </option>-->
           <option value="deg">
             Degree
           </option>
-          <option value="wide">
+          <!--<option value="wide">
             Weighted in degree
-          </option>
-          <option value="wode">
+          </option>-->
+          <!--<option value="wode">
             Weighted out degree
-          </option>
+          </option>-->
           <option value="wdeg">
             Weighted degree
           </option>
@@ -259,26 +259,26 @@
           <option value="pgr">
             Page rank
           </option>
-          <option value="ecc">
+          <!--<option value="ecc">
             Eccentricity
-          </option>
-          <option value="ccl">
+          </option>-->
+          <!--<option value="ccl">
             Closeness centrality
-          </option>
-          <option value="hcl">
+          </option>-->
+          <!--<option value="hcl">
             Harmonic closeness centrality
-          </option>
+          </option>-->
           <option value="egn">
             Eigenvector centrality
           </option>
         </select>
     
-        <div id="edges_opacity">
+        <div id="edges_opacity" class="network-control">
           <input type="checkbox" name="edges_opacity" checked>
           <label for="edges_opacity">Transparent edges</label>
         </div>
     
-        <div id="w_slider">
+        <div id="w_slider" class="network-control">
           <label id="w_slider_label" for="w_scale">W (1.00)</label>
           <input
             type="range"
@@ -291,7 +291,7 @@
           >
         </div>
     
-        <div id="b_slider">
+        <div id="b_slider" class="network-control">
           <label id="b_slider_label" for="b_scale">B (0.50)</label>
           <input
             type="range"
@@ -303,8 +303,16 @@
             value="0.5"
           >
         </div>
-    
-        <div id="graph-container" class="height-100 width-100"></div>
+        <div class="flex-col flex-100 height-100">
+          <div class="flex-row flex-85">
+            <div id="graph-container" class="height-100 width-100"></div>
+          </div>
+          <div class="flex-row flex-15">
+            <div class="small-text white-text jus">
+              <p id="graph-description">Choose between the different layouts of the graph: random, geographical or force atlas 2.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="p6-to-p7-container" class="container bk-to-ow-bg"></div>

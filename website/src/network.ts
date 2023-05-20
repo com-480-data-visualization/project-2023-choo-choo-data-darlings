@@ -8,6 +8,7 @@ import { animateNodes } from 'sigma/utils/animate';
 const GRAPH_CONTAINER_ID = 'graph-container';
 const SELECT_LAYOUT_ID = 'select_layout';
 const SELECT_NODE_SIZE_ID = 'select_node_size';
+const GRAPH_DESCRIPTION_ID = 'graph-description';
 const CHECKBOX_EDGE_OPACITY_ID = 'edges_opacity';
 const W_SLIDER_ID = 'w_slider';
 const W_SLIDER_LABEL_ID = 'w_slider_label';
@@ -43,6 +44,15 @@ const SEARCH_ZOOM_RATIO = 0.05;
 const NETWORK_SOURCE = 'transports';
 const NODES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
 const EDGES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
+
+const NODE_SIZE_DESCRIPTION = {
+  'fix': "Choose between the different layouts of the graph: random, geographical or force atlas 2.",
+  'deg': "Degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. It represents the number of direct connections a node has with other nodes in the graph. In simple terms, the degree of a node indicates the number of neighbors it has. In an undirected graph, the degree of a node is equal to the count of edges incident to that node. In a directed graph, the degree can be further divided into in-degree and out-degree, representing the number of incoming and outgoing edges, respectively. The degree of a node is often used to determine the connectivity and importance of nodes within a graph. Nodes with higher degrees typically have more connections and are considered more influential or central in the network.",
+  'bce': "Betweenness centrality is a measure of node importance in a graph based on the concept of how often a node lies on the shortest paths between other pairs of nodes. It quantifies the extent to which a node acts as a bridge or intermediary in connecting different parts of the graph. Nodes with higher betweenness centrality have more control over the flow of information or resources between other nodes, as they are more likely to be on the shortest paths. In essence, betweenness centrality identifies nodes that have a significant influence on the communication and interaction within the graph.",
+  'wdeg': "The weighted degree in a graph represents the sum of the weights of the links connected to a particular node. It takes into account the significance or importance of the links based on their weights, which are typically determined by factors such as the number of trains, buses, or trams that travel between the nodes. The weighted degree provides a measure of how well-connected and influential a node is within the transportation system, and can be used to determine the node sizes in your data visualization, reflecting their relative importance or traffic volume.",
+  'pgr': "PageRank is an algorithm used to measure the importance or relevance of nodes in a graph. It assigns a numerical value to each node based on the incoming links from other nodes. In simple terms, nodes with a higher PageRank are considered more influential or central in the graph.",
+  'egn': "Eigen centrality is a measure of node importance in a graph based on the concept of eigenvectors. It calculates the centrality of a node by considering both its own importance and the importance of its neighbors. Nodes with higher eigen centrality are those that have connections to other highly central nodes in the graph. In other words, eigen centrality identifies nodes that have a significant impact on the flow of information or influence throughout the graph.",
+};
 
 export class GraphManager {
   constructor() {
@@ -269,6 +279,11 @@ export class GraphManager {
       const selectNodeSizeElement = document.getElementById(SELECT_NODE_SIZE_ID);
       selectNodeSizeElement.addEventListener('change', (event) => {
         this.nodeSizeManager.handleNodeSizeSelectChange(event);
+        // Change the text in graph-description
+        const selectedOption = event.target.value;
+        const nodeSizeDescription = NODE_SIZE_DESCRIPTION[selectedOption];
+        const graphDescriptionElement = document.getElementById(GRAPH_DESCRIPTION_ID);
+        graphDescriptionElement.innerHTML = nodeSizeDescription;
       });
 
       const selectNodeColorElement = document.getElementById(SELECT_NODE_SIZE_ID);
