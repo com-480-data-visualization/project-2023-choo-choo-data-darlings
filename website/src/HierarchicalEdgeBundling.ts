@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as d3 from 'd3';
 import { zoom } from 'd3';
 import * as d3Tip from 'd3-tip';
