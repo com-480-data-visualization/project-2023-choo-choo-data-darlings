@@ -596,7 +596,7 @@ p {
 .network-control {}
 
 #search {
-  position: fixed;
+  position: absolute;
   top: 10px;
   left: 10px;
   z-index: 9999;
@@ -604,7 +604,7 @@ p {
 }
 
 #search_by_city {
-  position: fixed;
+  position: absolute;
   top: 35px;
   left: 10px;
   z-index: 9999;
@@ -613,7 +613,7 @@ p {
 }
 
 #select_layout {
-  position: fixed;
+  position: absolute;
   top: 10px;
   right: 10px;
   z-index: 9999;
@@ -621,7 +621,7 @@ p {
 }
 
 #select_node_size {
-  position: fixed;
+  position: absolute;
   top: 30px;
   right: 10px;
   z-index: 9999;
@@ -629,7 +629,7 @@ p {
 }
 
 #edges_opacity {
-  position: fixed;
+  position: absolute;
   top: 55px;
   right: 10px;
   z-index: 9999;
@@ -637,7 +637,7 @@ p {
 }
 
 #w_slider {
-  position: fixed;
+  position: absolute;
   top: 80px;
   right: 10px;
   z-index: 9999;
@@ -646,7 +646,7 @@ p {
 }
 
 #b_slider {
-  position: fixed;
+  position: absolute;
   top: 100px;
   right: 10px;
   z-index: 9999;
