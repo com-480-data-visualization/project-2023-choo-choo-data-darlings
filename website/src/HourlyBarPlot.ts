@@ -1,15 +1,17 @@
 //@ts-nocheck
 import * as d3 from "d3";
-import './style.css';
+//import './style.css';
 
-const BAR_WIDTH = 15
 const SHIFTED_MINUTES = 20
 // const MINUTES_INTERVAL = 30
 const DATA_FOLDER = "data/hourly_plot";
 
+const BAR_ELEMENT_ID = "hourly-bar-chart";
+const BAR_BUTTONS_ELEMENT_ID = "hourly-bar-buttons";
+
 const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-const width = 960 - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
+
+const BAR_WIDTH_FACTOR = 0.016;
 
 const COLOR_MAP = {
     "Train": "#00A59B",
@@ -35,16 +37,29 @@ export class HourlyBarPlot {
                    d3.Selection<d3.BaseType, { departure_time: string; count: number; }, SVGGElement, unknown>;
     
     constructor() {
+        this.initDimensions();
         this.initStaticElements();
         this.initPlot()
     }
 
+    /**
+     * Initializes the dimensions of the circle packing visualization.
+     * @returns {void}
+     */
+        initDimensions(): void {
+            const parentElement = document.getElementById(BAR_ELEMENT_ID);
+            if (parentElement) {
+                this.width = parentElement.clientWidth;
+                this.height = parentElement.clientHeight / 2;
+            }
+        }
+
     private initStaticElements(): void {
         this.svg = d3
-            .select("#chart")
+            .select(`#${BAR_ELEMENT_ID}`)
             .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", this.width + margin.left + margin.right)
+            .attr("height", this.height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
     }
@@ -77,13 +92,13 @@ export class HourlyBarPlot {
         this.xScale = d3
             .scaleTime()
             .domain([this.startTime, this.endTime])
-            .range([0, width]);
+            .range([0, this.width]);
         
         this.yScale = d3
             .scaleLinear()
             .domain([0, d3.max(this.data, (d) => d.count) as number])
             .nice()
-            .range([height, 0]);
+            .range([this.height, 0]);
     }
 
     private createLine(): void {
@@ -102,10 +117,10 @@ export class HourlyBarPlot {
             .enter()
             .append("rect")
             .attr("class", "bar")
-            .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
+            .attr("x", (d) => this.xScale(d.departure_time) - (this.width * BAR_WIDTH_FACTOR) / 2)
             .attr("y", (d) => this.yScale(d.count))
-            .attr("width", BAR_WIDTH)
-            .attr("height", (d) => height - this.yScale(d.count))
+            .attr("width", this.width * BAR_WIDTH_FACTOR)
+            .attr("height", (d) => this.height - this.yScale(d.count))
             .attr("fill", "#00A59B");
     }
 
@@ -113,13 +128,17 @@ export class HourlyBarPlot {
         this.svg
             .append("g")
             .attr("class", "x axis")
-            .attr("transform", `translate(0,${height})`)
+            .attr("transform", `translate(0,${this.height})`)
             .call(d3.axisBottom(this.xScale).tickFormat(d3.timeFormat("%H:%M")));
         
         this.svg
             .append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(this.yScale));
+
+        this.svg
+            .selectAll(".tick")
+            .attr("font-size", "var(--small-font-size)")
     }
 
     private initPlot(): void {
@@ -149,26 +168,20 @@ export class HourlyBarPlot {
                 this.bars.join(
                     enter => enter.append("rect")
                         .attr("class", "bar")
-                        .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
+                        .attr("x", (d) => this.xScale(d.departure_time) - this.width * BAR_WIDTH_FACTOR / 2)
                         .attr("y", this.yScale(0)) // start from the bottom of the chart
-                        .attr("width", BAR_WIDTH)
+                        .attr("width", this.width * BAR_WIDTH_FACTOR)
                         .attr("height", 0) // start with a height of 0
                         .attr("fill", "steelblue"),
 
                     update => update
                         .transition() // Start a transition
                         .duration(1000) // Make it last 1 second
-                        .attr("x", (d) => this.xScale(d.departure_time) - BAR_WIDTH / 2)
+                        .attr("x", (d) => this.xScale(d.departure_time) - this.width * BAR_WIDTH_FACTOR / 2)
                         .attr("y", (d) => this.yScale(d.count))
-                        .attr("width", BAR_WIDTH)
-                        .attr("height", (d) => height - this.yScale(d.count))
-                        .attr("fill", COLOR_MAP[transportMethod])
-                        // Change the color of the button elements to be the color of the bars
-                        .each(function (d) {
-                            for (let button of document.getElementById("buttons")!.children) {
-                                button.setAttribute("style", `background-color: ${COLOR_MAP[transportMethod]}`);
-                            }
-                        }),
+                        .attr("width", this.width * BAR_WIDTH_FACTOR)
+                        .attr("height", (d) => this.height - this.yScale(d.count))
+                        .attr("fill", COLOR_MAP[transportMethod]),
                     exit => exit
                         .transition() // Start a transition
                         .duration(1000) // Make it last 1 second
@@ -206,7 +219,7 @@ export class HourlyBarPlot {
                 this.updatePlot(transportMethod);
             };
 
-            document.getElementById("buttons")!.appendChild(button);
+            document.getElementById(BAR_BUTTONS_ELEMENT_ID)!.appendChild(button);
         }
     }
 }
