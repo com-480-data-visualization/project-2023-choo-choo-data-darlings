@@ -208,7 +208,7 @@ export class GraphManager {
     });
 
     // Normalize nodes size
-    const sizeFieldsToNormalize = ['Fix', 'Ide', 'Ode', 'Deg', 'Bce', 'Wide', 'Wode', 'Wdeg', 'Pgr', 'Ecc', 'Ccl', 'Hcl', 'Egn'];
+    const sizeFieldsToNormalize = ['Ide', 'Ode', 'Deg', 'Bce', 'Wide', 'Wode', 'Wdeg', 'Pgr', 'Ecc', 'Ccl', 'Hcl', 'Egn'];
     sizeFieldsToNormalize.forEach(field => {
       const min = Math.min(...graph.nodes().map(node => graph.getNodeAttribute(node, `size${field}`)));
       const max = Math.max(...graph.nodes().map(node => graph.getNodeAttribute(node, `size${field}`)));
