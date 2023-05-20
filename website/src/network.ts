@@ -109,35 +109,38 @@ export class GraphManager {
         const betweenessCentrality = parseFloat(row[6]);
 
         // 7: transportType
-        const city = row[7];
-        // 8: canton
-        const canton = row[8];
+        const transportType = row[7];
         
-        // 9: isBusStop
-        // 10: isTramStop
-        // 11: isTrainStop
-        // 12: isMetroStop
-        // 13: isRackRailwayStop
-        // 14: isBoatStop
+        // 8: city
+        const city = row[8];
+        // 9: canton
+        const canton = row[9];
         
-        const pageRank = parseFloat(row[15]);
-        // const modularityClass = parseInt(row[16]);
-        const inDegree = parseInt(row[17]);
-        const outDegree = parseInt(row[18]);
-        const degree = parseInt(row[19]);
-        const weightedInDegree = parseInt(row[20]);
-        const weightedOutDegree = parseInt(row[21]);
-        const weightedDegree = parseInt(row[22]);
-        const eccentricity = parseInt(row[23]);
-        const closenessCentrality = parseFloat(row[24]);
-        const harmonicClosenessCentrality = parseFloat(row[25]);
-        // const authority = parseFloat(row[26]);
-        // const hub = parseFloat(row[27]);
-        // const componentNumber = parseInt(row[28]);
-        // const strongComponentNumber = parseInt(row[29]);
-        // const statInfClass = parseInt(row[30]);
-        // const clustering = parseFloat(row[31]);
-        const eigenCentrality = parseFloat(row[32]);
+        // 10: isBusStop
+        // 11: isTramStop
+        // 12: isTrainStop
+        // 13: isMetroStop
+        // 14: isRackRailwayStop
+        // 15: isBoatStop
+        
+        const pageRank = parseFloat(row[16]);
+        // const modularityClass = parseInt(row[17]);
+        const inDegree = parseInt(row[18]);
+        const outDegree = parseInt(row[19]);
+        const degree = parseInt(row[20]);
+        const weightedInDegree = parseInt(row[21]);
+        const weightedOutDegree = parseInt(row[22]);
+        const weightedDegree = parseInt(row[23]);
+        const eccentricity = parseInt(row[24]);
+        const closenessCentrality = parseFloat(row[25]);
+        const harmonicClosenessCentrality = parseFloat(row[26]);
+        // const authority = parseFloat(row[27]);
+        // const hub = parseFloat(row[28]);
+        // const componentNumber = parseInt(row[29]);
+        // const strongComponentNumber = parseInt(row[30]);
+        // const statInfClass = parseInt(row[31]);
+        // const clustering = parseFloat(row[32]);
+        const eigenCentrality = parseFloat(row[33]);
 
         graph.addNode(id, {
           label: label, 
@@ -164,6 +167,7 @@ export class GraphManager {
           sizeCcl: closenessCentrality,
           sizeHcl: harmonicClosenessCentrality,
           sizeEgn: eigenCentrality,
+          transportType: transportType,
           city: city,
         });
       }
@@ -760,7 +764,7 @@ class ColorManager {
       for (const node of this.graphManager.graph.nodes()) {
         const initial = initialAttributes.get(node);
         const target = targetAttributes.get(node);
-    
+        
         const currentColor = this.colorLerp(initial.color, target.color, easedT);
         this.graphManager.graph.setNodeAttribute(node, "color", currentColor);
       }
