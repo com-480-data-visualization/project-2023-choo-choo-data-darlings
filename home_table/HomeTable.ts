@@ -124,7 +124,7 @@ export class HomePageTable {
 
   private async loadData(): Promise<void> {
     try {
-      const data = await d3.json('table_df.json');
+      const data = await d3.json('table_sub_df.json');
       this.data = data;
       console.log(this.data);
     } catch (error) {
@@ -230,6 +230,8 @@ export class HomePageTable {
   
     // Highlight the clicked cell
     d3.select(cell).classed("clicked", true);
+
+    console.log(columnData, attribute, this.data[0][attribute]);
   
     // Update the plot
     this.plot.updatePlot(columnData, attribute, this.data[0][attribute]);
@@ -244,13 +246,26 @@ export class HomePageTable {
     });
 
     // click
+    const self = this;
     this.rows
       .selectAll("td")
       // determine the clicked cell and what attribute it belongs to
-      .on("click", (d, i, nodes) => {
-        const clickedCell = nodes[i] as HTMLElement;
-        const clickedAttribute = attributes[i];
-        this.handleCellClick(clickedCell, clickedAttribute);
+      .on("click", function(d) {
+        const clickedCell = d3.select(this).node() as HTMLElement;
+    
+        // Get index of clickedCell within its parent tr
+        const cellIndex = Array.prototype.indexOf.call(clickedCell.parentNode.children, clickedCell);
+    
+        // Get header (th) element corresponding to the clicked cell
+        const headerRow = d3.select(`#${TABLE_ELEMENT_ID}`).select('thead tr').node() as HTMLElement;
+        const clickedHeader = headerRow.children[cellIndex];
+    
+        // Get the HTML content of the header cell
+        const clickedAttribute = clickedHeader.innerHTML;
+
+        console.log(clickedCell, clickedAttribute);
+    
+        self.handleCellClick(clickedCell, clickedAttribute);
       });
   }
 }
