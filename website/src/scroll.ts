@@ -113,10 +113,23 @@ document.addEventListener("DOMContentLoaded", () => {
       </ul>
     </div> */
   const scrollButtons = document.getElementById("scroll-buttons");
+  // Set the last selected button to the first button
+  let lastSelectedButton = scrollButtons?.getElementsByTagName("li")[0] as HTMLElement;
+
   if (scrollButtons) {
     scrollButtons.addEventListener("click", (event) => {
+      
+      // Remove "current" class from lastSelectedButton
+      if (lastSelectedButton) {
+        lastSelectedButton.classList.remove("current");
+      }
+
       const target = event.target as HTMLElement;
-      console.log(target)
+      lastSelectedButton = target;
+
+      // Add "current" class to the clicked button
+      target.classList.add("current");
+
       const containers = [
         "title-container",
         "p1-container",

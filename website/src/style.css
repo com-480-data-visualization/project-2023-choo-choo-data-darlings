@@ -682,11 +682,22 @@ select {
 	width: 16px;
 	height: 16px;
 	cursor: pointer;
-  background-color: black;
+  background-color: #2E5D52;
+  border: #ffffff00 2px solid;
   border-radius: 50%;
   margin-top: 1em;
   margin-bottom: 1em;
 }
+
+.dotstyle li:hover {
+  background-color: #0F1D18;
+}
+
+.dotstyle .current {
+  background-color: var(--off-white);
+  border: var(--black) 2px solid;
+  transition : all 0.25s linear;
+} 
 
 /* Map */
 #map {
