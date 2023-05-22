@@ -310,7 +310,7 @@ class Clock {
 
 
 
-class Map {
+export class Map {
   // Loaded data
   private swissBorderData!: any;
   private trips!: any;
@@ -441,6 +441,21 @@ class Map {
 
       const target = event.target as HTMLSelectElement;
       const trainColorMode = target.value;
+      const delayImg = document.getElementById(`train-delay-scale-img`) as HTMLImageElement;
+      const speedImg = document.getElementById(`train-speed-scale-img`) as HTMLImageElement;
+      if (!delayImg || !speedImg) return;
+
+      if (trainColorMode === 'delay') {
+        delayImg.style.opacity = '1';
+        speedImg.style.opacity = '0';
+      } else if (trainColorMode === 'speed') {
+        delayImg.style.opacity = '0';
+        speedImg.style.opacity = '1';
+      } else {
+        delayImg.style.opacity = '0';
+        speedImg.style.opacity = '0';
+      }
+
       this.setTrainColorMode(trainColorMode);
     });
 
@@ -1546,8 +1561,20 @@ class Map {
   private setSimulationFps(value: number): void {
     this.simulationSpeed = value;
   }
-}
 
-document.addEventListener("DOMContentLoaded", () => {
-  new Map();
-});
+  /**
+   * Pause the simulation.
+   * @returns {void}
+   */
+  public pauseSimulation(): void {
+    this.simulationSpeed = 0;
+  }
+
+  /**
+   * Resume the simulation.
+   * @returns {void}
+   */
+  public resumeSimulation(): void {
+    this.simulationSpeed = 60;
+  }
+}

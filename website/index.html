@@ -230,7 +230,7 @@
         </div>
         
         <div id="select_layout" class="light-text">
-          Layout: 
+          Layout 
           <select class="network-control">
             <option value="rdm" selected>
               Random
@@ -245,7 +245,7 @@
         </div>
 
         <div id="select_node_size" class="light-text">
-          Metric:
+          Metric 
           <select class="network-control">
             <option value="fix" selected>
               Fixed
@@ -427,7 +427,36 @@
       </div>
 
       <div id="p9-container" class="container container-padding black-bg">
-        <!-- MAP GOES HERE -->
+        <div id="map" style="width:1071px; height:643px;"></div>
+
+        <div id="show-trains">
+          <input type="checkbox" id="checkbox-show-trains" name="checkbox-show-trains" checked>
+          <label for="checkbox-show-trains">Show trains</label>
+        </div>
+
+        <div id="select-train-color-mode-div" class="light-text">
+          Train Coloring
+          <select id="select-train-color-mode">
+            <option value="uniform" selected>Uniform</option>
+            <option value="delay">Delay</option>
+            <option value="speed">Speed</option>
+          </select>
+        </div>
+
+        <div id="slider-simulation-speed">
+          <label id="slider-simulation-speed-label" for="simulation-speed">Speed</label>
+          <input type="range" id="simulation-speed" name="simulation-speed" min="0" max="240" step="1" value="60">
+        </div>
+
+        <div id="select-iso-div" class="light-text">
+          Isochronic center
+          <select id="select-iso"></select>
+        </div>
+
+        <div id="train-color-mode-scale">
+          <img class="train-scale-img" id="train-delay-scale-img" src="assets/map/delay_scale.png" alt="Train color mode delay scale">
+          <img class="train-scale-img" id="train-speed-scale-img" src="assets/map/speed_scale.png" alt="Train color mode speed scale">
+        </div>
       </div>
 
       <div id="p-to-final-container" class="container"></div>
@@ -453,7 +482,7 @@
     </div>
   </body>
 
+  <script type="module" src="./src/scroll.ts"></script>
   <script type="module" src="./src/main.ts"></script>
   <script type="module" src="./src/particles.ts"></script>
-  <script type="module" src="./src/scroll.ts"></script>
 </html>
