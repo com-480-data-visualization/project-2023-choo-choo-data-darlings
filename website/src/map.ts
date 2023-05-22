@@ -13,9 +13,9 @@ const CHECKBOX_SHOW_TRAINS_ID = 'checkbox-show-trains';
 
 const CONTAINER_RATIO = 1071 / 643;
 
-const MAP_PATH = '../../data/map/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.json';
-const TRAINS_FOLDER_PATH = '../../data/map/train_trips_bins/';
-const ISO_FILE_PREFIX = '../../data/map/isochronic_map_';
+const MAP_PATH = 'data/map/swissBOUNDARIES3D_1_3_TLM_LANDESGEBIET.json';
+const TRAINS_FOLDER_PATH = 'data/map/train_trips_bins/';
+const ISO_FILE_PREFIX = 'data/map/isochronic_map_';
 const ISO_FILE_SUFFIX = '.json';
 
 const SWISS_BORDER_LINE_NAME = 'swissborder_line';
