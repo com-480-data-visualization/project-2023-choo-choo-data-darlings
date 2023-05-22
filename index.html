@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Swiss Transportation System</title>
     
-    <script type="module" crossorigin src="./assets/main-dc3de4f6.js"></script>
-    <link rel="stylesheet" href="./assets/index-adec1c96.css">
+    <script type="module" crossorigin src="./assets/main-00d91ce8.js"></script>
+    <link rel="stylesheet" href="./assets/index-b5d52e3d.css">
   </head>
   <body>
+    <div class="dotstyle dotstyle-fillup">
+      <ul>
+        <li class="current"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
     <div class="app">
       <div id="title-container" class="container">
         <h1 id="title">The Swiss Transportation System</h1>
@@ -220,60 +230,66 @@
           <input type="checkbox" name="search_by_city">
           <label for="search_by_city">Search by city</label>
         </div>
-    
-        <select id="select_layout" class="network-control">
-          <option value="rdm" selected>
-            Random
-          </option>
-          <option value="fa2">
-            ForceAtlas2
-          </option>
-          <option value="geo">
-            Geographical
-          </option>
-        </select>
-    
-        <select id="select_node_size" class="network-control">
-          <option value="fix" selected>
-            Fixed
-          </option>
-          <!--<option value="ide">
-            In degree
-          </option>-->
-          <!--<option value="ode">
-            Out degree
-          </option>-->
-          <option value="deg">
-            Degree
-          </option>
-          <!--<option value="wide">
-            Weighted in degree
-          </option>-->
-          <!--<option value="wode">
-            Weighted out degree
-          </option>-->
-          <option value="wdeg">
-            Weighted degree
-          </option>
-          <option value="bce">
-            Betweeness centrality
-          </option>
-          <option value="pgr">
-            Page rank
-          </option>
-          <!--<option value="ecc">
-            Eccentricity
-          </option>-->
-          <!--<option value="ccl">
-            Closeness centrality
-          </option>-->
-          <!--<option value="hcl">
-            Harmonic closeness centrality
-          </option>-->
-          <option value="egn">
-            Eigenvector centrality
-          </option>
-        </select>
+        
+        <div id="select_layout" class="light-text">
+          Layout 
+          <select class="network-control">
+            <option value="rdm" selected>
+              Random
+            </option>
+            <option value="fa2">
+              ForceAtlas2
+            </option>
+            <option value="geo">
+              Geographical
+            </option>
+          </select>
+        </div>
+
+        <div id="select_node_size" class="light-text">
+          Metric 
+          <select class="network-control">
+            <option value="fix" selected>
+              Fixed
+            </option>
+            <!--<option value="ide">
+              In degree
+            </option>-->
+            <!--<option value="ode">
+              Out degree
+            </option>-->
+            <option value="deg">
+              Degree
+            </option>
+            <!--<option value="wide">
+              Weighted in degree
+            </option>-->
+            <!--<option value="wode">
+              Weighted out degree
+            </option>-->
+            <option value="wdeg">
+              Weighted degree
+            </option>
+            <option value="bce">
+              Betweeness centrality
+            </option>
+            <option value="pgr">
+              Page rank
+            </option>
+            <!--<option value="ecc">
+              Eccentricity
+            </option>-->
+            <!--<option value="ccl">
+              Closeness centrality
+            </option>-->
+            <!--<option value="hcl">
+              Harmonic closeness centrality
+            </option>-->
+            <option value="egn">
+              Eigenvector centrality
+            </option>
+          </select>
+        </div>
     
         <div id="edges_opacity" class="network-control">
           <input type="checkbox" name="edges_opacity" checked>
@@ -310,7 +326,7 @@
             <div id="graph-container" class="height-100 width-100"></div>
           </div>
           <div class="flex-row flex-15">
-            <div class="small-text white-text jus">
+            <div class="small-text light-text">
               <p id="graph-description">Choose between the different layouts of the graph: random, geographical or force atlas 2.</p>
             </div>
           </div>
@@ -413,7 +429,36 @@
       </div>
 
       <div id="p9-container" class="container container-padding black-bg">
-        <!-- MAP GOES HERE -->
+        <div id="map" style="width:1071px; height:643px;"></div>
+
+        <div id="show-trains">
+          <input type="checkbox" id="checkbox-show-trains" name="checkbox-show-trains" checked>
+          <label for="checkbox-show-trains">Show trains</label>
+        </div>
+
+        <div id="select-train-color-mode-div" class="light-text">
+          Train Coloring
+          <select id="select-train-color-mode">
+            <option value="uniform" selected>Uniform</option>
+            <option value="delay">Delay</option>
+            <option value="speed">Speed</option>
+          </select>
+        </div>
+
+        <div id="slider-simulation-speed">
+          <label id="slider-simulation-speed-label" for="simulation-speed">Speed</label>
+          <input type="range" id="simulation-speed" name="simulation-speed" min="0" max="240" step="1" value="60">
+        </div>
+
+        <div id="select-iso-div" class="light-text">
+          Isochronic center
+          <select id="select-iso"></select>
+        </div>
+
+        <div id="train-color-mode-scale">
+          <img class="train-scale-img" id="train-delay-scale-img" src="./assets/delay_scale-878e8228.png" alt="Train color mode delay scale">
+          <img class="train-scale-img" id="train-speed-scale-img" src="./assets/speed_scale-edda14b8.png" alt="Train color mode speed scale">
+        </div>
       </div>
 
       <div id="p-to-final-container" class="container"></div>
