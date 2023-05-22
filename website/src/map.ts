@@ -42,7 +42,7 @@ const FAST_TRAIN_COLOR = '#ffff00';
 const DEFAULT_ISO_COLOR = '#2c1e53';
 const DEFAULT_TIME_COLOR = '#FAF4DD';
 
-const DEFAULT_FONT_PATH = '/data/map/Nunito_Regular.json';
+const DEFAULT_FONT_PATH = 'data/map/Nunito_Regular.json';
 const DEFAULT_CITY_FONT_SIZE = 15;
 const DEFAULT_CITY_FONT_HEIGHT = 0.1;
 
