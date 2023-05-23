@@ -221,7 +221,7 @@
         </div>
       </div>
 
-      <div id="p6-container" class="container container-padding black-bg">
+      <div id="p6-container" class="container black-bg">
         <div id="search" class="network-control">
           <input type="search" id="search_input" list="search_suggestions" placeholder="Search stop" />
           <datalist id="search_suggestions"></datalist>
@@ -326,9 +326,11 @@
           <div class="flex-row flex-85">
             <div id="graph-container" class="height-100 width-100"></div>
           </div>
-          <div class="flex-row flex-15">
+          <div class="flex-row flex-15 container-padding overflow-auto">
             <div class="small-text light-text">
-              <p id="graph-description">Choose between the different layouts of the graph: random, geographical or force atlas 2.</p>
+              <p id="graph-description" class="text-italic">
+                You can choose between the different layouts of the graph: random, geographical or force atlas 2.
+              </p>
             </div>
           </div>
         </div>

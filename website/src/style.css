@@ -9,6 +9,7 @@
   --dark-green: #0F1D18;
   --black: #000000;
   --small-font-size: 0.8rem;
+  --default-font-size: 1.2rem;
   --medium-font-size: 1.4rem;
   --large-font-size: 4.0rem;
 }
@@ -621,7 +622,7 @@ p {
 
 #select_node_size {
   position: absolute;
-  top: 30px;
+  top: 40px;
   right: 10px;
   z-index: 9999;
 }
@@ -633,7 +634,7 @@ select {
 
 #edges_opacity {
   position: absolute;
-  top: 55px;
+  top: 70px;
   right: 10px;
   z-index: 9999;
   color: var(--off-white);
@@ -641,7 +642,7 @@ select {
 
 #w_slider {
   position: absolute;
-  top: 80px;
+  top: 90px;
   right: 10px;
   z-index: 9999;
   color: var(--off-white);
@@ -650,11 +651,16 @@ select {
 
 #b_slider {
   position: absolute;
-  top: 100px;
+  top: 110px;
   right: 10px;
   z-index: 9999;
   color: var(--off-white);
   accent-color: var(--green);
+}
+
+#graph-description {
+  margin: revert;
+  font-size: var(--default-font-size);
 }
 
 .dotstyle {
