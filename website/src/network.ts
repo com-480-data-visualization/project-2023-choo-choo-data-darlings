@@ -9,7 +9,6 @@ const GRAPH_CONTAINER_ID = 'graph-container';
 const SELECT_LAYOUT_ID = 'select_layout';
 const SELECT_NODE_SIZE_ID = 'select_node_size';
 const GRAPH_DESCRIPTION_ID = 'graph-description';
-const CHECKBOX_EDGE_OPACITY_ID = 'edges_opacity';
 const W_SLIDER_ID = 'w_slider';
 const W_SLIDER_LABEL_ID = 'w_slider_label';
 const B_SLIDER_ID = 'b_slider';
@@ -32,7 +31,7 @@ const DEFAULT_NODE_COLOR_TRANSITION_DURATION = 1_000;
 
 //const DEFAULT_NODE_COLOR = '#0f1d18';
 //const DEGREE_NODE_COLOR = '#db3927';
-const DEFAULT_NODE_COLOR = "#00A59B";
+const DEFAULT_NODE_COLOR = "#FB9E82";
 const DEGREE_NODE_COLOR = "#6F2282";
 const BETWEENESS_CENTRALITY_NODE_COLOR = "#E84E10";
 const WEIGHTED_DEGREE_NODE_COLOR = "#FCBB00";
@@ -46,8 +45,7 @@ const SEARCH_SELECTED_NODE_COLOR = '#f7b500';
 const DEFAULT_SEARCH_BY = 'label';
 
 const DEFAULT_EDGE_SCALING = 50_000;
-const DEFAULT_EDGE_OPACITY = 0.5;
-const DEFAULT_EDGE_COLOR = 'rgba(250, 244, 221, ' + DEFAULT_EDGE_OPACITY + ')';//'rgba(46, 93, 82, ' + DEFAULT_EDGE_OPACITY + ')';
+const DEFAULT_EDGE_COLOR = 'rgba(250, 244, 221, 1)';
 
 const SEARCH_ZOOM_RATIO = 0.05;
 
@@ -57,11 +55,11 @@ const EDGES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/networ
 
 const NODE_SIZE_DESCRIPTION = {
   'fix': "You can choose between the different layouts of the graph: random, geographical or force atlas 2.",
-  'deg': "The degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. It represents the number of direct connections a node has with other nodes in the graph. In simple terms, the degree of a node indicates the number of neighbors it has. In our graph, this value representes the number of connections a station has with other stations in the transportation network. We can see that the central stations, such as Bern, Zürich or Fribourg have a high degree which means they connect to a lot of other stations in the country.",
-  'bce': "Betweenness centrality is a measure of node importance in a graph based on the concept of how often a node lies on the shortest paths between other pairs of nodes. It quantifies the extent to which a node acts as a bridge or intermediary in connecting different parts of the graph. Nodes with higher betweenness centrality have more control over the flow of information or resources between other nodes, as they are more likely to be on the shortest paths. We can see that Bern has a high betweenness centrality, which means that it is a central nstation in Switzerland as there are many shortest paths that pass through it.",
-  'wdeg': "Just as the degree, the weighted degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. However, in this case, the weight of the edges is taken into account. In our graph, this value representes the number of connections a station has with other stations in the transportation network, taking into account the weight of the edges. The weight of an edge is the number of trips between two stations We can see that cities scûch as Geneva or Zürich have a high weighted degree as there are a lot of busses or trams that go aroung those cities.",
-  'pgr': "PageRank is an algorithm used to measure the importance or relevance of nodes in a graph. It assigns a numerical value to each node based on the incoming links from other nodes. In simple terms, nodes with a higher PageRank are considered more influential or central in the graph. We can see that the majority of the nodes with a high PageRank are located in cities, which makes sense as they connect the countryside to the cities.",
-  'egn': "Eigen centrality is a measure of node importance in a graph based on the concept of eigenvectors. It calculates the centrality of a node by considering both its own importance and the importance of its neighbors. Nodes with higher eigen centrality are those that have connections to other highly central nodes in the graph. In other words, eigen centrality identifies nodes that have a significant impact on the flow of information or influence throughout the graph. We can see that Zürich has the highest eigen centrality, which means that it is a central station in Switzerland as it has the highest concentration of buses, trams and train stations.",
+  'deg': "The degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. In our graph, this value represents the number of connections a station has with other stations in the transportation network. We can see that the central stations, such as Bern, Zürich or Fribourg have a high degree which means they connect to a lot of other stations in the country.",
+  'bce': "Betweenness centrality is a measure of node importance in a graph based on the concept of how often a node lies on the shortest paths between other pairs of nodes. It quantifies the extent to which a node acts as a bridge or intermediary in connecting different parts of the graph. We can see that Bern has a high betweenness centrality, which means that it is a central station in Switzerland as there are many shortest paths that pass through it.",
+  'wdeg': "Just as the degree, the weighted degree measures the number of edges connected to a node in a graph. However, in this case, the weight of the edges is taken into account. In our graph, this value represents the number of trips between two stations. We can see that cities such as Geneva or Zürich have a high weighted degree as there are a lot of busses or trams that go aroung those cities.",
+  'pgr': "PageRank is an algorithm used to measure the importance or relevance of nodes in a graph. It assigns a numerical value to each node based on the incoming links from other nodes. We can see that the majority of the nodes with a high PageRank are located in cities, which makes sense as they connect the countryside to the cities.",
+  'egn': "Eigen centrality calculates the centrality of a node by considering both its own importance and the importance of its neighbors. It identifies nodes that have a significant impact on the flow of information or influence throughout the graph. We can see that Zürich has the highest eigen centrality, which means that it is a central station in Switzerland as it has the highest concentration of buses, trams and train stations.",
 };
 
 export class GraphManager {
@@ -299,12 +297,6 @@ export class GraphManager {
       const selectNodeColorElement = document.getElementById(SELECT_NODE_SIZE_ID);
       selectNodeColorElement.addEventListener('change', (event) => {
         this.colorManager.handleNodeColorSelectChange(event);
-      });
-
-      const edgesOpacityCheckbox = document.getElementById(CHECKBOX_EDGE_OPACITY_ID);
-      edgesOpacityCheckbox.addEventListener('change', (event) => {
-        const isChecked = event.target.checked;
-        this.colorManager.handleEdgesOpacityCheckboxChange(isChecked);
       });
 
       const wSlider = document.getElementById(W_SLIDER_ID);
@@ -995,38 +987,6 @@ class ColorManager {
   handleBSliderChange(bScale) {
     this.bScale = bScale;
     this.handleSliderChange();
-  }
-
-  /**
-   * Handle the change of the node opacity checkbox
-   * @param {boolean} isChecked 
-   */
-  handleEdgesOpacityCheckboxChange(isChecked) {
-    const graph = this.graphManager.graph;
-  
-    if (isChecked) {
-      graph.edges().forEach((edge) => {
-        const edgeObj = graph.getEdgeAttributes(edge);
-        if (this.isRgbaColor(edgeObj.color)) return;
-        if (this.isHexColor(edgeObj.color)) {
-          edgeObj.color = this.hexToRgbaRepr(edgeObj.color, DEFAULT_EDGE_OPACITY);
-        } else if (this.isRgbColor(edgeObj.color)) {
-          edgeObj.color = this.rgbReprToRgbaRepr(edgeObj.color, DEFAULT_EDGE_OPACITY);
-        }
-      });
-    } else {
-      graph.edges().forEach((edge) => {
-        const edgeObj = graph.getEdgeAttributes(edge);
-        if (this.isHexColor(edgeObj.color)) return;
-        if (this.isRgbColor(edgeObj.color)) {
-          edgeObj.color = this.rgbReprToHex(edgeObj.color);
-        } else if (this.isRgbaColor(edgeObj.color)) {
-          edgeObj.color = this.rgbaReprToHex(edgeObj.color);
-        }
-      });
-    }
-
-    this.graphManager.renderer.refresh();
   }
 }
 

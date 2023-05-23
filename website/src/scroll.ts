@@ -2,6 +2,10 @@ const SCROLL_DURATION = 1000;
 
 document.addEventListener("DOMContentLoaded", () => {
   let startY: any;  // Variable to store Y position at touchstart
+  // In scroll-buttons, add a listener when ckick on a button, scroll to the corresponding section
+  const scrollButtons = document.getElementById("scroll-buttons");
+  // Set the last selected button to the first button
+  let lastSelectedButton = scrollButtons?.getElementsByTagName("li")[0] as HTMLElement;
 
   function isElementInViewport(el: any) {
     const rect = el.getBoundingClientRect();
@@ -13,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       rect.left >= 0 &&
       rect.bottom <= (windowHeight + 1) &&  // Allow for rounding errors in Chrome
       rect.right <= (windowWidth + 1)  // Allow for rounding errors in Chrome
-  );
+    );
   }
 
   function smoothScrollTo(element: any, duration: any) {
@@ -45,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return event.deltaY > 0 ? "down" : "up";
   }
 
-  function scrollDown(event: any) {
+  function scrollDirection(event: any) {
     event.preventDefault();
     const containers = [
       "title-container",
@@ -78,14 +82,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const upContainer = i >= 1 ? document.getElementById(containers[i - 1]) : null;
       const currentContainer = document.getElementById(containers[i]);
       const downContainer = i < containers.length - 1 ? document.getElementById(containers[i + 1]) : null;
-      
+
+      // Get next container
+      let nextContainer: any = null;
       if (upContainer && isElementInViewport(currentContainer) && direction === "up") {
-        smoothScrollTo(upContainer, SCROLL_DURATION);
+        nextContainer = upContainer;
+      } else if (downContainer && isElementInViewport(currentContainer) && direction === "down") {
+        nextContainer = downContainer;
+      } else {
+        continue;
       }
-      
-      if (downContainer && isElementInViewport(currentContainer) && direction === "down") {
-        smoothScrollTo(downContainer, SCROLL_DURATION);
-      }
+
+      // Remove "current" class from lastSelectedButton
+      if (!scrollButtons) continue;
+      lastSelectedButton = scrollButtons.getElementsByClassName("current")[0] as HTMLElement;
+      if (!lastSelectedButton) continue;
+      lastSelectedButton.classList.remove("current");
+      lastSelectedButton.classList.remove("unclickable");
+
+      // Add "current" class to the corresponding button
+      const button = scrollButtons.querySelector(`li[value="${nextContainer.id}"]`);
+      if (!button) continue;
+      button.classList.add("current");
+      lastSelectedButton = button as HTMLElement;
+
+      smoothScrollTo(nextContainer, SCROLL_DURATION);
+      break;
     }
   }
   
@@ -94,27 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
     startY = event.touches[0].pageY;
   });
   
-  document.addEventListener("wheel", scrollDown, { passive: false });
-  document.addEventListener("touchmove", scrollDown, { passive: false });
-  
-  // In scroll-buttons, add a listener when ckick on a button, scroll to the corresponding section
-  // The buttons are in li elements as:
-  /* <div id="scroll-buttons" class="dotstyle dotstyle-fillup">
-      <ul>
-        <li class="current" value="title-container"></li>
-        <li value="p1-container"></li>
-        <li value="p2-container"></li>
-        <li value="p3-container"></li>
-        <li value="p4-container"></li>
-        <li value="p5-container"></li>
-        <li value="p7-container"></li>
-        <li value="p8-container"></li>
-        <li value="final-container"></li>
-      </ul>
-    </div> */
-  const scrollButtons = document.getElementById("scroll-buttons");
-  // Set the last selected button to the first button
-  let lastSelectedButton = scrollButtons?.getElementsByTagName("li")[0] as HTMLElement;
+  document.addEventListener("wheel", scrollDirection, { passive: false });
+  document.addEventListener("touchmove", scrollDirection, { passive: false });
 
   if (scrollButtons) {
     scrollButtons.addEventListener("click", (event) => {
@@ -124,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Remove "current" class from lastSelectedButton
       if (lastSelectedButton) {
         lastSelectedButton.classList.remove("current");
+        lastSelectedButton.classList.remove("unclickable");
       }
 
       const target = event.target as HTMLElement;

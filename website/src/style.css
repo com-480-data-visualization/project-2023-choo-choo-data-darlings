@@ -641,17 +641,9 @@ select {
   font-weight: 600;
 }
 
-#edges_opacity {
-  position: absolute;
-  top: 70px;
-  right: 10px;
-  z-index: 9999;
-  color: var(--off-white);
-}
-
 #w_slider {
   position: absolute;
-  top: 90px;
+  top: 70px;
   right: 10px;
   z-index: 9999;
   color: var(--off-white);
@@ -660,7 +652,7 @@ select {
 
 #b_slider {
   position: absolute;
-  top: 110px;
+  top: 90px;
   right: 10px;
   z-index: 9999;
   color: var(--off-white);
@@ -693,9 +685,9 @@ select {
 .dotstyle li {
 	position: relative;
 	display: block;
-	margin: 0 16px;
-	width: 16px;
-	height: 16px;
+	margin: 0 8px;
+	width: 8px;
+	height: 8px;
 	cursor: pointer;
   background-color: #2E5D52;
   border: #ffffff00 2px solid;
@@ -713,6 +705,11 @@ select {
   border: var(--black) 2px solid;
   transition : all 0.25s linear;
 } 
+
+.dotstyle .unclickable:not(.current) {
+  opacity: 0.5;
+  pointer-events: none !important;
+}
 
 /* Map */
 #map {
