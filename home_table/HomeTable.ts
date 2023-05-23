@@ -2,11 +2,12 @@
 import * as d3 from "d3";
 import './style.css';
 
-const DATA_FOLDER = "data/home_table";
+const DATA_FOLDER = "./data2";
 
 const TABLE_ELEMENT_ID = "table-container";
 const BAR_ELEMENT_ID = "bar-plot";
-const NUMBER_STOPS = 5527916;
+
+const DEFAULT_COLUMN = 'n_entries'
 
 // not used anymore but could be
 interface StopData {
@@ -28,82 +29,149 @@ interface StopData {
   n_entries: number;
 }
 
-// TODO: use json files instead for the plot
+interface HistData {
+  hist_values: number;
+  bins: number;
+}
+
+
+const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+const width = 960 - margin.left - margin.right;
+const height = 500 - margin.top - margin.bottom;
+
+
 export class TablePlot {
-  private barChart: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
-  private xScale: d3.ScaleLinear<number, number>;
-  private yScale: d3.ScaleLinear<number, number>;
+  private svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  private data!: any[];
 
-  constructor(barChartId: string) {
-    this.barChart = d3.select(`#${BAR_ELEMENT_ID}`);
-
-    const margin = { top: 10, right: 10, bottom: 30, left: 30 };
-    const width = 400 - margin.left - margin.right;
-    const height = 200 - margin.top - margin.bottom;
-
-    // SVG barchart
-    const svg = this.barChart
-      .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // scales and axis
-    this.xScale = d3.scaleLinear().range([0, width]);
-    this.yScale = d3.scaleLinear().range([height, 0]);
-
-    svg.append("g").attr("class", "x-axis").attr("transform", `translate(0, ${height})`);
-
-    svg.append("g").attr("class", "y-axis");
+  private bars!: d3.Selection<(SVGRectElement|d3.BaseType), { bins: number; hist_values: number; }, SVGGElement, unknown> | 
+                   d3.Selection<d3.BaseType, { bins: number; hist_values: number; }, SVGGElement, unknown>;
+    
+  constructor() {
+        this.initStaticElements();
+        this.initPlot()
   }
 
-  public updatePlot(data: any[], attribute: string, highlightedValue?: number): void {
-    // calculate hist. bins
+
+  private initStaticElements(): void {
+    this.svg = d3
+        .select("#chart")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+  }
     
-    const histogram = d3.histogram<number>().domain(this.xScale.domain()).thresholds(NUMBER_STOPS)(data);
+  private async loadData(columnClicked: string): Promise<void> {
+    const data_path = `${DATA_FOLDER}/${columnClicked.toLowerCase().replace(' ', '_')}.json`;
 
-    // the scales
-    this.xScale.domain(d3.extent(data) as [number, number]);
-    this.yScale.domain([0, d3.max(histogram, (d) => d.length) || 0]);
+    return new Promise((resolve, reject) => {
+        d3.json(data_path).then((data: any) => {
+            resolve(data);
+        });
+    });
+  }
 
-    // bars
-    const bars = this.barChart.select("svg").selectAll(".bar").data(histogram);
+  private createLine(): void {
+    // Create the line generator function
+    d3
+        .line()
+        .x((d: { bins: number }) => this.xScale(d.bins))
+        .y((d) => this.yScale(d.hist_values));
+  }
 
-    // bars
-    // new
-    bars
-      .enter()
-      .append("rect")
-      .attr("class", "bar")
-      .attr("x", (d) => this.xScale(d.x0) + 1)
-      .attr("y", (d) => this.yScale(d.length))
-      .attr("width", (d) => Math.max(0, this.xScale(d.x1) - this.xScale(d.x0) - 1))
-      .attr("height", (d) => Math.max(0, this.yScale(0) - this.yScale(d.length)));
-
-    // updates
-    bars
-      .attr("x", (d) => this.xScale(d.x0) + 1)
-      .attr("y", (d) => this.yScale(d.length))
-      .attr("width", (d) => Math.max(0, this.xScale(d.x1) - this.xScale(d.x0) - 1))
-      .attr("height", (d) => Math.max(0, this.yScale(0) - this.yScale(d.length)));
-
-    // removing old
-    bars.exit().remove();
-
-    // update axis
-    this.barChart.select(".x-axis").call(d3.axisBottom(this.xScale));
-    this.barChart.select(".y-axis").call(d3.axisLeft(this.yScale));
-
-    // highlight the value of selected cell in the plot
-    if (highlightedValue !== undefined) {
-      this.barChart
-        .select("svg")
+  private createBars(): void {
+    // Create the bar generator function
+    this.bars = this.svg
         .selectAll(".bar")
-        .classed("highlighted", (d) => d.x0 <= highlightedValue && highlightedValue <= d.x1);
-    }
+        .data(this.data)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", (d) => this.xScale(d.bins) - BAR_WIDTH / 2)
+        .attr("y", (d) => this.yScale(d.hist_values))
+        .attr("width", BAR_WIDTH)
+        .attr("height", (d) => height - this.yScale(d.bins))
+        .attr("fill", "#00A59B");
+  }
+
+  private createAxes(): void {
+    this.svg
+        .append("g")
+        .attr("class", "x axis")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(this.xScale));
+    
+    this.svg
+        .append("g")
+        .attr("class", "y axis")
+        .call(d3.axisLeft(this.yScale));
+  }
+
+  private initPlot(): void {
+    this.loadData(DEFAULT_COLUMN).then((data: any) => {
+        this.data = data;
+
+        this.createLine();
+        this.createBars();
+        this.createAxes();
+    });
+  }
+
+  private async updatePlot(columnClicked: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        this.loadData(columnClicked).then((data: any) => {
+          this.data = data
+
+          // Parse data and update scales 
+          /// TO IMPLEMENT THIS
+          this.initData()
+  
+          // Update the bars
+          this.bars = this.svg.selectAll(".bar")
+              .data(this.data);
+  
+          this.bars.join(
+              enter => enter.append("rect")
+                  .attr("class", "bar")
+                  .attr("x", (d) => this.xScale(d.bins) - BAR_WIDTH / 2)
+                  .attr("y", this.yScale(0)) // start from the bottom of the chart
+                  .attr("width", BAR_WIDTH)
+                  .attr("height", 0) // start with a height of 0
+                  .attr("fill", "steelblue"),
+
+              update => update
+                  .transition() // Start a transition
+                  .duration(1000) // Make it last 1 second
+                  .attr("x", (d) => this.xScale(d.bins) - BAR_WIDTH / 2)
+                  .attr("y", (d) => this.yScale(d.hist_values))
+                  .attr("width", BAR_WIDTH)
+                  .attr("height", (d) => height - this.yScale(d.hist_values)),
+
+              exit => exit
+                  .transition() // Start a transition
+                  .duration(1000) // Make it last 1 second
+                  .attr("y", this.yScale(0)) // Move to the bottom of the chart
+                  .attr("height", 0) // End with a height of 0
+                  .remove() // After the transition, remove the bar
+          );
+  
+          // Update the axes
+          this.svg.select(".x.axis")
+              .transition()
+              .duration(1000)
+              .call(d3.axisBottom(this.xScale));
+  
+              this.svg.select(".y.axis")
+              .transition()
+              .duration(1000)
+              .call(d3.axisLeft(this.yScale));
+      });
+    });
   }
 }
+
 
 export class HomePageTable {
   private data: StopData[];
@@ -124,7 +192,7 @@ export class HomePageTable {
 
   private async loadData(): Promise<void> {
     try {
-      const data = await d3.json('table_sub_df.json');
+      const data = await d3.json('table_df.json');
       this.data = data;
       console.log(this.data);
     } catch (error) {
@@ -230,11 +298,10 @@ export class HomePageTable {
   
     // Highlight the clicked cell
     d3.select(cell).classed("clicked", true);
-
-    console.log(columnData, attribute, this.data[0][attribute]);
   
     // Update the plot
-    this.plot.updatePlot(columnData, attribute, this.data[0][attribute]);
+    //this.plot.updatePlot(columnData, attribute, this.data[0][attribute]);
+    this.plot.updatePlot(attribute)
 }
 
   private updateTable(): void {
@@ -246,26 +313,13 @@ export class HomePageTable {
     });
 
     // click
-    const self = this;
     this.rows
       .selectAll("td")
       // determine the clicked cell and what attribute it belongs to
-      .on("click", function(d) {
-        const clickedCell = d3.select(this).node() as HTMLElement;
-    
-        // Get index of clickedCell within its parent tr
-        const cellIndex = Array.prototype.indexOf.call(clickedCell.parentNode.children, clickedCell);
-    
-        // Get header (th) element corresponding to the clicked cell
-        const headerRow = d3.select(`#${TABLE_ELEMENT_ID}`).select('thead tr').node() as HTMLElement;
-        const clickedHeader = headerRow.children[cellIndex];
-    
-        // Get the HTML content of the header cell
-        const clickedAttribute = clickedHeader.innerHTML;
-
-        console.log(clickedCell, clickedAttribute);
-    
-        self.handleCellClick(clickedCell, clickedAttribute);
+      .on("click", (d, i, nodes) => {
+        const clickedCell = nodes[i] as HTMLElement;
+        const clickedAttribute = attributes[i];
+        this.handleCellClick(clickedCell, clickedAttribute);
       });
   }
 }
