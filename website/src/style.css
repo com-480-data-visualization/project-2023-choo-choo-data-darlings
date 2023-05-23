@@ -19,7 +19,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--default-font-family);
-  overflow: hidden;
 }
 
 .container {
@@ -495,6 +494,16 @@ p {
   background-color: var(--dark-green);
   color: var(--off-white);
   font-size: var(--medium-font-size);
+  padding: 15px;
+  margin: 0 1%;
+}
+
+#hourly-bar-buttons > button.pushed {
+  background-color: var(--dark-green);
+  color: var(--off-white);
+  font-size: var(--medium-font-size);
+  border: solid transparent;
+  border-width: 0;
   padding: 15px;
   margin: 0 1%;
 }

@@ -44,11 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (map === null) return;
 
             if (entries[0].isIntersecting) {
-                console.log("resume simulation")
                 map.resumeSimulation();
             } else {
                 setTimeout(() => {
-                    console.log("pause simulation")
                     map.pauseSimulation();
                 }, SCROLL_DURATION);
             }
