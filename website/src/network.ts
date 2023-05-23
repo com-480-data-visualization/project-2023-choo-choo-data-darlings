@@ -28,9 +28,19 @@ const MIN_NODE_SIZE = 1;
 const MAX_NODE_SIZE = 10;
 const DEFAULT_NODE_COLOR_MODE = 'fixed';
 const DEFAULT_NODE_COLOR_TRANSITION_DURATION = 1_000;
-const DEFAULT_NODE_COLOR = '#0f1d18';
-const DEGREE_NODE_COLOR = '#db3927';
-const BETWEENESS_CENTRALITY_NODE_COLOR = '#8d2eb2';
+
+
+//const DEFAULT_NODE_COLOR = '#0f1d18';
+//const DEGREE_NODE_COLOR = '#db3927';
+const DEFAULT_NODE_COLOR = "#00A59B";
+const DEGREE_NODE_COLOR = "#6F2282";
+const BETWEENESS_CENTRALITY_NODE_COLOR = "#E84E10";
+const WEIGHTED_DEGREE_NODE_COLOR = "#FCBB00";
+const PAGERAND_NODE_COLOR = "#143A85";
+const EIGEN_CENTRALITY_NODE_COLOR = "#00973B";
+
+
+// const BETWEENESS_CENTRALITY_NODE_COLOR = '#8d2eb2';
 const SEARCH_SELECTED_NODE_COLOR = '#f7b500';
 
 const DEFAULT_SEARCH_BY = 'label';
@@ -46,10 +56,10 @@ const NODES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/networ
 const EDGES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
 
 const NODE_SIZE_DESCRIPTION = {
-  'fix': "Choose between the different layouts of the graph: random, geographical or force atlas 2.",
-  'deg': "Degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. It represents the number of direct connections a node has with other nodes in the graph. In simple terms, the degree of a node indicates the number of neighbors it has. In an undirected graph, the degree of a node is equal to the count of edges incident to that node. In a directed graph, the degree can be further divided into in-degree and out-degree, representing the number of incoming and outgoing edges, respectively. The degree of a node is often used to determine the connectivity and importance of nodes within a graph. Nodes with higher degrees typically have more connections and are considered more influential or central in the network.",
+  'fix': "You can choose between the different layouts of the graph: random, geographical or force atlas 2.",
+  'deg': "The degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. It represents the number of direct connections a node has with other nodes in the graph. In simple terms, the degree of a node indicates the number of neighbors it has. In our graph, this value representes the number of connections a station has with other stations in the transportation network.",
   'bce': "Betweenness centrality is a measure of node importance in a graph based on the concept of how often a node lies on the shortest paths between other pairs of nodes. It quantifies the extent to which a node acts as a bridge or intermediary in connecting different parts of the graph. Nodes with higher betweenness centrality have more control over the flow of information or resources between other nodes, as they are more likely to be on the shortest paths. In essence, betweenness centrality identifies nodes that have a significant influence on the communication and interaction within the graph.",
-  'wdeg': "The weighted degree in a graph represents the sum of the weights of the links connected to a particular node. It takes into account the significance or importance of the links based on their weights, which are typically determined by factors such as the number of trains, buses, or trams that travel between the nodes. The weighted degree provides a measure of how well-connected and influential a node is within the transportation system, and can be used to determine the node sizes in your data visualization, reflecting their relative importance or traffic volume.",
+  'wdeg': "Just as the degree, the weighted degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. However, in this case, the weight of the edges is taken into account. In our graph, this value representes the number of connections a station has with other stations in the transportation network, taking into account the weight of the edges. The weight of an edge is the number of trips between two stations.",
   'pgr': "PageRank is an algorithm used to measure the importance or relevance of nodes in a graph. It assigns a numerical value to each node based on the incoming links from other nodes. In simple terms, nodes with a higher PageRank are considered more influential or central in the graph.",
   'egn': "Eigen centrality is a measure of node importance in a graph based on the concept of eigenvectors. It calculates the centrality of a node by considering both its own importance and the importance of its neighbors. Nodes with higher eigen centrality are those that have connections to other highly central nodes in the graph. In other words, eigen centrality identifies nodes that have a significant impact on the flow of information or influence throughout the graph.",
 };
@@ -882,18 +892,18 @@ class ColorManager {
 
     const colorMap = {
       fix: DEFAULT_NODE_COLOR,
-      ide: DEGREE_NODE_COLOR,
-      ode: DEGREE_NODE_COLOR,
+      //ide: DEGREE_NODE_COLOR,
+      //ode: DEGREE_NODE_COLOR,
       deg: DEGREE_NODE_COLOR,
       bce: BETWEENESS_CENTRALITY_NODE_COLOR,
-      wide: DEGREE_NODE_COLOR,
-      wode: DEGREE_NODE_COLOR,
-      wdeg: DEGREE_NODE_COLOR,
-      pgr: DEGREE_NODE_COLOR,
-      ecc: DEGREE_NODE_COLOR,
-      ccl: DEGREE_NODE_COLOR,
-      hcl: DEGREE_NODE_COLOR,
-      egn: DEGREE_NODE_COLOR,
+      //wide: DEGREE_NODE_COLOR,
+      //wode: DEGREE_NODE_COLOR,
+      wdeg: WEIGHTED_DEGREE_NODE_COLOR,
+      pgr: PAGERAND_NODE_COLOR,
+      //ecc: DEGREE_NODE_COLOR,
+      //ccl: DEGREE_NODE_COLOR,
+      //hcl: DEGREE_NODE_COLOR,
+      egn: EIGEN_CENTRALITY_NODE_COLOR,
     };
 
     const colorScaleArgMap = {
@@ -946,18 +956,18 @@ class ColorManager {
     };
   
     const colorMap = {
-      in_degree: DEGREE_NODE_COLOR,
-      out_degree: DEGREE_NODE_COLOR,
+      //in_degree: DEGREE_NODE_COLOR,
+      //out_degree: DEGREE_NODE_COLOR,
       degree: DEGREE_NODE_COLOR,
       betweeness_centrality: BETWEENESS_CENTRALITY_NODE_COLOR,
-      weighted_in_degree: DEGREE_NODE_COLOR,
-      weighted_out_degree: DEGREE_NODE_COLOR,
-      weighted_degree: DEGREE_NODE_COLOR,
-      page_rank: DEGREE_NODE_COLOR,
-      eccentricity: DEGREE_NODE_COLOR,
-      closeness_centrality: DEGREE_NODE_COLOR,
-      harmonic_closeness_centrality: DEGREE_NODE_COLOR,
-      eigen_centrality: DEGREE_NODE_COLOR,
+      //weighted_in_degree: DEGREE_NODE_COLOR,
+      //weighted_out_degree: DEGREE_NODE_COLOR,
+      weighted_degree: WEIGHTED_DEGREE_NODE_COLOR,
+      page_rank: PAGERANK_NODE_COLOR,
+      //eccentricity: DEGREE_NODE_COLOR,
+      //closeness_centrality: DEGREE_NODE_COLOR,
+      //harmonic_closeness_centrality: DEGREE_NODE_COLOR,
+      eigen_centrality: EIGEN_CENTRALITY_NODE_COLOR,
     };
   
     const colorScaleArg = `size${colorScaleArgMap[this.nodeColorMode]}`;
