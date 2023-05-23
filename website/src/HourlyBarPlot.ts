@@ -215,7 +215,17 @@ export class HourlyBarPlot {
             button.setAttribute("type", "button");
             button.setAttribute('id', transportMethod);
             button.innerHTML = transportMethod;
+            if (transportMethod === DEFAULT_TRANSPORT_METHOD) {
+                button.classList.add("pushed");
+            }
             button.onclick = () => {
+                // Set button as pushed
+                const buttons = document.getElementById(BAR_BUTTONS_ELEMENT_ID)!.getElementsByTagName("button");
+                for (let j = 0; j < buttons.length; j++) {
+                    buttons[j].classList.remove("pushed");
+                }
+                button.classList.add("pushed");
+
                 this.updatePlot(transportMethod);
             };
 
