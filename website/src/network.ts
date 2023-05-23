@@ -47,7 +47,7 @@ const DEFAULT_SEARCH_BY = 'label';
 
 const DEFAULT_EDGE_SCALING = 50_000;
 const DEFAULT_EDGE_OPACITY = 0.5;
-const DEFAULT_EDGE_COLOR = 'rgba(46, 93, 82, ' + DEFAULT_EDGE_OPACITY + ')';
+const DEFAULT_EDGE_COLOR = 'rgba(250, 244, 221, ' + DEFAULT_EDGE_OPACITY + ')';//'rgba(46, 93, 82, ' + DEFAULT_EDGE_OPACITY + ')';
 
 const SEARCH_ZOOM_RATIO = 0.05;
 
@@ -57,11 +57,11 @@ const EDGES_FILE_PATH = `data/network/networks/${NETWORK_SOURCE}/web_data/networ
 
 const NODE_SIZE_DESCRIPTION = {
   'fix': "You can choose between the different layouts of the graph: random, geographical or force atlas 2.",
-  'deg': "The degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. It represents the number of direct connections a node has with other nodes in the graph. In simple terms, the degree of a node indicates the number of neighbors it has. In our graph, this value representes the number of connections a station has with other stations in the transportation network.",
-  'bce': "Betweenness centrality is a measure of node importance in a graph based on the concept of how often a node lies on the shortest paths between other pairs of nodes. It quantifies the extent to which a node acts as a bridge or intermediary in connecting different parts of the graph. Nodes with higher betweenness centrality have more control over the flow of information or resources between other nodes, as they are more likely to be on the shortest paths. In essence, betweenness centrality identifies nodes that have a significant influence on the communication and interaction within the graph.",
-  'wdeg': "Just as the degree, the weighted degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. However, in this case, the weight of the edges is taken into account. In our graph, this value representes the number of connections a station has with other stations in the transportation network, taking into account the weight of the edges. The weight of an edge is the number of trips between two stations.",
-  'pgr': "PageRank is an algorithm used to measure the importance or relevance of nodes in a graph. It assigns a numerical value to each node based on the incoming links from other nodes. In simple terms, nodes with a higher PageRank are considered more influential or central in the graph.",
-  'egn': "Eigen centrality is a measure of node importance in a graph based on the concept of eigenvectors. It calculates the centrality of a node by considering both its own importance and the importance of its neighbors. Nodes with higher eigen centrality are those that have connections to other highly central nodes in the graph. In other words, eigen centrality identifies nodes that have a significant impact on the flow of information or influence throughout the graph.",
+  'deg': "The degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. It represents the number of direct connections a node has with other nodes in the graph. In simple terms, the degree of a node indicates the number of neighbors it has. In our graph, this value representes the number of connections a station has with other stations in the transportation network. We can see that the central stations, such as Bern, Zürich or Fribourg have a high degree which means they connect to a lot of other stations in the country.",
+  'bce': "Betweenness centrality is a measure of node importance in a graph based on the concept of how often a node lies on the shortest paths between other pairs of nodes. It quantifies the extent to which a node acts as a bridge or intermediary in connecting different parts of the graph. Nodes with higher betweenness centrality have more control over the flow of information or resources between other nodes, as they are more likely to be on the shortest paths. We can see that Bern has a high betweenness centrality, which means that it is a central nstation in Switzerland as there are many shortest paths that pass through it.",
+  'wdeg': "Just as the degree, the weighted degree is a fundamental metric in graph theory that measures the number of edges connected to a node in a graph. However, in this case, the weight of the edges is taken into account. In our graph, this value representes the number of connections a station has with other stations in the transportation network, taking into account the weight of the edges. The weight of an edge is the number of trips between two stations We can see that cities scûch as Geneva or Zürich have a high weighted degree as there are a lot of busses or trams that go aroung those cities.",
+  'pgr': "PageRank is an algorithm used to measure the importance or relevance of nodes in a graph. It assigns a numerical value to each node based on the incoming links from other nodes. In simple terms, nodes with a higher PageRank are considered more influential or central in the graph. We can see that the majority of the nodes with a high PageRank are located in cities, which makes sense as they connect the countryside to the cities.",
+  'egn': "Eigen centrality is a measure of node importance in a graph based on the concept of eigenvectors. It calculates the centrality of a node by considering both its own importance and the importance of its neighbors. Nodes with higher eigen centrality are those that have connections to other highly central nodes in the graph. In other words, eigen centrality identifies nodes that have a significant impact on the flow of information or influence throughout the graph. We can see that Zürich has the highest eigen centrality, which means that it is a central station in Switzerland as it has the highest concentration of buses, trams and train stations.",
 };
 
 export class GraphManager {
@@ -817,6 +817,7 @@ class ColorManager {
    * @returns {void}
    */
   setNodeColorMode(nodeColorMode, newColor, colorScaleArg, immediate = false) {
+    console.log(nodeColorMode)
     if (this.nodeColorMode === nodeColorMode && !immediate) return;
   
     // Get the graph nodes
@@ -832,7 +833,7 @@ class ColorManager {
         colorScale = 1 / (1 + Math.exp(-this.wScale * (colorScale - this.bScale)));
       }
   
-      const colorLerp = this.colorLerp(DEFAULT_NODE_COLOR, newColor, colorScale);
+      const colorLerp = nodeColorMode === "fixed" ? DEFAULT_NODE_COLOR : this.colorLerp(DEFAULT_NODE_COLOR, newColor, colorScale);
       const color = nodeObj.searchSelected ? SEARCH_SELECTED_NODE_COLOR : colorLerp;
       acc[node] = {
         color: color,
