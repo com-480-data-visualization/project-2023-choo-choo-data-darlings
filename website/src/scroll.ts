@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (scrollButtons) {
     scrollButtons.addEventListener("click", (event) => {
       // Only do something if the clicked element is an element of type li
-      if (event.target.tagName !== "LI") return;
+      if (event.target instanceof Element && event.target.tagName !== "LI") return;
 
       // Remove "current" class from lastSelectedButton
       if (lastSelectedButton) {
