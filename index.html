@@ -5,21 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Swiss Transportation System</title>
     
-    <script type="module" crossorigin src="./assets/main-37c80a38.js"></script>
-    <link rel="stylesheet" href="./assets/index-ecf4f15a.css">
+    <script type="module" crossorigin src="./assets/main-a968bda3.js"></script>
+    <link rel="stylesheet" href="./assets/index-9b7e10b8.css">
   </head>
   <body>
     <div id="scroll-buttons" class="dotstyle dotstyle-fillup">
       <ul>
-        <li class="current" value="title-container"></li>
-        <li value="p1-container"></li>
-        <li value="p2-container"></li>
-        <li value="p3-container"></li>
-        <li value="p4-container"></li>
-        <li value="p5-container"></li>
-        <li value="p7-container"></li>
-        <li value="p8-container"></li>
-        <li value="final-container"></li>
+        <li class="current unclickable" value="title-container"></li>
+        <li value="p1-container" class="unclickable"></li>
+        <li value="p2-container" class="unclickable"></li>
+        <li value="p3-container" class="unclickable"></li>
+        <li value="p4-container" class="unclickable"></li>
+        <li value="p5-container" class="unclickable"></li>
+        <li value="p6-container" class="unclickable"></li>
+        <li value="p7-container" class="unclickable"></li>
+        <li value="p8-container" class="unclickable"></li>
+        <li value="p9-container" class="unclickable"></li>
+        <li value="final-container" class="unclickable"></li>
       </ul>
     </div>
     <div class="app">
@@ -223,7 +225,7 @@
         </div>
       </div>
 
-      <div id="p6-container" class="container container-padding black-bg">
+      <div id="p6-container" class="container black-bg">
         <div id="search" class="network-control">
           <input type="search" id="search_input" list="search_suggestions" placeholder="Search stop" />
           <datalist id="search_suggestions"></datalist>
@@ -294,11 +296,6 @@
           </select>
         </div>
     
-        <div id="edges_opacity" class="network-control">
-          <input type="checkbox" name="edges_opacity" checked>
-          <label for="edges_opacity">Transparent edges</label>
-        </div>
-    
         <div id="w_slider" class="network-control">
           <label id="w_slider_label" for="w_scale">W (1.00)</label>
           <input
@@ -328,9 +325,11 @@
           <div class="flex-row flex-85">
             <div id="graph-container" class="height-100 width-100"></div>
           </div>
-          <div class="flex-row flex-15">
+          <div class="flex-row flex-15 container-padding overflow-auto">
             <div class="small-text light-text">
-              <p id="graph-description">Choose between the different layouts of the graph: random, geographical or force atlas 2.</p>
+              <p id="graph-description" class="text-italic">
+                You can choose between the different layouts of the graph: random, geographical or force atlas 2.
+              </p>
             </div>
           </div>
         </div>
@@ -469,7 +468,7 @@
       <div id="final-container" class="container">
         <div id="maintainers">
           <div id="maintainers-list">
-          Website published on the <span id="current_date" itemprop="date">7th of May 2023</span> and maintained by
+          Website published on the <span id="current_date" itemprop="date">26th of May 2023</span> and maintained by
             <a class="github-link" href="https://github.com/dvculha" target="_blank">Dafne Culha</a>, 
             <a class="github-link" href="https://github.com/ozan-guven" target="_blank">Ozan Güven</a> and 
             <a class="github-link" href="https://github.com/ArnaudPoletto" target="_blank">Arnaud Poletto</a>
