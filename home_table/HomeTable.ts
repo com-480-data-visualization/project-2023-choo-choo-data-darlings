@@ -9,6 +9,8 @@ const BAR_ELEMENT_ID = "bar-plot";
 
 const DEFAULT_COLUMN = 'n_entries'
 
+const BAR_WIDTH = 0.016;
+
 // not used anymore but could be
 interface StopData {
   stop_id: number;
@@ -44,41 +46,68 @@ export class TablePlot {
   private svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   private data!: any[];
 
+  private xScale!: d3.ScaleLinear<number, number>;
+  private yScale!: d3.ScaleLinear<number, number>;
+
   private bars!: d3.Selection<(SVGRectElement|d3.BaseType), { bins: number; hist_values: number; }, SVGGElement, unknown> | 
                    d3.Selection<d3.BaseType, { bins: number; hist_values: number; }, SVGGElement, unknown>;
     
   constructor() {
         this.initStaticElements();
         this.initPlot()
+        this.updatePlot(this.clickedAttribute)
   }
+
+  private initData(): void {
+    // Parse the time for each data point
+    // the scales
+    //this.xScale = d3
+    //    .scaleLinear()
+    //    .range([0, this.width]);
+    console.log("Data:", this.data);
+
+
+    this.xScale = d3
+        .scaleLinear()
+        //.domain([0, d3.max(this.data, (d) => d.bins)]) // Set the domain based on your data
+        .range([0, width]);
+    
+    this.yScale = d3
+        .scaleLinear()
+        .nice()
+        .range([this.height, 0]);
+}
 
 
   private initStaticElements(): void {
     this.svg = d3
-        .select("#chart")
+        .select("#bar-plot")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
   }
-    
-  private async loadData(columnClicked: string): Promise<void> {
-    const data_path = `${DATA_FOLDER}/${columnClicked.toLowerCase().replace(' ', '_')}.json`;
-
-    return new Promise((resolve, reject) => {
-        d3.json(data_path).then((data: any) => {
-            resolve(data);
-        });
-    });
+  
+  
+private async loadData(): Promise<void> {
+  //const attribute = this.clickedAttribute;
+  //const filename = `${attribute}.json`;
+  //console.log(attribute)
+  try {
+    const data = await d3.json(`DATA_FOLDER\${clickedAttribute}.json`);
+    this.data = data;
+    console.log(this.data);
+  } catch (error) {
+    console.error('Error loading data:', error);
   }
+}
 
-  private createLine(): void {
-    // Create the line generator function
-    d3
-        .line()
-        .x((d: { bins: number }) => this.xScale(d.bins))
-        .y((d) => this.yScale(d.hist_values));
+  private createLine(): d3.Line<{ bins: number }> {
+    return d3
+      .line<{ bins: number }>()
+      .x((d) => this.xScale(d.bins))
+      .y((d) => this.yScale(d.hist_values));
   }
 
   private createBars(): void {
@@ -110,7 +139,7 @@ export class TablePlot {
   }
 
   private initPlot(): void {
-    this.loadData(DEFAULT_COLUMN).then((data: any) => {
+    this.loadData(clickedAttribute).then((data: any) => {
         this.data = data;
 
         this.createLine();
@@ -119,9 +148,9 @@ export class TablePlot {
     });
   }
 
-  private async updatePlot(columnClicked: string): Promise<void> {
+  private updatePlot(clickedAttribute: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        this.loadData(columnClicked).then((data: any) => {
+        this.loadData(clickedAttribute).then((data: any) => {
           this.data = data
 
           // Parse data and update scales 
@@ -167,7 +196,10 @@ export class TablePlot {
               .transition()
               .duration(1000)
               .call(d3.axisLeft(this.yScale));
+          
+          resolve();
       });
+      
     });
   }
 }
@@ -186,13 +218,13 @@ export class HomePageTable {
       this.sortedTable(); //sort values depending on attribute
       this.updateTable(); //hover and click behaviours
       //this.plot = new TablePlot(); // link bar plot
-      this.plot = new TablePlot(BAR_ELEMENT_ID); //link bar plot
+      this.plot = new TablePlot(); //link bar plot
     });
   }
 
   private async loadData(): Promise<void> {
     try {
-      const data = await d3.json('table_df.json');
+      const data = await d3.json('table_sub_df.json');
       this.data = data;
       console.log(this.data);
     } catch (error) {
@@ -298,7 +330,9 @@ export class HomePageTable {
   
     // Highlight the clicked cell
     d3.select(cell).classed("clicked", true);
-  
+
+    console.log(attribute);
+
     // Update the plot
     //this.plot.updatePlot(columnData, attribute, this.data[0][attribute]);
     this.plot.updatePlot(attribute)
@@ -313,13 +347,26 @@ export class HomePageTable {
     });
 
     // click
+    const self = this
     this.rows
       .selectAll("td")
       // determine the clicked cell and what attribute it belongs to
-      .on("click", (d, i, nodes) => {
-        const clickedCell = nodes[i] as HTMLElement;
-        const clickedAttribute = attributes[i];
-        this.handleCellClick(clickedCell, clickedAttribute);
+      .on("click", function(d) {
+        const clickedCell = d3.select(this).node() as HTMLElement;
+
+        // Get index of clickedCell within its parent tr
+        const cellIndex = Array.prototype.indexOf.call(clickedCell.parentNode.children, clickedCell);
+
+        // Get header (th) element corresponding to the clicked cell
+        const headerRow = d3.select(`#${TABLE_ELEMENT_ID}`).select('thead tr').node() as HTMLElement;
+        const clickedHeader = headerRow.children[cellIndex];
+
+        // Get the HTML content of the header cell
+        const clickedAttribute = clickedHeader.innerHTML;
+
+        console.log(clickedCell, clickedAttribute);
+
+        self.handleCellClick(clickedCell, clickedAttribute);
       });
   }
 }
