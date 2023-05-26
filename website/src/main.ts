@@ -66,16 +66,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Map loading, resume and pause
-            if (destination.index === 9){
-                if (map === null) {
+            if (map === null && destination.index === 8) {
+                setTimeout(() => {
                     map = new Map();
-                } else {
-                    map.resumeSimulation();
-                }
-            } else {
-                if (map !== null) {
                     map.pauseSimulation();
-                }
+                }, SCROLL_DURATION);
+            }
+
+            if (map !== null && destination.index === 9){
+                map.resumeSimulation();
+            } else {
+                map.pauseSimulation();
             }
 
             // Network loading
