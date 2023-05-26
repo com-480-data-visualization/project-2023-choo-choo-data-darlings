@@ -1168,6 +1168,7 @@ export class Map {
       const isoText = this.isoTextObjects[isoTextName];
       this.scene.remove(isoText);
     }
+    this.isoTextObjects = {};
 
     // Remove the isochronic center
     if (!this.isoCenterObject) return;
