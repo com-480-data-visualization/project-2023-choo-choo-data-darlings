@@ -24,6 +24,10 @@
   color: var(--green) !important;
 }
 
+.locked {
+  opacity: 0.5;
+}
+
 /* MAIN */
 body {
   margin: 0;

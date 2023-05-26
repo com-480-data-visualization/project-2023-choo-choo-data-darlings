@@ -25,6 +25,7 @@
     "fullpage.js": "^4.0.19",
     "gh-pages": "^5.0.0",
     "graphology": "^0.25.1",
+    "jquery": "^3.7.0",
     "proj4": "^2.9.0",
     "sigma": "^3.0.0-alpha3",
     "three": "^0.151.3"
