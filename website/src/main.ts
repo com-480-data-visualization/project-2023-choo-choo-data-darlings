@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (map !== null && destination.index === 9){
                 map.resumeSimulation();
-            } else {
+            } else if (map !== null && destination.index !== 9) {
                 map.pauseSimulation();
             }
 
