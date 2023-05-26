@@ -79,10 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Network loading
-            if (network == null && destination.index === 5) {
+            if (network === null && destination.index === 5) {
                 network = new GraphManager();
                 setTimeout(() => {
-                    graphManager.load();
+                    network.load();
                 }, SCROLL_DURATION);
             }
         }
