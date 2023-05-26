@@ -5,24 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Swiss Transportation System</title>
     <link rel="stylesheet" href="./src/style.css" />
+    <link rel="stylesheet" href="/dist/fullpage.min.css">
   </head>
   <body>
-    <div id="scroll-buttons" class="dotstyle dotstyle-fillup">
-      <ul>
-        <li class="current unclickable" value="title-container"></li>
-        <li value="p1-container" class="unclickable"></li>
-        <li value="p2-container" class="unclickable"></li>
-        <li value="p3-container" class="unclickable"></li>
-        <li value="p4-container" class="unclickable"></li>
-        <li value="p5-container" class="unclickable"></li>
-        <li value="p6-container" class="unclickable"></li>
-        <li value="p7-container" class="unclickable"></li>
-        <li value="p8-container" class="unclickable"></li>
-        <li value="p9-container" class="unclickable"></li>
-        <li value="final-container" class="unclickable"></li>
-      </ul>
-    </div>
-    <div class="app">
+    <div id="fullpage">
+      <div class="section">
       <div id="title-container" class="container">
         <h1 id="title">The Swiss Transportation System</h1>
         <div id="day-sky"></div>
@@ -44,9 +31,11 @@
         </div>
         <div id="particle-container"></div>
       </div>
+      </div>
 
       <div id="title-to-p1-container" class="container"></div>
 
+      <div class="section">
       <div id="p1-container" class="container container-padding pink-grainy-bg">
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col text-padding-20 overflow-auto">
@@ -70,9 +59,11 @@
           </div>
         </div>
       </div>
+      </div>
 
       <div id="p1-to-p2-container" class="container"></div>
 
+      <div class="section">
       <div id="p2-container" class="container container-padding off-white-bg">
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col flex-50 overflow-auto">
@@ -119,9 +110,11 @@
           </div>
         </div>
       </div>
+      </div>
 
       <div id="p2-to-p3-container" class="container ow-to-ow-bg"></div>
 
+      <div class="section">
       <div id="p3-container" class="container container-padding off-white-bg">
         <div class="flex-col flex-100">
           <div class="flex-col flex-50 flex-center verflow-auto">
@@ -141,9 +134,11 @@
           </div>
         </div>
       </div>
+      </div>
 
       <div id="p3-to-p4-container" class="container ow-to-ow-bg"></div>
 
+      <div class="section">
       <div id="p4-container" class="container off-white-bg">
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col flex-50 height-100">
@@ -190,9 +185,11 @@
           </div>
         </div>
       </div>
+      </div>
 
       <div id="p4-to-p5-container" class="container ow-to-bk-bg"></div>
 
+      <div class="section">
       <div id="p5-container" class="container container-padding black-bg">
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col text-padding-20 overflow-auto">
@@ -222,7 +219,9 @@
           </div>
         </div>
       </div>
+      </div>
 
+      <div class="section">
       <div id="p6-container" class="container black-bg">
         <div id="search" class="network-control">
           <input type="search" id="search_input" list="search_suggestions" placeholder="Search stop" />
@@ -332,9 +331,11 @@
           </div>
         </div>
       </div>
+      </div>
 
       <div id="p6-to-p7-container" class="container bk-to-ow-bg"></div>
 
+      <div class="section">
       <div id="p7-container" class="container container-padding off-white-bg">
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col flex-50 overflow-auto">
@@ -389,9 +390,11 @@
           </div>
         </div>
       </div>
+      </div>
 
       <div id="p7-to-p8-container" class="container ow-to-bk-bg"></div>
 
+      <div class="section">
       <div id="p8-container" class="container container-padding black-bg">
         <div class="flex-row flex-100 flex-center">
           <div class="flex-col text-padding-20 overflow-auto">
@@ -427,7 +430,9 @@
           </div>
         </div>
       </div>
+      </div>
 
+      <div class="section">
       <div id="p9-container" class="container container-padding black-bg">
         <div id="map" style="width:1071px; height:643px;"></div>
 
@@ -460,9 +465,11 @@
           <img class="train-scale-img" id="train-speed-scale-img" src="assets/map/speed_scale.png" alt="Train color mode speed scale">
         </div>
       </div>
+      </div>
 
       <div id="p-to-final-container" class="container"></div>
 
+      <div class="section">
       <div id="final-container" class="container">
         <div id="maintainers">
           <div id="maintainers-list">
@@ -481,10 +488,72 @@
         <div id="night-mountain-left"></div>
         <div id="night-mountain-right"></div>
       </div>
+      </div>
     </div>
   </body>
 
-  <script type="module" src="./src/scroll.ts"></script>
   <script type="module" src="./src/main.ts"></script>
   <script type="module" src="./src/particles.ts"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="./dist/fullpage.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const sectionsLocked = [
+        false,  // title
+        false,  // introduction
+        true,   // circle packing
+        true,   // interactive table
+        true,   // hierarchical edge bundling
+        true,   // network introduction
+        true,   // network
+        true,   // hourly plot
+        true,   // map introduction
+        true,   // map
+        true,   // final
+      ];
+
+      $("#fullpage").fullpage({
+        navigation: true,
+        navigationTooltips: [
+          'Title',
+          'Introduction',
+          'Circle Packing',
+          'Interactive Table',
+          'Hierarchical Edge Bundling',
+          'Network Introduction',
+          'Network',
+          'Hourly Plot',
+          'Map Introduction',
+          'Map',
+          'Final'
+        ],
+        slidesNavigation: true,
+        controlArrows: false,
+        verticalCentered: false,
+        scrollingSpeed: 1000,
+        scrollOverflow: true,
+        onLeave: function(origin, destination, direction){
+          // if we are going forward and the destination is locked...
+          if(direction == 'down' && sectionsLocked[destination.index]) {
+              // don't let them leave the section (by canceling the move)
+              return false;
+          }
+          // otherwise, unlock the next section (if it exists)
+          else if(destination.index + 1 < sectionsLocked.length) {
+              sectionsLocked[destination.index + 1] = false;
+          }
+        }
+      });
+  });
+
+  // disable navigation to locked sections
+  $('#my-nav li').on('click', function(e) {
+    var index = $(this).index();
+    if(sectionsLocked[index]) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  });
+  </script>
 </html>
