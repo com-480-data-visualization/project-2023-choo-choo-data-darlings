@@ -7,9 +7,9 @@ const DATA_FOLDER = "./data2";
 const TABLE_ELEMENT_ID = "table-container";
 const BAR_ELEMENT_ID = "bar-plot";
 
-const DEFAULT_COLUMN = 'n_entries'
+const DEFAULT_COLUMN = 'n_arrival_delay'
 
-const BAR_WIDTH = 0.016;
+const BAR_WIDTH = 1;
 
 // not used anymore but could be
 interface StopData {
@@ -41,7 +41,6 @@ const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 960 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
-
 export class TablePlot {
   private svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   private data!: any[];
@@ -54,8 +53,10 @@ export class TablePlot {
     
   constructor() {
         this.initStaticElements();
-        this.initPlot()
+
+        this.clickedAttribute = DEFAULT_COLUMN
         this.updatePlot(this.clickedAttribute)
+        this.initPlot()
   }
 
   private initData(): void {
@@ -66,18 +67,17 @@ export class TablePlot {
     //    .range([0, this.width]);
     console.log("Data:", this.data);
 
-
     this.xScale = d3
         .scaleLinear()
-        //.domain([0, d3.max(this.data, (d) => d.bins)]) // Set the domain based on your data
+        .domain([d3.min(this.data.bins), d3.max(this.data.bins)]) // Set the domain based on your data
         .range([0, width]);
     
     this.yScale = d3
-        .scaleLinear()
+        .scaleLog()
+        .domain([1, d3.max(this.data.hist_values)])
         .nice()
-        .range([this.height, 0]);
+        .range([height, 0]);
 }
-
 
   private initStaticElements(): void {
     this.svg = d3
@@ -90,17 +90,19 @@ export class TablePlot {
   }
   
   
-private async loadData(): Promise<void> {
+private async loadData(clickedAttribute: any): Promise<void> {
   //const attribute = this.clickedAttribute;
   //const filename = `${attribute}.json`;
   //console.log(attribute)
-  try {
-    const data = await d3.json(`DATA_FOLDER\${clickedAttribute}.json`);
-    this.data = data;
-    console.log(this.data);
-  } catch (error) {
-    console.error('Error loading data:', error);
-  }
+  return new Promise((resolve, reject) => {
+      d3.json(`${DATA_FOLDER}/${clickedAttribute}.json`).then((data) => {
+          this.data = data;
+          resolve();
+      })
+      .catch((error) => {
+          reject(error);
+      });
+  });
 }
 
   private createLine(): d3.Line<{ bins: number }> {
@@ -111,72 +113,83 @@ private async loadData(): Promise<void> {
   }
 
   private createBars(): void {
+    // Convert bins and hist_values into an array of objects
+    const data = this.data.bins.map((bin, i) => ({
+      bins: bin,
+      hist_values: this.data.hist_values[i]
+    }));
+
     // Create the bar generator function
-    this.bars = this.svg
-        .selectAll(".bar")
-        .data(this.data)
+    this.barGroup = this.svg.append('g')
+      .attr('class', 'bar-group');
+
+    this.bars = this.barGroup.selectAll(".bar")
+        .data(data)
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("x", (d) => this.xScale(d.bins) - BAR_WIDTH / 2)
-        .attr("y", (d) => this.yScale(d.hist_values))
-        .attr("width", BAR_WIDTH)
-        .attr("height", (d) => height - this.yScale(d.bins))
+        .attr("x", (d) => this.xScale(d.bins))
+        .attr("y", (d) => this.yScale(d.hist_values + 0.0001))
+        .attr("width", width / this.data.num_bins)
+        .attr("height", (d) => this.yScale.range()[0] - this.yScale(d.hist_values + 0.0001))
         .attr("fill", "#00A59B");
   }
 
   private createAxes(): void {
     this.svg
         .append("g")
-        .attr("class", "x axis")
+        .attr("class", "x-axis")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(this.xScale));
     
     this.svg
         .append("g")
-        .attr("class", "y axis")
+        .attr("class", "y-axis")
         .call(d3.axisLeft(this.yScale));
   }
 
   private initPlot(): void {
-    this.loadData(clickedAttribute).then((data: any) => {
-        this.data = data;
-
+    this.loadData(DEFAULT_COLUMN).then(() => {
         this.createLine();
         this.createBars();
         this.createAxes();
     });
   }
 
-  private updatePlot(clickedAttribute: string): Promise<void> {
+  private async updatePlot(clickedAttribute: string): Promise<void> {
     return new Promise((resolve, reject) => {
-        this.loadData(clickedAttribute).then((data: any) => {
-          this.data = data
-
+        this.loadData(clickedAttribute).then(() => {
           // Parse data and update scales 
           /// TO IMPLEMENT THIS
           this.initData()
-  
+
+          // Convert bins and hist_values into an array of objects
+          const data = this.data.bins.map((bin, i) => ({
+            bins: bin,
+            hist_values: this.data.hist_values[i]
+          }));
+
           // Update the bars
-          this.bars = this.svg.selectAll(".bar")
-              .data(this.data);
+          this.bars = this.barGroup.selectAll(".bar")
+              .data(data);
   
           this.bars.join(
-              enter => enter.append("rect")
+              enter => enter
+                  .append("rect")
                   .attr("class", "bar")
-                  .attr("x", (d) => this.xScale(d.bins) - BAR_WIDTH / 2)
+                  .attr("x", (d) => this.xScale(d.bins))
                   .attr("y", this.yScale(0)) // start from the bottom of the chart
-                  .attr("width", BAR_WIDTH)
+                  .attr("width", width / this.data.num_bins)
                   .attr("height", 0) // start with a height of 0
                   .attr("fill", "steelblue"),
 
               update => update
                   .transition() // Start a transition
                   .duration(1000) // Make it last 1 second
-                  .attr("x", (d) => this.xScale(d.bins) - BAR_WIDTH / 2)
-                  .attr("y", (d) => this.yScale(d.hist_values))
-                  .attr("width", BAR_WIDTH)
-                  .attr("height", (d) => height - this.yScale(d.hist_values)),
+                  .attr("x", (d) => this.xScale(d.bins))
+                  .attr("y", (d) => this.yScale(d.hist_values + 0.0001))
+                  .attr("width", width / this.data.num_bins)
+                  .attr("height", (d) => height - this.yScale(d.hist_values + 0.0001)),
 
               exit => exit
                   .transition() // Start a transition
@@ -187,19 +200,21 @@ private async loadData(): Promise<void> {
           );
   
           // Update the axes
-          this.svg.select(".x.axis")
+          this.svg.select(".x-axis")
               .transition()
               .duration(1000)
               .call(d3.axisBottom(this.xScale));
   
-              this.svg.select(".y.axis")
+              this.svg.select(".y-axis")
               .transition()
               .duration(1000)
               .call(d3.axisLeft(this.yScale));
           
           resolve();
+      })
+      .catch((error) => {
+          reject(error);
       });
-      
     });
   }
 }
@@ -226,7 +241,6 @@ export class HomePageTable {
     try {
       const data = await d3.json('table_sub_df.json');
       this.data = data;
-      console.log(this.data);
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -330,8 +344,6 @@ export class HomePageTable {
   
     // Highlight the clicked cell
     d3.select(cell).classed("clicked", true);
-
-    console.log(attribute);
 
     // Update the plot
     //this.plot.updatePlot(columnData, attribute, this.data[0][attribute]);
