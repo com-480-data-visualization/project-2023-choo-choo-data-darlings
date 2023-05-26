@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     new HierarchicalEdgeBundling();
     new HourlyBarPlot();
 
+    let map: any = null;
+
     // Fullpage.js
     const sectionsLocked = [
         false,  // title
@@ -45,10 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
             'Map',
             'Final'
         ],
-        slidesNavigation: true,
+        slidesNavigation: false,
         controlArrows: false,
         verticalCentered: false,
-        scrollingSpeed: 1000,
+        scrollingSpeed: SCROLL_DURATION,
         scrollOverflow: true,
         onLeave: function(_: any, destination: any, direction: any){
             // if we are going forward and the destination is locked...
@@ -60,6 +62,27 @@ document.addEventListener("DOMContentLoaded", () => {
             else if(destination.index + 1 < sectionsLocked.length) {
                 sectionsLocked[destination.index + 1] = false;
                 navItems[destination.index + 1].classList.remove('locked');
+            }
+
+            // Map loading, resume and pause
+            if (destination.index === 9){
+                if (map === null) {
+                    map = new Map();
+                } else {
+                    map.resumeSimulation();
+                }
+            } else {
+                if (map !== null) {
+                    map.pauseSimulation();
+                }
+            }
+
+            // Network loading
+            if (destination.index === 5) {
+                setTimeout(() => {
+                    const graphManager = new GraphManager();
+                    graphManager.load();
+                }, SCROLL_DURATION);
             }
         }
     });
@@ -75,47 +98,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     applyOpacityToLockedSections();
-
-    // Load the graph when scoll to the p5-container div
-    const p5Container = document.getElementById("p5-container");
-    if (p5Container) {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                const graphManager = new GraphManager();
-                graphManager.load();
-                observer.unobserve(p5Container);
-            }
-        }, { threshold: 1 });
-        observer.observe(p5Container);
-    }
-
-    // Load the map when scoll to the map-container div
-    let map: any = null;
-    // Observer for p8-container
-    const p8Container = document.getElementById("p8-container");
-    if (p8Container) {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && map === null) {
-                map = new Map();
-            }
-        }, { threshold: 1 });
-        observer.observe(p8Container);
-    }
-
-    // Observer for p9-container
-    const p9Container = document.getElementById("p9-container");
-    if (p9Container) {
-        const observer = new IntersectionObserver((entries) => {
-            if (map === null) return;
-
-            if (entries[0].isIntersecting) {
-                map.resumeSimulation();
-            } else {
-                setTimeout(() => {
-                    map.pauseSimulation();
-                }, SCROLL_DURATION);
-            }
-        }, { threshold: 1 });
-        observer.observe(p9Container);
-    }
 });
