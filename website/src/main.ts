@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { CirclePacking } from './CirclePacking.ts';
 import { HierarchicalEdgeBundling } from './HierarchicalEdgeBundling.ts';
 import { HourlyBarPlot } from './HourlyBarPlot.ts';
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         verticalCentered: false,
         scrollingSpeed: 1000,
         scrollOverflow: true,
-        onLeave: function(origin: any, destination: any, direction: any){
+        onLeave: function(_: any, destination: any, direction: any){
             // if we are going forward and the destination is locked...
             if(direction == 'down' && sectionsLocked[destination.index]) {
                 // don't let them leave the section (by canceling the move)

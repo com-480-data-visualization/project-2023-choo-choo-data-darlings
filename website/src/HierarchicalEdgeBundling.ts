@@ -533,6 +533,12 @@ export class HierarchicalEdgeBundling {
      * @returns {void}
      */
     zoomed(event: any): void {
+        // Restrict zooming for Firefox as it has a bug with d3 zooming and fullpage.js
+        const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        if (isFirefox) {
+            return; // Avoid zooming
+        }
+
         const newTransform: any = d3.zoomIdentity
             .translate(event.transform.x, event.transform.y)
             .scale(event.transform.k)
