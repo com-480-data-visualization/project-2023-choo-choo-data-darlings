@@ -1,6 +1,12 @@
 const SCROLL_DURATION = 1000;
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Go back to top of the page
+  const titleContainer = document.getElementById("title-container");
+  if (titleContainer) {
+    smoothScrollTo(titleContainer, 0);
+  }
+
   let startY: any;  // Variable to store Y position at touchstart
   // In scroll-buttons, add a listener when ckick on a button, scroll to the corresponding section
   const scrollButtons = document.getElementById("scroll-buttons");
@@ -122,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (scrollButtons) {
     scrollButtons.addEventListener("click", (event) => {
       // Only do something if the clicked element is an element of type li
-      if (event.target.tagName !== "LI") return;
+      if (event.target instanceof Element && event.target.tagName !== "LI") return;
 
       // Remove "current" class from lastSelectedButton
       if (lastSelectedButton) {
