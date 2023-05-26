@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new HourlyBarPlot();
 
     let map: any = null;
+    let network: any = null;
 
     // Fullpage.js
     const sectionsLocked = [
@@ -78,9 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Network loading
-            if (destination.index === 5) {
+            if (network == null && destination.index === 5) {
+                network = new GraphManager();
                 setTimeout(() => {
-                    const graphManager = new GraphManager();
                     graphManager.load();
                 }, SCROLL_DURATION);
             }
