@@ -9,9 +9,9 @@
   --dark-green: #0F1D18;
   --black: #000000;
   --small-font-size: 0.8rem;
-  --default-font-size: 1.2rem;
-  --medium-font-size: 1.4rem;
-  --large-font-size: 4.0rem;
+  --default-font-size: 1rem;
+  --medium-font-size: 1.2rem;
+  --large-font-size: 3.0rem;
 }
 
 .section {
