@@ -230,11 +230,59 @@ export class HomePageTable {
   constructor() {
     this.loadData().then(() => {
       this.initTable();
+      this.initPagination();
       this.sortedTable(); //sort values depending on attribute
       this.updateTable(); //hover and click behaviours
       //this.plot = new TablePlot(); // link bar plot
       this.plot = new TablePlot(); //link bar plot
     });
+  }
+
+  private initPagination(): void {
+    const tableContainer = document.getElementById(TABLE_ELEMENT_ID);
+    const paginationContainer = document.getElementById("pagination-container");
+  
+    const itemsPerPage = 25; // Number of items to display per page
+  
+    const pageCount = Math.ceil(this.data.length / itemsPerPage);
+    const pagination = Array.from({ length: pageCount }).map((_, index) => index + 1);
+  
+    paginationContainer.innerHTML = "";
+  
+    pagination.forEach((pageNum) => {
+      const pageButton = document.createElement("button");
+      pageButton.innerText = pageNum.toString();
+  
+      pageButton.addEventListener("click", () => {
+        this.renderTablePage(pageNum, itemsPerPage);
+      });
+  
+      paginationContainer.appendChild(pageButton);
+    });
+  
+    this.renderTablePage(1, itemsPerPage); // Render the first page
+  }
+
+  private renderTablePage(pageNum, itemsPerPage): void {
+    const startIndex = (pageNum - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageData = this.data.slice(startIndex, endIndex);
+  
+    this.rows = this.table.select("tbody").selectAll("tr")
+      .data(pageData, (d) => d.stop_id.toString());
+  
+    this.rows.exit().remove();
+  
+    const newRows = this.rows.enter().append("tr");
+    newRows.selectAll("td")
+      .data((d) => Object.values(d))
+      .enter()
+      .append("td")
+      .text((d) => d);
+  
+    this.rows = newRows.merge(this.rows);
+  
+    this.updateTable();
   }
 
   private async loadData(): Promise<void> {
