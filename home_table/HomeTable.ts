@@ -217,6 +217,26 @@ private async loadData(clickedAttribute: any): Promise<void> {
       });
     });
   }
+
+  private createHorizontalLine(clickedCell: number): void {
+    // Remove existing lines
+    this.svg.selectAll(".vertical-line").remove();
+    console.log(clickedCell)
+
+    //Add a horizontal line
+    this.svg.append("line")
+      .attr("class", "vertical-line")
+      .attr("y1", 0)
+      .attr("x1", this.xScale(clickedCell))
+      .attr("y2", height)
+      .attr("x2", this.xScale(clickedCell))
+      .attr("stroke", "red")
+      .attr("stroke-width", 2);
+  }
+
+
+
+
 }
 
 
@@ -394,8 +414,8 @@ export class HomePageTable {
     d3.select(cell).classed("clicked", true);
 
     // Update the plot
-    //this.plot.updatePlot(columnData, attribute, this.data[0][attribute]);
     this.plot.updatePlot(attribute)
+    this.plot.createHorizontalLine(cell)
 }
 
   private updateTable(): void {
