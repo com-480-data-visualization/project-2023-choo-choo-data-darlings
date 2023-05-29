@@ -398,7 +398,7 @@ export class HomePageTable {
     });
 
     // Add a button that goes back 10 pages if it is not present
-    if (startPage > this.maxVisibleButtons) {
+    if (startPage >= 2) {
       const previousPageButton = document.createElement("button");
       previousPageButton.innerText = "<";
       previousPageButton.addEventListener("click", () => {
@@ -616,6 +616,10 @@ export class HomePageTable {
     // respond to clicks on header
     headerRow.selectAll('th')
       .on('click', function (d) {
+        console.log(d.target.innerHTML);
+        // Remove the ▲ or ▼ symbol from the previously clicked header
+        headerRow.selectAll('th').html((d) => HEADER_NAME_MAP(d));
+
         const currentSortOrder = d3.select(this).classed('sorted-ascending');
         headerRow.selectAll('th').classed('sorted-ascending', false);
         headerRow.selectAll('th').classed('sorted-descending', false);
@@ -624,6 +628,13 @@ export class HomePageTable {
 
         // Sort the table based on the clicked attribute
         sortTable(REVERSE_HEADER_NAME_MAP(d.target.innerHTML), !currentSortOrder);
+
+        // Put the ▲ or ▼ symbol next to the clicked header based on the sort order
+        if (currentSortOrder) {
+          d.target.innerHTML = `${HEADER_NAME_MAP(d.target.innerHTML)} ▲`;
+        } else {
+          d.target.innerHTML = `${HEADER_NAME_MAP(d.target.innerHTML)} ▼`;
+        }
       });
   }
 
@@ -635,7 +646,7 @@ export class HomePageTable {
 
     // Unhighlight the previously clicked cell
     this.lastClickedCell?.classList.remove("clicked");
-    
+
     // Store the clicked cell
     this.lastClickedCell = cell;
 
@@ -675,10 +686,10 @@ export class HomePageTable {
 
         // Get header (th) element corresponding to the clicked cell
         const headerRow = d3.select(`#${TABLE_ELEMENT_ID}`).select('thead tr').node() as HTMLElement;
-        const clickedHeader =headerRow.children[cellIndex];
+        const clickedHeader = headerRow.children[cellIndex];
 
         // Get the HTML content of the header cell
-        const clickedAttribute =  REVERSE_HEADER_NAME_MAP(clickedHeader.innerHTML);
+        const clickedAttribute = REVERSE_HEADER_NAME_MAP(clickedHeader.innerHTML);
 
         //console.log(clickedCell, clickedAttribute);
 
