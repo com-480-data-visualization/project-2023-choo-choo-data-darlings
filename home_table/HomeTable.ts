@@ -257,11 +257,15 @@ export class HomePageTable {
   private data: StopData[];
   private table: d3.Selection<HTMLTableElement, unknown, HTMLElement, any>;
   private plot: TablePlot;
+  private ranks: number[];
 
   private rows: any;
 
   private currentPageNumber: number = 1;
   private itemsPerPage: number = 25;
+
+  private maxVisibleButtons: number = 5; // Maximum number of visible buttons
+
 
   constructor() {
     this.loadData().then(() => {
@@ -283,7 +287,17 @@ export class HomePageTable {
   
     paginationContainer.innerHTML = "";
   
-    pagination.forEach((pageNum) => {
+    const maxVisibleButtons = 5; // Define the maximum number of visible buttons
+    const currentButtonIndex = this.currentPageNumber - 1;
+  
+    let startPage = Math.max(currentButtonIndex - Math.floor(maxVisibleButtons / 2), 0);
+    let endPage = Math.min(startPage + maxVisibleButtons, pageCount);
+  
+    if (endPage - startPage < maxVisibleButtons) {
+      startPage = Math.max(endPage - maxVisibleButtons, 0);
+    }
+  
+    pagination.slice(startPage, endPage + 1).forEach((pageNum) => { // Increment endPage by 1
       const pageButton = document.createElement("button");
       pageButton.innerText = pageNum.toString();
   
@@ -304,6 +318,10 @@ export class HomePageTable {
     const startIndex = (pageNum - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     const pageData = this.data.slice(startIndex, endIndex);
+
+    // update the ranks based on the current page data
+    this.ranks = Array.from({ length: pageData.length }, (_, index) => startIndex + index + 1);
+
   
     this.rows = this.table.select("tbody").selectAll("tr")
       .data(pageData, (d) => d.stop_id.toString());
@@ -351,6 +369,9 @@ export class HomePageTable {
     // table header row
     const headerRow = thead.append('tr');
 
+    // Add the rank column header
+    headerRow.append('th').text('Rank');
+
     // attributes from the first entry in table_df.json
     const attributes = Object.keys(this.data[0]);
 
@@ -366,6 +387,9 @@ export class HomePageTable {
       .data(this.data)
       .enter()
       .append('tr');
+
+    // Add the rank column cells
+    //this.rows.append('tr').text((_, i) => this.ranks[i]);
 
     // create table cells and fill them up with the data
     this.rows.selectAll('td')
@@ -454,5 +478,8 @@ export class HomePageTable {
 
         self.handleCellClick(clickedCell, clickedAttribute);
       });
+
+    // Update the rank column cells
+    //this.rows.select('td').text((_, i) => this.ranks[i]);
   }
 }
