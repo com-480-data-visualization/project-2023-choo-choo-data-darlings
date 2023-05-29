@@ -302,6 +302,8 @@ export class HomePageTable {
 
   private colorScale: d3.ScaleSequential<string>;
 
+  private lastClickedCell: HTMLElement;
+
   constructor() {
     this.loadData().then(() => {
       // Get the number of data points
@@ -631,6 +633,12 @@ export class HomePageTable {
     // Highlight the clicked cell
     d3.select(cell).classed("clicked", true);
 
+    // Unhighlight the previously clicked cell
+    this.lastClickedCell?.classList.remove("clicked");
+    
+    // Store the clicked cell
+    this.lastClickedCell = cell;
+
     // Update the plot
     this.plot.updatePlot(attribute, cell);
   }
@@ -641,8 +649,10 @@ export class HomePageTable {
       //d3.select(this).classed('hovered', true);
       // Get the old background color
       const oldColor = d3.select(this).style('background-color');
+      // Make the oldColor lighter
+      const lighterColor = d3.color(oldColor)?.brighter(0.5).toString();
       d3.select(this)
-        .style('background-color', '#F2F2F2')
+        .style('background-color', lighterColor)
         .attr('old-color', oldColor);
     }).on('mouseout', function () {
       //d3.select(this).classed('hovered', false);

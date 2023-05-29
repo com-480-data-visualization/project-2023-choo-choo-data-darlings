@@ -58,3 +58,50 @@ table {
     /* Set the default font family */
     font-family: var(--default-font-family);
 }
+
+#pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  #pagination-container > button {
+    background-color: var(--green);
+    color: var(--off-white);
+    font-size: var(--medium-font-size);
+    padding: 15px;
+    margin: 0 0.1%;
+    border-radius: 10px;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    border-color: var(--dark-green);
+    cursor: pointer;
+  }
+  
+  #pagination-container > button:hover {
+    background-color: var(--dark-green);
+    transition: 0.2s;
+  }
+  
+  #pagination-container > button:active {
+    background-color: var(--dark-green);
+    color: var(--off-white);
+    font-size: var(--medium-font-size);
+    padding: 15px;
+    margin: 0 0.1%;
+  }
+  
+  #pagination-container > button.pushed {
+    background-color: var(--dark-green);
+    color: var(--off-white);
+    font-size: var(--medium-font-size);
+    border: solid transparent;
+    border-width: 0;
+    padding: 15px;
+    margin: 0 0.1%;
+  }
+  
