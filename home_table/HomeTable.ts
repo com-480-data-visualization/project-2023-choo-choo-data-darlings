@@ -141,19 +141,21 @@ export class TablePlot {
     });
   }
 
-  private createLine(): d3.Line<{ bins: number }> {
-    return d3
-      .line<{ bins: number }>()
-      .x((d) => this.xScale(d.bins))
-      .y((d) => this.yScale(d.hist_values));
-  }
-
   private createBars(): void {
     // Convert bins and hist_values into an array of objects
-    const data = this.data.bins.map((bin, i) => ({
-      bins: bin,
-      hist_values: this.data.hist_values[i]
-    }));
+    // There are 101 bin values and 100 hist_values
+    const data = this.data.bins.map((bin, i) => {
+      if (this.data.hist_values[i] === undefined) {
+        return {
+          bins: bin,
+          hist_values: 0
+        }
+      }
+      return {
+        bins: bin,
+        hist_values: this.data.hist_values[i]
+      }
+    });
 
     // Create the bar generator function
     this.barGroup = this.svg.append('g')
@@ -167,7 +169,12 @@ export class TablePlot {
       .attr("x", (d) => this.xScale(d.bins))
       .attr("y", (d) => this.yScale(d.hist_values + 0.0001))
       .attr("width", width / this.data.num_bins)
-      .attr("height", (d) => this.yScale.range()[0] - this.yScale(d.hist_values + 0.0001))
+      .attr("height", (d) => {
+        if (d.hist_values === 0) {
+          return 0
+        }
+        return this.yScale.range()[0] - this.yScale(d.hist_values + 0.0001)
+      })
       .attr("fill", "#00A59B");
   }
 
@@ -186,7 +193,6 @@ export class TablePlot {
 
   private initPlot(): void {
     this.loadData(DEFAULT_COLUMN).then(() => {
-      this.createLine();
       this.createBars();
       this.createAxes();
     });
@@ -205,10 +211,18 @@ export class TablePlot {
         }
 
         // Convert bins and hist_values into an array of objects
-        const data = this.data.bins.map((bin, i) => ({
-          bins: bin,
-          hist_values: this.data.hist_values[i]
-        }));
+        const data = this.data.bins.map((bin, i) => {
+          if (this.data.hist_values[i] === undefined) {
+            return {
+              bins: bin,
+              hist_values: 0
+            }
+          }
+          return {
+            bins: bin,
+            hist_values: this.data.hist_values[i]
+          }
+        });
 
         // Update the bars
         if (!this.barGroup) {
@@ -281,7 +295,8 @@ export class TablePlot {
     const newX = this.xScale(clickedCell.__data__);
 
     // Transition line to new position
-    line.transition()
+    line
+      .transition()
       .duration(1000) // 1000 ms transition duration
       .attr("x1", newX)
       .attr("x2", newX);
@@ -312,7 +327,10 @@ export class HomePageTable {
 
       // Create a segmented color scale from green to red
       this.colorScale = d3
-        .scaleSequential(d3.interpolateRdYlGn)
+        .scaleSequential(d3.scaleLinear<string>()
+        .domain([0, 0.25, 0.5, 0.75, 1])  // setting the domain of our color scale
+        .range(["darkred", "red", "orange", "yellow", "green"])  // setting the color range of our scale
+        .interpolate(d3.interpolateRgb))
         .domain([nDataPoints, 1]);
 
       this.initTable();
@@ -355,24 +373,49 @@ export class HomePageTable {
       paginationContainer.appendChild(pageButton);
     });
 
-    // Add a button that goes forward 10 pages if it is not present
-    const nextPageButton = document.createElement("button");
-    nextPageButton.innerText = ">";
-    nextPageButton.addEventListener("click", () => {
-      this.updateButtons(endPage + 1, pageCount, pagination, paginationContainer);
-      this.renderTablePage(endPage + 1);
-    });
-    paginationContainer.appendChild(nextPageButton);
+    // Add a button that goes back 10 pages if it is not present
+    if (startPage >= 2) {
+      const previousPageButton = document.createElement("button");
+      previousPageButton.innerText = "<";
+      previousPageButton.addEventListener("click", () => {
+        this.updateButtons(startPage - this.maxVisibleButtons, pageCount, pagination, paginationContainer);
+        this.renderTablePage(startPage - this.maxVisibleButtons);
+      });
+      paginationContainer.prepend(previousPageButton);
+    }
+    // Add the first button if it is not present
+    if (startPage > 0) {
+      const firstPageButton = document.createElement("button");
+      firstPageButton.innerText = "<<";
+      firstPageButton.addEventListener("click", () => {
+        this.updateButtons(1, pageCount, pagination, paginationContainer);
+        this.renderTablePage(1);
+      });
+      paginationContainer.prepend(firstPageButton);
+    }
 
+    // Add a button that goes forward 10 pages if it is not present
+    if (endPage < pageCount - this.maxVisibleButtons) {
+      const nextPageButton = document.createElement("button");
+      nextPageButton.innerText = ">";
+      nextPageButton.addEventListener("click", () => {
+        this.updateButtons(endPage + 1, pageCount, pagination, paginationContainer);
+        this.renderTablePage(endPage + 1);
+      });
+      paginationContainer.appendChild(nextPageButton);
+    }
 
     // Add the last button to go to the last page
-    const lastPageButton = document.createElement("button");
-    lastPageButton.innerText = ">>";
-    lastPageButton.addEventListener("click", () => {
-      this.updateButtons(pageCount, pageCount, pagination, paginationContainer);
-      this.renderTablePage(pageCount);
-    });
-    paginationContainer.appendChild(lastPageButton);
+    if (endPage < pageCount) {
+      // Add the last button to go to the last page
+      const lastPageButton = document.createElement("button");
+      lastPageButton.innerText = ">>";
+      lastPageButton.addEventListener("click", () => {
+        this.updateButtons(pageCount, pageCount, pagination, paginationContainer);
+        this.renderTablePage(pageCount);
+      });
+      paginationContainer.appendChild(lastPageButton);
+    }
 
     this.renderTablePage(this.currentPageNumber); // Render the first page
   }
@@ -486,8 +529,10 @@ export class HomePageTable {
       });
     this.rows = newRows.merge(this.rows);
 
-    // Add colors to the rows based on the rank
-    this.rows.style('background-color', (d) => this.colorScale(d.rank));
+    // Add colors to the rows based on the rank only to the first elmenet of the row
+    this.rows
+      .select('td')
+      .style('background-color', (d) => this.colorScale(d.rank));
 
     this.updateTable();
   }
@@ -554,7 +599,7 @@ export class HomePageTable {
       .data(attributes)
       .enter()
       .append('th')
-      .text((d) => HEADER_NAME_MAP(d));
+      .html((d) => `<span><label>${HEADER_NAME_MAP(d)}</label> <i class="fas fa-sort"></i></span>`);
 
     // Update the data to include the ranks
     this.data = this.data.map((d, i) => ({ ...d, rank: i + 1 }));
@@ -592,7 +637,9 @@ export class HomePageTable {
       });
 
     // Add colors to the rows based on the rank
-    this.rows.style('background-color', (d) => this.colorScale(d.rank));
+    this.rows
+      .select('td')
+      .style('background-color', (d) => this.colorScale(d.rank));
   }
 
   // sorter function
@@ -626,13 +673,13 @@ export class HomePageTable {
     // respond to clicks on header
     headerRow.selectAll('th')
       .on('click', function (d) {
+        // Get the label only
+        const label = d3.select(this).select('label').node().innerHTML;
+
         // If the table is Rank, then return
         if (d.target.innerHTML === 'Rank') {
           return;
         }
-        console.log(d.target.innerHTML);
-        // Remove the ▲ or ▼ symbol from the previously clicked header
-        headerRow.selectAll('th').html((d) => HEADER_NAME_MAP(d));
 
         const currentSortOrder = d3.select(this).classed('sorted-ascending');
         headerRow.selectAll('th').classed('sorted-ascending', false);
@@ -641,13 +688,18 @@ export class HomePageTable {
         d3.select(this).classed('sorted-descending', currentSortOrder);
 
         // Sort the table based on the clicked attribute
-        that.sortTable(REVERSE_HEADER_NAME_MAP(d.target.innerHTML), !currentSortOrder);
+        that.sortTable(REVERSE_HEADER_NAME_MAP(label), !currentSortOrder);
+
+        // Reset the i elements of all cells to sort
+        headerRow.selectAll('th i').attr('class', 'fas fa-sort');
 
         // Put the ▲ or ▼ symbol next to the clicked header based on the sort order
         if (currentSortOrder) {
-          d.target.innerHTML = `${HEADER_NAME_MAP(d.target.innerHTML)} ▼`;
+          // Change the class of the i element to sort-down
+          d3.select(this).select('i').attr('class', 'fas fa-sort-down');
         } else {
-          d.target.innerHTML = `${HEADER_NAME_MAP(d.target.innerHTML)} ▲`;
+          // Change the class of the i element to sort-up
+          d3.select(this).select('i').attr('class', 'fas fa-sort-up');
         }
       });
   }
@@ -702,13 +754,8 @@ export class HomePageTable {
         const headerRow = d3.select(`#${TABLE_ELEMENT_ID}`).select('thead tr').node() as HTMLElement;
         const clickedHeader = headerRow.children[cellIndex];
 
-        let clickedAttribute = clickedHeader.innerHTML;
-        // Remove the ▲ or ▼ symbol from the clicked header
-        if (clickedAttribute.includes("▲")) {
-          clickedAttribute = clickedAttribute.replace(" ▲", "");
-        } else if (clickedAttribute.includes("▼")) {
-          clickedAttribute = clickedAttribute.replace(" ▼", "");
-        }
+        // Get the clicked attribute that is the label of the clicked header
+        let clickedAttribute = clickedHeader.querySelector('label').innerHTML;
 
         // Get the HTML content of the header cell
         clickedAttribute = REVERSE_HEADER_NAME_MAP(clickedAttribute);

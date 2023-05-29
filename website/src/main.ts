@@ -1,9 +1,10 @@
 //@ts-nocheck
 import { CirclePacking } from './CirclePacking.ts';
 import { HierarchicalEdgeBundling } from './HierarchicalEdgeBundling.ts';
+import { HomePageTable } from './HomeTable.ts';
 import { HourlyBarPlot } from './HourlyBarPlot.ts';
-import { GraphManager } from './network.ts';
 import { Map } from './map.ts';
+import { GraphManager } from './network.ts';
 
 import fullpage from 'fullpage.js';
 import 'fullpage.js/dist/fullpage.css';
@@ -12,6 +13,7 @@ const SCROLL_DURATION = 1000;
 
 document.addEventListener("DOMContentLoaded", () => {
     new CirclePacking();
+    new HomePageTable();
     new HierarchicalEdgeBundling();
     new HourlyBarPlot();
 

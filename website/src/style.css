@@ -750,3 +750,93 @@ select {
   border-radius: 5px;
   padding: 3px;
 }
+
+/* Style of table and histogram */
+.selected-row {
+  background-color: #ff0000;
+}
+
+.hovered {
+  background-color: #7300ff;
+}
+
+.clicked {
+  background-color: purple;
+}
+
+.highlighted {
+  fill: orange;
+}
+
+/* Make cells have a border */
+td {
+  border: 1px solid black;
+  /* Center the text horizontally */
+  text-align: center;
+  /* Center the text vertically */
+  vertical-align: middle;
+
+  /* Make the text thicker */
+  font-weight: 600;
+}
+
+/* Make the borders of the cells overlap */
+table {
+  border-collapse: collapse;
+
+  /* Set the default font family */
+  font-family: var(--default-font-family);
+
+  font-size: var(--small-font-size);
+}
+
+#pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#pagination-container > button {
+  background-color: var(--green);
+  color: var(--off-white);
+  font-size: var(--default-font-size);
+  padding: 15px;
+  margin: 0 0.1%;
+  border-radius: 10px;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  border-color: var(--dark-green);
+  cursor: pointer;
+}
+
+#pagination-container > button:hover {
+  background-color: var(--dark-green);
+  transition: 0.2s;
+}
+
+#pagination-container > button:active {
+  background-color: var(--dark-green);
+  color: var(--off-white);
+  font-size: var(--default-font-size);
+  padding: 15px;
+  margin: 0 0.1%;
+}
+
+#pagination-container > button.pushed {
+  background-color: var(--dark-green);
+  color: var(--off-white);
+  font-size: var(--default-font-size);
+  border: solid transparent;
+  border-width: 0;
+  padding: 15px;
+  margin: 0 0.1%;
+}
+
+.mean_arrival_delay, .mean_departure_delay, .n_arrival_delay, .n_departure_delay, .n_cancelled {
+  /* Set the witdh of the column */
+  width: 70px;
+}
