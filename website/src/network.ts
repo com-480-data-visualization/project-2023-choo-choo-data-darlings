@@ -268,12 +268,15 @@ export class GraphManager {
     }
 
     this.loadData().then(graph => {
-      // Define graph
       this.graph = graph;
       this.renderer = new Sigma(
         this.graph, 
-        document.getElementById(GRAPH_CONTAINER_ID),
+        document.getElementById(GRAPH_CONTAINER_ID)
       );
+      this.renderer.settings.labelColor.color = '#FB9E82';
+      this.renderer.refresh();
+
+      console.log(this.renderer);
 
       // Fill out the search suggestions
       this.searchManager.setSearchSuggestions();
