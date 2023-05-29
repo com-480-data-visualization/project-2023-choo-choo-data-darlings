@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { csvParseRows } from 'd3-dsv';
 import Graph from 'graphology';
 import Sigma from 'sigma';
@@ -26,7 +27,7 @@ const MIN_NODE_SIZE = 1;
 const MAX_NODE_SIZE = 10;
 const DEFAULT_NODE_COLOR_MODE = 'fixed';
 const DEFAULT_NODE_COLOR_TRANSITION_DURATION = 1_000;
-const DEFAULT_NODE_COLOR = '#dddddd';
+const DEFAULT_NODE_COLOR = '#0f1d18';
 const DEGREE_NODE_COLOR = '#db3927';
 const BETWEENESS_CENTRALITY_NODE_COLOR = '#8d2eb2';
 const SEARCH_SELECTED_NODE_COLOR = '#f7b500';
@@ -35,13 +36,13 @@ const DEFAULT_SEARCH_BY = 'label';
 
 const DEFAULT_EDGE_SCALING = 50_000;
 const DEFAULT_EDGE_OPACITY = 0.5;
-const DEFAULT_EDGE_COLOR = 'rgba(125, 125, 125, ' + DEFAULT_EDGE_OPACITY + ')';
+const DEFAULT_EDGE_COLOR = 'rgba(46, 93, 82, ' + DEFAULT_EDGE_OPACITY + ')';
 
 const SEARCH_ZOOM_RATIO = 0.05;
 
 const NETWORK_SOURCE = 'transports';
-const NODES_FILE_PATH = `./data/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
-const EDGES_FILE_PATH = `./data/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
+const NODES_FILE_PATH = `../../data/network/networks/${NETWORK_SOURCE}/web_data/network_nodes.csv`;
+const EDGES_FILE_PATH = `../../data/network/networks/${NETWORK_SOURCE}/web_data/network_edges.csv`;
 
 class GraphManager {
   constructor() {

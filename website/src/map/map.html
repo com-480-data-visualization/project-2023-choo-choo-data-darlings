@@ -8,29 +8,26 @@
 
 <body>
   <div id="container">
+    <div id="map" style="width:1071px; height:643px;"></div>
     <script type="module" src="./map.ts"></script>
 
-    <select id="select_heatmap">
-      <option value="" selected>None</option>
-      <option value="all">All</option>
-      <option value="bus">Bus</option>
-      <option value="tram">Tram</option>
-      <option value="train">Train</option>
-      <option value="metro">Metro</option>
-      <option value="rack_railway">Rack Railway</option>
-      <option value="boat">Boat</option>
-    </select>
+    <div id="show-trains">
+      <input type="checkbox" id="checkbox-show-trains" name="checkbox-show-trains" checked>
+      <label for="checkbox-show-trains">Show trains</label>
+    </div>
 
-    <select id="select_train_color_mode">
+    <select id="select-train-color-mode">
       <option value="uniform" selected>Uniform</option>
       <option value="delay">Delay</option>
       <option value="speed">Speed</option>
     </select>
 
-    <div id="slider_simulation_speed">
-      <label id="slider_simulation_speed_label" for="simulation_speed">speed</label>
-      <input type="range" id="simulation_speed" name="simulation_speed" min="0" max="240" step="1" value="60">
+    <div id="slider-simulation-speed">
+      <label id="slider-simulation-speed-label" for="simulation-speed">speed</label>
+      <input type="range" id="simulation-speed" name="simulation-speed" min="0" max="240" step="1" value="60">
     </div>
+
+    <select id="select-iso"></select>
   </div>
 </body>
 

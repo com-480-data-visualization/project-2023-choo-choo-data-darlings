@@ -23,25 +23,39 @@ body {
   background: #000;
 }
 
-#select_heatmap {
-  right: 10px;
-  top: 35px;
+#map {
   position: absolute;
+}
+
+#show-trains {
+  position: absolute;
+  top: 35px;
+  right: 10px;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   z-index: 9999;
 }
 
-#select_train_color_mode {
+#select-train-color-mode {
+  position: absolute;
   right: 10px;
   top: 60px;
-  position: absolute;
   z-index: 9999;
 }
 
-#slider_simulation_speed {
+#slider-simulation-speed {
   position: fixed;
   top: 10px;
   right: 10px;
-  z-index: 9999;
   color: white;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  z-index: 9999;
+}
+
+#select-iso {
+  position: absolute;
+  top: 85px;
+  right: 10px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  z-index: 9999;
 }

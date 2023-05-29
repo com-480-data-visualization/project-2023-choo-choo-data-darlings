@@ -14,5 +14,4 @@ spark/dv_project/target/scala-2.11/classes/*
 **/node_modules/*
 package-lock.json
 package.json
-**/public/*
 tsconfig.json
