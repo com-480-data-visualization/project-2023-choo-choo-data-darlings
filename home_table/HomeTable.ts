@@ -497,6 +497,9 @@ export class HomePageTable {
         delete d.median_departure_delay;
         delete d.std_arrival_delay;
         delete d.std_departure_delay;
+        delete d.n_through_trip;
+        delete d.n_additional_trip;
+        delete d.n_entries;
       });
 
       this.data = data;
@@ -595,6 +598,8 @@ export class HomePageTable {
         }
       });
 
+      console.log(this.data);
+
       // Update the data to include the ranks
       this.data = this.data.map((d, i) => ({ ...d, rank: i + 1 }));
 
@@ -633,9 +638,18 @@ export class HomePageTable {
   private updateTable(): void {
     // hover 
     this.rows.on('mouseover', function () {
-      d3.select(this).classed('hovered', true);
+      //d3.select(this).classed('hovered', true);
+      // Get the old background color
+      const oldColor = d3.select(this).style('background-color');
+      d3.select(this)
+        .style('background-color', '#F2F2F2')
+        .attr('old-color', oldColor);
     }).on('mouseout', function () {
-      d3.select(this).classed('hovered', false);
+      //d3.select(this).classed('hovered', false);
+      // Get the old background color
+      const oldColor = d3.select(this).attr('old-color');
+
+      d3.select(this).style('background-color', (d) => oldColor);
     });
 
     // click

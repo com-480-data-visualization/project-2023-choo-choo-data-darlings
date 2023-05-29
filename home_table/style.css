@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&display=swap');
+
+:root {
+    --default-font-family: 'Nunito', sans-serif;
+    --off-white: #FAF4DD;
+    --white: #FFFFFF;
+    --pink: #FB9E82;
+    --green: #2E5D52;
+    --dark-green: #0F1D18;
+    --black: #000000;
+    --small-font-size: 0.8rem;
+    --default-font-size: 1rem;
+    --medium-font-size: 1.2rem;
+    --large-font-size: 3.0rem;
+  }
+
 .selected-row {
     background-color: #ff0000;
 }
@@ -30,9 +46,15 @@ td {
     text-align: center;
     /* Center the text vertically */
     vertical-align: middle;
+
+    /* Make the text thicker */
+    font-weight: 600;
 }
 
 /* Make the borders of the cells overlap */
 table {
     border-collapse: collapse;
+
+    /* Set the default font family */
+    font-family: var(--default-font-family);
 }
