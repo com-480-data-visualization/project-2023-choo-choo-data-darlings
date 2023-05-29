@@ -55,7 +55,7 @@ export class TablePlot {
         this.initStaticElements();
 
         this.clickedAttribute = DEFAULT_COLUMN
-        this.updatePlot(this.clickedAttribute)
+        this.updatePlot(this.clickedAttribute, null)
         this.initPlot()
   }
 
@@ -65,7 +65,7 @@ export class TablePlot {
     //this.xScale = d3
     //    .scaleLinear()
     //    .range([0, this.width]);
-    console.log("Data:", this.data);
+    //console.log("Data:", this.data);
 
     this.xScale = d3
         .scaleLinear()
@@ -156,12 +156,17 @@ private async loadData(clickedAttribute: any): Promise<void> {
     });
   }
 
-  private async updatePlot(clickedAttribute: string): Promise<void> {
+  private async updatePlot(clickedAttribute: string, cell: HTMLElement): Promise<void> {
     return new Promise((resolve, reject) => {
         this.loadData(clickedAttribute).then(() => {
           // Parse data and update scales 
           /// TO IMPLEMENT THIS
           this.initData()
+
+          // Create the line
+          if (cell) {
+            this.createHorizontalLine(cell);
+          }
 
           // Convert bins and hist_values into an array of objects
           const data = this.data.bins.map((bin, i) => ({
@@ -170,6 +175,10 @@ private async loadData(clickedAttribute: any): Promise<void> {
           }));
 
           // Update the bars
+          if (!this.barGroup) {
+            this.barGroup = this.svg.append('g')
+              .attr('class', 'bar-group');
+          }
           this.bars = this.barGroup.selectAll(".bar")
               .data(data);
   
@@ -218,25 +227,29 @@ private async loadData(clickedAttribute: any): Promise<void> {
     });
   }
 
-  private createHorizontalLine(clickedCell: number): void {
-    // Remove existing lines
-    this.svg.selectAll(".vertical-line").remove();
-    console.log(clickedCell)
+  private createHorizontalLine(clickedCell: HTMLElement): void {
+    // Select the existing line, if it exists
+    let line = this.svg.select(".vertical-line");
 
-    //Add a horizontal line
-    this.svg.append("line")
-      .attr("class", "vertical-line")
-      .attr("y1", 0)
-      .attr("x1", this.xScale(clickedCell))
-      .attr("y2", height)
-      .attr("x2", this.xScale(clickedCell))
-      .attr("stroke", "red")
-      .attr("stroke-width", 2);
+    // If no line exists, create one
+    if (line.empty()) {
+      line = this.svg.append("line")
+        .attr("class", "vertical-line")
+        .attr("y1", 0)
+        .attr("y2", height)
+        .attr("stroke", "red")
+        .attr("stroke-width", 2);
+    }
+
+    // Calculate new x position
+    const newX = this.xScale(clickedCell.__data__);
+
+    // Transition line to new position
+    line.transition()
+      .duration(1000) // 1000 ms transition duration
+      .attr("x1", newX)
+      .attr("x2", newX);
   }
-
-
-
-
 }
 
 
@@ -246,6 +259,9 @@ export class HomePageTable {
   private plot: TablePlot;
 
   private rows: any;
+
+  private currentPageNumber: number = 1;
+  private itemsPerPage: number = 25;
 
   constructor() {
     this.loadData().then(() => {
@@ -262,9 +278,7 @@ export class HomePageTable {
     const tableContainer = document.getElementById(TABLE_ELEMENT_ID);
     const paginationContainer = document.getElementById("pagination-container");
   
-    const itemsPerPage = 25; // Number of items to display per page
-  
-    const pageCount = Math.ceil(this.data.length / itemsPerPage);
+    const pageCount = Math.ceil(this.data.length / this.itemsPerPage);
     const pagination = Array.from({ length: pageCount }).map((_, index) => index + 1);
   
     paginationContainer.innerHTML = "";
@@ -274,18 +288,21 @@ export class HomePageTable {
       pageButton.innerText = pageNum.toString();
   
       pageButton.addEventListener("click", () => {
-        this.renderTablePage(pageNum, itemsPerPage);
+        this.renderTablePage(pageNum);
       });
   
       paginationContainer.appendChild(pageButton);
     });
   
-    this.renderTablePage(1, itemsPerPage); // Render the first page
+    this.renderTablePage(this.currentPageNumber); // Render the first page
   }
 
-  private renderTablePage(pageNum, itemsPerPage): void {
-    const startIndex = (pageNum - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+  private renderTablePage(pageNum): void {
+    // Update the current page number
+    this.currentPageNumber = pageNum;
+
+    const startIndex = (pageNum - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
     const pageData = this.data.slice(startIndex, endIndex);
   
     this.rows = this.table.select("tbody").selectAll("tr")
@@ -363,36 +380,26 @@ export class HomePageTable {
     const table = d3.select('.choo-choo-table-class');
     const headerRow = table.select('thead tr');
     const tbody = table.select('tbody');
-
+  
     // sorter function
     const sortTable = (attribute: string, ascending: boolean) => {
-      const sortedData = this.data.slice().sort((a, b) => {
+      // Sort the data
+      this.data.sort((a, b) => {
         if (ascending) {
           return d3.ascending(a[attribute], b[attribute]);
         } else {
           return d3.descending(a[attribute], b[attribute]);
         }
       });
-
-      // Remove the old rows
-      tbody.selectAll('tr').remove();
-
-      // Add new sorted rows
-      this.rows = tbody.selectAll('tr')
-        .data(sortedData)
-        .enter()
-        .append('tr');
-
-      // Add data to the rows
-      this.rows.selectAll('td')
-        .data((d: any) => Object.values(d))
-        .enter()
-        .append('td')
-        .text((d: any) => d);
-
-      this.updateTable();
+  
+      // Store current page number
+      const currentPageNumber = this.currentPageNumber;
+  
+      // Initialize the table with the first page of sorted data
+      this.initPagination();
+      this.renderTablePage(currentPageNumber);
     };
-
+  
     // respond to clicks on header
     headerRow.selectAll('th')
       .on('click', function (d) {
@@ -401,7 +408,7 @@ export class HomePageTable {
         headerRow.selectAll('th').classed('sorted-descending', false);
         d3.select(this).classed('sorted-ascending', !currentSortOrder);
         d3.select(this).classed('sorted-descending', currentSortOrder);
-
+  
         // Sort the table based on the clicked attribute
         sortTable(d.target.innerHTML, !currentSortOrder);
       });
@@ -414,8 +421,7 @@ export class HomePageTable {
     d3.select(cell).classed("clicked", true);
 
     // Update the plot
-    this.plot.updatePlot(attribute)
-    this.plot.createHorizontalLine(cell)
+    this.plot.updatePlot(attribute, cell);
 }
 
   private updateTable(): void {
@@ -444,7 +450,7 @@ export class HomePageTable {
         // Get the HTML content of the header cell
         const clickedAttribute = clickedHeader.innerHTML;
 
-        console.log(clickedCell, clickedAttribute);
+        //console.log(clickedCell, clickedAttribute);
 
         self.handleCellClick(clickedCell, clickedAttribute);
       });
