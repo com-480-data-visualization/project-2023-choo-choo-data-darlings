@@ -693,7 +693,6 @@ export class HomePageTable {
       .selectAll("td")
       // determine the clicked cell and what attribute it belongs to
       .on("click", function (d) {
-        console.log("Clicked")
         const clickedCell = d3.select(this).node() as HTMLElement;
 
         // Get index of clickedCell within its parent tr
@@ -716,7 +715,6 @@ export class HomePageTable {
 
         //console.log(clickedCell, clickedAttribute);
 
-        console.log("Clicked", clickedAttribute);
         self.handleCellClick(clickedCell, clickedAttribute);
       });
 
