@@ -12,6 +12,40 @@ const DEFAULT_COLUMN = 'n_arrival_delay'
 
 const BAR_WIDTH = 1;
 
+const HEADER_NAME_MAP = (name: String) => {
+  const map = {
+    "stop_name": "Stop Name",
+    "city": "City",
+    "canton": "Canton",
+    "mean_arrival_delay": "Mean Arrival Delay",
+    "mean_departure_delay": "Mean Departure Delay",
+    "n_arrival_delay": "Number of Arrival Delays",
+    "n_departure_delay": "Number of Departure Delays",
+    "n_cancelled": "Number of Cancelled Trips",
+    "n_through_trip": "Number of Through Trips",
+    "n_additional_trip": "Number of Additional Trips",
+    "n_entries": "Number of Entries"
+  }
+  return map[name] ?? name
+};
+
+const REVERSE_HEADER_NAME_MAP = (name: String) => {
+  const map = {
+    "Stop Name": "stop_name",
+    "City": "city",
+    "Canton": "canton",
+    "Mean Arrival Delay": "mean_arrival_delay",
+    "Mean Departure Delay": "mean_departure_delay",
+    "Number of Arrival Delays": "n_arrival_delay",
+    "Number of Departure Delays": "n_departure_delay",
+    "Number of Cancelled Trips": "n_cancelled",
+    "Number of Through Trips": "n_through_trip",
+    "Number of Additional Trips": "n_additional_trip",
+    "Number of Entries": "n_entries"
+  }
+  return map[name] ?? name
+};
+
 // not used anymore but could be
 interface StopData {
   stop_id: number;
@@ -277,7 +311,7 @@ export class HomePageTable {
       this.colorScale = d3
         .scaleSequential(d3.interpolateRdYlGn)
         .domain([nDataPoints, 1]);
-      
+
       this.initTable();
 
       this.initPagination();
@@ -318,6 +352,16 @@ export class HomePageTable {
       paginationContainer.appendChild(pageButton);
     });
 
+    // Add a button that goes forward 10 pages if it is not present
+    const nextPageButton = document.createElement("button");
+    nextPageButton.innerText = ">";
+    nextPageButton.addEventListener("click", () => {
+      this.updateButtons(endPage + 1, pageCount, pagination, paginationContainer);
+      this.renderTablePage(endPage + 1);
+    });
+    paginationContainer.appendChild(nextPageButton);
+
+
     // Add the last button to go to the last page
     const lastPageButton = document.createElement("button");
     lastPageButton.innerText = ">>";
@@ -351,6 +395,16 @@ export class HomePageTable {
       paginationContainer.appendChild(pageButton);
     });
 
+    // Add a button that goes back 10 pages if it is not present
+    if (startPage > this.maxVisibleButtons) {
+      const previousPageButton = document.createElement("button");
+      previousPageButton.innerText = "<";
+      previousPageButton.addEventListener("click", () => {
+        this.updateButtons(startPage - this.maxVisibleButtons, pageCount, pagination, paginationContainer);
+        this.renderTablePage(startPage - this.maxVisibleButtons);
+      });
+      paginationContainer.prepend(previousPageButton);
+    }
     // Add the first button if it is not present
     if (startPage > 0) {
       const firstPageButton = document.createElement("button");
@@ -360,6 +414,17 @@ export class HomePageTable {
         this.renderTablePage(1);
       });
       paginationContainer.prepend(firstPageButton);
+    }
+
+    // Add a button that goes forward 10 pages if it is not present
+    if (endPage < pageCount - this.maxVisibleButtons) {
+      const nextPageButton = document.createElement("button");
+      nextPageButton.innerText = ">";
+      nextPageButton.addEventListener("click", () => {
+        this.updateButtons(endPage + 1, pageCount, pagination, paginationContainer);
+        this.renderTablePage(endPage + 1);
+      });
+      paginationContainer.appendChild(nextPageButton);
     }
 
     // Add the last button if it is not present
@@ -395,31 +460,45 @@ export class HomePageTable {
 
     const newRows = this.rows.enter().append("tr");
     newRows.selectAll("td")
-    .data((d) => {
-      // Remove first element (stop_id) and replace it by last element
-      const values = Object.values(d);
-      values.shift();
+      .data((d) => {
+        // Remove first element (stop_id) and replace it by last element
+        const values = Object.values(d);
+        values.shift();
 
-      // Make the last element the first element
-      const lastElement = values.pop();
-      values.unshift(lastElement);
+        // Make the last element the first element
+        const lastElement = values.pop();
+        values.unshift(lastElement);
 
-      return values;
-    })
+        return values;
+      })
       .enter()
       .append("td")
-      .text((d) => d);
+      .text((d) => {
+        // If the value is a number, round it
+        if (typeof d === "number") {
+          return Math.round(d);
+        }
+        return d;
+      });
     this.rows = newRows.merge(this.rows);
 
     // Add colors to the rows based on the rank
     this.rows.style('background-color', (d) => this.colorScale(d.rank));
-    
+
     this.updateTable();
   }
 
   private async loadData(): Promise<void> {
     try {
       const data = await d3.json(DATA_FILE_NAME);
+      // Remove the attributes: median_arrival_delay	median_departure_delay	std_arrival_delay	std_departure_delay
+      data.forEach((d) => {
+        delete d.median_arrival_delay;
+        delete d.median_departure_delay;
+        delete d.std_arrival_delay;
+        delete d.std_departure_delay;
+      });
+
       this.data = data;
     } catch (error) {
       console.error('Error loading data:', error);
@@ -458,10 +537,10 @@ export class HomePageTable {
       .data(attributes)
       .enter()
       .append('th')
-      .text((d) => d);
+      .text((d) => HEADER_NAME_MAP(d));
 
     // Update the data to include the ranks
-    this.data = this.data.map((d, i) => ({ ...d, rank: i + 1}));
+    this.data = this.data.map((d, i) => ({ ...d, rank: i + 1 }));
 
     // table body rows
     this.rows = tbody.selectAll('tr')
@@ -487,8 +566,14 @@ export class HomePageTable {
       })
       .enter()
       .append('td')
-      .text((d) => d);
-    
+      .text((d) => {
+        // If the value is a number, round it
+        if (typeof d === "number") {
+          return Math.round(d);
+        }
+        return d;
+      });
+
     // Add colors to the rows based on the rank
     this.rows.style('background-color', (d) => this.colorScale(d.rank));
   }
@@ -511,7 +596,7 @@ export class HomePageTable {
       });
 
       // Update the data to include the ranks
-      this.data = this.data.map((d, i) => ({ ...d, rank: i + 1}));
+      this.data = this.data.map((d, i) => ({ ...d, rank: i + 1 }));
 
       // Store current page number
       const currentPageNumber = this.currentPageNumber;
@@ -531,7 +616,7 @@ export class HomePageTable {
         d3.select(this).classed('sorted-descending', currentSortOrder);
 
         // Sort the table based on the clicked attribute
-        sortTable(d.target.innerHTML, !currentSortOrder);
+        sortTable(REVERSE_HEADER_NAME_MAP(d.target.innerHTML), !currentSortOrder);
       });
   }
 
@@ -566,10 +651,10 @@ export class HomePageTable {
 
         // Get header (th) element corresponding to the clicked cell
         const headerRow = d3.select(`#${TABLE_ELEMENT_ID}`).select('thead tr').node() as HTMLElement;
-        const clickedHeader = headerRow.children[cellIndex];
+        const clickedHeader =headerRow.children[cellIndex];
 
         // Get the HTML content of the header cell
-        const clickedAttribute = clickedHeader.innerHTML;
+        const clickedAttribute =  REVERSE_HEADER_NAME_MAP(clickedHeader.innerHTML);
 
         //console.log(clickedCell, clickedAttribute);
 
