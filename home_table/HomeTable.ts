@@ -24,7 +24,8 @@ const HEADER_NAME_MAP = (name: String) => {
     "n_cancelled": "Number of Cancelled Trips",
     "n_through_trip": "Number of Through Trips",
     "n_additional_trip": "Number of Additional Trips",
-    "n_entries": "Number of Entries"
+    "n_entries": "Number of Entries",
+    "stop_id": "Rank",
   }
   return map[name] ?? name
 };
@@ -461,7 +462,8 @@ export class HomePageTable {
     this.rows.exit().remove();
 
     const newRows = this.rows.enter().append("tr");
-    newRows.selectAll("td")
+    newRows
+      .selectAll("td")
       .data((d) => {
         // Remove first element (stop_id) and replace it by last element
         const values = Object.values(d);
@@ -583,36 +585,43 @@ export class HomePageTable {
     this.rows.style('background-color', (d) => this.colorScale(d.rank));
   }
 
+  // sorter function
+  private sortTable(attribute: string, ascending: boolean): void {
+    // Sort the data
+    this.data.sort((a, b) => {
+      if (ascending) {
+        console.log("ascending");
+        return d3.ascending(a[attribute], b[attribute]);
+      } else {
+        console.log("descending")
+        return d3.descending(a[attribute], b[attribute]);
+      }
+    });
+
+    console.log(this.data.length);
+
+    console.log(this.data);
+
+    // Update the data to include the ranks
+    this.data = this.data.map((d, i) => ({ ...d, rank: i + 1 }));
+
+    console.log("uptaded:")
+    console.log(this.data)
+
+    // Store current page number
+    const currentPageNumber = this.currentPageNumber;
+
+    // Initialize the table with the first page of sorted data
+    this.initPagination();
+    this.renderTablePage(currentPageNumber);
+  }
+
   private sortedTable(): void {
     // get table element by its class
     const table = d3.select('.choo-choo-table-class');
     const headerRow = table.select('thead tr');
     const tbody = table.select('tbody');
-
-    // sorter function
-    const sortTable = (attribute: string, ascending: boolean) => {
-      // Sort the data
-      this.data.sort((a, b) => {
-        if (ascending) {
-          return d3.ascending(a[attribute], b[attribute]);
-        } else {
-          return d3.descending(a[attribute], b[attribute]);
-        }
-      });
-
-      console.log(this.data);
-
-      // Update the data to include the ranks
-      this.data = this.data.map((d, i) => ({ ...d, rank: i + 1 }));
-
-      // Store current page number
-      const currentPageNumber = this.currentPageNumber;
-
-      // Initialize the table with the first page of sorted data
-      this.initPagination();
-      this.renderTablePage(currentPageNumber);
-    };
-
+    const that = this;
     // respond to clicks on header
     headerRow.selectAll('th')
       .on('click', function (d) {
@@ -627,7 +636,7 @@ export class HomePageTable {
         d3.select(this).classed('sorted-descending', currentSortOrder);
 
         // Sort the table based on the clicked attribute
-        sortTable(REVERSE_HEADER_NAME_MAP(d.target.innerHTML), !currentSortOrder);
+        that.sortTable(REVERSE_HEADER_NAME_MAP(d.target.innerHTML), !currentSortOrder);
 
         // Put the ▲ or ▼ symbol next to the clicked header based on the sort order
         if (currentSortOrder) {
