@@ -264,7 +264,7 @@ export class HomePageTable {
   private currentPageNumber: number = 1;
   private itemsPerPage: number = 25;
 
-  private maxVisibleButtons: number = 5; // Maximum number of visible buttons
+  private maxVisibleButtons: number = 10; // Maximum number of visible buttons
 
 
   constructor() {
@@ -307,6 +307,15 @@ export class HomePageTable {
   
       paginationContainer.appendChild(pageButton);
     });
+
+    // Add the last button to go to the last page
+    const lastPageButton = document.createElement("button");
+    lastPageButton.innerText = ">>";
+    lastPageButton.addEventListener("click", () => {
+      this.updateButtons(pageCount, pageCount, pagination, paginationContainer);
+      this.renderTablePage(pageCount);
+    });
+    paginationContainer.appendChild(lastPageButton);
   
     this.renderTablePage(this.currentPageNumber); // Render the first page
   }
@@ -331,6 +340,29 @@ export class HomePageTable {
       });
       paginationContainer.appendChild(pageButton);
     });
+
+    // Add the first button if it is not present
+    if (startPage > 0) {
+      const firstPageButton = document.createElement("button");
+      firstPageButton.innerText = "<<";
+      firstPageButton.addEventListener("click", () => {
+        this.updateButtons(1, pageCount, pagination, paginationContainer);
+        this.renderTablePage(1);
+      });
+      paginationContainer.prepend(firstPageButton);
+    }
+
+    // Add the last button if it is not present
+    if (endPage < pageCount) {
+      // Add the last button to go to the last page
+      const lastPageButton = document.createElement("button");
+      lastPageButton.innerText = ">>";
+      lastPageButton.addEventListener("click", () => {
+        this.updateButtons(pageCount, pageCount, pagination, paginationContainer);
+        this.renderTablePage(pageCount);
+      });
+      paginationContainer.appendChild(lastPageButton);
+    }
   }
 
   private renderTablePage(pageNum): void {
