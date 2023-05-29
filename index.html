@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Swiss Transportation System</title>
     
-    <script type="module" crossorigin src="./assets/main-9cc60caa.js"></script>
-    <link rel="stylesheet" href="./assets/index-681c46c6.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <script type="module" crossorigin src="./assets/main-3c06c848.js"></script>
+    <link rel="stylesheet" href="./assets/index-35640bcb.css">
   </head>
   <body>
     <div id="fullpage">
@@ -118,7 +119,7 @@
       <div class="section">
       <div id="p3-container" class="container container-padding off-white-bg">
         <div class="flex-col flex-100">
-          <div class="flex-col flex-50 flex-center verflow-auto">
+          <!-- <div class="flex-col flex-50 flex-center verflow-auto">
             <div class="flex-col text-padding-5">
               <p class="large-text large-font-weight">
                 Stop Insights
@@ -129,9 +130,15 @@
                 Introducing our latest feature - an interactive table that delves deep into the beating heart of Swiss transportation: the stops. This isn't just a table, it's a comprehensive dashboard that brings together key facets of the transport system. Here, you can sort by average delays, the number of trains, or even by the unfortunate but inevitable cancelled trips. When sorting, a responsive histogram magically appears, depicting the distribution of stops based on your selected feature. Witness how delays, train frequencies, and cancellations vary across the landscape of Swiss transportation, offering a unique glimpse into the workings of this complex system.
               </p>
             </div>
-          </div>
-          <div class="flex-col flex-50">
-            <!-- TABLE GOES HERE -->
+          </div> -->
+          <div class="flex-row flex-100">
+            <div class="flex-col flex-20">
+              <div id="table-container"></div>
+              <div id="pagination-container"></div>
+            </div>
+            <div class="flex-col flex-80">
+              <div id="bar-plot"></div>
+            </div>
           </div>
         </div>
       </div>
