@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import './style.css';
 
 const DATA_FOLDER = "./data2";
+const DATA_FILE_NAME = 'table_df.json';
 
 const TABLE_ELEMENT_ID = "table-container";
 const BAR_ELEMENT_ID = "bar-plot";
@@ -252,7 +253,6 @@ private async loadData(clickedAttribute: any): Promise<void> {
   }
 }
 
-
 export class HomePageTable {
   private data: StopData[];
   private table: d3.Selection<HTMLTableElement, unknown, HTMLElement, any>;
@@ -287,14 +287,13 @@ export class HomePageTable {
   
     paginationContainer.innerHTML = "";
   
-    const maxVisibleButtons = 5; // Define the maximum number of visible buttons
     const currentButtonIndex = this.currentPageNumber - 1;
   
-    let startPage = Math.max(currentButtonIndex - Math.floor(maxVisibleButtons / 2), 0);
-    let endPage = Math.min(startPage + maxVisibleButtons, pageCount);
+    let startPage = Math.max(currentButtonIndex - Math.floor(this.maxVisibleButtons / 2), 0);
+    let endPage = Math.min(startPage + this.maxVisibleButtons, pageCount);
   
-    if (endPage - startPage < maxVisibleButtons) {
-      startPage = Math.max(endPage - maxVisibleButtons, 0);
+    if (endPage - startPage < this.maxVisibleButtons) {
+      startPage = Math.max(endPage - this.maxVisibleButtons, 0);
     }
   
     pagination.slice(startPage, endPage + 1).forEach((pageNum) => { // Increment endPage by 1
@@ -302,6 +301,7 @@ export class HomePageTable {
       pageButton.innerText = pageNum.toString();
   
       pageButton.addEventListener("click", () => {
+        this.updateButtons(pageNum, pageCount, pagination, paginationContainer);
         this.renderTablePage(pageNum);
       });
   
@@ -309,6 +309,28 @@ export class HomePageTable {
     });
   
     this.renderTablePage(this.currentPageNumber); // Render the first page
+  }
+
+  private updateButtons(pageNum, pageCount, pagination, paginationContainer): void {
+    // Update the rendered button to inlcude the following 5 buttons
+    let startPage = Math.max(pageNum - Math.floor(this.maxVisibleButtons / 2), 0);
+    let endPage = Math.min(startPage + this.maxVisibleButtons, pageCount);
+
+    if (endPage - startPage < this.maxVisibleButtons) {
+      startPage = Math.max(endPage - this.maxVisibleButtons, 0);
+    }
+
+    paginationContainer.innerHTML = "";
+    pagination.slice(startPage, endPage + 1).forEach((pageNum) => {
+      const pageButton = document.createElement("button");
+      pageButton.innerText = pageNum.toString();
+      
+      pageButton.addEventListener("click", () => {
+        this.updateButtons(pageNum, pageCount, pagination, paginationContainer);
+        this.renderTablePage(pageNum);
+      });
+      paginationContainer.appendChild(pageButton);
+    });
   }
 
   private renderTablePage(pageNum): void {
@@ -342,7 +364,7 @@ export class HomePageTable {
 
   private async loadData(): Promise<void> {
     try {
-      const data = await d3.json('table_sub_df.json');
+      const data = await d3.json(DATA_FILE_NAME);
       this.data = data;
     } catch (error) {
       console.error('Error loading data:', error);

@@ -22,4 +22,13 @@
 .highlighted {
     fill: orange;
 }
-  
+
+/* Make cells have a border */
+td {
+    border: 1px solid black;
+}
+
+/* Make the borders of the cells overlap */
+table {
+    border-collapse: collapse;
+}
