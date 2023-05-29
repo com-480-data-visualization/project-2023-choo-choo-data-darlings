@@ -506,6 +506,16 @@ export class HomePageTable {
         delete d.n_entries;
       });
 
+      // In mean_arrival_delay and mean_departure_delay, replace NaN by 0
+      data.forEach((d) => {
+        if (d.mean_arrival_delay === null) {
+          d.mean_arrival_delay = 0;
+        }
+        if (d.mean_departure_delay === null) {
+          d.mean_departure_delay = 0;
+        }
+      });
+
       this.data = data;
     } catch (error) {
       console.error('Error loading data:', error);
@@ -590,23 +600,14 @@ export class HomePageTable {
     // Sort the data
     this.data.sort((a, b) => {
       if (ascending) {
-        console.log("ascending");
         return d3.ascending(a[attribute], b[attribute]);
       } else {
-        console.log("descending")
         return d3.descending(a[attribute], b[attribute]);
       }
     });
 
-    console.log(this.data.length);
-
-    console.log(this.data);
-
     // Update the data to include the ranks
     this.data = this.data.map((d, i) => ({ ...d, rank: i + 1 }));
-
-    console.log("uptaded:")
-    console.log(this.data)
 
     // Store current page number
     const currentPageNumber = this.currentPageNumber;
@@ -625,6 +626,10 @@ export class HomePageTable {
     // respond to clicks on header
     headerRow.selectAll('th')
       .on('click', function (d) {
+        // If the table is Rank, then return
+        if (d.target.innerHTML === 'Rank') {
+          return;
+        }
         console.log(d.target.innerHTML);
         // Remove the ▲ or ▼ symbol from the previously clicked header
         headerRow.selectAll('th').html((d) => HEADER_NAME_MAP(d));
@@ -640,9 +645,9 @@ export class HomePageTable {
 
         // Put the ▲ or ▼ symbol next to the clicked header based on the sort order
         if (currentSortOrder) {
-          d.target.innerHTML = `${HEADER_NAME_MAP(d.target.innerHTML)} ▲`;
-        } else {
           d.target.innerHTML = `${HEADER_NAME_MAP(d.target.innerHTML)} ▼`;
+        } else {
+          d.target.innerHTML = `${HEADER_NAME_MAP(d.target.innerHTML)} ▲`;
         }
       });
   }
@@ -688,6 +693,7 @@ export class HomePageTable {
       .selectAll("td")
       // determine the clicked cell and what attribute it belongs to
       .on("click", function (d) {
+        console.log("Clicked")
         const clickedCell = d3.select(this).node() as HTMLElement;
 
         // Get index of clickedCell within its parent tr
@@ -697,11 +703,20 @@ export class HomePageTable {
         const headerRow = d3.select(`#${TABLE_ELEMENT_ID}`).select('thead tr').node() as HTMLElement;
         const clickedHeader = headerRow.children[cellIndex];
 
+        let clickedAttribute = clickedHeader.innerHTML;
+        // Remove the ▲ or ▼ symbol from the clicked header
+        if (clickedAttribute.includes("▲")) {
+          clickedAttribute = clickedAttribute.replace(" ▲", "");
+        } else if (clickedAttribute.includes("▼")) {
+          clickedAttribute = clickedAttribute.replace(" ▼", "");
+        }
+
         // Get the HTML content of the header cell
-        const clickedAttribute = REVERSE_HEADER_NAME_MAP(clickedHeader.innerHTML);
+        clickedAttribute = REVERSE_HEADER_NAME_MAP(clickedAttribute);
 
         //console.log(clickedCell, clickedAttribute);
 
+        console.log("Clicked", clickedAttribute);
         self.handleCellClick(clickedCell, clickedAttribute);
       });
 

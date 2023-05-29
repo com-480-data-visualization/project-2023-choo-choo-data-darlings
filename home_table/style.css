@@ -22,15 +22,6 @@
     background-color: #7300ff;
 }
 
-.sorted-ascending {
-    background-color: #00ff00;
-}
-
-.sorted-descending {
-    background-color: #ff00ff;
-}
-
-
 .clicked {
     background-color: purple;
 }
