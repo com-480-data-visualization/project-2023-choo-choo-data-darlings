@@ -18,7 +18,7 @@ The repository contains the following folders:
 - [📁 generated](./generated/): Contains the generated graphs and plots used in the README and milestone reports.
 - [📁 notebooks](./notebooks/): Contains the notebooks used for preprocessing and analysis.
 - [📁 spark](./spark/): Contains the spark scripts used for preprocessing and analysis.
-- [📁 src](./src/): Contains the code used to generate the heatmap and the isochronic map.
+- [📁 src](./src/): Contains the Python code used for the processing pipeline, the isochrnic map and the heatmap.
 - [📁 website](./website/): Contains the code for the website.
 
 
