@@ -13,13 +13,13 @@ This repository contains the source code for our data visualization project, an 
 
 The repository contains the following folders:
 
-- [data/](./data/): Contains the raw data and the processed data.
-- [docs/](./docs/): Contains the process book and the milestone documents.
-- [generated/](./generated/): Contains the generated graphs and plots used in the README and milestone reports.
-- [notebooks/](./notebooks/): Contains the notebooks used for preprocessing and analysis.
-- [spark/](./spark/): Contains the spark scripts used for preprocessing and analysis.
-- [src/](./src/): Contains the code used to generate the heatmap and the isochronic map.
-- [website/](./website/): Contains the code for the website.
+- [📁 data](./data/): Contains the raw data and the processed data.
+- [📁 docs](./docs/): Contains the process book and the milestone documents.
+- [📁 generated](./generated/): Contains the generated graphs and plots used in the README and milestone reports.
+- [📁 notebooks](./notebooks/): Contains the notebooks used for preprocessing and analysis.
+- [📁 spark](./spark/): Contains the spark scripts used for preprocessing and analysis.
+- [📁 src](./src/): Contains the code used to generate the heatmap and the isochronic map.
+- [📁 website](./website/): Contains the code for the website.
 
 
 ## **Contributors**
