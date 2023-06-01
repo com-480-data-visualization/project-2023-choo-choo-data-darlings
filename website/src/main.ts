@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         false,  // title
         false,  // introduction
         true,   // circle packing
+        true,   // table introduction
         true,   // interactive table
         true,   // hierarchical edge bundling
         true,   // network introduction
@@ -70,21 +71,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Map loading, resume and pause
-            if (map === null && destination.index === 8) {
+            if (map === null && destination.index === 9) {
                 setTimeout(() => {
                     map = new Map();
                     map.pauseSimulation();
                 }, SCROLL_DURATION);
             }
 
-            if (map !== null && destination.index === 9){
+            if (map !== null && destination.index === 10){
                 map.resumeSimulation();
-            } else if (map !== null && destination.index !== 9) {
+            } else if (map !== null && destination.index !== 10) {
                 map.pauseSimulation();
             }
 
             // Network loading
-            if (network === null && destination.index === 5) {
+            if (network === null && destination.index === 6) {
                 network = new GraphManager();
                 setTimeout(() => {
                     network.load();
