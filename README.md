@@ -1,5 +1,12 @@
 # **Project of Data Visualization (COM-480)**
 
+## **Description**
+
+## **Website and Video Links**
+
+- Our website can be found [here](https://ozanarda.github.io/COM-480-project/).
+- A video introducing our website can be found [here](https://www.youtube.com/watch?v=NZHCEzEIrAc).
+
 | Student's name | SCIPER |
 | -------------- | ------ |
 | Ozan Arda Güven| 297076|

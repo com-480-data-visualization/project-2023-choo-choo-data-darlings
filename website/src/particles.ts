@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         particle.style.opacity = '1';
         particle.style.transform = `translateY(${randomY}vh) translateX(${randomX}vw)`;
         particle.style.transition = `transform 5s ease-out, opacity 2s linear`;
+        console.log(randomX, randomY);
     }, 0);
 
     setTimeout(() => {
@@ -35,4 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
         createParticle(0);
     }
     }, 100);
+
+    // Recalculate particle positions when the window is resized
+    window.addEventListener("resize", () => {
+        Array.from(document.getElementsByClassName("particle")).forEach((particle) => {
+            const randomY = (0.8 - Math.random()) * 20;
+            const randomX = (0.5 - Math.random()) * 20 + 20;
+            particle.style.transform = `translateY(${randomY}vh) translateX(${randomX}vw)`;
+        });
+    });
 });
