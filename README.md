@@ -1,33 +1,21 @@
 # **Project of Data Visualization (COM-480)**
 
+## **Description**
+
+This repository contains the source code for our data visualization project, an interactive platform designed to explore the intricate Swiss transportation network. Developed by the Choo Choo Data Darlings team at EPFL, the project provides an in-depth view into the vast array of Swiss transportation operations, including trains, buses, and trams.
+
+## **Website and Video Links**
+
+- Our website can be found [here](https://ozanarda.github.io/COM-480-project/).
+- A video introducing our website can be found [here](https://www.youtube.com/watch?v=NZHCEzEIrAc).
+
+## **Contributors**
+
 | Student's name | SCIPER |
 | -------------- | ------ |
 | Ozan Arda Güven| 297076|
 | Arnaud Poletto| 302411|
 | Defne Culha| 353020|
-
-[Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
-
-## **Description**
-
-- [📁 data](data) contains raw and processed data.
-  - [📁 networks](data/networks) contains Gephi files of networks with their respective node and edge files, along with more detailed files for the website's network visualization.
-  - [📁 processed](data/processed) contains processed data.
-    - [📄 operators.csv](data/processed/operators.csv) contains the list of operators.
-    - [📄 stops.csv](data/processed/stops.csv) contains the list of stops.
-    - [🔒 transports.parquet](data/processed/transports.parquet) contains the processed entries of the whole year of 2022.
-    - [🔒 transports_v2.parquet](data/processed/transports_v2.parquet) contains the processed entries of the whole year of 2022, **further processed and filtered to create the network visualization**.
-    - [🔒 trains_v2.parquet](data/processed/trains_v2.parquet) contains the processed entries of **trains only** of the whole year of 2022, further processed and filtered to create the network visualization.
-  - [📄 bav_list_current_timetable.xlsx](data/bav_list_current_timetable.xlsx) contains the list of stations and stops and many informative columns.
-- [📁 generated](generated) contains generated images and charts.
-- [📁 notebooks](notebooks) contains notebooks used for data analysis and visualization.
-  - [📁 preprocessing](notebooks/data_processing) contains notebooks used for data processing.
-  - [📁 analysis](notebooks/analysis) contains notebooks used for data analysis.
-- [📁 src](src) contains source code for the notebook extension.
-- [📁 spark](spark) contains the spark project used to process the data when basic python processing was not enough.
-- [📁 network_example](network_example) contains the website with the network implementation.
-- [📁 map_example_1](map_example_1) contains the website with the map implementation using D3.js, rendered with SVG.
-- [📁 map_example_2](map_example_2) contains the website with the map implementation using D3.js and Three.js, rendered with WebGL.
 
 ## **Milestone 1**
 
@@ -175,11 +163,5 @@ The current version of the website can be found [here](https://com-480-data-visu
 
 ## **Milestone 3**
 
-**(4th June, 5pm) | 80% of the final grade**
-
-
-## **Late policy**
-
-- < 24h: 80% of the grade for the milestone
-- < 48h: 70% of the grade for the milestone
-
+- The video can be found [here](https://www.youtube.com/watch?v=NZHCEzEIrAc).
+- The process book can be found [here](./docs/process_book.pdf).
