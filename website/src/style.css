@@ -752,16 +752,8 @@ select {
 }
 
 /* Style of table and histogram */
-.selected-row {
-  background-color: #ff0000;
-}
-
-.hovered {
-  background-color: #7300ff;
-}
-
 .clicked {
-  background-color: purple;
+  background-color: var(--pink);
 }
 
 .highlighted {
@@ -839,4 +831,9 @@ table {
 .mean_arrival_delay, .mean_departure_delay, .n_arrival_delay, .n_departure_delay, .n_cancelled {
   /* Set the witdh of the column */
   width: 70px;
+}
+
+/* Set pointer events to none on rank, stop_name, city and canton in the table */
+td.rank, td.stop_name, td.city, td.canton {
+  pointer-events: none;
 }

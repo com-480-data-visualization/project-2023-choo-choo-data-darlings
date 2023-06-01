@@ -8,9 +8,9 @@ const DATA_FILE_NAME = DATA_FOLDER + '/table_df.json';
 const TABLE_ELEMENT_ID = "table-container";
 const BAR_ELEMENT_ID = "bar-plot";
 
-const DEFAULT_COLUMN = 'n_arrival_delay'
+const DEFAULT_COLUMN = 'n_arrival_delay';
 
-const BAR_WIDTH = 1;
+const BAR_WIDTH_FACTOR = 0.016;
 
 const HEADER_NAME_MAP = (name: String) => {
   const map = {
@@ -74,8 +74,6 @@ interface HistData {
 
 
 const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-const width = 960 - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
 
 export class TablePlot {
   private svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -84,15 +82,31 @@ export class TablePlot {
   private xScale!: d3.ScaleLinear<number, number>;
   private yScale!: d3.ScaleLinear<number, number>;
 
+  private width!: number;
+  private height!: number;
+
   private bars!: d3.Selection<(SVGRectElement | d3.BaseType), { bins: number; hist_values: number; }, SVGGElement, unknown> |
     d3.Selection<d3.BaseType, { bins: number; hist_values: number; }, SVGGElement, unknown>;
 
   constructor() {
+    this.initDimensions();
     this.initStaticElements();
 
     this.clickedAttribute = DEFAULT_COLUMN
     this.updatePlot(this.clickedAttribute, null)
     this.initPlot();
+  }
+
+  /**
+ * Initializes the dimensions of the circle packing visualization.
+ * @returns {void}
+ */
+  initDimensions(): void {
+    const parentElement = document.getElementById("bar-plot-container");
+    if (parentElement) {
+      this.width = parentElement.clientWidth - margin.left - margin.right;
+      this.height = parentElement.clientHeight / 2;
+    }
   }
 
   private initData(): void {
@@ -106,23 +120,35 @@ export class TablePlot {
     this.xScale = d3
       .scaleLinear()
       .domain([d3.min(this.data.bins), d3.max(this.data.bins)]) // Set the domain based on your data
-      .range([0, width]);
+      .range([0, this.width]);
 
     this.yScale = d3
       .scaleLog()
       .domain([1, d3.max(this.data.hist_values)])
       .nice()
-      .range([height, 0]);
+      .range([this.height, 0]);
   }
 
   private initStaticElements(): void {
     this.svg = d3
       .select("#bar-plot")
       .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+      .attr("width", this.width + margin.left + margin.right)
+      .attr("height", this.height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Add title to the plot
+    this.svg
+      .append("text")
+      // COlor to balck
+      .attr("id", "table-plot-hist-title")
+      .attr("x", (this.width / 2))
+      .attr("y", margin.top / 2)
+      .attr("text-anchor", "middle")
+      .style("font-size", "1em")
+      .attr("fill", "black")
+      .text(HEADER_NAME_MAP(DEFAULT_COLUMN));
   }
 
 
@@ -168,7 +194,7 @@ export class TablePlot {
       .attr("class", "bar")
       .attr("x", (d) => this.xScale(d.bins))
       .attr("y", (d) => this.yScale(d.hist_values + 0.0001))
-      .attr("width", width / this.data.num_bins)
+      .attr("width", (this.width / this.data.num_bins))
       .attr("height", (d) => {
         if (d.hist_values === 0) {
           return 0
@@ -182,7 +208,7 @@ export class TablePlot {
     this.svg
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0,${height})`)
+      .attr("transform", `translate(0,${this.height})`)
       .call(d3.axisBottom(this.xScale));
 
     this.svg
@@ -204,6 +230,10 @@ export class TablePlot {
         // Parse data and update scales 
         /// TO IMPLEMENT THIS
         this.initData()
+
+        // Update the title
+        this.svg.select("#table-plot-hist-title")
+          .text(HEADER_NAME_MAP(clickedAttribute));
 
         // Create the line
         if (cell) {
@@ -238,7 +268,7 @@ export class TablePlot {
             .attr("class", "bar")
             .attr("x", (d) => this.xScale(d.bins))
             .attr("y", this.yScale(1)) // start from the bottom of the chart
-            .attr("width", width / this.data.num_bins)
+            .attr("width", this.width / this.data.num_bins)
             .attr("height", 0) // start with a height of 0
             .attr("fill", "steelblue"),
 
@@ -247,8 +277,8 @@ export class TablePlot {
             .duration(1000) // Make it last 1 second
             .attr("x", (d) => this.xScale(d.bins))
             .attr("y", (d) => this.yScale(d.hist_values + 1.0001))
-            .attr("width", width / this.data.num_bins)
-            .attr("height", (d) => height - this.yScale(d.hist_values + 1.0001)),
+            .attr("width", this.width / this.data.num_bins)
+            .attr("height", (d) => this.height - this.yScale(d.hist_values + 1.0001)),
 
           exit => exit
             .transition() // Start a transition
@@ -286,7 +316,7 @@ export class TablePlot {
       line = this.svg.append("line")
         .attr("class", "vertical-line")
         .attr("y1", 0)
-        .attr("y2", height)
+        .attr("y2", this.height)
         .attr("stroke", "red")
         .attr("stroke-width", 2);
     }
@@ -314,7 +344,7 @@ export class HomePageTable {
   private currentPageNumber: number = 1;
   private itemsPerPage: number = 25;
 
-  private maxVisibleButtons: number = 10; // Maximum number of visible buttons
+  private maxVisibleButtons: number = 7; // Maximum number of visible buttons
 
   private colorScale: d3.ScaleSequential<string>;
 
@@ -328,9 +358,9 @@ export class HomePageTable {
       // Create a segmented color scale from green to red
       this.colorScale = d3
         .scaleSequential(d3.scaleLinear<string>()
-        .domain([0, 0.25, 0.5, 0.75, 1])  // setting the domain of our color scale
-        .range(["darkred", "red", "orange", "yellow", "green"])  // setting the color range of our scale
-        .interpolate(d3.interpolateRgb))
+          .domain([0, 0.25, 0.5, 0.75, 1])  // setting the domain of our color scale
+          .range(["darkred", "red", "orange", "yellow", "green"])  // setting the color range of our scale
+          .interpolate(d3.interpolateRgb))
         .domain([nDataPoints, 1]);
 
       this.initTable();
@@ -363,6 +393,9 @@ export class HomePageTable {
 
     pagination.slice(startPage, endPage + 1).forEach((pageNum) => { // Increment endPage by 1
       const pageButton = document.createElement("button");
+      // Set the id of the button to the page number
+      pageButton.id = `page-${pageNum}`;
+
       pageButton.innerText = pageNum.toString();
 
       pageButton.addEventListener("click", () => {
@@ -379,10 +412,11 @@ export class HomePageTable {
       previousPageButton.innerText = "<";
       previousPageButton.addEventListener("click", () => {
         this.updateButtons(startPage - this.maxVisibleButtons, pageCount, pagination, paginationContainer);
-        this.renderTablePage(startPage - this.maxVisibleButtons);
+        this.renderTablePage(Math.max(startPage - this.maxVisibleButtons, 1));
       });
       paginationContainer.prepend(previousPageButton);
     }
+
     // Add the first button if it is not present
     if (startPage > 0) {
       const firstPageButton = document.createElement("button");
@@ -432,6 +466,9 @@ export class HomePageTable {
     paginationContainer.innerHTML = "";
     pagination.slice(startPage, endPage + 1).forEach((pageNum) => {
       const pageButton = document.createElement("button");
+      // Set the id of the button to the page number
+      pageButton.id = `page-${pageNum}`;
+
       pageButton.innerText = pageNum.toString();
 
       pageButton.addEventListener("click", () => {
@@ -447,7 +484,7 @@ export class HomePageTable {
       previousPageButton.innerText = "<";
       previousPageButton.addEventListener("click", () => {
         this.updateButtons(startPage - this.maxVisibleButtons, pageCount, pagination, paginationContainer);
-        this.renderTablePage(startPage - this.maxVisibleButtons);
+        this.renderTablePage(Math.max(startPage - this.maxVisibleButtons, 1));
       });
       paginationContainer.prepend(previousPageButton);
     }
@@ -489,6 +526,11 @@ export class HomePageTable {
   private renderTablePage(pageNum): void {
     // Update the current page number
     this.currentPageNumber = pageNum;
+
+    // Select the button corresponding to the current page number
+    // And add the active class to it
+    const activeButton = document.getElementById(`page-${pageNum}`);
+    activeButton.classList.add("pushed");
 
     const startIndex = (pageNum - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -571,9 +613,9 @@ export class HomePageTable {
     // container element where the table will be appended
     const container = d3.select(`#${TABLE_ELEMENT_ID}`);
 
-    // width of the table to 90% of the screen width
-    const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    const tableWidth = 0.5 * screenWidth;
+    const parentElement = document.getElementById("table-container-parent");
+
+    const tableWidth = parentElement.clientWidth;
 
     this.table = container
       .append('table')
@@ -731,20 +773,13 @@ export class HomePageTable {
   private updateTable(): void {
     // hover 
     this.rows.on('mouseover', function () {
-      //d3.select(this).classed('hovered', true);
-      // Get the old background color
-      const oldColor = d3.select(this).style('background-color');
-      // Make the oldColor lighter
-      const lighterColor = d3.color(oldColor)?.brighter(0.5).toString();
       d3.select(this)
-        .style('background-color', lighterColor)
-        .attr('old-color', oldColor);
+        .style('background-color', "#FB9E82AA");
     }).on('mouseout', function () {
       //d3.select(this).classed('hovered', false);
       // Get the old background color
-      const oldColor = d3.select(this).attr('old-color');
 
-      d3.select(this).style('background-color', (d) => oldColor);
+      d3.select(this).style('background-color', null);
     });
 
     // click
@@ -773,6 +808,16 @@ export class HomePageTable {
         self.handleCellClick(clickedCell, clickedAttribute);
       });
 
+    // Readd classes to each cell
+    this.rows.selectAll('td')
+      .attr('class', (d, i) => {
+        if (i === 0) {
+          return 'rank';
+        }
+        return REVERSE_HEADER_NAME_MAP(Object.keys(this.data[0])[i])
+      });
+
+    
     // Update the rank column cells
     //this.rows.select('td').text((_, i) => this.ranks[i]);
   }
