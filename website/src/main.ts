@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             'Title',
             'Introduction',
             'Circle Packing',
+            'Table Introduction',
             'Interactive Table',
             'Hierarchical Edge Bundling',
             'Network Introduction',
