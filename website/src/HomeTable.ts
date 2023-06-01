@@ -434,7 +434,7 @@ export class HomePageTable {
       nextPageButton.innerText = ">";
       nextPageButton.addEventListener("click", () => {
         this.updateButtons(endPage + SMALL_BUTTON_JUMP, pageCount, pagination, paginationContainer);
-        this.renderTablePage(Math.max(endPage + SMALL_BUTTON_JUMP, pageCount));
+        this.renderTablePage(Math.min(endPage + SMALL_BUTTON_JUMP, pageCount));
       });
       paginationContainer.appendChild(nextPageButton);
     }
@@ -505,7 +505,7 @@ export class HomePageTable {
       nextPageButton.innerText = ">";
       nextPageButton.addEventListener("click", () => {
         this.updateButtons(endPage + SMALL_BUTTON_JUMP, pageCount, pagination, paginationContainer);
-        this.renderTablePage(Math.max(endPage + SMALL_BUTTON_JUMP, pageCount));
+        this.renderTablePage(Math.min(endPage + SMALL_BUTTON_JUMP, pageCount));
       });
       paginationContainer.appendChild(nextPageButton);
     }
