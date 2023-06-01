@@ -10,7 +10,7 @@ const BAR_ELEMENT_ID = "bar-plot";
 
 const DEFAULT_COLUMN = 'n_arrival_delay';
 
-const BAR_WIDTH_FACTOR = 0.016;
+const SMALL_BUTTON_JUMP = 20;
 
 const HEADER_NAME_MAP = (name: String) => {
   const map = {
@@ -411,8 +411,8 @@ export class HomePageTable {
       const previousPageButton = document.createElement("button");
       previousPageButton.innerText = "<";
       previousPageButton.addEventListener("click", () => {
-        this.updateButtons(startPage - this.maxVisibleButtons, pageCount, pagination, paginationContainer);
-        this.renderTablePage(Math.max(startPage - this.maxVisibleButtons, 1));
+        this.updateButtons(startPage - SMALL_BUTTON_JUMP, pageCount, pagination, paginationContainer);
+        this.renderTablePage(Math.max(startPage - SMALL_BUTTON_JUMP, 1));
       });
       paginationContainer.prepend(previousPageButton);
     }
@@ -433,8 +433,8 @@ export class HomePageTable {
       const nextPageButton = document.createElement("button");
       nextPageButton.innerText = ">";
       nextPageButton.addEventListener("click", () => {
-        this.updateButtons(endPage + 1, pageCount, pagination, paginationContainer);
-        this.renderTablePage(endPage + 1);
+        this.updateButtons(endPage + SMALL_BUTTON_JUMP, pageCount, pagination, paginationContainer);
+        this.renderTablePage(Math.max(endPage + SMALL_BUTTON_JUMP, pageCount));
       });
       paginationContainer.appendChild(nextPageButton);
     }
@@ -483,8 +483,8 @@ export class HomePageTable {
       const previousPageButton = document.createElement("button");
       previousPageButton.innerText = "<";
       previousPageButton.addEventListener("click", () => {
-        this.updateButtons(startPage - this.maxVisibleButtons, pageCount, pagination, paginationContainer);
-        this.renderTablePage(Math.max(startPage - this.maxVisibleButtons, 1));
+        this.updateButtons(startPage - SMALL_BUTTON_JUMP, pageCount, pagination, paginationContainer);
+        this.renderTablePage(Math.max(startPage - SMALL_BUTTON_JUMP, 1));
       });
       paginationContainer.prepend(previousPageButton);
     }
@@ -504,8 +504,8 @@ export class HomePageTable {
       const nextPageButton = document.createElement("button");
       nextPageButton.innerText = ">";
       nextPageButton.addEventListener("click", () => {
-        this.updateButtons(endPage + 1, pageCount, pagination, paginationContainer);
-        this.renderTablePage(endPage + 1);
+        this.updateButtons(endPage + SMALL_BUTTON_JUMP, pageCount, pagination, paginationContainer);
+        this.renderTablePage(Math.max(endPage + SMALL_BUTTON_JUMP, pageCount));
       });
       paginationContainer.appendChild(nextPageButton);
     }
