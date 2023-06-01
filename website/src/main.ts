@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     new fullpage('#fullpage', {
+        licenseKey: "gplv3-license",
         navigation: true,
         navigationTooltips: [
             'Title',
