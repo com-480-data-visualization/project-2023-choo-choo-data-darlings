@@ -9,6 +9,11 @@ This repository contains the source code for our data visualization project, an 
 - Our website can be found [here](https://com-480-data-visualization.github.io/project-2023-choo-choo-data-darlings/).
 - A video introducing our website can be found [here](https://www.youtube.com/watch?v=NZHCEzEIrAc).
 
+## **Repository Structure**
+
+The repository contains the following folders:
+
+
 ## **Contributors**
 
 | Student's name | SCIPER |
