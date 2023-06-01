@@ -6,7 +6,7 @@ This repository contains the source code for our data visualization project, an 
 
 ## **Website and Video Links**
 
-- Our website can be found [here](https://ozanarda.github.io/COM-480-project/).
+- Our website can be found [here](https://com-480-data-visualization.github.io/project-2023-choo-choo-data-darlings/).
 - A video introducing our website can be found [here](https://www.youtube.com/watch?v=NZHCEzEIrAc).
 
 ## **Contributors**
